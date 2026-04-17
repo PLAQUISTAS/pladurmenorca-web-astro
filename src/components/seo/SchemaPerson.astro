@@ -1,0 +1,12 @@
+---
+import { personSchema } from '@/lib/schema'
+interface Props {
+  name: string
+  jobTitle: string
+  description?: string
+  image?: string
+}
+const props = Astro.props
+const schema = personSchema(props)
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

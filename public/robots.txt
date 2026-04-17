@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://www.pladurmallorca.com/sitemap-index.xml
+
+# AI: https://www.pladurmallorca.com/llms.txt
+# AI: https://www.pladurmallorca.com/llms-full.txt

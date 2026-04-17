@@ -1,0 +1,200 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import { faqs } from '@/data/faqs'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur en Manacor | Instaladores | Presupuesto Gratis',
+  description: 'Instala pladur en Manacor y Llevant. Falsos techos, tabiques y aislamiento en Porto Cristo, Cala Millor y Son Servera. Desde 29€/m². Presupuesto gratis.',
+  canonical: '/pladur-manacor',
+}
+
+const zonas = [
+  {
+    nombre: 'Manacor centro',
+    descripcion: 'Casas de pueblo tradicionales y pisos del ensanche. Proyectos habituales: redistribución de viviendas heredadas, falsos techos para modernizar espacios y trasdosados térmicos en fachadas de piedra.',
+  },
+  {
+    nombre: 'Porto Cristo',
+    descripcion: 'Alta concentración de apartamentos turísticos y segundas residencias. Reformas rápidas entre temporadas: falsos techos con LED, aislamiento acústico para mejorar valoraciones y modernización general.',
+  },
+  {
+    nombre: "S'Illot",
+    descripcion: 'Zona turística costera con edificios de los años 70-80. Reformas de apartamentos vacacionales con pladur: techos nuevos, redistribución y mejora del aislamiento para prolongar la temporada de alquiler.',
+  },
+  {
+    nombre: 'Cala Millor (adyacente)',
+    descripcion: 'Principal polo turístico del Llevant. Hoteles, aparthoteles y apartamentos que necesitan reformas ágiles sin interrumpir la operativa. Falsos techos registrables y aislamiento acústico entre habitaciones.',
+  },
+  {
+    nombre: 'Son Servera (adyacente)',
+    descripcion: 'Municipio limítrofe con mix de vivienda residencial y turística. Proyectos de reforma integral en chalets, adosados y viviendas unifamiliares de la urbanización costera.',
+  },
+  {
+    nombre: 'Cales de Mallorca',
+    descripcion: 'Urbanización turística con bloques de apartamentos de los años 80. Alta demanda de actualización: falsos techos, tabiques para crear dormitorios adicionales y mejora del aislamiento acústico.',
+  },
+]
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Manacor', href: '/pladur-manacor' },
+]
+
+const pageFaqs = faqs['manacor'] ?? []
+
+const proyectoFicha = [
+  { label: 'Superficie', valor: '120 m²' },
+  { label: 'Ubicación', valor: 'Porto Cristo, Manacor' },
+  { label: 'Trabajos', valor: 'Techo + Tabiques + Aislamiento acústico' },
+  { label: 'Duración', valor: '9 días hábiles' },
+  { label: 'Resultado', valor: '4 apartamentos renovados' },
+]
+
+const serviciosLinks = [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-mallorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-mallorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' },
+  { label: 'Precios', href: '/precios-pladur-mallorca' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name="Instalación de Pladur en Manacor"
+      description="Servicio profesional de instalación de pladur en Manacor y el Llevant de Mallorca: falsos techos, tabiques, aislamiento acústico y térmico en Porto Cristo, Cala Millor, Son Servera y Cales de Mallorca."
+      serviceType="Instalación de Pladur"
+      url="/pladur-manacor"
+     
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instaladores de pladur en Manacor. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.
+  </p>
+
+  <PaginaGeografica
+    municipio="Manacor"
+    zonas={zonas}
+    faqKey="manacor"
+    heroTitle="Pladur en Manacor — Instaladores Profesionales en el Llevant de Mallorca"
+    heroBadge="Manacor · Llevant de Mallorca"
+    heroDescription="Instalamos pladur en Manacor y toda la comarca del Llevant: Porto Cristo, Cala Millor, Son Servera, S'Illot y Cales de Mallorca. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratuito en 24 horas."
+    faqTitulo="Preguntas frecuentes sobre pladur en Manacor"
+    faqSubtitulo="Respuestas a las dudas más habituales de nuestros clientes en Manacor y el Llevant."
+    proyectoTitulo="Renovación de 4 apartamentos turísticos en Porto Cristo"
+    proyectoFicha={proyectoFicha}
+    ctaTitulo="¿Tu proyecto está en Manacor o el Llevant?"
+    ctaSubtitulo="Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en toda la comarca."
+  >
+    <!-- Texto SEO -->
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Especialistas en el Llevant
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Reformas con pladur en Manacor: la capital del Llevant
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>
+              Manacor es la segunda ciudad de Mallorca y el centro de servicios de toda la comarca del Llevant. Con más de 45.000 habitantes y un parque inmobiliario que combina casas de pueblo centenarias en el centro histórico, pisos del ensanche de los años 60-80 y urbanizaciones costeras orientadas al turismo, la demanda de reformas con pladur es constante y diversa.
+            </p>
+            <p>
+              El centro de Manacor conserva un tejido urbano de casas de pueblo con muros de piedra de marès, techos altos de vigas de madera y distribuciones que responden a las necesidades de otra época. Estas viviendas —muchas heredadas y sometidas a procesos de renovación— son candidatas ideales para el pladur: <a href="/falsos-techos-pladur-mallorca">falsos techos</a> que ocultan instalaciones antiguas y mejoran la eficiencia del aire acondicionado, <a href="/tabiques-pladur-mallorca">tabiques que redistribuyen espacios</a> para adaptarlos a la vida actual, y trasdosados que aíslan del frío invernal y del calor del verano mallorquín.
+            </p>
+            <p>
+              La costa del Llevant —Porto Cristo, S'Illot, Cala Millor, Cales de Mallorca— concentra miles de plazas turísticas en apartamentos y hoteles construidos durante el boom del turismo de los años 70 y 80. Estos edificios necesitan actualizaciones periódicas para mantener su competitividad en el mercado del alquiler vacacional. El pladur es la herramienta perfecta para estas reformas: permite modernizar un apartamento completo en menos de dos semanas, sin la suciedad y los plazos de la obra tradicional.
+            </p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              La mejora del <a href="/aislamiento-acustico-mallorca">aislamiento acústico</a> es especialmente demandada en los bloques turísticos de la costa, donde las quejas por ruido entre vecinos o entre habitaciones son una de las principales causas de valoraciones negativas en Airbnb, Booking y otras plataformas. Nuestros sistemas de pladur con lana mineral de alta densidad reducen la transmisión de ruido en 45-55 dB, lo que transforma la experiencia del huésped y mejora directamente las reseñas.
+            </p>
+            <p>
+              Manacor también es un polo industrial y comercial importante, con naves reconvertidas, locales comerciales en el centro y espacios de oficina que necesitan adaptarse a nuevos usos. El pladur permite dividir grandes espacios, crear salas de reuniones, mejorar la acústica de oficinas abiertas y modernizar techos con iluminación LED integrada, todo ello en plazos muy cortos y sin interrumpir la actividad del negocio.
+            </p>
+            <p>
+              Trabajamos en toda la comarca del Llevant sin coste adicional de desplazamiento para obras a partir de 500€. Nuestro equipo conoce las particularidades constructivas de la zona: desde los muros de piedra de las casas señoriales de Manacor hasta los forjados prefabricados de los bloques turísticos de la costa.
+            </p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">El Llevant confía en nosotros</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">Más de 20 años trabajando en Manacor y toda la costa este de Mallorca. Conocemos los edificios, los materiales locales y los retos específicos de cada zona del Llevant.</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">4.7/5 en Google</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">Servicios en Manacor</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>
+        Un propietario de cuatro apartamentos turísticos en primera línea de Porto Cristo necesitaba renovar las unidades antes del inicio de la temporada de verano. Los apartamentos, construidos en 1978, tenían techos de escayola deteriorados con manchas de humedad, paredes medianeras con aislamiento acústico insuficiente y una distribución original de dos dormitorios pequeños que limitaba las opciones de alquiler.
+      </p>
+      <p>
+        El proyecto abarcó 120 m² repartidos en las cuatro unidades. En cada apartamento se instaló un falso techo continuo de placa estándar con iluminación LED perimetral (30 m² por unidad), se reforzaron las paredes medianeras con un trasdosado de placa doble y lana mineral de 48 mm (16 ml lineales en total) y se creó un tabique nuevo en dos de las unidades para convertir el salón-dormitorio en un espacio con dormitorio independiente y zona de estar diferenciada.
+      </p>
+      <p>
+        El trabajo se completó en 9 días hábiles, trabajando en dos apartamentos en paralelo. La inversión total fue de aproximadamente 8.400 euros. Tras la renovación, los apartamentos pasaron de una valoración media de 3,9 a 4,5 estrellas en Booking, y el propietario pudo incrementar el precio por noche un 18% respecto a la temporada anterior, amortizando la inversión en menos de tres meses de alquiler.
+      </p>
+    </div>
+  </PaginaGeografica>
+
+  <ArticulosRelacionados articulos={[
+    { slug: 'reformas-pladur-manacor', titulo: 'Reformas con pladur en Manacor', descripcion: 'Proyectos reales de reformas con pladur en Manacor y la comarca del Llevant.' },
+  ]} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

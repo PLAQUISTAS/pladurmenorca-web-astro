@@ -1,0 +1,190 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { faqs } from '@/data/faqs'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur en Sóller | Instaladores | Presupuesto Gratis',
+  description: 'Instala pladur en Sóller y Port de Sóller. Reformas en casas de la Serra de Tramuntana. Falsos techos, aislamiento y tabiques. Presupuesto gratis en 24h.',
+  canonical: '/pladur-soller',
+}
+
+const zonas = [
+  {
+    nombre: 'Sóller centro',
+    descripcion: 'Casas señoriales y de pueblo con arquitectura tradicional de la Tramuntana. Reformas para modernizar viviendas heredadas respetando su carácter: trasdosados térmicos, falsos techos y redistribución con pladur.',
+  },
+  {
+    nombre: 'Port de Sóller',
+    descripcion: 'Puerto natural rodeado de montañas con mezcla de vivienda residencial y turística. Reformas de apartamentos, hoteles boutique y casas con vistas al mar: aislamiento, modernización y acabados de calidad.',
+  },
+  {
+    nombre: 'Fornalutx',
+    descripcion: 'Considerado uno de los pueblos más bonitos de España. Casas de piedra centenarias que necesitan mejoras de confort sin alterar su estética: trasdosados interiores, aislamiento térmico y falsos techos discretos.',
+  },
+  {
+    nombre: 'Deià',
+    descripcion: 'Pueblo de artistas y residentes internacionales con casas de piedra de gran valor. Reformas de alta calidad que combinan respeto por la tradición con confort moderno: aislamiento, redistribución y acabados premium.',
+  },
+  {
+    nombre: 'Biniaraix',
+    descripcion: 'Pequeño núcleo tradicional junto a Sóller. Casas de piedra con muros gruesos y distribuciones antiguas que se benefician del pladur para ganar funcionalidad y mejorar el aislamiento sin alterar la fachada.',
+  },
+]
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Sóller', href: '/pladur-soller' },
+]
+
+const pageFaqs = faqs['soller'] ?? []
+
+const proyectoFicha = [
+  { label: 'Superficie', valor: '95 m²' },
+  { label: 'Ubicación', valor: 'Centro histórico, Sóller' },
+  { label: 'Trabajos', valor: 'Trasdosado + Techo + Redistribución' },
+  { label: 'Duración', valor: '13 días hábiles' },
+  { label: 'Resultado', valor: 'Casa señorial convertida en hotel boutique (3 suites)' },
+]
+
+const serviciosLinks = [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-mallorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-mallorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' },
+  { label: 'Precios', href: '/precios-pladur-mallorca' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name="Instalación de Pladur en Sóller"
+      description="Servicio profesional de instalación de pladur en Sóller y la Serra de Tramuntana: falsos techos, tabiques, aislamiento acústico y térmico en Port de Sóller, Fornalutx y Deià."
+      serviceType="Instalación de Pladur"
+      url="/pladur-soller"
+     
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instaladores de pladur en Sóller. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.
+  </p>
+
+  <PaginaGeografica
+    municipio="Sóller"
+    zonas={zonas}
+    faqKey="soller"
+    heroTitle="Pladur en Sóller — Instaladores en la Serra de Tramuntana"
+    heroBadge="Sóller · Serra de Tramuntana"
+    heroDescription="Instalamos pladur en Sóller y la Serra de Tramuntana: Port de Sóller, Fornalutx, Deià y Biniaraix. Reformas en casas antiguas, aislamiento térmico, falsos techos y tabiques. Presupuesto gratuito en 24 horas."
+    faqTitulo="Preguntas frecuentes sobre pladur en Sóller"
+    faqSubtitulo="Respuestas a las dudas más habituales de nuestros clientes en Sóller y la Tramuntana."
+    proyectoTitulo="Conversión de casa señorial en hotel boutique en Sóller"
+    proyectoFicha={proyectoFicha}
+    ctaTitulo="¿Tu proyecto está en Sóller o la Tramuntana?"
+    ctaSubtitulo="Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en todo el valle."
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Especialistas en la Tramuntana
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Reformas con pladur en Sóller: tradición y confort en la Tramuntana
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>
+              Sóller ocupa un valle privilegiado en el corazón de la Serra de Tramuntana, Patrimonio de la Humanidad por la UNESCO. Este entorno único define el carácter de su arquitectura: casas señoriales de piedra con fachadas modernistas, possessions centenarias con muros de hasta 60 cm de espesor y viviendas tradicionales con techos de vigas de madera y teja árabe. Un patrimonio construido que exige soluciones de reforma respetuosas y eficaces.
+            </p>
+            <p>
+              El pladur es la herramienta ideal para modernizar estas viviendas sin comprometer su carácter arquitectónico. Los trasdosados interiores permiten incorporar <a href="/aislamiento-termico-mallorca">aislamiento térmico</a> de última generación pegado directamente al muro de piedra, mejorando radicalmente el confort en invierno —Sóller es una de las zonas más frías de Mallorca— sin alterar la fachada exterior. Los <a href="/falsos-techos-pladur-mallorca">falsos techos</a> ocultan instalaciones eléctricas y de climatización modernas bajo una superficie lisa y uniforme, manteniendo la altura libre necesaria.
+            </p>
+            <p>
+              Port de Sóller ha experimentado una transformación notable en las últimas décadas, con la rehabilitación de edificios antiguos y la apertura de hoteles boutique y apartamentos de alquiler de gama alta. Estos proyectos requieren acabados impecables y soluciones de <a href="/aislamiento-acustico-mallorca">aislamiento acústico</a> entre unidades que garanticen la privacidad de los huéspedes. Nuestros sistemas de pladur con lana mineral y estructura desacoplada ofrecen reducciones de ruido de 45-55 dB, muy por encima de lo que exige la normativa.
+            </p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              Fornalutx y Deià representan el segmento más exclusivo del mercado inmobiliario de la Tramuntana. Las casas de piedra en estos pueblos, muchas propiedad de residentes internacionales que buscan el equilibrio entre autenticidad y confort europeo contemporáneo, son proyectos donde el detalle marca la diferencia. Trabajamos con arquitectos e interioristas para conseguir resultados que integren perfectamente el pladur con los elementos originales de piedra, madera y hierro forjado.
+            </p>
+            <p>
+              El aislamiento térmico es especialmente importante en el valle de Sóller. La orientación norte de muchas fachadas, la elevada humedad del valle y las temperaturas invernales que pueden bajar de los 5°C hacen que un buen trasdosado con pladur y aislamiento sea una inversión que se amortiza rápidamente en ahorro de calefacción. En verano, ese mismo aislamiento mantiene las estancias frescas y reduce el consumo de aire acondicionado.
+            </p>
+            <p>
+              Trabajamos en todo el valle de Sóller y la Tramuntana occidental sin coste adicional de desplazamiento para obras a partir de 500€. Planificamos la logística de transporte de materiales con antelación, adaptándonos a las características de las carreteras de montaña y los accesos estrechos de los cascos antiguos.
+            </p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">La Tramuntana confía en nosotros</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">Más de 20 años trabajando en Sóller y toda la Serra de Tramuntana. Conocemos las casas de piedra, sus particularidades constructivas y los retos del clima de montaña.</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">4.7/5 en Google</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">Servicios en Sóller</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>
+        Una casa señorial de 95 m² en la plaza de la Constitución de Sóller, a pocos metros de la parada del histórico Tren de Sóller, iba a convertirse en un pequeño hotel boutique con tres suites independientes. El edificio, datado de principios del siglo XX, presentaba la fachada modernista típica de Sóller, muros de piedra de 55 cm, techos de vigas de sabina a 4,2 metros de altura y una distribución original de gran salón, comedor formal y cuatro dormitorios pequeños conectados por un pasillo largo y oscuro.
+      </p>
+      <p>
+        El proyecto de pladur abarcó tres intervenciones principales. Primero, se instalaron trasdosados con placa estándar y aislamiento de lana mineral de 60 mm en todas las paredes exteriores y medianeras (68 m²), resolviendo los problemas de condensación invernal y mejorando el aislamiento térmico. Segundo, se montó un falso techo continuo a 3,20 m en toda la planta (95 m²), creando una cámara técnica de casi un metro donde se alojaron los conductos de climatización, el cableado eléctrico nuevo y los downlights LED. Tercero, se redistribuyó completamente el espacio con 32 metros lineales de tabiques de pladur con doble placa y lana mineral de alta densidad para crear tres suites con baño privado, cada una completamente insonorizada respecto a las demás (reducción de 52 dB entre unidades).
+      </p>
+      <p>
+        La logística fue un reto adicional: el acceso se realizaba por una calle peatonal de 2,5 metros de ancho, lo que obligó a transportar las placas en formato reducido y a programar las entregas en horario de madrugada. El trabajo se completó en 13 días hábiles con un coste de pladur de 11.600 euros. El hotel boutique abrió a tiempo para la temporada de primavera, con tres suites que combinan el encanto de la arquitectura modernista sollerica con el confort térmico y acústico que exige el turismo de calidad.
+      </p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

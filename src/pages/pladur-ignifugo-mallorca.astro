@@ -1,0 +1,354 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import { ignifugoFaqs } from '@/data/faqs/ignifugo'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur Ignífugo en Mallorca | Protección Contra Incendios',
+  description: 'Instala pladur ignífugo en Mallorca. Placa FOC rosa con resistencia EI-30 a EI-240 para hoteles, locales y garajes. Cumplimiento CTE DB-SI. Desde 45€/m².',
+  canonical: '/pladur-ignifugo-mallorca',
+}
+
+const tiposPlaca = [
+  { tipo: 'Pladur <strong>FOC</strong>', color: 'Rosa', resistencia: 'EI-30 a EI-120', aplicacion: 'Tabiques, techos, trasdosados' },
+  { tipo: 'Pladur FOC+ RF', color: 'Rosa reforzada', resistencia: 'EI-120 a EI-240', aplicacion: 'Muros cortafuegos, sectorizaciones' },
+  { tipo: 'Knauf Fireboard', color: 'Roja', resistencia: 'EI-120+', aplicacion: 'Conductos, columnas, vigas' },
+]
+
+const normativa = [
+  { uso: 'Hoteles', requisito: 'Sectorización por plantas: EI-60 mínimo', norma: 'CTE DB-SI, Sección SI-1' },
+  { uso: 'Locales comerciales', requisito: 'Según superficie y ocupación: EI-60 a EI-120', norma: 'CTE DB-SI, Tabla 1.2' },
+  { uso: 'Garajes subterráneos', requisito: 'Sectorización: EI-120', norma: 'CTE DB-SI, Sección SI-1' },
+  { uso: 'Pasos de instalaciones', requisito: 'Sellado cortafuegos con misma EI que sector', norma: 'CTE DB-SI, Art. 3' },
+]
+
+const aplicaciones = [
+  { titulo: 'Sectorización de hoteles', descripcion: 'Tabiquería y techos ignífugos por plantas. Trabajamos en temporada baja (oct-mar) para no afectar la operativa.' },
+  { titulo: 'Techos de garajes subterráneos', descripcion: 'Falsos techos ignífugos EI-120 en garajes de edificios nuevos y reformas. Cumplimiento normativo completo.' },
+  { titulo: 'Protección de estructura metálica', descripcion: 'Revestimiento de vigas y pilares metálicos con placa cortafuegos para alcanzar la resistencia al fuego exigida.' },
+  { titulo: 'Conductos de ventilación', descripcion: 'Cajeado ignífugo de conductos de ventilación y extracción que atraviesan sectores de incendio diferentes.' },
+  { titulo: 'Medianeras entre locales', descripcion: 'Trasdosados cortafuegos en medianeras entre locales comerciales. Solución obligatoria según CTE DB-SI.' },
+  { titulo: 'Sellado de pasos de instalaciones', descripcion: 'Sellado intumescente y placa ignífuga en puntos donde tuberías, cables o conductos atraviesan sectores de incendio.' },
+]
+
+const precios = [
+  { sistema: 'Tabique ignífugo simple', ei: 'EI-30', desde: '38€/m²', hasta: '50€/m²' },
+  { sistema: 'Tabique ignífugo doble placa', ei: 'EI-60', desde: '48€/m²', hasta: '65€/m²' },
+  { sistema: 'Muro cortafuegos', ei: 'EI-120', desde: '65€/m²', hasta: '90€/m²' },
+  { sistema: 'Revestimiento viga/pilar', ei: 'EI-60', desde: '55€/ml', hasta: '80€/ml' },
+  { sistema: 'Sellado paso instalaciones', ei: '—', desde: '30€/ud', hasta: '80€/ud' },
+]
+
+const documentacion = [
+  'Certificado de los materiales instalados (Knauf, Placo, Pladur)',
+  'Declaración de prestaciones (DoP) de cada producto',
+  'Ficha técnica con clasificación de reacción al fuego',
+  'Fotografías del proceso para archivo del proyecto',
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name="Instalación de Pladur Ignífugo en Mallorca"
+      description="Servicio de instalación de pladur ignífugo en Mallorca. Protección pasiva contra incendios con placa FOC, resistencia EI-30 a EI-240. Hoteles, locales, garajes. Documentación incluida."
+      serviceType="Protección Pasiva Contra Incendios"
+      url="/pladur-ignifugo-mallorca"
+    />
+    <SchemaFAQ faqs={ignifugoFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Pladur Ignífugo', href: '/pladur-ignifugo-mallorca' }]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instalación de pladur ignífugo en Mallorca. Placa FOC con resistencia EI-30 a EI-240. Hoteles, locales, garajes. Cumplimiento CTE DB-SI. Documentación técnica incluida. Tel: 627 829 723.
+  </p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            Protección contra incendios · Mallorca
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            Pladur Ignífugo en Mallorca — Protección Pasiva Contra Incendios
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            La protección pasiva contra incendios es obligatoria en hoteles, locales comerciales, garajes y pasos de instalaciones. Las placas ignífugas (tipo FOC) proporcionan una barrera cortafuegos certificada que retarda la propagación del fuego entre 30 y 240 minutos.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/presupuesto-pladur"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              Pide presupuesto gratis
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de placa ignífuga -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Materiales
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Tipos de placa ignífuga
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Trabajamos con las tres principales marcas del mercado. Cada tipo de placa ofrece prestaciones diferentes según la resistencia al fuego requerida.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger-children">
+        {tiposPlaca.map((p) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 cursor-default">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="size-4 rounded-full bg-rose-400 border border-rose-500" />
+              <p class="font-bold text-foreground" set:html={p.tipo} />
+            </div>
+            <div class="space-y-2">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Color</p>
+                <p class="text-sm text-foreground">{p.color}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Resistencia</p>
+                <p class="text-sm font-bold text-foreground-dark">{p.resistencia}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Aplicación</p>
+                <p class="text-sm text-muted">{p.aplicacion}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Normativa CTE DB-SI -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Normativa
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          ¿Qué normativa CTE DB-SI se aplica en Mallorca?
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p>
+          El Código Técnico de la Edificación, en su Documento Básico de Seguridad en caso de Incendio (<strong>CTE DB-SI</strong>), establece los requisitos mínimos de resistencia al fuego según el uso del edificio. En Mallorca, estos requisitos se aplican con especial atención en el sector hotelero y comercial.
+        </p>
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p>"Los elementos constructivos delimitadores de los sectores de incendio deben tener una resistencia al fuego al menos igual a la establecida en la Tabla 1.2 del DB-SI 1, que varía entre <strong>EI-60</strong> y <strong>EI-120</strong> según el uso y la altura de evacuación"</p>
+          <cite class="block mt-2 text-sm not-italic text-muted/70">— CTE DB-SI, Documento Básico de Seguridad en caso de Incendio, Sección SI-1</cite>
+        </blockquote>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {normativa.map((n) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-3">{n.uso}</span>
+            <p class="font-bold text-foreground text-sm mb-2">{n.requisito}</p>
+            <p class="text-xs text-muted">{n.norma}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Aplicaciones habituales -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Aplicaciones
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Aplicaciones habituales en Mallorca
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          El pladur ignífugo se utiliza en una amplia variedad de situaciones donde la normativa exige <strong>protección pasiva</strong> contra incendios.
+        </p>
+      </div>
+      <div class="space-y-3">
+        {aplicaciones.map((a) => (
+          <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+              <svg aria-hidden="true" class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-foreground text-base mb-1">{a.titulo}</h3>
+              <p class="text-sm text-muted leading-relaxed">{a.descripcion}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios orientativos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Precios
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Precio pladur ignífugo en Mallorca 2026
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Precios de instalación completa (material + mano de obra), IVA no incluido. Precio final tras visita técnica gratuita.
+        </p>
+      </div>
+      <div class="space-y-3">
+        {precios.map((p) => (
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default">
+            <div class="sm:w-64 shrink-0">
+              <p class="text-sm font-bold text-foreground">{p.sistema}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Resistencia</p>
+                <p class="text-sm font-bold text-foreground-dark">{p.ei}</p>
+              </div>
+              <div class="sm:ml-auto flex items-baseline gap-2">
+                <span class="text-lg font-bold text-foreground-dark">{p.desde}</span>
+                <span class="text-muted">—</span>
+                <span class="text-lg font-bold text-foreground-dark">{p.hasta}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a
+          href="/precios-pladur-mallorca"
+          class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+        >
+          Ver tabla de precios completa
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentación -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Documentación
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Documentación que entregamos
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>
+              La instalación de pladur ignífugo requiere documentación técnica que acredite el cumplimiento normativo. Proporcionamos toda la documentación necesaria para la legalización de la actividad y las inspecciones de los bomberos.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="bg-foreground rounded-3xl p-7 lg:mt-12">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">Incluido en cada proyecto</p>
+            <div class="space-y-0">
+              {documentacion.map((doc) => (
+                <div class="flex items-start gap-3 py-3.5 border-b border-white/10 last:border-0">
+                  <div class="shrink-0 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
+                    <svg aria-hidden="true" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <span class="text-sm text-white/70">{doc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enlace a hoteles -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">¿Necesitas sectorización ignífuga para un hotel? Consulta nuestro <strong class="text-white">servicio especializado en reformas hoteleras</strong> con plazos garantizados.</p>
+        <a href="/pladur-hoteles-mallorca" class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          Pladur para hoteles
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={[
+    { slug: 'pladur-ignifugo-normativa-mallorca', titulo: 'Pladur ignífugo y normativa en Mallorca', descripcion: 'Guía sobre la normativa de protección contra incendios y el uso de pladur ignífugo en Mallorca.' },
+    { slug: 'precio-pladur-mallorca-2026', titulo: 'Precio del pladur en Mallorca 2026', descripcion: 'Precios actualizados del pladur ignífugo y otros tipos de placa en Mallorca.' },
+    { slug: 'licencia-obra-pladur-mallorca', titulo: '¿Necesitas licencia de obra para pladur?', descripcion: 'Permisos necesarios para instalar pladur ignífugo en locales y garajes en Mallorca.' },
+  ]} />
+
+  <!-- FAQs -->
+  <FaqAccordion
+    client:visible
+    categoria="ignifugo"
+    titulo="Preguntas frecuentes sobre pladur ignífugo"
+    subtitulo="Resolvemos las dudas más habituales sobre protección pasiva contra incendios con pladur en Mallorca."
+  />
+
+  <!-- CTA -->
+  <CtaBanner
+    titulo="¿Necesitas protección contra incendios con pladur?"
+    subtitulo="Presupuesto gratuito en 24 horas. Documentación técnica incluida. Cumplimiento CTE DB-SI garantizado."
+  />
+
+  <ServiciosRelacionados currentPath="/pladur-ignifugo-mallorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

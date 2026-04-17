@@ -1,0 +1,13 @@
+---
+import { faqSchema } from '@/lib/schema'
+import type { FAQ } from '@/data/faqs/types'
+
+interface Props {
+  faqs: FAQ[]
+}
+
+const { faqs } = Astro.props
+const schema = faqSchema(faqs)
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

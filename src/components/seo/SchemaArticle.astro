@@ -1,0 +1,20 @@
+---
+import { articleSchema } from '@/lib/schema'
+
+interface Props {
+  title: string
+  description: string
+  url: string
+  image?: string
+  datePublished: string
+  dateModified?: string
+  authorName?: string
+  articleSection?: string
+  keywords?: string[]
+}
+
+const { title, description, url, image, datePublished, dateModified, authorName, articleSection, keywords } = Astro.props
+const schema = articleSchema({ title, description, url, image, datePublished, dateModified, authorName, articleSection, keywords })
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

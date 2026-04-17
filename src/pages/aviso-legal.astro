@@ -1,0 +1,793 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import Hero from '@/components/sections/Hero'
+import CookieSettingsButton from '@/components/ui/CookieSettingsButton'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Aviso Legal y Política de Cookies | Pladur Mallorca',
+  description: 'Aviso legal, condiciones de uso y política de cookies de Pladur Mallorca (PLAQUISTAS Y ACABADOS SL). Información conforme a la LSSI-CE y normativa de la AEPD.',
+  canonical: '/aviso-legal',
+}
+
+const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>`
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Aviso Legal', href: '/aviso-legal' }]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <!-- Hero -->
+  <Hero
+    client:visible
+    title="Aviso Legal y Política de Cookies"
+    subtitle="Información legal sobre el uso de este sitio web y nuestra política de cookies conforme a la LSSI-CE y la normativa de la AEPD."
+    dark={true}
+  />
+
+  <!-- ═══════════════════════════════════════════════════════════════
+      PARTE 1 — AVISO LEGAL
+  ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- 1. Titular del sitio web -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+          Parte I — Aviso Legal
+        </p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          1. Identificación del titular del sitio web
+        </h2>
+      </div>
+      <div>
+        <p class="text-muted leading-relaxed mb-4">
+          En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la
+          Sociedad de la Información y de Comercio Electrónico (LSSI-CE), se informa al usuario
+          de los siguientes datos identificativos del titular de este sitio web:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Denominación social:</strong> PLAQUISTAS Y ACABADOS SL</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Nombre comercial:</strong> PLADUR MALLORCA</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">CIF:</strong> B16648487</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Domicilio social:</strong> Carrer Jacint Verdaguer 37, ESC A, 4, 2 — 07004 Palma de Mallorca, Illes Balears, España</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Correo electrónico:</strong> <a href="mailto:info@plaquistas.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">info@plaquistas.com</a></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Teléfono:</strong> <a href={`tel:${siteConfig.phoneRaw}`} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">{siteConfig.phone}</a></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Actividad:</strong> Instalación de sistemas de construcción en seco (pladur)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Sitio web:</strong> <a href="https://www.pladurmallorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmallorca.com</a></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Registro Mercantil:</strong> Inscrita en el Registro Mercantil de Palma de Mallorca</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Objeto del sitio web -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2. Objeto del sitio web
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          El presente sitio web, accesible desde la dirección{' '}
+          <a href="https://www.pladurmallorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmallorca.com</a>,
+          tiene como finalidad la presentación y difusión de los servicios profesionales de
+          instalación de sistemas de construcción en seco (pladur) que ofrece{' '}
+          <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong>, bajo la marca comercial{' '}
+          <strong class="text-foreground">PLADUR MALLORCA</strong>, en el ámbito territorial de la
+          Comunidad Autónoma de las Islas Baleares.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          A través de este sitio web, los usuarios pueden obtener información detallada sobre los
+          servicios ofrecidos — incluyendo, entre otros, la instalación de falsos techos, tabiques
+          divisorios, trasdosados, aislamientos acústicos y térmicos, y reformas interiores con
+          yeso laminado —, consultar proyectos realizados, y solicitar presupuestos personalizados
+          sin compromiso a través de los formularios de contacto habilitados al efecto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Condiciones de uso -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          3. Condiciones de uso
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          El acceso y la navegación por este sitio web atribuyen la condición de usuario e implican
+          la aceptación plena y sin reservas de todas y cada una de las disposiciones incluidas en
+          el presente Aviso Legal, así como de cualesquiera otras disposiciones legales que fueran
+          de aplicación. El titular del sitio web se reserva el derecho de modificar estas
+          condiciones en cualquier momento, siendo efectivas dichas modificaciones desde su
+          publicación en este sitio web.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          El usuario se compromete a utilizar el sitio web y sus servicios de conformidad con la
+          legislación vigente, el presente Aviso Legal, la moral y las buenas costumbres
+          generalmente aceptadas, y el orden público. En particular, el usuario se obliga a:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted">No realizar ninguna acción que pueda dañar, inutilizar, sobrecargar o deteriorar el sitio web o impedir su normal utilización por parte de otros usuarios.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted">No utilizar los contenidos del sitio web con fines ilícitos o contrarios al presente Aviso Legal, lesivos de los derechos e intereses de terceros, o que de cualquier forma puedan perjudicar, dañar o impedir el acceso a dichos contenidos.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted">No introducir, almacenar o difundir mediante el sitio web ningún programa informático, dato, virus, código o cualquier otro instrumento o dispositivo electrónico que sea susceptible de causar daños en el sitio web o en cualquiera de los equipos, sistemas o redes conectados a él.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted">Facilitar datos veraces y actualizados cuando estos sean requeridos a través de los formularios de contacto o solicitud de presupuesto disponibles en el sitio web.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Propiedad intelectual e industrial -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          4. Propiedad intelectual e industrial
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          Todos los contenidos del sitio web — incluyendo, a título enunciativo pero no
+          limitativo, textos, fotografías, gráficos, imágenes, iconos, logotipos, tecnología,
+          software, enlaces, diseño gráfico, código fuente, así como la propia estructura,
+          selección, ordenación y presentación de los contenidos — son propiedad de{' '}
+          <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong> o, en su caso, de
+          terceros que han autorizado su uso, y se encuentran protegidos por las leyes españolas
+          y comunitarias de propiedad intelectual e industrial.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          Queda expresamente prohibida la reproducción total o parcial de este sitio web y de
+          cualquiera de sus contenidos sin la autorización expresa y por escrito de{' '}
+          <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong>. El incumplimiento
+          de esta prohibición podrá constituir infracción sancionable por la legislación vigente
+          en materia de propiedad intelectual e industrial.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          Las marcas, nombres comerciales, signos distintivos y logotipos que aparecen en el
+          sitio web son titularidad de <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong> o
+          de terceros, sin que el acceso al sitio web pueda entenderse como atribución de derecho
+          alguno sobre las citadas marcas, nombres comerciales o signos distintivos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Exclusión de responsabilidad -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          5. Exclusión de responsabilidad
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong> no garantiza la
+          disponibilidad y continuidad del funcionamiento del sitio web. En todo caso, realizará
+          todos los esfuerzos razonables para mantener su correcto funcionamiento, si bien no
+          se responsabiliza de los perjuicios que pudieran derivarse de interrupciones del
+          servicio, fallos informáticos, averías telefónicas, desconexiones, retrasos o bloqueos
+          causados por deficiencias o sobrecargas en las líneas de telecomunicaciones o en la
+          red eléctrica, así como de daños causados por terceras personas mediante intrusiones
+          ilegítimas fuera del control del titular.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          La información contenida en este sitio web tiene carácter meramente informativo y
+          orientativo, pudiendo ser modificada, corregida, eliminada o actualizada en cualquier
+          momento y sin previo aviso. <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong> no
+          se responsabiliza de posibles inexactitudes, errores tipográficos u omisiones que
+          pudieran existir en la información proporcionada.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          El sitio web puede contener enlaces a páginas web de terceros. <strong class="text-foreground">PLAQUISTAS
+          Y ACABADOS SL</strong> no asume responsabilidad alguna por el contenido, la información
+          o los servicios que pudieran ofrecerse en dichos sitios enlazados, los cuales tienen
+          una función meramente informativa. En ningún caso dichos enlaces implican relación,
+          aprobación, patrocinio o recomendación alguna entre el titular y las personas o
+          entidades titulares de los contenidos enlazados.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Legislación aplicable y jurisdicción -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          6. Legislación aplicable y jurisdicción
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          Las presentes condiciones se rigen y se interpretan de acuerdo con la legislación
+          española. Para la resolución de cualquier controversia que pudiera derivarse del
+          acceso o uso de este sitio web, las partes se someten expresamente a la jurisdicción
+          de los Juzgados y Tribunales de{' '}
+          <strong class="text-foreground">Palma de Mallorca</strong>, con renuncia expresa a
+          cualquier otro fuero que pudiera corresponderles, salvo que la normativa aplicable
+          imponga imperativamente un fuero distinto.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          No obstante lo anterior, si el usuario tiene la condición de consumidor conforme al
+          Real Decreto Legislativo 1/2007, de 16 de noviembre, por el que se aprueba el texto
+          refundido de la Ley General para la Defensa de los Consumidores y Usuarios, la
+          jurisdicción competente será la que corresponda a su domicilio o la del lugar de
+          cumplimiento de la obligación, a su elección, de conformidad con la legislación vigente.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+      PARTE 2 — POLÍTICA DE COOKIES
+  ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- 2.1 ¿Qué son las cookies? -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+          Parte II — Política de Cookies
+        </p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.1. ¿Qué son las cookies?
+        </h2>
+      </div>
+      <div>
+        <p class="text-muted leading-relaxed mb-4">
+          Las cookies son pequeños archivos de texto que los sitios web almacenan en el
+          dispositivo del usuario (ordenador, tableta o teléfono móvil) cuando este accede a
+          ellos. Su finalidad principal es reconocer al usuario cuando vuelve a visitar el sitio
+          web y almacenar información sobre sus preferencias de navegación, hábitos de uso u
+          otros datos técnicos necesarios para el correcto funcionamiento del servicio.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          Las cookies no son dañinas por sí mismas: no pueden acceder a la información
+          almacenada en el disco duro del usuario, no pueden transmitir virus informáticos y no
+          pueden leer las cookies creadas por otros sitios web. Sin embargo, pueden contener
+          información que permita identificar al usuario, por lo que su uso se encuentra regulado
+          por la normativa europea y española de protección de datos y servicios de la sociedad
+          de la información.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.2 ¿Por qué usamos cookies? -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.2. ¿Por qué usamos cookies?
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          En <strong class="text-foreground">www.pladurmallorca.com</strong> utilizamos cookies
+          con las siguientes finalidades:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Garantizar el funcionamiento técnico del sitio web:</strong> algunas cookies son estrictamente necesarias para que las funcionalidades básicas del sitio — como la navegación entre páginas, la seguridad de los formularios o la gestión de la sesión del usuario — funcionen correctamente.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Analizar el uso del sitio web:</strong> utilizamos herramientas de analítica web (Google Analytics 4) para comprender cómo interactúan los usuarios con el sitio, qué páginas visitan y durante cuánto tiempo, con el objetivo de mejorar la experiencia de navegación y la calidad de nuestros contenidos.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Mostrar publicidad personalizada:</strong> de forma optativa y solo con el consentimiento previo del usuario, utilizamos cookies de terceros (Google Ads, Meta/Facebook) para mostrar anuncios relevantes basados en el historial de navegación del usuario y para medir la eficacia de las campañas publicitarias.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.3 Tabla completa de cookies -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.3. Tabla completa de cookies utilizadas
+        </h2>
+        <p class="text-muted leading-relaxed mb-6">
+          A continuación se detalla la relación completa de cookies que pueden utilizarse en
+          este sitio web, indicando su nombre, proveedor, tipo, finalidad, duración y si
+          requieren el consentimiento previo del usuario:
+        </p>
+      </div>
+
+      <!-- Cookies técnicas -->
+      <div>
+        <h3 class="text-lg font-bold text-foreground mb-4">Cookies técnicas (estrictamente necesarias)</h3>
+        <p class="text-muted leading-relaxed mb-4">
+          Estas cookies son imprescindibles para el correcto funcionamiento del sitio web.
+          No requieren el consentimiento del usuario conforme al artículo 22.2 de la LSSI-CE,
+          ya que su finalidad es exclusivamente técnica.
+        </p>
+        <!-- Desktop -->
+        <div class="hidden sm:block mb-10">
+          <div class="rounded-2xl overflow-hidden border border-warm-border/50 shadow-card">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-foreground text-white">
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nombre</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Proveedor</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Finalidad</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Duración</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-warm-border/50">
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">PHPSESSID</code> / <code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">__session</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Gestión de la sesión del servidor.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">locale</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Preferencia de idioma y región del usuario.</td><td class="px-4 py-3 text-sm text-muted">1 año</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">csrf_token</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Protección contra ataques CSRF en formularios.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Mobile -->
+        <div class="sm:hidden space-y-3 mb-10">
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">PHPSESSID</code> / <code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">__session</code></p>
+            <p class="text-xs text-muted mb-2">Gestión de la sesión del servidor. Permite mantener el estado de la sesión del usuario durante la navegación.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Duración:</strong> Sesión</span><span><strong class="text-foreground">Consentimiento:</strong> No</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">locale</code></p>
+            <p class="text-xs text-muted mb-2">Almacena la preferencia de idioma y región del usuario.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Duración:</strong> 1 año</span><span><strong class="text-foreground">Consentimiento:</strong> No</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">csrf_token</code></p>
+            <p class="text-xs text-muted mb-2">Token de seguridad para la protección contra ataques CSRF en los formularios.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Duración:</strong> Sesión</span><span><strong class="text-foreground">Consentimiento:</strong> No</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cookies analíticas -->
+      <div>
+        <h3 class="text-lg font-bold text-foreground mb-4">Cookies analíticas</h3>
+        <p class="text-muted leading-relaxed mb-4">
+          Estas cookies permiten el análisis estadístico del comportamiento de los usuarios en
+          el sitio web. Su instalación requiere el consentimiento previo e informado del usuario.
+        </p>
+        <!-- Desktop -->
+        <div class="hidden sm:block mb-10">
+          <div class="rounded-2xl overflow-hidden border border-warm-border/50 shadow-card">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-foreground text-white">
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nombre</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Proveedor</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Finalidad</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Duración</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-warm-border/50">
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_ga</code></td><td class="px-4 py-3 text-sm text-muted">Google (GA4)</td><td class="px-4 py-3 text-sm text-muted">Identificador único para estadísticas de uso.</td><td class="px-4 py-3 text-sm text-muted">2 años</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_ga_&lt;ID&gt;</code></td><td class="px-4 py-3 text-sm text-muted">Google (GA4)</td><td class="px-4 py-3 text-sm text-muted">Estado de sesión e interacción con el sitio.</td><td class="px-4 py-3 text-sm text-muted">2 años</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gid</code></td><td class="px-4 py-3 text-sm text-muted">Google (GA4)</td><td class="px-4 py-3 text-sm text-muted">Identificador de sesión diaria (24h).</td><td class="px-4 py-3 text-sm text-muted">24 horas</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gat_gtag_&lt;ID&gt;</code></td><td class="px-4 py-3 text-sm text-muted">Google (GA4)</td><td class="px-4 py-3 text-sm text-muted">Limita la tasa de peticiones a GA.</td><td class="px-4 py-3 text-sm text-muted">1 minuto</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gcl_au</code></td><td class="px-4 py-3 text-sm text-muted">Google Ads</td><td class="px-4 py-3 text-sm text-muted">Seguimiento de conversiones publicitarias.</td><td class="px-4 py-3 text-sm text-muted">90 días</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Mobile -->
+        <div class="sm:hidden space-y-3 mb-10">
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_ga</code></p>
+            <p class="text-xs text-muted mb-2">Registra un identificador único para estadísticas de uso del sitio.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (GA4)</span><span><strong class="text-foreground">Duración:</strong> 2 años</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_ga_&lt;ID&gt;</code></p>
+            <p class="text-xs text-muted mb-2">Mantiene el estado de la sesión del usuario e interacción con el sitio.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (GA4)</span><span><strong class="text-foreground">Duración:</strong> 2 años</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gid</code></p>
+            <p class="text-xs text-muted mb-2">Identificador de sesión diaria para agrupar páginas visitadas.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (GA4)</span><span><strong class="text-foreground">Duración:</strong> 24 horas</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gat_gtag_&lt;ID&gt;</code></p>
+            <p class="text-xs text-muted mb-2">Limita la tasa de peticiones a Google Analytics.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (GA4)</span><span><strong class="text-foreground">Duración:</strong> 1 minuto</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_gcl_au</code></p>
+            <p class="text-xs text-muted mb-2">Seguimiento de conversiones publicitarias de Google Ads.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google Ads</span><span><strong class="text-foreground">Duración:</strong> 90 días</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cookies de marketing -->
+      <div>
+        <h3 class="text-lg font-bold text-foreground mb-4">Cookies de marketing (publicidad)</h3>
+        <p class="text-muted leading-relaxed mb-4">
+          Estas cookies son instaladas por terceros proveedores de servicios publicitarios y se
+          utilizan para rastrear la actividad del usuario en diferentes sitios web con el fin de
+          mostrar publicidad personalizada. Su instalación requiere el consentimiento previo e
+          informado del usuario.
+        </p>
+        <!-- Desktop -->
+        <div class="hidden sm:block">
+          <div class="rounded-2xl overflow-hidden border border-warm-border/50 shadow-card">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-foreground text-white">
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nombre</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Proveedor</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Finalidad</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider">Duración</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-warm-border/50">
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">IDE</code></td><td class="px-4 py-3 text-sm text-muted">Google (DoubleClick)</td><td class="px-4 py-3 text-sm text-muted">Seguimiento de acciones tras ver/clic en anuncios.</td><td class="px-4 py-3 text-sm text-muted">13 meses</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">test_cookie</code></td><td class="px-4 py-3 text-sm text-muted">Google (DoubleClick)</td><td class="px-4 py-3 text-sm text-muted">Verifica si el navegador admite cookies.</td><td class="px-4 py-3 text-sm text-muted">15 minutos</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_fbp</code></td><td class="px-4 py-3 text-sm text-muted">Meta (Facebook)</td><td class="px-4 py-3 text-sm text-muted">Seguimiento de visitas para publicidad en Facebook/Instagram.</td><td class="px-4 py-3 text-sm text-muted">90 días</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_fbc</code></td><td class="px-4 py-3 text-sm text-muted">Meta (Facebook)</td><td class="px-4 py-3 text-sm text-muted">Atribución de conversiones desde anuncios de Facebook.</td><td class="px-4 py-3 text-sm text-muted">90 días</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">fr</code></td><td class="px-4 py-3 text-sm text-muted">Meta (Facebook)</td><td class="px-4 py-3 text-sm text-muted">Medición y mejora de relevancia de anuncios.</td><td class="px-4 py-3 text-sm text-muted">90 días</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Mobile -->
+        <div class="sm:hidden space-y-3">
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">IDE</code></p>
+            <p class="text-xs text-muted mb-2">Registra acciones del usuario tras ver o hacer clic en un anuncio de Google.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (DoubleClick)</span><span><strong class="text-foreground">Duración:</strong> 13 meses</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">test_cookie</code></p>
+            <p class="text-xs text-muted mb-2">Verifica si el navegador del usuario admite cookies.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Google (DoubleClick)</span><span><strong class="text-foreground">Duración:</strong> 15 minutos</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_fbp</code></p>
+            <p class="text-xs text-muted mb-2">Seguimiento de visitas para mostrar publicidad relevante en Facebook e Instagram.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Meta (Facebook)</span><span><strong class="text-foreground">Duración:</strong> 90 días</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">_fbc</code></p>
+            <p class="text-xs text-muted mb-2">Atribución de conversiones desde anuncios de Facebook.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Meta (Facebook)</span><span><strong class="text-foreground">Duración:</strong> 90 días</span></div>
+          </div>
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-semibold text-foreground text-sm mb-2"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">fr</code></p>
+            <p class="text-xs text-muted mb-2">Medición y mejora de la relevancia de anuncios mostrados al usuario.</p>
+            <div class="flex gap-4 text-xs text-muted"><span><strong class="text-foreground">Proveedor:</strong> Meta (Facebook)</span><span><strong class="text-foreground">Duración:</strong> 90 días</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.4 Cómo gestionar y desactivar cookies -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.4. Cómo gestionar y desactivar cookies
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          El usuario puede configurar su navegador para aceptar o rechazar todas las cookies, o
+          para que le notifique cuando se envía una cookie, pudiendo así decidir si la acepta o
+          no en cada caso. A continuación se indican los enlaces a las instrucciones de
+          configuración de cookies en los navegadores más habituales:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card mb-6">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Google Chrome:</strong>{' '}
+                <a href="https://support.google.com/chrome/answer/95647" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">support.google.com/chrome/answer/95647</a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Mozilla Firefox:</strong>{' '}
+                <a href="https://support.mozilla.org/es/kb/cookies-informacion-que-los-sitios-web-guardan-en-" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">support.mozilla.org/es/kb/cookies</a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Safari:</strong>{' '}
+                <a href="https://support.apple.com/es-es/guide/safari/sfri11471/mac" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">support.apple.com/es-es/guide/safari</a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Microsoft Edge:</strong>{' '}
+                <a href="https://support.microsoft.com/es-es/microsoft-edge/eliminar-las-cookies-en-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">support.microsoft.com/es-es/microsoft-edge</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p class="text-muted leading-relaxed mb-4">
+          Asimismo, el usuario puede desactivar específicamente las cookies analíticas y de
+          marketing de los proveedores utilizados en este sitio web a través de los siguientes
+          enlaces:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Google Analytics (opt-out):</strong>{' '}
+                <a href="https://tools.google.com/dlpage/gaoptout" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">tools.google.com/dlpage/gaoptout</a>
+              </span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Meta / Facebook (política de cookies):</strong>{' '}
+                <a href="https://www.facebook.com/policies/cookies/" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" target="_blank" rel="noopener noreferrer">www.facebook.com/policies/cookies</a>
+              </span>
+            </li>
+          </ul>
+        </div>
+        <p class="text-muted leading-relaxed mt-4">
+          Tenga en cuenta que la desactivación de determinadas cookies técnicas puede afectar al
+          correcto funcionamiento del sitio web y limitar algunas de sus funcionalidades.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.5 Transferencias internacionales -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.5. Transferencias internacionales de datos
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          Algunos de los proveedores de cookies de terceros utilizados en este sitio web
+          pueden transferir datos personales fuera del Espacio Económico Europeo (EEE). En
+          particular:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Google LLC</strong> (Estados Unidos): Google es participante del EU-US Data Privacy Framework (Marco de Privacidad de Datos UE-EE. UU.), lo que garantiza un nivel adecuado de protección de datos conforme a la Decisión de Adecuación de la Comisión Europea de 10 de julio de 2023. Adicionalmente, Google aplica Cláusulas Contractuales Tipo (SCCs) aprobadas por la Comisión Europea como garantía complementaria.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Meta Platforms Ireland Ltd</strong> (Irlanda / Estados Unidos): Meta opera su sede europea en Irlanda (dentro del EEE). Las transferencias de datos a sus servidores en Estados Unidos se realizan al amparo del EU-US Data Privacy Framework y de Cláusulas Contractuales Tipo (SCCs) adoptadas por la Comisión Europea, garantizando un nivel de protección equivalente al del RGPD.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.6 Panel de preferencias -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.6. Panel de preferencias de cookies
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          El usuario puede modificar sus preferencias de cookies en cualquier momento a través
+          del panel de configuración de cookies de este sitio web. Al acceder por primera vez,
+          se muestra un banner informativo que permite aceptar, rechazar o configurar las
+          cookies de forma granular. Posteriormente, el usuario puede volver a acceder a este
+          panel de configuración en cualquier momento haciendo clic en el siguiente botón:
+        </p>
+        <div class="mt-6">
+          <CookieSettingsButton client:visible />
+        </div>
+        <p class="text-muted leading-relaxed mt-4 text-sm">
+          Las modificaciones realizadas en las preferencias de cookies tendrán efecto inmediato
+          para las cookies que aún no hayan sido instaladas. Para eliminar las cookies ya
+          existentes en su dispositivo, deberá utilizar las opciones de configuración de su
+          navegador conforme a las instrucciones indicadas en el apartado 2.4 de esta política.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.7 Actualizaciones -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.7. Actualizaciones de esta política de cookies
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong> se reserva el derecho de
+          actualizar y modificar la presente Política de Cookies en cualquier momento, con el
+          fin de adaptarla a las novedades legislativas, jurisprudenciales o de interpretación
+          de la Agencia Española de Protección de Datos (AEPD), así como a posibles cambios en
+          los servicios de terceros utilizados en este sitio web.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          Se recomienda al usuario revisar periódicamente esta página para estar informado de
+          cualquier cambio. La fecha de la última actualización se indica al final de este
+          documento.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.8 Normativa aplicable -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.8. Normativa aplicable
+        </h2>
+        <p class="text-muted leading-relaxed mb-4">
+          La presente Política de Cookies se ha elaborado de conformidad con la siguiente
+          normativa:
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Reglamento General de Protección de Datos (RGPD)</strong> — Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD)</strong> — Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Ley de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE)</strong> — Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico, en particular su artículo 22.2 relativo a las cookies.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Directiva ePrivacy</strong> — Directiva 2002/58/CE del Parlamento Europeo y del Consejo, de 12 de julio de 2002, relativa al tratamiento de los datos personales y a la protección de la intimidad en el sector de las comunicaciones electrónicas.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+              </span>
+              <span class="text-muted"><strong class="text-foreground">Guía sobre el uso de las cookies</strong> de la Agencia Española de Protección de Datos (AEPD), en su versión actualizada.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.9 Fecha de última actualización -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+          2.9. Fecha de última actualización
+        </h2>
+        <p class="text-muted leading-relaxed mb-6">
+          La presente Política de Cookies ha sido revisada y actualizada por última vez el
+          día <strong class="text-foreground">7 de marzo de 2026</strong>.
+        </p>
+        <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+          <p class="text-muted leading-relaxed text-sm">
+            Si tiene cualquier duda o consulta sobre el presente Aviso Legal o la Política de
+            Cookies, puede ponerse en contacto con nosotros a través del correo electrónico{' '}
+            <a href="mailto:info@plaquistas.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">info@plaquistas.com</a>{' '}
+            o llamando al teléfono{' '}
+            <a href={`tel:${siteConfig.phoneRaw}`} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">{siteConfig.phone}</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

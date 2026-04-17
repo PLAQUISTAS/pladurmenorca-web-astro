@@ -1,0 +1,195 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import { faqs } from '@/data/faqs'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur en Alcúdia | Instaladores | Presupuesto Gratis',
+  description: "Instala pladur en Alcúdia, Puerto de Alcúdia y Playa de Muro. Falsos techos, tabiques y aislamiento para viviendas y apartamentos. Presupuesto gratis 24h.",
+  canonical: '/pladur-alcudia',
+}
+
+const zonas = [
+  {
+    nombre: 'Alcúdia centro',
+    descripcion: 'Casco histórico amurallado con casas de piedra centenarias. Reformas para modernizar viviendas antiguas: falsos techos, trasdosados térmicos en muros de piedra y redistribución de espacios sin alterar la estructura original.',
+  },
+  {
+    nombre: 'Puerto de Alcúdia',
+    descripcion: 'Principal polo turístico del norte de Mallorca. Hoteles, aparthoteles y bloques de apartamentos de los años 70-90 que necesitan reformas ágiles entre temporadas: falsos techos con LED, aislamiento acústico y modernización general.',
+  },
+  {
+    nombre: 'Playa de Muro',
+    descripcion: 'Zona residencial y turística de alta gama junto a la playa. Chalets, villas y apartamentos que demandan acabados de calidad: falsos techos decorativos, aislamiento térmico premium y redistribución de espacios.',
+  },
+  {
+    nombre: "Ca'n Picafort",
+    descripcion: 'Núcleo turístico costero con alta concentración de apartamentos vacacionales. Reformas rápidas para alquiler turístico: techos nuevos, tabiques para crear dormitorios adicionales y mejora del aislamiento acústico.',
+  },
+  {
+    nombre: 'Bonaire',
+    descripcion: 'Urbanización residencial entre Alcúdia y el puerto. Chalets y adosados que se benefician del pladur para crear vestidores, despachos, mejorar la acústica y personalizar distribuciones.',
+  },
+]
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Alcúdia', href: '/pladur-alcudia' },
+]
+
+const pageFaqs = faqs['alcudia'] ?? []
+
+const proyectoFicha = [
+  { label: 'Superficie', valor: '75 m²' },
+  { label: 'Ubicación', valor: 'Casco antiguo, Alcúdia' },
+  { label: 'Trabajos', valor: 'Trasdosado + Techo + Tabiques' },
+  { label: 'Duración', valor: '11 días hábiles' },
+  { label: 'Resultado', valor: 'Casa medieval convertida en vivienda moderna' },
+]
+
+const serviciosLinks = [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-mallorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-mallorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' },
+  { label: 'Precios', href: '/precios-pladur-mallorca' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name="Instalación de Pladur en Alcúdia"
+      description="Servicio profesional de instalación de pladur en Alcúdia y el norte de Mallorca: falsos techos, tabiques, aislamiento acústico y térmico en Puerto de Alcúdia, Playa de Muro y Ca'n Picafort."
+      serviceType="Instalación de Pladur"
+      url="/pladur-alcudia"
+     
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instaladores de pladur en Alcúdia. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.
+  </p>
+
+  <PaginaGeografica
+    municipio="Alcúdia"
+    zonas={zonas}
+    faqKey="alcudia"
+    heroTitle="Pladur en Alcúdia — Instaladores Profesionales en el Norte de Mallorca"
+    heroBadge="Alcúdia · Norte de Mallorca"
+    heroDescription="Instalamos pladur en Alcúdia y todo el norte de Mallorca: Puerto de Alcúdia, Playa de Muro, Ca'n Picafort y Bonaire. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratuito en 24 horas."
+    faqTitulo="Preguntas frecuentes sobre pladur en Alcúdia"
+    faqSubtitulo="Respuestas a las dudas más habituales de nuestros clientes en Alcúdia y el norte de Mallorca."
+    proyectoTitulo="Rehabilitación de casa de piedra en el casco antiguo de Alcúdia"
+    proyectoFicha={proyectoFicha}
+    ctaTitulo="¿Tu proyecto está en Alcúdia o el norte de Mallorca?"
+    ctaSubtitulo="Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en toda la zona norte."
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Especialistas en el norte
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Reformas con pladur en Alcúdia: capital turística del norte
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>
+              Alcúdia es el epicentro turístico del norte de Mallorca y uno de los municipios con mayor demanda de reformas con pladur de toda la isla. Con su casco histórico amurallado, el bullicioso Puerto de Alcúdia, las urbanizaciones residenciales de Bonaire y la cercanía a Playa de Muro y Ca'n Picafort, la diversidad de proyectos es enorme.
+            </p>
+            <p>
+              El Puerto de Alcúdia concentra la mayor oferta hotelera y de apartamentos turísticos del norte de Mallorca. Edificios construidos durante el boom turístico de los años 70 y 80 que necesitan actualizaciones constantes para mantener su competitividad. El pladur es la solución ideal para estas <a href="/reformas-interiores-pladur-mallorca">reformas interiores</a>: permite modernizar un apartamento completo en menos de dos semanas, instalando <a href="/falsos-techos-pladur-mallorca">falsos techos con iluminación LED</a> empotrada, mejorando el aislamiento acústico entre habitaciones y creando distribuciones más funcionales.
+            </p>
+            <p>
+              La mejora del aislamiento acústico es especialmente crítica en los bloques turísticos del Puerto de Alcúdia, donde las quejas por ruido entre vecinos son una de las principales causas de valoraciones negativas en plataformas como Airbnb y Booking. Nuestros sistemas de pladur con lana mineral de alta densidad y estructura desacoplada reducen la transmisión de ruido en 45-55 dB, transformando la experiencia del huésped y mejorando directamente las reseñas y, en consecuencia, los ingresos por alquiler.
+            </p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              El casco antiguo de Alcúdia, con sus calles empedradas y casas de piedra dentro de la muralla medieval, presenta retos constructivos específicos. Los muros gruesos de piedra, los techos altos de vigas de madera y las distribuciones heredadas de siglos pasados requieren soluciones que respeten el carácter del edificio. El pladur permite crear trasdosados que proporcionan <a href="/aislamiento-termico-mallorca">aislamiento térmico</a> del frío invernal y del calor del verano sin reducir significativamente el espacio habitable, instalar falsos techos que ocultan instalaciones modernas y redistribuir estancias para adaptarlas al uso actual.
+            </p>
+            <p>
+              Playa de Muro, contigua al Puerto de Alcúdia, se ha consolidado como una de las zonas residenciales y turísticas más valoradas del norte. Sus villas, chalets y apartamentos de gama media-alta demandan acabados de calidad superior: falsos techos decorativos con molduras, trasdosados con aislamiento térmico de altas prestaciones y tabiques con refuerzos para soportar cargas pesadas como televisores o estanterías empotradas.
+            </p>
+            <p>
+              Trabajamos en todo el norte de Mallorca sin coste adicional de desplazamiento para obras a partir de 500€. Nuestro equipo conoce las particularidades constructivas de cada zona: desde los muros medievales del casco de Alcúdia hasta los forjados prefabricados de los bloques turísticos del puerto, pasando por los chalets de Bonaire y las villas de Playa de Muro.
+            </p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">El norte confía en nosotros</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">Más de 20 años trabajando en Alcúdia y todo el norte de Mallorca. Conocemos los edificios, los materiales locales y los retos específicos de cada zona.</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">4.7/5 en Google</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">Servicios en Alcúdia</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>
+        Una pareja de origen británico adquirió una casa de piedra de 75 m² en el interior del recinto amurallado de Alcúdia, con la intención de convertirla en su residencia permanente. La vivienda, datada del siglo XVIII, conservaba muros de piedra de marès de 50 cm, un techo de vigas de madera con cañizo a 3,8 metros de altura y una distribución original de cuatro estancias pequeñas comunicadas entre sí, sin pasillo. Los inviernos resultaban muy fríos por la ausencia total de aislamiento, y la distribución no permitía un uso cómodo como vivienda contemporánea.
+      </p>
+      <p>
+        El proyecto abarcó la totalidad de la planta baja. Se instalaron trasdosados con placa estándar de 15 mm y aislamiento de poliestireno extruido de 40 mm en todas las paredes exteriores (48 m² de superficie), reduciendo las pérdidas térmicas un 65%. Se montó un falso techo continuo a 2,90 m de altura en toda la vivienda (75 m²), creando una cámara de aire que mejora aún más el aislamiento y permite integrar la instalación eléctrica nueva, los conductos de aerotermia y la iluminación LED empotrada. Se redistribuyó el espacio con tabiques de pladur (18 ml) para crear un salón-comedor abierto, dos dormitorios con armarios empotrados, un baño completo y una cocina independiente.
+      </p>
+      <p>
+        La obra se completó en 11 días hábiles, con un coste aproximado de 9.800 euros por la parte de pladur. Los propietarios destacaron la diferencia radical en confort térmico: el primer invierno tras la reforma, el consumo de calefacción se redujo un 40% respecto a los cálculos previos del técnico, y la casa mantiene una temperatura agradable incluso en los días más fríos de enero. La distribución moderna transformó una vivienda oscura y compartimentada en un hogar luminoso y funcional.
+      </p>
+    </div>
+  </PaginaGeografica>
+
+  <ArticulosRelacionados articulos={[
+    { slug: 'reformas-pladur-alcudia', titulo: 'Reformas con pladur en Alcúdia', descripcion: 'Proyectos de reformas con pladur en Alcúdia. Apartamentos turísticos y viviendas.' },
+  ]} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

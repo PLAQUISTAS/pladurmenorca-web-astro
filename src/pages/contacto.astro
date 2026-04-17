@@ -1,0 +1,360 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import TestimonioCard from '@/components/ui/TestimonioCard.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import FormPresupuesto from '@/components/forms/FormPresupuesto'
+import { presupuestoFaqs } from '@/data/faqs/presupuesto'
+import { contactoPageFaqs } from '@/data/faqs'
+import { siteConfig } from '@/data/site'
+import { testimonios } from '@/data/testimonios'
+
+const meta = {
+  title: 'Contacto | Pladur Mallorca — Presupuesto Gratis en 24h',
+  description: 'Solicita tu presupuesto gratuito de pladur en Mallorca. Respuesta garantizada en menos de 24h. Tel: 627 829 723. Sin compromiso. Visita técnica gratis.',
+  canonical: '/contacto',
+}
+
+const allFaqs = [...presupuestoFaqs, ...contactoPageFaqs.filter(f => f.pregunta !== '¿La visita técnica tiene algún coste?')]
+const sidebarFaqs = [
+  contactoPageFaqs[0],
+  presupuestoFaqs[1],
+]
+const contactoFaqs = allFaqs
+const miniTestimonios = [testimonios[0], testimonios[3], testimonios[4]]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Contacto', href: '/contacto' }]} />
+    {contactoFaqs.length > 0 && <SchemaFAQ faqs={contactoFaqs} />}
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — contacto directo. Carrer Jacint Verdaguer, 37, 07004 Palma de Mallorca. Tel: 627 829 723. Email: info@plaquistas.com. Presupuesto gratis en 24h.
+  </p>
+
+  <!-- Hero -->
+  <section class="pt-28 pb-20 lg:pt-36 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-3xl text-center mx-auto">
+          <div class="flex flex-wrap items-center justify-center gap-2 mb-8">
+            {['Respuesta en 24h', 'Visita gratuita', 'Sin compromiso'].map((tag) => (
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-surface text-foreground border border-warm-border/60">
+                {tag}
+              </span>
+            ))}
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            Contacto Pladur Mallorca
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto">
+            Presupuesto gratuito y sin compromiso. Respondemos en menos de 24 horas por teléfono, email o WhatsApp.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main grid: Form + Sidebar -->
+  <section class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14">
+
+        <!-- LEFT: Form -->
+        <div class="lg:col-span-7">
+          <div class="bg-white rounded-2xl border border-warm-border p-8 lg:p-10 shadow-soft-lg">
+            <h2 class="text-2xl font-bold text-foreground mb-2">
+              Solicita tu presupuesto gratuito
+            </h2>
+            <p class="text-muted text-sm mb-8">
+              Rellena el formulario y un técnico se pondrá en contacto para coordinar la visita gratuita. Recibirás el presupuesto detallado en 24-48 horas.
+            </p>
+            <FormPresupuesto client:load />
+          </div>
+        </div>
+
+        <!-- RIGHT: Sidebar -->
+        <div class="lg:col-span-5 space-y-6">
+
+          <!-- Contacto directo -->
+          <div class="bg-foreground rounded-2xl p-8 text-white">
+            <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-3">
+              Contacto directo
+            </p>
+            <p class="font-bold text-3xl text-white mb-1 tracking-tight">{siteConfig.phone}</p>
+            <p class="text-white/60 text-sm mb-6">
+              Lunes–Viernes: 8:00–18:00 · Sábados: 8:00–14:00
+            </p>
+            <div class="flex flex-col gap-3">
+              <a
+                href={`tel:${siteConfig.phoneRaw}`}
+                class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl border-2 border-white/30 text-white font-bold text-sm hover:bg-white hover:text-foreground hover:border-white transition-colors duration-200"
+              >
+                <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                </svg>
+                Llamar ahora
+              </a>
+              <a
+                href={`https://wa.me/${siteConfig.whatsapp}?text=${siteConfig.whatsappText}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-3 px-6 py-3.5 rounded-xl bg-white hover:bg-white/90 text-foreground font-bold text-sm shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/15 transition-[background-color,box-shadow] duration-200"
+              >
+                <svg class="size-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+                Escribir por WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Ubicación y horario -->
+          <div class="bg-white rounded-2xl border border-warm-border p-6 shadow-soft">
+            <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-5">
+              Ubicación y horario
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-9 h-9 bg-surface border border-nav-border rounded-xl flex items-center justify-center text-foreground">
+                  <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-foreground">{siteConfig.address.street}</p>
+                  <p class="text-xs text-muted">{siteConfig.address.postalCode} {siteConfig.address.city}, {siteConfig.address.province}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="shrink-0 w-9 h-9 bg-surface border border-nav-border rounded-xl flex items-center justify-center text-foreground">
+                  <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-foreground">L–V: 8:00–18:00 · S: 8:00–14:00</p>
+                  <p class="text-xs text-muted">Domingos y festivos: cerrado</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mini FAQ -->
+          <div class="bg-white rounded-2xl border border-warm-border p-6 shadow-soft">
+            <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-5">
+              Dudas rápidas
+            </p>
+            <div class="space-y-4">
+              {sidebarFaqs.map((faq) => (
+                <div class="border-b border-warm-border/60 pb-4 last:border-0 last:pb-0">
+                  <p class="font-semibold text-foreground text-sm mb-1.5">{faq.pregunta}</p>
+                  <p class="text-muted text-xs leading-relaxed">{faq.respuesta}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Servicios más solicitados -->
+          <div class="bg-white rounded-2xl border border-warm-border p-6 shadow-soft">
+            <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+              Servicios más solicitados
+            </p>
+            <div class="flex flex-wrap gap-x-3 gap-y-2">
+              <a href="/falsos-techos-pladur-mallorca" class="text-sm text-foreground hover:text-muted transition-colors">Falsos techos</a>
+              <span class="text-warm-border">·</span>
+              <a href="/tabiques-pladur-mallorca" class="text-sm text-foreground hover:text-muted transition-colors">Tabiques</a>
+              <span class="text-warm-border">·</span>
+              <a href="/aislamiento-acustico-mallorca" class="text-sm text-foreground hover:text-muted transition-colors">Aislamiento acústico</a>
+              <span class="text-warm-border">·</span>
+              <a href="/reformas-interiores-pladur-mallorca" class="text-sm text-foreground hover:text-muted transition-colors">Reformas interiores</a>
+              <span class="text-warm-border">·</span>
+              <a href="/precios-pladur-mallorca" class="text-sm text-foreground hover:text-muted transition-colors">Precios</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- El proceso es sencillo -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Cómo trabajamos
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance">
+          El proceso es sencillo
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-children">
+        <div class="group bg-white/70 rounded-3xl border border-warm-border/50 p-8 h-full shadow-card hover:shadow-elevated hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+          <div class="size-12 rounded-2xl bg-surface border border-nav-border flex items-center justify-center mb-5 group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300">
+            <svg class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-3">Contactas con nosotros</h3>
+          <p class="text-muted text-sm leading-relaxed">Por teléfono, WhatsApp, email o formulario. Cuéntanos qué necesitas y te asesoraremos sin ningún tipo de compromiso.</p>
+        </div>
+
+        <div class="group bg-white/70 rounded-3xl border border-warm-border/50 p-8 h-full shadow-card hover:shadow-elevated hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+          <div class="size-12 rounded-2xl bg-surface border border-nav-border flex items-center justify-center mb-5 group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300">
+            <svg class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-3">Visita técnica gratuita</h3>
+          <p class="text-muted text-sm leading-relaxed">Un técnico acude a tu domicilio, toma medidas exactas y evalúa el proyecto in situ. Sin coste ni compromiso para ti.</p>
+        </div>
+
+        <div class="group bg-white/70 rounded-3xl border border-warm-border/50 p-8 h-full shadow-card hover:shadow-elevated hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+          <div class="size-12 rounded-2xl bg-surface border border-nav-border flex items-center justify-center mb-5 group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300">
+            <svg class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-3">Presupuesto en 24-48h</h3>
+          <p class="text-muted text-sm leading-relaxed">Recibes un presupuesto detallado y cerrado. Si lo aceptas, acordamos fecha de inicio y ejecutamos con garantía de 2 años.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mapa -->
+  <section class="py-16 lg:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Nuestra ubicación
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance">
+          Cobertura en toda Mallorca
+        </h2>
+        <p class="text-muted text-base mt-3 max-w-2xl mx-auto">
+          Carrer Jacint Verdaguer, 37, ESC. A 4º 2ª — 07004 Palma de Mallorca, Illes Balears
+        </p>
+      </div>
+      <a
+        href="https://share.google/5aOG6HDW2lcaBHcLV"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="block overflow-hidden border border-warm-border rounded-3xl shadow-card hover:shadow-elevated transition-shadow duration-300 relative group"
+        aria-label="Ver ubicación de Pladur Mallorca en Google Maps"
+      >
+        <iframe
+          src="https://www.google.com/maps?q=Carrer+Jacint+Verdaguer+37,+07004+Palma+de+Mallorca,+Illes+Balears&output=embed"
+          width="100%"
+          height="350"
+          style="border:0;pointer-events:none"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación de Pladur Mallorca — Carrer Jacint Verdaguer 37, 07004 Palma de Mallorca"
+          tabindex="-1"
+        ></iframe>
+        <div class="absolute inset-0 bg-transparent group-hover:bg-black/5 transition-colors duration-300"></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Lo que dicen nuestros clientes
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance">
+          Reseñas verificadas en Google
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {miniTestimonios.map((testimonio) => (
+          <TestimonioCard testimonio={testimonio} />
+        ))}
+      </div>
+
+      <div class="mt-10 text-center">
+        <a
+          href={siteConfig.googleReviewsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-2xl bg-white border-2 border-warm-border hover:border-google hover:shadow-google text-foreground font-bold text-sm tracking-wide transition-[border-color,box-shadow,transform] duration-300 active:scale-95"
+        >
+          <svg class="size-5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Déjanos tu reseña en Google
+          <svg class="size-4 text-muted group-hover:text-google group-hover:translate-x-0.5 transition-[color,transform]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <FaqAccordion
+    client:visible
+    faqs={contactoFaqs}
+    titulo="Preguntas frecuentes sobre contacto y presupuestos"
+    subtitulo="Dudas habituales sobre cómo contactar con nosotros, plazos de respuesta y proceso de presupuesto."
+  />
+
+  <!-- Enlazado interno -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">También te puede interesar</span>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {[
+          { href: '/falsos-techos-pladur-mallorca', label: 'Falsos Techos de Pladur', descripcion: 'Techos continuos, decorativos, acústicos y con iluminación LED' },
+          { href: '/tabiques-pladur-mallorca', label: 'Tabiques de Pladur', descripcion: 'Distribución de espacios rápida, limpia y sin obra tradicional' },
+          { href: '/aislamiento-acustico-mallorca', label: 'Aislamiento Acústico', descripcion: 'Reducción de ruido entre viviendas, oficinas y locales comerciales' },
+          { href: '/reformas-interiores-pladur-mallorca', label: 'Reformas Interiores', descripcion: 'Reformas completas con pladur para viviendas y locales' },
+          { href: '/precios-pladur-mallorca', label: 'Precios de Pladur', descripcion: 'Consulta nuestras tarifas y precios orientativos por m²' },
+          { href: '/instalacion-pladur-mallorca', label: 'Instalación de Pladur', descripcion: 'Servicio completo de instalación con más de 20 años de experiencia' },
+          { href: '/pladur-palma', label: 'Pladur en Palma', descripcion: 'Instaladores de pladur en Palma de Mallorca y barrios cercanos' },
+          { href: '/pladur-calvia', label: 'Pladur en Calvià', descripcion: 'Servicio de pladur en Calvià, Santa Ponsa, Magaluf y alrededores' },
+          { href: '/presupuesto-pladur', label: 'Presupuesto de Pladur', descripcion: 'Solicita un presupuesto detallado con visita técnica gratuita' },
+        ].map((link) => (
+          <a
+            href={link.href}
+            class="group block bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300"
+          >
+            <h3 class="font-bold text-foreground text-base mb-1">{link.label}</h3>
+            <p class="text-muted text-sm mb-4">{link.descripcion}</p>
+            <div class="h-0.5 bg-warm-border rounded-full overflow-hidden">
+              <div class="h-full w-0 bg-foreground-dark group-hover:w-full transition-[width] duration-500"></div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

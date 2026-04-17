@@ -1,0 +1,436 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import Container from '@/components/ui/Container.astro'
+import { aislamientoTermicoFaqs } from '@/data/faqs/aislamiento-termico'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+
+const servicio = getServicioBySlug('aislamiento-termico-mallorca')!
+const pageFaqs = aislamientoTermicoFaqs
+
+const meta = {
+  title: 'Aislamiento Térmico en Mallorca · Trasdosados Pladur desde 35€/m²',
+  description: 'Instaladores de aislamiento térmico interior con pladur en Mallorca. EPS, XPS y lana de roca. Ahorra hasta 30% en climatización. Mejora tu certificado energético. Presupuesto gratis.',
+  canonical: '/aislamiento-termico-mallorca',
+}
+
+const datosReferencia = [
+  { label: 'Temperatura máxima verano', valor: '35°C' },
+  { label: 'Meses con AC obligatorio', valor: '4-5 meses' },
+  { label: 'Ahorro estimado con aislamiento', valor: '20-30%' },
+  { label: 'Zona climática Mallorca', valor: 'C3' },
+  { label: 'Amortización media', valor: '5-10 años' },
+]
+
+const tiposAislante = [
+  {
+    nombre: 'Poliestireno Expandido (EPS)',
+    color: 'border-foreground-dark',
+    desc: 'El aislante más económico y extendido en el mercado. Es un material ligero, fácil de cortar y con buenas propiedades térmicas para su precio. Se fabrica en planchas rígidas de distintos espesores (30-100 mm) y densidades.',
+    ventajas: ['Precio muy competitivo', 'Fácil de instalar', 'Ligero y manejable', 'Resiste la humedad'],
+    rValue: 'R = 0,70-1,25 m²K/W (40mm)',
+    precio: 'Desde 3-5€/m² (material)',
+    mejorPara: 'Cerramientos estándar, presupuesto ajustado',
+  },
+  {
+    nombre: 'Poliestireno Extruido (XPS)',
+    color: 'border-foreground',
+    desc: 'Mayor resistencia a la compresión que el EPS y mejor comportamiento ante la humedad. Su estructura celular cerrada le hace más resistente al paso del vapor de agua. Disponible en espesores de 20-100 mm con mecanizado machihembrado.',
+    ventajas: ['Mayor eficiencia por cm', 'Resistente a compresión', 'Excelente resistencia a humedad', 'Bordes mecanizados sin puentes'],
+    rValue: 'R = 1,00-1,40 m²K/W (40mm)',
+    precio: 'Desde 6-10€/m² (material)',
+    mejorPara: 'Cubiertas, espacios con riesgo de humedad',
+  },
+  {
+    nombre: 'Lana de Roca (Rockwool)',
+    color: 'border-foreground-dark',
+    desc: 'El material más versátil: aporta aislamiento térmico y acústico simultáneamente. Es el aislante de referencia para los trasdosados de pladur que necesitan cumplir con la normativa CTE-HR. Disponible en formato de manta o en planchas rígidas.',
+    ventajas: ['Doble función: térmica + acústica', 'Clasificación fuego A1', 'Transpirable al vapor', 'Cumplimiento CTE-HR'],
+    rValue: 'R = 1,05-1,40 m²K/W (60mm)',
+    precio: 'Desde 5-9€/m² (material)',
+    mejorPara: 'Proyectos con doble objetivo acústico + térmico',
+  },
+]
+
+const tablaComparativa = [
+  { nombre: 'EPS 035', valorR: '1,14', espesor: '60-80mm', precio: '3-5€/m²', mejorPara: 'Paredes y techos estándar', destacado: false },
+  { nombre: 'XPS 034', valorR: '1,18', espesor: '50-70mm', precio: '6-10€/m²', mejorPara: 'Cubiertas, humedad', destacado: false },
+  { nombre: 'Lana de roca 035', valorR: '1,14', espesor: '60-80mm', precio: '5-9€/m²', mejorPara: 'Paredes + acústico', destacado: false },
+  { nombre: 'Lana de roca 040', valorR: '1,00', espesor: '70-90mm', precio: '4-7€/m²', mejorPara: 'Tabiques y techos', destacado: false },
+  { nombre: 'Poliuretano 024', valorR: '1,67', espesor: '40-60mm', precio: '12-18€/m²', mejorPara: 'Espacios limitados', destacado: true },
+]
+
+const pasosInstalacion = [
+  { num: '01', titulo: 'Análisis del cerramiento', desc: 'Evaluamos el estado de las paredes, la composición del cerramiento y el valor U actual. Calculamos el espesor de aislante necesario para alcanzar el valor U objetivo según CTE-HE.' },
+  { num: '02', titulo: 'Selección del aislante', desc: 'En función del presupuesto, el espacio disponible y si se requiere también mejora acústica, seleccionamos el material más adecuado: EPS, XPS o lana de roca.' },
+  { num: '03', titulo: 'Instalación de la estructura', desc: 'Fijamos los perfiles guía en suelo y techo y los montantes verticales. Si hay riesgo de puente térmico en los perfiles, utilizamos materiales con rotura de puente térmico.' },
+  { num: '04', titulo: 'Colocación del aislante', desc: 'Introducimos el aislante en las cavidades entre montantes. Los paneles deben encajar perfectamente sin dejar huecos que puedan convertirse en puentes térmicos.' },
+  { num: '05', titulo: 'Placa de yeso y acabado', desc: 'Atornillamos la placa de yeso, tratamos las juntas y realizamos el acabado final listo para pintar. El resultado es una pared nueva perfectamente plana.' },
+]
+
+const programasAyudas = [
+  { programa: 'PIREP Balears', cobertura: 'Hasta 80%', tipo: 'Rehabilitación energética edificios' },
+  { programa: 'Programa PREE', cobertura: 'Hasta 40%', tipo: 'Mejora de cerramientos viviendas' },
+  { programa: 'Deducciones IRPF', cobertura: 'Hasta 60%', tipo: 'Deducción fiscal en IRPF anual' },
+  { programa: 'Préstamos ICO', cobertura: 'Financiación blanda', tipo: 'Préstamos a bajo interés' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService name={servicio.schema.name} description={servicio.schema.description} serviceType={servicio.schema.serviceType} url="https://www.pladurmallorca.com/aislamiento-termico-mallorca" image="https://www.pladurmallorca.com/images/proyectos/detalle-perfileria-aislamiento-pladur.webp" />
+    <SchemaHowTo name="Cómo instalar aislamiento térmico con pladur" description="Proceso de instalación de aislamiento térmico con trasdosado de pladur en 5 pasos: desde el análisis del cerramiento hasta el acabado final." totalTime="PT24H" steps={[
+      { name: 'Análisis del cerramiento', text: 'Se evalúa el estado de las paredes, composición del cerramiento y valor U actual, calculando el espesor de aislante necesario para cumplir normativa.' },
+      { name: 'Selección del aislante', text: 'Se elige el material más adecuado (EPS, XPS o lana de roca) según las necesidades térmicas, presupuesto y espacio disponible.' },
+      { name: 'Instalación de la estructura', text: 'Se fijan los perfiles guía y montantes verticales, utilizando materiales con rotura de puente térmico si es necesario para maximizar el rendimiento.' },
+      { name: 'Colocación del aislante', text: 'Se introduce el aislante en las cavidades entre montantes sin dejar huecos ni puentes térmicos, asegurando una cobertura continua.' },
+      { name: 'Placa de yeso y acabado', text: 'Se atornilla la placa de yeso laminado, se tratan las juntas y se realiza el acabado final listo para pintar.' },
+    ]} />
+    <SchemaOffers offers={[
+      { name: 'Trasdosado térmico con EPS', price: '30', description: 'Trasdosado directo con placa de pladur y aislante de poliestireno expandido (EPS). Precio por m².' },
+      { name: 'Trasdosado térmico con lana de roca', price: '45', description: 'Trasdosado autoportante con estructura metálica y lana de roca para máximo rendimiento térmico y acústico. Precio por m².' },
+      { name: 'Trasdosado térmico con XPS', price: '40', description: 'Trasdosado con poliestireno extruido (XPS) de alta densidad para zonas con humedad. Precio por m².' },
+    ]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instaladores de aislamiento térmico interior con trasdosados de pladur en toda Mallorca. Ahorro del 20-35% en climatización. Zona climática B3. Materiales: EPS, XPS, lana de roca. Precios desde 35€/m². Servicio en Palma, Calvià, Andratx, Llucmajor, Manacor y toda la isla. Presupuesto sin compromiso. Tel: 627 829 723.
+  </p>
+
+  <!-- Hero -->
+  <Hero client:visible title="Aislamiento Térmico en Mallorca — Ahorra hasta un 30% en Climatización" subtitle="Trasdosados con pladur adaptados al clima mediterráneo" description="Mejora la eficiencia energética de tu vivienda o negocio en Mallorca con trasdosados de pladur y aislante interior. EPS, XPS y lana de roca. Reduce tu factura de climatización hasta un 30%. Presupuesto gratis." dark={true} badges={['Ahorro hasta 30%', 'Clima mediterráneo', 'Toda Mallorca']} ctaPrimario={{ texto: 'Pedir presupuesto gratis', href: '/presupuesto-pladur' }} ctaSecundario={{ texto: `Llamar: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }} />
+
+  <!-- El clima de Mallorca y el aislamiento -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">El contexto</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">El clima de Mallorca y la necesidad de aislamiento térmico</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>Mallorca tiene un clima mediterráneo con veranos calurosos y secos donde las temperaturas superan habitualmente los 32-35 °C durante junio, julio y agosto. El uso del aire acondicionado es prácticamente universal en viviendas, hoteles y locales comerciales, y representa la partida más importante de la factura eléctrica durante los meses de verano. Un piso de 80 m² sin aislamiento adecuado puede consumir entre 400 y 800 kWh mensuales solo en climatización durante el verano.</p>
+            <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+              <p>"Las viviendas en zona climática B3, correspondiente a Mallorca, deben alcanzar una transmitancia térmica máxima de 0,38 W/m²K en muros de fachada"</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">— CTE-HE, Documento Básico de Ahorro de Energía, Tabla D.2.7</cite>
+            </blockquote>
+            <p>Los inviernos mallorquines, aunque templados (temperaturas medias de 10-14 °C en enero), son húmedos y con rachas de viento que hacen necesaria la calefacción durante 3-4 meses al año. El aislamiento térmico, por tanto, no es solo una inversión para el verano: mejora el confort en todas las estaciones y reduce tanto el gasto en refrigeración como en calefacción.</p>
+            <p>El principal problema térmico de los edificios en Mallorca es la transmitancia elevada de sus cerramientos. Muchos edificios construidos antes de los años 90 tienen fachadas de una sola hoja sin cámara de aire, lo que hace que el calor exterior penetre directamente en el interior. Los trasdosados de pladur con aislante interior son la solución más rápida, limpia y económica para mejorar esta transmitancia sin necesidad de actuar en la fachada exterior.</p>
+            <p class="text-sm">
+              Ver también:
+              <a href="/instalacion-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">todos nuestros servicios de pladur en Mallorca</a>
+              &middot;
+              <a href="/precios-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">precios de aislamiento térmico</a>
+              &middot;
+              <a href="/reformas-interiores-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">reformas interiores con pladur</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <div class="p-6 bg-foreground text-white rounded-3xl">
+              <p class="text-xs font-bold uppercase tracking-widest text-nav-border/60 mb-3">Presupuesto gratis</p>
+              <p class="font-bold text-lg mb-2">Reduce tu factura eléctrica en Mallorca</p>
+              <p class="text-gray-300 text-sm mb-5 leading-relaxed">Calculamos el ROI de tu inversión y te enviamos presupuesto en 24h.</p>
+              <a href="/presupuesto-pladur" class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide transition-colors">Pedir presupuesto online</a>
+              <a href={`tel:${siteConfig.phoneRaw}`} class="flex items-center justify-center gap-2 w-full py-3 mt-3 rounded-xl border border-white/30 hover:border-white hover:bg-white/10 text-white font-bold text-sm tracking-wide transition-colors">{siteConfig.phone}</a>
+            </div>
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+              <p class="font-bold text-foreground text-sm mb-3">Datos de referencia en Mallorca:</p>
+              <div class="space-y-2">
+                {datosReferencia.map((d) => (
+                  <div class="flex justify-between items-center py-1.5 border-b border-warm-border/50 last:border-0">
+                    <span class="text-xs text-muted">{d.label}</span>
+                    <span class="text-xs font-bold text-foreground">{d.valor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de aislante térmico -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">Materiales aislantes</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">Tipos de aislante térmico que utilizamos</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">La elección del aislante adecuado depende del presupuesto, el espacio disponible y si se requiere también aislamiento acústico simultáneo. Estas son las opciones que manejamos:</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 stagger-children">
+        {tiposAislante.map((mat) => (
+          <div class={`bg-white/70 border-t-4 ${mat.color} border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default`}>
+            <h3 class="text-lg font-bold text-foreground mb-3">{mat.nombre}</h3>
+            <p class="text-sm text-muted leading-relaxed mb-5">{mat.desc}</p>
+            <div class="mb-4">
+              <p class="text-xs font-bold text-muted uppercase tracking-wider mb-2">Ventajas</p>
+              <ul class="space-y-1">
+                {mat.ventajas.map((v) => (
+                  <li class="flex items-center gap-2 text-xs text-muted">
+                    <svg class="size-3 text-foreground shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    {v}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="space-y-2 pt-4 border-t border-warm-border/50">
+              <div class="flex justify-between items-center"><span class="text-xs font-bold text-foreground">Resistencia R:</span><span class="text-xs font-semibold text-foreground">{mat.rValue}</span></div>
+              <div class="flex justify-between items-center"><span class="text-xs font-bold text-foreground">Precio material:</span><span class="text-xs font-semibold text-foreground">{mat.precio}</span></div>
+              <div class="pt-1"><span class="text-xs font-bold text-foreground">Mejor para: </span><span class="text-xs text-muted">{mat.mejorPara}</span></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tabla comparativa aislantes -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">Comparativa</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">Tabla comparativa de aislantes térmicos</h2>
+        <p class="text-muted leading-relaxed mb-12 max-w-2xl">Valores para la zona climática C3 de Mallorca según CTE-HE.</p>
+      </div>
+      <div class="space-y-3">
+        {tablaComparativa.map((a) => (
+          <div class={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 bg-white/70 rounded-2xl border ${a.destacado ? 'border-foreground-dark' : 'border-warm-border/50'} shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default`}>
+            <div class="sm:w-44 shrink-0 flex items-center gap-3">
+              <h3 class="text-sm font-bold text-foreground">{a.nombre}</h3>
+              {a.destacado && (<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-foreground-dark text-white text-[9px] font-bold uppercase tracking-wider">Top</span>)}
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">Valor R</p><p class="text-sm font-bold text-foreground">{a.valorR} <span class="text-xs font-normal text-muted">m²K/W</span></p></div>
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">Espesor</p><p class="text-sm font-bold text-foreground">{a.espesor}</p></div>
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">Precio</p><p class="text-sm font-bold text-foreground">{a.precio}</p></div>
+              <div class="sm:ml-auto"><p class="text-[10px] font-bold uppercase tracking-wider text-muted">Mejor para</p><p class="text-sm text-foreground">{a.mejorPara}</p></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-xs text-muted mt-4">Los espesores necesarios son para alcanzar U≤0,35. Los valores reales dependen del cerramiento existente.</p>
+    </Container>
+  </section>
+
+  <!-- Trasdosados térmicos con pladur -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">La solución</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">Trasdosados térmicos con pladur: cómo funciona y cuánto cuesta</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>Un trasdosado térmico con pladur es una solución de mejora energética que se instala en el interior del edificio, sobre las fachadas o cerramientos exteriores con mayor transmisión de calor. Consiste en crear un nuevo muro interior formado por una estructura metálica, el aislante elegido y una placa de yeso laminado, que queda a pocos centímetros de la pared original.</p>
+            <p>El proceso es sencillo: instalamos los perfiles guía y montantes de acero galvanizado pegados o separados de la pared existente según el caso, introducimos el aislante en el interior de los montantes o entre ellos, y fijamos las placas de yeso. El resultado es una nueva pared interior que mejora notablemente la transmitancia térmica del cerramiento (valor U) sin necesidad de intervenir en la fachada exterior ni molestar a la comunidad de propietarios.</p>
+            <p>La pérdida de superficie interior es de 5 a 10 cm por pared tratada (dependiendo del espesor de aislante necesario), lo que en la práctica supone entre 1 y 2 m² de superficie útil en un piso de 80 m² tratando las cuatro fachadas. Un precio pequeño a pagar por una reducción de la demanda energética de entre el 20 y el 35%.</p>
+            <div class="p-5 bg-foreground text-white mt-6 rounded-3xl">
+              <p class="font-bold text-base mb-2">ROI estimado en Mallorca</p>
+              <p class="text-gray-300 text-sm leading-relaxed">Un piso de 80 m² con una inversión de 4.000-6.000€ en trasdosados térmicos puede ahorrar entre 300 y 600€ anuales en climatización, lo que supone una amortización en 5-10 años. Dado que el aislamiento dura toda la vida del edificio, el beneficio a largo plazo es muy significativo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proceso paso a paso -->
+        <div class="space-y-4">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-2 inline-flex items-center px-3 py-1 rounded-lg">Proceso de instalación</p>
+          {pasosInstalacion.map((paso) => (
+            <div class="bg-white/70 border border-warm-border/50 p-5 flex gap-4 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+              <div class="shrink-0 size-10 bg-foreground-dark flex items-center justify-center rounded-xl">
+                <span class="text-white font-bold text-xs">{paso.num}</span>
+              </div>
+              <div>
+                <p class="font-bold text-foreground text-sm mb-1">{paso.titulo}</p>
+                <p class="text-xs text-muted leading-relaxed">{paso.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Enlace a subvenciones -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">¿Sabías que puedes recuperar hasta el <strong class="text-white">60% del coste</strong> de tu aislamiento térmico? Deducciones IRPF, fondos europeos y bonificaciones IBI. Consulta nuestra guía completa.</p>
+        <a href="/blog/subvenciones-aislamiento-baleares-2026" class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          Ver subvenciones 2026
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner titulo="Mejora la eficiencia energética de tu piso en Mallorca" subtitulo="Presupuesto gratis con cálculo de ahorro estimado incluido." showForm={false} />
+
+  <!-- Certificado energético -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">Valor del inmueble</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">Cómo mejora el certificado energético con el aislamiento</h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>El certificado de eficiencia energética es obligatorio para vender o alquilar una vivienda en España. Una mala calificación (E, F o G) devalúa el inmueble y dificulta su comercialización. La mejora del aislamiento térmico con trasdosados de pladur puede subir la calificación energética entre 1 y 2 letras, lo que supone un aumento real del valor del inmueble en el mercado de Mallorca.</p>
+            <p>Al reducir la transmitancia U de los cerramientos, disminuye la demanda de energía para calefacción y refrigeración. Esta reducción se refleja directamente en el certificado energético: un inmueble que consume menos es más eficiente y obtiene mejor calificación.</p>
+            <p>En Mallorca, donde el mercado inmobiliario es muy activo y los compradores e inquilinos —muchos de ellos europeos con alta concienciación medioambiental— valoran cada vez más la eficiencia energética, una mejora de calificación de E a C puede suponer un aumento del valor del inmueble del 5-15%.</p>
+          </div>
+        </div>
+
+        <!-- Subvenciones y ayudas -->
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">Ahorro adicional</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">Ayudas y subvenciones en Baleares</h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>El Govern de les Illes Balears y el Estado español ofrecen periódicamente ayudas para la rehabilitación energética de edificios. Los fondos Next Generation EU han financiado programas de subvención que cubren entre el 40% y el 80% del coste de las obras de mejora de la envolvente térmica, incluyendo el aislamiento interior con pladur.</p>
+            <p>Te recomendamos consultar el estado actual de las convocatorias con el Departament de Transicions Energètiques de la Conselleria de Medi Ambient i Territori del Govern Balear, o con tu gestor de comunidad si el proyecto afecta a elementos comunes del edificio. Estas ayudas pueden reducir significativamente el coste de tu inversión en aislamiento.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              {programasAyudas.map((prog) => (
+                <div class="p-4 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+                  <p class="font-bold text-foreground text-sm">{prog.programa}</p>
+                  <p class="text-foreground font-bold text-sm">{prog.cobertura}</p>
+                  <p class="text-xs text-muted mt-1">{prog.tipo}</p>
+                </div>
+              ))}
+            </div>
+            <p class="text-xs text-muted">* Las convocatorias y cuantías pueden variar. Consulta el estado actual de las ayudas con las administraciones competentes.</p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Aislamiento por tipo de vivienda -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">Aplicaciones</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">Aislamiento térmico para cada tipo de vivienda en Mallorca</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">Adaptamos la solución de aislamiento al tipo de inmueble, al presupuesto y a las condiciones del cerramiento existente.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Pisos en Palma</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">Muchos pisos del centro de Palma tienen fachadas de una sola hoja sin aislamiento. El trasdosado interior reduce la temperatura interior 3-5 °C en verano y elimina las corrientes de aire frío en invierno.</p>
+          <p class="text-xs text-foreground font-semibold">Inversión media: 3.500-5.500 € · Amortización: 6-9 años</p>
+        </div>
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1m1.5.5l-1.5-.5M6.75 7.364V3h-3v18m3-13.636l10.5-3.819" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Chalets y villas</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">Las viviendas unifamiliares en zonas como Calvià, Andratx o Llucmajor tienen gran superficie de fachada expuesta. El aislamiento de cubiertas y paredes exteriores reduce drásticamente el consumo de AC.</p>
+          <p class="text-xs text-foreground font-semibold">Inversión media: 6.000-12.000 € · Amortización: 5-8 años</p>
+        </div>
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Locales comerciales</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">Restaurantes, tiendas y oficinas con grandes acristalamientos sufren sobrecalentamiento en verano. El aislamiento de paredes y techos reduce el consumo de climatización y mejora el confort de clientes y empleados.</p>
+          <p class="text-xs text-foreground font-semibold">Inversión media: 2.000-5.000 € · Amortización: 3-5 años</p>
+        </div>
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Hoteles y apartamentos turísticos</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">El sector hotelero mallorquín consume enormes cantidades de energía en AC. Aislar las habitaciones mejora las valoraciones de los huéspedes y reduce costes operativos de forma permanente.</p>
+          <p class="text-xs text-foreground font-semibold">Ahorro estimado: 25-40% en factura de climatización</p>
+        </div>
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17l-5.384 3.064A1.287 1.287 0 015 17.12V6.88a1.287 1.287 0 011.036-1.114l5.384-3.064a1.287 1.287 0 011.036 0l5.384 3.064A1.287 1.287 0 0118.872 6.88v10.24a1.287 1.287 0 01-1.036 1.114l-5.384 3.064a1.287 1.287 0 01-1.036 0z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Edificios de obra nueva</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">En nueva construcción, los trasdosados con aislante son la solución estándar para cumplir el CTE-HE. Instalamos el aislamiento durante la fase de división interior, integrando estructura, aislante y placa de yeso.</p>
+          <p class="text-xs text-foreground font-semibold">Cumplimiento garantizado CTE-HE zona B3</p>
+        </div>
+        <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+            <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" /></svg>
+          </div>
+          <h3 class="text-lg font-bold text-foreground mb-2">Rehabilitación energética</h3>
+          <p class="text-sm text-muted leading-relaxed mb-4">Proyectos de mejora de la envolvente térmica en edificios existentes, con o sin subvención pública. Aislamos fachadas, cubiertas y particiones para cumplir con los nuevos requisitos del CTE.</p>
+          <p class="text-xs text-foreground font-semibold">Elegible para subvenciones PIREP y PREE</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- PreciosTable -->
+  <PreciosTable variant="Aislamiento Térmico" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/detalle-perfileria-aislamiento-pladur.webp', alt: 'Detalle de perfilería para aislamiento térmico con pladur' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral-mallorca.webp', alt: 'Aislamiento térmico integral en villa de obra nueva en Mallorca' },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina-mallorca.webp', alt: 'Acabados de pladur con aislamiento térmico en cocina' },
+    { src: '/images/proyectos/reforma-integral-piso-santa-catalina-pladur-mallorca.webp', alt: 'Reforma integral con aislamiento térmico en Santa Catalina' },
+  ]} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={[
+    { slug: 'aislamiento-termico-chalets-calvia', titulo: 'Aislamiento térmico en chalets de Calvià', descripcion: 'Cómo mejorar el aislamiento térmico en chalets y villas de la zona de Calvià con pladur.' },
+    { slug: 'sate-vs-trasdosado-pladur-mallorca', titulo: 'SATE vs trasdosado de pladur en Mallorca', descripcion: 'Comparativa entre sistema SATE y trasdosado de pladur para aislamiento térmico en Mallorca.' },
+    { slug: 'mejorar-certificado-energetico-palma', titulo: 'Mejorar certificado energético en Palma', descripcion: 'Cómo mejorar la calificación energética de tu vivienda en Palma con aislamiento de pladur.' },
+  ]} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion client:visible faqs={pageFaqs} titulo="Preguntas frecuentes sobre aislamiento térmico" subtitulo="Todo lo que necesitas saber sobre el aislamiento térmico con pladur en Mallorca." />
+
+  <!-- CtaBanner final -->
+  <CtaBanner titulo="Invierte en confort y ahorra en climatización" subtitulo="Presupuesto gratis con estimación de ahorro. Financiación disponible." showForm={true} />
+
+  <ServiciosRelacionados currentPath="/aislamiento-termico-mallorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

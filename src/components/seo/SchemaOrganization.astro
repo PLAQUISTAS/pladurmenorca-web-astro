@@ -1,0 +1,5 @@
+---
+import { organizationSchema } from '@/lib/schema'
+const schema = organizationSchema()
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -1,0 +1,325 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import { hotelesFaqs } from '@/data/faqs/hoteles'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur para Hoteles en Mallorca | Reformas en Temporada Baja',
+  description: 'Reforma tu hotel con pladur en Mallorca. Habitaciones, zonas comunes y normativa contra incendios. Plazos ajustados oct-mar. Más de 20 años de experiencia.',
+  canonical: '/pladur-hoteles-mallorca',
+}
+
+const serviciosHotel = [
+  { titulo: 'Redistribución de habitaciones', descripcion: 'Tabiques desvinculados para máximo aislamiento acústico entre estancias. Creación de suites, ampliación de baños o división de habitaciones.' },
+  { titulo: 'Falsos techos con LED', descripcion: 'Iluminación LED empotrada en habitaciones, pasillos y zonas comunes. Diseño moderno que mejora la experiencia del huésped y reduce el consumo eléctrico.' },
+  { titulo: 'Aislamiento acústico', descripcion: 'Sistemas que alcanzan 50-58 dBA de aislamiento entre habitaciones, superando el mínimo CTE-HR de 50 dBA para uso residencial público.' },
+  { titulo: 'Sectorización contra incendios', descripcion: 'Placa ignífuga EI-60 y EI-120 para sectorización por plantas según CTE DB-SI. Puertas cortafuegos y conductos de evacuación.' },
+  { titulo: 'Revestimiento de instalaciones', descripcion: 'Ocultación de bajantes, conductos de climatización y cableado con registros accesibles para mantenimiento.' },
+  { titulo: 'Protección ignífuga de estructura', descripcion: 'Protección de estructura metálica con placa cortafuegos. Documentación técnica y certificados incluidos.' },
+]
+
+const calendario = [
+  { mes: 'Octubre', actividad: 'Cierre parcial, inicio obra', ocupacion: 'Baja (~40%)', activo: false },
+  { mes: 'Noviembre', actividad: 'Fase principal de obra', ocupacion: 'Muy baja (~20%)', activo: true },
+  { mes: 'Dic-Enero', actividad: 'Acabados y pintura', ocupacion: 'Mínima (~15%)', activo: true },
+  { mes: 'Feb-Marzo', actividad: 'Remates y limpieza', ocupacion: 'Subiendo (~30%)', activo: false },
+  { mes: 'Abril', actividad: 'Entrega y apertura', ocupacion: 'Temporada media', activo: false },
+]
+
+const precios = [
+  { concepto: 'Habitación completa (tabiques + techo + aislamiento)', desde: '2.500€', hasta: '4.500€', unidad: 'por habitación' },
+  { concepto: 'Falso techo LED en pasillo', desde: '25€', hasta: '40€', unidad: 'm²' },
+  { concepto: 'Sectorización ignífuga por planta', desde: '55€', hasta: '85€', unidad: 'm²' },
+  { concepto: 'Trasdosado acústico entre habitaciones', desde: '45€', hasta: '65€', unidad: 'm²' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name="Reforma de Hoteles con Pladur en Mallorca"
+      description="Servicio especializado en reforma de hoteles con pladur en Mallorca. Habitaciones, zonas comunes, sectorización contra incendios y aislamiento acústico. Plazos ajustados a temporada baja."
+      serviceType="Reforma de Hoteles"
+      url="/pladur-hoteles-mallorca"
+    />
+    <SchemaFAQ faqs={hotelesFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Pladur para Hoteles', href: '/pladur-hoteles-mallorca' }]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — reforma de hoteles con pladur en Mallorca. Habitaciones, zonas comunes, sectorización contra incendios EI-60/EI-120. Plazos garantizados oct-mar. +20 años de experiencia hotelera. Tel: 627 829 723.
+  </p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            Sector hotelero · Mallorca
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            Pladur para Hoteles en Mallorca — Reformas en Temporada Baja
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            Mallorca tiene más de 2.000 establecimientos hoteleros que necesitan renovar sus instalaciones periódicamente. El pladur permite actuar por fases, reduce los plazos a la mitad y cumple toda la normativa de protección contra incendios.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/presupuesto-pladur"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              Presupuesto para tu hotel
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué pladur en hoteles -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Ventajas
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          ¿Por qué pladur en la reforma de tu hotel?
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p>
+          El sector hotelero de Mallorca opera con ventanas de reforma muy ajustadas. Entre el cierre parcial de octubre y la reapertura en abril, cada día cuenta. El <strong>pladur</strong> es el sistema constructivo que mejor se adapta a esta realidad porque permite reformar por fases sin paralizar todo el hotel, genera mínimos escombros y se ejecuta en la mitad de tiempo que la obra tradicional.
+        </p>
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p>"El Código Técnico de la Edificación exige para establecimientos de uso residencial público una <strong>sectorización</strong> contra incendios mínima de <strong>EI-60</strong> entre plantas y un aislamiento acústico entre habitaciones de al menos 50 dBA"</p>
+          <cite class="block mt-2 text-sm not-italic text-muted/70">— <strong>CTE DB-SI</strong> y CTE DB-HR, Documentos Básicos de Seguridad contra Incendios y Protección frente al Ruido</cite>
+        </blockquote>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+        {[
+          { titulo: 'Rapidez', valor: '10-15 días', detalle: '20 habitaciones completas' },
+          { titulo: 'Limpieza', valor: 'Obra seca', detalle: 'Sin escombros de derribo' },
+          { titulo: 'Normativa', valor: 'EI-60 / EI-120', detalle: 'Sectorización contra incendios' },
+          { titulo: 'Acústica', valor: '≥50 dBA', detalle: 'Entre habitaciones (CTE-HR)' },
+          { titulo: 'Diseño', valor: 'LED integrado', detalle: 'Techos, cornisas, baldas' },
+          { titulo: 'Ahorro', valor: '30-40%', detalle: 'Más económico que albañilería' },
+        ].map((card) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 cursor-default">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-2">{card.titulo}</p>
+            <p class="text-2xl font-bold text-foreground-dark mb-1">{card.valor}</p>
+            <p class="text-sm text-muted">{card.detalle}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios específicos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Servicios
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Servicios específicos para hoteles
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Soluciones adaptadas a las necesidades del sector hotelero: plazos cortos, normativa estricta y mínima interferencia con la operativa.
+        </p>
+      </div>
+      <div class="space-y-3">
+        {serviciosHotel.map((s) => (
+          <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+              <svg aria-hidden="true" class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-foreground text-base mb-1">{s.titulo}</h3>
+              <p class="text-sm text-muted leading-relaxed" set:html={s.descripcion} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario óptimo -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <div class="sticky top-28">
+            <div class="bg-foreground rounded-3xl p-7">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">Calendario de reforma</p>
+              <div class="space-y-4">
+                {calendario.map((item, index) => (
+                  <div class="flex items-start gap-3">
+                    <div class="flex flex-col items-center shrink-0">
+                      <div class:list={['w-2.5 h-2.5 rounded-full mt-1', item.activo ? 'bg-white' : 'bg-white/30']} />
+                      {index < calendario.length - 1 && <div class="w-px h-8 bg-white/15 mt-1" />}
+                    </div>
+                    <div class="flex-1">
+                      <span class="block text-xs font-bold text-white/80 tabular-nums">{item.mes}</span>
+                      <span class="text-sm text-white/60">{item.actividad}</span>
+                      <span class="block text-[11px] text-white/40">{item.ocupacion}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 order-1 lg:order-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Planificación
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Calendario óptimo de reforma hotelera
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>
+              La <strong>temporada baja</strong> en Mallorca (octubre-marzo) es la ventana ideal para reformar un hotel. La ocupación desciende hasta el 15-20% en los meses centrales de invierno, lo que permite intervenir plantas enteras sin afectar significativamente a los ingresos.
+            </p>
+            <p>
+              Recomendamos planificar la reforma desde septiembre: visita técnica, aprobación de presupuesto y reserva de materiales. El transporte marítimo de placas y perfilería desde la península puede tardar 1-2 semanas, por lo que anticipar los pedidos es clave para cumplir plazos.
+            </p>
+            <p>
+              Para hoteles grandes (más de 50 habitaciones), trabajamos con equipos simultáneos en diferentes plantas. Esto permite completar la reforma de todo el hotel en 6-8 semanas, dejando margen suficiente para acabados, limpieza profesional y puesta en marcha antes de Semana Santa.
+            </p>
+            <p>
+              Ofrecemos contratos con penalización por retraso: si no cumplimos el plazo acordado, aplicamos descuento. Esta garantía es especialmente valorada por cadenas hoteleras que necesitan certeza absoluta en las fechas de apertura.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Normativa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Normativa
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          Normativa aplicable en hoteles de Mallorca
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p>
+          Los establecimientos hoteleros están sujetos a una normativa más exigente que las viviendas particulares. El CTE clasifica los hoteles como "uso residencial público", lo que implica requisitos específicos de protección contra incendios y aislamiento acústico que el pladur cumple con las configuraciones adecuadas.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {[
+          { norma: 'CTE DB-SI', requisito: 'Sectorización por plantas: EI-60 mínimo', solucion: '<strong>Placa FOC</strong> ignífuga en doble capa: alcanza <strong>EI-120</strong>' },
+          { norma: 'CTE DB-HR', requisito: 'Paredes entre habitaciones: DnT,A ≥ 50 dB', solucion: 'Tabique desvinculado con lana mineral: 50-58 dBA' },
+          { norma: 'CTE DB-SI', requisito: 'Puertas cortafuegos en pasillos', solucion: 'Marcos de pladur ignífugo preparados para puerta EI' },
+          { norma: 'CTE DB-SI', requisito: 'Conductos de evacuación protegidos', solucion: 'Cajeado con placa cortafuegos y sellado intumescente' },
+        ].map((item) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-3">{item.norma}</span>
+            <p class="font-bold text-foreground text-sm mb-2">{item.requisito}</p>
+            <p class="text-sm text-muted" set:html={item.solucion} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios orientativos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Precios
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Precio reforma hotel con pladur 2026
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Precios 2026, IVA no incluido. Descuentos por volumen a partir de 10 habitaciones. Precio final tras visita técnica gratuita.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger-children">
+        {precios.map((p) => (
+          <div class="bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <p class="font-bold text-foreground text-sm mb-3">{p.concepto}</p>
+            <div class="flex items-baseline gap-2 mb-1">
+              <span class="text-2xl font-bold text-foreground-dark">{p.desde}</span>
+              <span class="text-muted">—</span>
+              <span class="text-2xl font-bold text-foreground-dark">{p.hasta}</span>
+            </div>
+            <p class="text-xs text-muted">{p.unidad}</p>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a
+          href="/precios-pladur-mallorca"
+          class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+        >
+          Ver tabla de precios completa
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <FaqAccordion
+    client:visible
+    categoria="hoteles"
+    titulo="Preguntas frecuentes sobre reforma de hoteles con pladur"
+    subtitulo="Respuestas a las dudas más habituales de propietarios y cadenas hoteleras en Mallorca."
+  />
+
+  <!-- CTA -->
+  <CtaBanner
+    titulo="¿Planificando la reforma de tu hotel?"
+    subtitulo="Presupuesto gratuito en 24 horas. Plazos garantizados por contrato con penalización. Experiencia en +200 habitaciones de hotel reformadas."
+  />
+
+  <ServiciosRelacionados currentPath="/pladur-hoteles-mallorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

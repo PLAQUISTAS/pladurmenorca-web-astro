@@ -1,0 +1,154 @@
+---
+import { Image } from 'astro:assets'
+
+interface Proyecto {
+  titulo: string
+  descripcion: string
+  imagen: string
+  servicio: string
+  ubicacion: string
+}
+
+interface Props {
+  proyectos?: Proyecto[]
+}
+
+const defaultProyectos: Proyecto[] = [
+  {
+    titulo: 'Reforma integral piso en Santa Catalina',
+    descripcion: 'Redistribución completa de un piso de 95m² con falso techo continuo LED integrado, nuevos tabiques de distribución y trasdosado perimetral con aislamiento térmico. Acabado listo para pintar en 8 jornadas.',
+    imagen: '/images/proyectos/reforma-integral-piso-santa-catalina-pladur-mallorca.webp',
+    servicio: 'Falsos Techos + Tabiques',
+    ubicacion: 'Palma de Mallorca',
+  },
+  {
+    titulo: 'Aislamiento acústico apartamento turístico',
+    descripcion: 'Insonorización completa de apartamento de 70m² en zona costera de alta densidad. Solución con doble placa y lana mineral de alta densidad en paredes medianeras y techo. Mejora de 4 dB en medición certificada.',
+    imagen: '/images/proyectos/aislamiento-acustico-apartamento-turistico-pladur-mallorca.webp',
+    servicio: 'Aislamiento Acústico',
+    ubicacion: 'Calvià',
+  },
+  {
+    titulo: 'Oficina distribución open space',
+    descripcion: 'Transformación de nave diáfana de 300m² en espacio de oficinas con tabiques divisorios, salas de reuniones insonorizadas y falso techo técnico con instalación eléctrica integrada. Plazo: 3 semanas.',
+    imagen: '/images/proyectos/oficina-open-space-tabiques-pladur-mallorca.webp',
+    servicio: 'Tabiques + Falsos Techos',
+    ubicacion: 'Manacor',
+  },
+]
+
+function getAltText(proyecto: Proyecto) {
+  return `${proyecto.titulo} — ${proyecto.servicio} de pladur en ${proyecto.ubicacion}`
+}
+
+const { proyectos: proyectosProp } = Astro.props
+const items = proyectosProp ?? defaultProyectos
+---
+
+<section class="w-full py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {/* Section header */}
+    <div class="mb-14 lg:mb-16 animate-fade-up">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div class="max-w-xl">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Casos reales
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
+            Proyectos recientes
+          </h2>
+          <p class="mt-4 text-lg text-muted leading-relaxed">
+            Algunos de los trabajos que hemos realizado en los últimos meses por toda Mallorca.
+          </p>
+        </div>
+        <a
+          href="/proyectos"
+          class="inline-flex items-center gap-2 text-foreground font-bold text-sm border-b-2 border-warm-border pb-0.5 hover:text-muted hover:border-muted transition-colors duration-200 whitespace-nowrap self-start lg:self-auto rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+        >
+          Ver todos los proyectos
+          <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    {/* Projects grid */}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 stagger-children">
+      {items.map((proyecto) => (
+        <article class="group flex flex-col rounded-3xl bg-white border border-warm-border/40 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default overflow-hidden h-full">
+
+          {/* Image area */}
+          <div class="relative w-full h-52 sm:h-60 lg:h-56 bg-warm-border-light overflow-hidden">
+            {proyecto.imagen ? (
+              <Image
+                src={proyecto.imagen}
+                alt={getAltText(proyecto)}
+                width={600}
+                height={400}
+                class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="absolute inset-0 bg-warm-border-light flex flex-col items-center justify-center gap-2">
+                <svg class="size-12 text-muted" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span class="text-muted text-xs font-medium">Foto de proyecto</span>
+              </div>
+            )}
+
+            {/* Service badge overlaid on image */}
+            <div class="absolute top-4 left-4">
+              <span class="inline-block text-xs px-3 py-1.5 rounded-full font-bold uppercase tracking-wide bg-foreground-dark text-white">
+                {proyecto.servicio}
+              </span>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div class="flex flex-col gap-3 p-6 flex-1">
+            {/* Location */}
+            <div class="flex items-center gap-1.5 text-xs text-muted font-medium">
+              <svg class="size-3.5 text-muted" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.757.433l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
+              </svg>
+              {proyecto.ubicacion}
+            </div>
+
+            <h3 class="font-bold text-lg text-foreground leading-snug group-hover:text-muted transition-colors">
+              {proyecto.titulo}
+            </h3>
+
+            <p class="text-sm text-muted leading-relaxed flex-1">
+              {proyecto.descripcion}
+            </p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    {/* Bottom CTA banner */}
+    <div class="mt-14 flex flex-col sm:flex-row items-center justify-between gap-6 p-8 bg-white border border-warm-border/40 rounded-3xl shadow-card animate-fade-up">
+      <div>
+        <p class="font-bold text-foreground text-lg">
+          ¿Tu proyecto podría ser el próximo?
+        </p>
+        <p class="text-muted text-sm mt-1">
+          Cuéntanos qué necesitas. Visita técnica gratuita, presupuesto en 24h.
+        </p>
+      </div>
+      <a
+        href="/presupuesto-pladur"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide transition-[background-color,box-shadow] duration-200 active:scale-95 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+      >
+        Solicitar presupuesto
+        <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,304 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import { mallorcaFaqs } from '@/data/faqs/mallorca'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Pladur en Mallorca | Instaladores en 53 Municipios',
+  description: 'Instala pladur en toda Mallorca: Palma, Calvià, Manacor, Inca y 12 municipios más. Cobertura total con +20 años de experiencia. Presupuesto gratis en 24h.',
+  canonical: '/pladur-en-mallorca',
+}
+
+const municipiosConPagina = [
+  { nombre: 'Andratx', href: '/pladur-andratx', comarca: 'Suroeste · Premium', zonas: 5 },
+  { nombre: 'Calvià', href: '/pladur-calvia', comarca: 'Poniente · Turístico', zonas: 6 },
+  { nombre: 'Palma', href: '/pladur-palma', comarca: 'Capital · Todos los barrios', zonas: 7 },
+  { nombre: 'Marratxí', href: '/pladur-marratxi', comarca: 'Área metropolitana', zonas: 6 },
+  { nombre: 'Llucmajor', href: '/pladur-llucmajor', comarca: "S'Arenal · Playa de Palma", zonas: 6 },
+  { nombre: 'Inca', href: '/pladur-inca', comarca: 'Raiguer · Interior', zonas: 6 },
+  { nombre: 'Sóller', href: '/pladur-soller', comarca: 'Serra de Tramuntana', zonas: 5 },
+  { nombre: 'Pollença', href: '/pladur-pollenca', comarca: 'Norte · Patrimonio', zonas: 5 },
+  { nombre: 'Alcúdia', href: '/pladur-alcudia', comarca: 'Norte · Turístico', zonas: 5 },
+  { nombre: 'Manacor', href: '/pladur-manacor', comarca: 'Llevant · Costa este', zonas: 6 },
+]
+
+const municipiosSinPagina = [
+  'Felanitx', 'Santanyí', 'Sa Pobla', 'Campos', 'Porreres', 'Petra',
+  'Artà', 'Binissalem', 'Santa Maria del Camí', 'Ses Salines', 'Esporles', 'Valldemossa',
+]
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Instaladores de Pladur en Mallorca por Municipio',
+  description: 'Listado de municipios de Mallorca donde ofrecemos servicio especializado de instalación de pladur.',
+  numberOfItems: municipiosConPagina.length,
+  itemListElement: municipiosConPagina.map((m, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `Pladur en ${m.nombre}`,
+    url: `${siteConfig.url}${m.href}`,
+  })),
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Pladur en Mallorca', href: '/pladur-en-mallorca' }]} />
+    <SchemaFAQ faqs={mallorcaFaqs} />
+    <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — especialistas exclusivos en pladur en Mallorca desde 2004. Más de 50 trabajadores certificados, +6.000 proyectos en toda la isla. Tel: 627 829 723.
+  </p>
+
+  <!-- 1. Hero — Glassmorphism -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            Toda la isla · 53 municipios
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            Pladur en Mallorca — Instaladores Profesionales en Toda la Isla
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            Cubrimos los 53 municipios principales de Mallorca sin suplemento por desplazamiento. Falsos techos, tabiques, aislamiento acústico y térmico. Visita técnica gratuita dondequiera que estés.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/presupuesto-pladur"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              Presupuesto gratis en 24h
+              <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color,transform] duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Municipios con página dedicada -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="mb-14 max-w-3xl animate-fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Nuestras zonas de especialización
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            Municipios donde somos especialistas
+          </h2>
+          <p class="text-lg text-muted leading-relaxed">
+            Conocemos las particularidades constructivas de cada zona. Haz clic en tu municipio para ver soluciones específicas, barrios cubiertos y preguntas frecuentes locales.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5 stagger-children">
+        {municipiosConPagina.map((m) => (
+          <div>
+            <a
+              href={m.href}
+              class="group block bg-white/70 rounded-3xl border border-warm-border/50 p-6 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <div class="absolute top-0 left-0 w-0 h-0.5 bg-foreground-dark group-hover:w-full transition-[width] duration-500" />
+              <p class="font-bold text-foreground text-lg mb-1 flex items-center justify-between">
+                {m.nombre}
+                <svg class="size-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </p>
+              <p class="text-xs text-muted mb-3">{m.comarca}</p>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface text-foreground text-[11px] font-semibold">
+                {m.zonas} zonas
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Resto de municipios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="mb-10 max-w-3xl">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Cobertura completa
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-4">
+            También trabajamos en toda la isla
+          </h2>
+          <p class="text-lg text-muted leading-relaxed">
+            Cubrimos estos municipios con el mismo servicio, calidad y sin suplemento por desplazamiento para obras a partir de 500€.
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="flex flex-wrap gap-3 mb-8">
+          {municipiosSinPagina.map((m) => (
+            <span
+              class="inline-flex items-center px-4 py-2 rounded-xl bg-white/70 border border-warm-border/50 text-foreground text-sm font-medium shadow-soft"
+            >
+              {m}
+            </span>
+          ))}
+        </div>
+        <p class="text-muted text-sm">
+          ¿Tu municipio no está en la lista? Llámanos al{' '}
+          <a href={`tel:${siteConfig.phoneRaw}`} class="text-foreground font-semibold hover:underline">
+            {siteConfig.phone}
+          </a>
+          . Trabajamos en cualquier punto de Mallorca.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Texto SEO -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-8">
+          <div>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+              Tu empresa de referencia
+            </span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+              Pladur en Mallorca: por qué somos tu empresa de referencia en toda la isla
+            </h2>
+          </div>
+          <div>
+            <div class="max-w-none text-muted space-y-5">
+              <p>
+                Con más de 20 años de experiencia cubriendo toda la isla de Mallorca, somos la empresa de referencia en instalación de pladur (yeso laminado) en el archipiélago balear. Nuestro equipo de más de 50 trabajadores certificados trabaja a diario en los 53 municipios principales de Mallorca, desde las villas de lujo de <a href="/pladur-andratx" class="text-foreground font-semibold hover:underline">Port d'Andratx</a> hasta las casas de pueblo de <a href="/pladur-manacor" class="text-foreground font-semibold hover:underline">Manacor</a>, pasando por los apartamentos turísticos de <a href="/pladur-alcudia" class="text-foreground font-semibold hover:underline">Alcúdia</a> y las promociones de obra nueva de <a href="/pladur-marratxi" class="text-foreground font-semibold hover:underline">Marratxí</a>.
+              </p>
+
+              <h3 class="text-xl font-bold text-foreground pt-2">Particularidades de la construcción mallorquina</h3>
+              <p>
+                Mallorca tiene un parque inmobiliario único que exige conocimiento especializado. Los edificios del centro histórico de <a href="/pladur-palma" class="text-foreground font-semibold hover:underline">Palma</a> tienen muros de piedra de marès de hasta 60 cm, accesos estrechos y techos de vigas de madera centenarias. Las villas de <a href="/pladur-calvia" class="text-foreground font-semibold hover:underline">Calvià</a> y <a href="/pladur-andratx" class="text-foreground font-semibold hover:underline">Andratx</a> demandan acabados de gama alta y coordinación con equipos de arquitectura e interiorismo. Los bloques turísticos de la costa —desde <a href="/pladur-llucmajor" class="text-foreground font-semibold hover:underline">S'Arenal</a> hasta <a href="/pladur-alcudia" class="text-foreground font-semibold hover:underline">Puerto de Alcúdia</a>— necesitan reformas rápidas entre temporadas con plazos garantizados.
+              </p>
+              <p>
+                Las possessions y casas de pueblo de la <a href="/pladur-soller" class="text-foreground font-semibold hover:underline">Serra de Tramuntana</a>, <a href="/pladur-pollenca" class="text-foreground font-semibold hover:underline">Pollença</a> e <a href="/pladur-inca" class="text-foreground font-semibold hover:underline">Inca</a> presentan retos específicos: muros irregulares, humedad ascendente, accesos complicados y la necesidad de respetar elementos patrimoniales. Conocemos todos estos escenarios porque llevamos dos décadas resolviendo cada uno de ellos.
+              </p>
+
+              <h3 class="text-xl font-bold text-foreground pt-2">Sin suplemento por desplazamiento</h3>
+              <p>
+                A diferencia de muchos competidores que solo trabajan en Palma y cobran extra por salir de la capital, nosotros cubrimos toda la isla sin coste adicional de desplazamiento para obras a partir de 500€. Organizamos nuestros equipos por zonas geográficas: mientras un equipo trabaja en <a href="/pladur-soller" class="text-foreground font-semibold hover:underline">Sóller</a> y la Tramuntana, otro puede estar en <a href="/pladur-manacor" class="text-foreground font-semibold hover:underline">Manacor</a> y el Llevant. Esta organización nos permite ser eficientes y mantener precios competitivos en toda la isla.
+              </p>
+              <p>
+                La logística de materiales en una isla tiene sus propias particularidades: todo el material llega por barco desde la Península, lo que implica un sobrecoste del 10-20% respecto a precios peninsulares. Compensamos esta realidad con relaciones directas con los principales distribuidores de Mallorca y la compra en volumen de materiales de las marcas líderes: Placo (Saint-Gobain), Knauf y Lafarge.
+              </p>
+
+              <h3 class="text-xl font-bold text-foreground pt-2">Nuestros servicios disponibles en toda la isla</h3>
+              <p>
+                En cualquier municipio de Mallorca ofrecemos la gama completa de servicios de pladur: <a href="/falsos-techos-pladur-mallorca" class="text-foreground font-semibold hover:underline">falsos techos</a> continuos y registrables con iluminación LED integrada, <a href="/tabiques-pladur-mallorca" class="text-foreground font-semibold hover:underline">tabiques de distribución</a> para redistribuir espacios sin obra pesada, <a href="/aislamiento-acustico-mallorca" class="text-foreground font-semibold hover:underline">aislamiento acústico</a> con sistemas desacoplados que reducen el ruido en 45-55 dB, y <a href="/aislamiento-termico-mallorca" class="text-foreground font-semibold hover:underline">aislamiento térmico</a> con trasdosados que mejoran la eficiencia energética del hogar.
+              </p>
+              <p>
+                También somos especialistas en <a href="/pladur-apartamentos-turisticos-mallorca" class="text-foreground font-semibold hover:underline">reformas de apartamentos turísticos</a>, uno de los sectores con mayor demanda en Mallorca. Garantizamos plazos por contrato y entregamos el apartamento listo para operar, limpio y con acabados perfectos.
+              </p>
+              <p>
+                Todos nuestros trabajos incluyen garantía de 2 años en mano de obra. Los materiales tienen garantía del fabricante. Consulta nuestros <a href="/precios-pladur-mallorca" class="text-foreground font-semibold hover:underline">precios orientativos</a> y solicita tu presupuesto personalizado: es gratuito, cerrado y lo recibirás en 24-48 horas tras la visita técnica.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-4">
+          <div>
+            <div class="sticky top-28 space-y-6">
+              <div class="bg-foreground rounded-3xl p-8 text-white">
+                <p class="font-bold text-lg mb-2">Toda Mallorca confía en nosotros</p>
+                <p class="text-white/70 text-sm leading-relaxed">
+                  Más de 20 años, 6.000 proyectos y 53 municipios cubiertos. Somos la empresa de pladur con mayor cobertura geográfica de la isla.
+                </p>
+                <div class="mt-4 flex items-center gap-2">
+                  <div class="flex">
+                    {Array.from({ length: 5 }).map(() => (
+                      <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <span class="text-white/70 text-xs">4.7/5 en Google</span>
+                </div>
+              </div>
+              <div class="bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-soft">
+                <p class="font-bold text-foreground text-sm mb-4 uppercase tracking-wider">Datos clave</p>
+                <div class="space-y-0">
+                  {[
+                    { label: 'Municipios', valor: '53' },
+                    { label: 'Años de experiencia', valor: '+20' },
+                    { label: 'Proyectos completados', valor: '+6.000' },
+                    { label: 'Profesionales', valor: '12' },
+                    { label: 'Garantía', valor: '2 años' },
+                    { label: 'Desplazamiento', valor: 'Gratis' },
+                  ].map((item) => (
+                    <div class="flex justify-between items-center py-3 border-b border-warm-border/60 last:border-0">
+                      <span class="text-muted text-sm">{item.label}</span>
+                      <span class="text-foreground font-bold text-sm">{item.valor}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. PreciosTable resumen -->
+  <PreciosTable variant="resumen" />
+
+  <!-- 6. FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    categoria="mallorca"
+    titulo="Preguntas frecuentes sobre pladur en Mallorca"
+    subtitulo="Respuestas a las dudas más habituales sobre nuestro servicio en toda la isla."
+  />
+
+  <!-- 7. CtaBanner -->
+  <CtaBanner
+    titulo="¿Tu proyecto está en cualquier punto de Mallorca?"
+    subtitulo="Dinos dónde estás y te visitamos gratis. Presupuesto en 24 horas, sin compromiso."
+  />
+
+  <ServiciosRelacionados currentPath="/pladur-en-mallorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

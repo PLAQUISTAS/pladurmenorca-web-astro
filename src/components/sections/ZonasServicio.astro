@@ -1,0 +1,169 @@
+---
+import { allMunicipiosMallorca } from '@/data/municipios'
+
+interface Props {
+  municipios?: string[]
+}
+
+const { municipios: municipiosProp } = Astro.props
+const todosMunicipios = municipiosProp ?? allMunicipiosMallorca
+
+const municipiosDestacados = [
+  {
+    nombre: 'Palma de Mallorca',
+    slug: 'pladur-palma',
+    href: '/pladur-palma',
+    descripcion: 'Capital de Mallorca. Pisos históricos, apartamentos modernos y locales comerciales. Sin coste de desplazamiento.',
+    barrios: ['Santa Catalina', 'El Terreno', 'Portixol', 'Centro Histórico', 'Son Vida'],
+  },
+  {
+    nombre: 'Calvià',
+    slug: 'pladur-calvia',
+    href: '/pladur-calvia',
+    descripcion: 'Chalets de lujo, villas y apartamentos turísticos. Especialistas en reformas entre temporadas.',
+    barrios: ['Santa Ponça', 'Palmanova', 'Portals Nous', 'Magaluf', 'Illetes'],
+  },
+]
+
+const municipiosConLanding = ['Palma de Mallorca', 'Calvià']
+
+const municipiosConPagina: Record<string, string> = {
+  'Manacor': '/pladur-manacor',
+  'Inca': '/pladur-inca',
+  'Llucmajor': '/pladur-llucmajor',
+  'Alcúdia': '/pladur-alcudia',
+  'Sóller': '/pladur-soller',
+  'Andratx': '/pladur-andratx',
+  'Pollença': '/pladur-pollenca',
+  'Marratxí': '/pladur-marratxi',
+}
+
+const restanteMunicipios = todosMunicipios.filter(
+  (m) => !municipiosConLanding.includes(m)
+)
+---
+
+<section class="w-full py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {/* Section header */}
+    <div class="mb-14 lg:mb-16 max-w-3xl animate-fade-up">
+      <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+        Cobertura total
+      </p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+        Trabajamos en toda Mallorca
+      </h2>
+      <p class="text-lg text-muted leading-relaxed">
+        Desde Palma hasta Alcúdia, desde Andratx hasta Manacor. Cubrimos los 53 municipios de Mallorca con el mismo equipo y la misma calidad.
+      </p>
+    </div>
+
+    {/* Highlighted municipalities */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-14 stagger-children">
+      {municipiosDestacados.map((municipio) => (
+        <a
+          href={municipio.href}
+          class="group bg-white border border-warm-border/40 rounded-3xl p-8 lg:p-10 flex flex-col gap-5 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <div class="size-10 rounded-xl bg-surface border border-nav-border group-hover:bg-foreground group-hover:border-foreground flex items-center justify-center transition-colors duration-300 shrink-0">
+                <svg class="size-5 text-foreground group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-foreground">
+                {municipio.nombre}
+              </h3>
+            </div>
+            <div class="shrink-0 w-9 h-9 rounded-full bg-surface border border-nav-border flex items-center justify-center">
+              <svg class="size-4 text-foreground group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </div>
+          </div>
+
+          <p class="text-muted text-sm leading-relaxed">
+            {municipio.descripcion}
+          </p>
+
+          {/* Barrios */}
+          <div class="flex flex-wrap gap-2">
+            {municipio.barrios.map((barrio) => (
+              <span
+                class="text-xs px-2.5 py-1 bg-surface text-foreground font-medium rounded-lg"
+              >
+                {barrio}
+              </span>
+            ))}
+            <span class="text-xs px-2.5 py-1 text-muted font-medium">
+              y más...
+            </span>
+          </div>
+
+          <p class="text-sm font-bold text-foreground flex items-center gap-1 mt-auto">
+            Ver página de {municipio.nombre}
+            <svg class="size-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </p>
+        </a>
+      ))}
+    </div>
+
+    {/* Badge grid */}
+    <div class="bg-white border border-warm-border/40 p-8 lg:p-10 rounded-3xl shadow-card animate-fade-up">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="size-8 rounded-lg bg-surface border border-nav-border flex items-center justify-center shrink-0">
+          <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+          </svg>
+        </div>
+        <p class="text-sm font-semibold text-foreground uppercase tracking-wide">
+          También trabajamos en
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 lg:gap-2.5">
+        {restanteMunicipios.map((municipio) => {
+          const href = municipiosConPagina[municipio]
+          return href ? (
+            <a
+              href={href}
+              class="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-foreground bg-surface font-semibold rounded-lg hover:bg-foreground-dark hover:text-white transition-colors duration-200"
+            >
+              {municipio}
+              <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          ) : (
+            <span
+              class="inline-flex items-center px-3 py-1.5 text-sm text-muted bg-surface font-medium rounded-lg hover:bg-warm-border hover:text-foreground transition-colors duration-200 cursor-default"
+            >
+              {municipio}
+            </span>
+          )
+        })}
+      </div>
+    </div>
+
+    {/* Info banner */}
+    <div class="mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 p-6 bg-white rounded-3xl border border-warm-border/40 shadow-card animate-fade-up">
+      <div class="shrink-0">
+        <svg class="size-6 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />
+        </svg>
+      </div>
+      <div>
+        <p class="font-bold text-foreground text-base">
+          Sin coste de desplazamiento en toda la isla para obras +500&euro;
+        </p>
+        <p class="text-muted text-sm mt-1">
+          Para presupuestos inferiores, consulta condiciones. La visita técnica previa es siempre gratuita sin excepción.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,7 @@
+---
+import { localBusinessSchema } from '@/lib/schema'
+
+const schema = localBusinessSchema()
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -1,0 +1,195 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { faqs } from '@/data/faqs'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: "Pladur en Llucmajor y S'Arenal | Presupuesto Gratis",
+  description: "Instala pladur en Llucmajor, S'Arenal y Playa de Palma. Especialistas en apartamentos turísticos y reformas rápidas. Desde 29€/m². Presupuesto gratis.",
+  canonical: '/pladur-llucmajor',
+}
+
+const zonas = [
+  {
+    nombre: 'Llucmajor pueblo',
+    descripcion: 'Casas de pueblo tradicionales y pisos del centro urbano. Rehabilitación con pladur: falsos techos modernos, redistribución de espacios y trasdosados térmicos para mejorar el confort.',
+  },
+  {
+    nombre: "S'Arenal",
+    descripcion: 'Principal zona turística con alta concentración de apartamentos vacacionales. Reformas rápidas entre temporadas: modernización de techos, aislamiento acústico y redistribución para maximizar ocupación.',
+  },
+  {
+    nombre: 'Playa de Palma',
+    descripcion: 'Franja costera con hoteles y apartamentos turísticos. Proyectos de renovación con plazos ajustados: falsos techos con LED, insonorización entre habitaciones y actualización de espacios comunes.',
+  },
+  {
+    nombre: 'Bahía Azul',
+    descripcion: 'Urbanización residencial con adosados y chalets. Proyectos de aislamiento térmico en fachadas, falsos techos decorativos y redistribución de plantas para adaptar la vivienda al uso familiar.',
+  },
+  {
+    nombre: 'Sa Torre',
+    descripcion: 'Urbanización moderna con viviendas unifamiliares. Falsos techos de diseño con cofres, tabiques para crear vestidores y zonas de trabajo, y aislamiento acústico entre plantas.',
+  },
+  {
+    nombre: 'Cala Pi',
+    descripcion: 'Zona residencial costera tranquila. Reformas de segundas residencias y casas de veraneo: modernización de interiores con pladur, mejora del aislamiento y actualización de techos.',
+  },
+]
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Llucmajor', href: '/pladur-llucmajor' },
+]
+
+const pageFaqs = faqs['llucmajor'] ?? []
+
+const proyectoFicha = [
+  { label: 'Superficie', valor: '55 m²' },
+  { label: 'Ubicación', valor: "S'Arenal, Llucmajor" },
+  { label: 'Trabajos', valor: 'Techo + Aislamiento acústico + Placa H' },
+  { label: 'Duración', valor: '6 días hábiles' },
+  { label: 'Inversión', valor: '4.800 €' },
+  { label: 'Resultado', valor: 'Valoración 4,0 → 4,7 estrellas' },
+]
+
+const serviciosLinks = [
+  { label: 'Apartamentos Turísticos', href: '/pladur-apartamentos-turisticos-mallorca' },
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-mallorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' },
+  { label: 'Precios', href: '/precios-pladur-mallorca' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name="Instalación de Pladur en Llucmajor y S'Arenal"
+      description="Servicio profesional de instalación de pladur en Llucmajor, S'Arenal y Playa de Palma. Especialistas en reformas de apartamentos turísticos, aislamiento acústico y modernización de espacios."
+      serviceType="Instalación de Pladur"
+      url="/pladur-llucmajor"
+     
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — instaladores de pladur en Llucmajor. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.
+  </p>
+
+  <PaginaGeografica
+    municipio="Llucmajor"
+    zonas={zonas}
+    faqKey="llucmajor"
+    heroTitle="Pladur en Llucmajor y S'Arenal — Especialistas en Reformas Turísticas"
+    heroBadge="Llucmajor · S'Arenal · Playa de Palma"
+    heroDescription="Especialistas en reformas con pladur en Llucmajor, S'Arenal y Playa de Palma. Apartamentos turísticos, viviendas y locales. Plazos garantizados para tener tu propiedad lista antes de temporada."
+    faqTitulo="Preguntas frecuentes sobre pladur en Llucmajor"
+    faqSubtitulo="Respuestas a las dudas más habituales de propietarios en Llucmajor, S'Arenal y Playa de Palma."
+    proyectoTitulo="Reforma de apartamento turístico en S'Arenal con placa hidrófuga"
+    proyectoFicha={proyectoFicha}
+    ctaTitulo="¿Tu proyecto está en Llucmajor o S'Arenal?"
+    ctaSubtitulo="Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Especialistas en reformas turísticas."
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Especialistas en reformas turísticas
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Pladur en Llucmajor: del pueblo a la costa turística
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>
+              El municipio de Llucmajor es el más extenso de Mallorca y uno de los más diversos: desde el pueblo interior con su arquitectura tradicional hasta la franja costera de S'Arenal y Playa de Palma, que concentra una de las mayores densidades de alojamiento turístico de todo el Mediterráneo. Esta diversidad genera una demanda de reformas con pladur constante y variada.
+            </p>
+            <p>
+              S'Arenal y Playa de Palma son el epicentro de nuestro trabajo en la zona. Miles de apartamentos turísticos construidos entre los años 60 y 80 necesitan actualizaciones periódicas para mantener su competitividad en un mercado cada vez más exigente. Los propietarios y gestores de apartamentos turísticos buscan reformas que cumplan tres requisitos: rapidez (la ventana entre temporadas es corta), limpieza (los apartamentos contiguos pueden estar ocupados) y resultado profesional (las fotos del alojamiento son clave para las reservas).
+            </p>
+            <p>
+              El pladur cumple los tres requisitos de forma óptima. Un apartamento turístico de 50-60 m² puede tener <a href="/falsos-techos-pladur-mallorca">falso techo nuevo</a> con iluminación LED empotrada, <a href="/aislamiento-acustico-mallorca">aislamiento acústico mejorado</a> entre vecinos y una redistribución parcial del espacio en menos de dos semanas de trabajo. Sin demoliciones, sin escombros y con una limpieza final rápida que permite poner el apartamento en servicio casi de inmediato.
+            </p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              El aislamiento acústico es probablemente la mejora con mayor retorno de inversión en un apartamento turístico. Las quejas por ruido son la causa más frecuente de valoraciones negativas en plataformas como Airbnb y Booking, y una mejora de medio punto en la puntuación media puede traducirse en un incremento del 10-15% en el precio por noche y en una mejora significativa de la tasa de ocupación. Nuestros sistemas de pladur con lana mineral de alta densidad y estructura desacoplada pueden reducir la transmisión de ruido entre viviendas en 45-55 dB.
+            </p>
+            <p>
+              En el pueblo de Llucmajor, la demanda es diferente: casas de pueblo con muros de piedra que necesitan <a href="/aislamiento-termico-mallorca">trasdosados térmicos</a> para ser habitables en invierno, distribuciones heredadas que no encajan con la vida actual, y techos altos que se benefician de un falso techo moderno con iluminación integrada. Las urbanizaciones residenciales de Bahía Azul, Sa Torre y Cala Pi presentan proyectos de vivienda unifamiliar con acabados de mayor gama.
+            </p>
+            <p>
+              La ventana óptima para reformar un apartamento turístico en S'Arenal o Playa de Palma es de octubre a marzo. Recomendamos contactar en septiembre para planificar el proyecto, reservar fechas y garantizar que todo esté listo antes de Semana Santa o el inicio de la temporada alta.
+            </p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">Reformas turísticas garantizadas</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">Garantizamos plazos por contrato. Tu apartamento estará listo antes de temporada. Más de 20 años de experiencia en reformas turísticas en S'Arenal y Playa de Palma.</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">4.7/5 en Google</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">Servicios relacionados</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>
+        Un apartamento turístico de 55 m² en un segundo piso de S'Arenal, a 150 metros de la playa, presentaba problemas combinados de humedad costera y ruido entre viviendas. El techo de escayola original mostraba manchas de humedad recurrentes que reaparecían cada invierno, y las paredes medianeras transmitían el ruido del apartamento contiguo, generando quejas constantes de los huéspedes en temporada alta.
+      </p>
+      <p>
+        Se instaló un falso techo completo con placa hidrófuga (placa H) en toda la vivienda (55 m²), incorporando iluminación LED empotrada en salón y dormitorio. En las dos paredes medianeras se montó un trasdosado con placa estándar de 15 mm, lana mineral de alta densidad de 48 mm y banda acústica perimetral (22 m² de superficie tratada). En el baño y la cocina se utilizó placa hidrófuga también en los trasdosados para proteger contra la humedad ambiental propia de la proximidad al mar.
+      </p>
+      <p>
+        La obra se ejecutó en 6 días hábiles durante el mes de noviembre, con un coste total de 4.800 euros. La humedad no ha vuelto a aparecer en las dos temporadas siguientes, y la reducción acústica eliminó las quejas por ruido. La valoración del apartamento en Airbnb subió de 4,0 a 4,7 estrellas, permitiendo al propietario incrementar la tarifa nocturna en un 15% y mejorar la ocupación en temporada media.
+      </p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

@@ -1,0 +1,316 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaPerson from '@/components/seo/SchemaPerson.astro'
+import Hero from '@/components/sections/Hero'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import { sobreNosotrosFaqs } from '@/data/faqs/sobre-nosotros'
+
+const meta = {
+  title: 'Sobre Nosotros | Empresa de Pladur en Mallorca con +20 Años',
+  description: 'Conoce a Pladur Mallorca: empresa especializada en instalación de yeso laminado desde 2004. Equipo profesional, materiales premium y garantía de 2 años.',
+  canonical: '/sobre-nosotros',
+  ogImage: '/og/sobre-nosotros.jpg',
+}
+
+const stats = [
+  { valor: '+6.000', etiqueta: 'Proyectos completados', descripcion: 'En toda la isla de Mallorca' },
+  { valor: '20', etiqueta: 'Años de experiencia', descripcion: 'Especializados desde 2004' },
+  { valor: '4.7/5', etiqueta: 'Valoración media', descripcion: 'Reseñas verificadas en Google' },
+  { valor: '+50', etiqueta: 'Trabajadores', descripcion: 'Equipo certificado por fabricante' },
+]
+
+const valores = [
+  {
+    titulo: 'Calidad premium',
+    descripcion: 'Trabajamos exclusivamente con marcas líderes: Placo (Saint-Gobain), Knauf y Lafarge. Sin materiales de segunda. Sin atajos. Cada instalación cumple los estándares técnicos más exigentes.',
+    iconoPath: 'M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z',
+  },
+  {
+    titulo: 'Plazos cumplidos',
+    descripcion: 'Sabemos que el tiempo es dinero. Antes de empezar cada obra acordamos un calendario de ejecución y lo cumplimos. En Mallorca, especialmente en reformas turísticas, el plazo no es negociable.',
+    iconoPath: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
+  },
+  {
+    titulo: 'Precio transparente',
+    descripcion: 'Presupuesto detallado, sin letra pequeña. El precio que acordamos es el precio que facturamos. Nunca hay sorpresas al final de la obra, y trabajamos siempre con factura oficial.',
+    iconoPath: 'M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z',
+  },
+]
+
+const marcas = [
+  {
+    nombre: 'Placo (Saint-Gobain)',
+    logo: '/images/marcas/placo.png',
+    descripcion: 'Creadora del concepto Pladur\u00AE. Líder mundial en sistemas de yeso laminado con más de 150 años de historia en materiales de construcción.',
+  },
+  {
+    nombre: 'Knauf',
+    logo: '/images/marcas/knauf.png',
+    descripcion: 'Multinacional alemana referente en sistemas de construcción en seco. Sus soluciones acústicas y de protección al fuego son las más empleadas en proyectos de alta exigencia técnica.',
+  },
+  {
+    nombre: 'Lafarge',
+    logo: '/images/marcas/lafarge.png',
+    descripcion: 'Parte del grupo LafargeHolcim, uno de los mayores fabricantes de materiales de construcción del mundo. Sus sistemas de trasdosado y aislamiento térmico son de referencia en el sector.',
+  },
+]
+
+const certificaciones = [
+  {
+    titulo: 'ISO 9001',
+    descripcion: 'Sistema de gestión de calidad certificado. Garantía de procesos estandarizados y mejora continua en todos nuestros proyectos.',
+    iconoPath: 'M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z',
+  },
+  {
+    titulo: 'Instaladores certificados por fabricante',
+    descripcion: 'Nuestro equipo cuenta con certificaciones de Placo Saint-Gobain y Knauf, lo que garantiza que los sistemas se instalan conforme a los requisitos técnicos del fabricante.',
+    iconoPath: 'M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z',
+  },
+  {
+    titulo: 'Cumplimiento CTE',
+    descripcion: 'Todos nuestros proyectos se ejecutan conforme al Código Técnico de la Edificación (CTE), incluyendo los documentos básicos HR (ruido), HE (ahorro de energía) y SI (seguridad contra incendios).',
+    iconoPath: 'M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z',
+  },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Sobre Nosotros', href: '/sobre-nosotros' }]} />
+    <SchemaPerson
+      name="Equipo Pladur Mallorca"
+      jobTitle="Instaladores profesionales de pladur"
+      description="Equipo de profesionales con más de 20 años de experiencia en instalación de pladur y reformas interiores en Mallorca"
+    />
+    <SchemaFAQ faqs={sobreNosotrosFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca (Plaquistas y Acabados SL) — empresa especializada en pladur en Mallorca desde 2004. Más de 50 trabajadores certificados por Placo, Knauf y Lafarge. +6.000 proyectos completados. Tel: 627 829 723.
+  </p>
+
+  <!-- 1. Hero -->
+  <Hero
+    client:visible
+    title="Somos Pladur Mallorca — 20 Años Construyendo Confianza"
+    subtitle="Especialistas en yeso laminado desde 2004. Un equipo de más de 50 trabajadores al servicio de tu proyecto."
+    dark={true}
+  />
+
+  <!-- 2. Historia -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+        <div class="lg:col-span-4 lg:sticky lg:top-32">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+              Nuestra historia
+            </p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              De empresa familiar a referente en Mallorca
+            </h2>
+            <div class="hidden lg:block w-12 h-1 rounded-full bg-foreground-dark"></div>
+          </div>
+        </div>
+        <div class="lg:col-span-8 space-y-5 text-foreground leading-relaxed text-base lg:text-lg border-l-2 border-warm-border/60 pl-6 lg:pl-8">
+          <p>
+            Fundada en <strong class="text-foreground">2004</strong> en Palma de Mallorca, Pladur Mallorca nació como una empresa familiar de
+            3 personas con una convicción clara: especializarse en un único sistema constructivo y
+            dominarlo completamente. En aquel momento, la construcción en seco con yeso laminado
+            era todavía un sector emergente en las Islas Baleares, dominado por empresas generalistas
+            que lo ofrecían como un servicio más entre muchos otros.
+          </p>
+          <p>
+            Apostamos por la <strong class="text-foreground">especialización total</strong>. Formamos a nuestros operarios en los centros
+            técnicos de Placo y Knauf, invertimos en herramienta profesional y construimos relaciones
+            directas con los distribuidores de materiales. El resultado fue inmediato: proyectos mejor
+            ejecutados, en menos tiempo y con menos incidencias.
+          </p>
+          <p>
+            Hoy somos un equipo de <strong class="text-foreground font-semibold">más de 50 trabajadores</strong> especializados en sistemas de yeso laminado.
+            Hemos completado más de <strong class="text-foreground font-semibold">6.000 proyectos</strong> en toda la isla de Mallorca — desde <a href="/falsos-techos-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">falsos techos</a> y <a href="/tabiques-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">tabiques</a> en apartamentos de 40 m² en Palma, hasta <a href="/reformas-interiores-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">reformas interiores</a> de villas de lujo en Calvià y hoteles de 4 estrellas
+            en la zona turística de la Playa de Palma. Nuestra valoración media es de <strong class="text-foreground font-semibold">4.7 sobre
+            5</strong> en Google, con reseñas verificadas de clientes reales.
+          </p>
+          <p>
+            Nuestros servicios cubren todas las necesidades de construcción en seco: <a href="/aislamiento-acustico-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">aislamiento acústico</a>, <a href="/aislamiento-termico-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">aislamiento térmico</a>, trasdosados, distribuciones completas y acabados decorativos.
+          </p>
+          <p>
+            Seguimos siendo una empresa de proximidad, con trato directo entre cliente y responsable
+            técnico, y con el mismo compromiso con el que empezamos: hacer bien cada trabajo, a la
+            primera vez, en el plazo acordado y al <a href="/precios-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">precio</a> cerrado.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Cifras clave -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="text-center mb-12 lg:mb-16 animate-fade-up">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg mx-auto">
+            En números
+          </p>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
+            Dos décadas, una sola especialidad
+          </h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 stagger-children">
+        {stats.map((stat) => (
+          <div
+            class="flex flex-col items-center text-center bg-white/70 border border-warm-border/50 rounded-3xl p-6 lg:p-8 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default"
+          >
+            <span class="text-4xl lg:text-5xl font-bold text-foreground-dark leading-none mb-3 tabular-nums">
+              {stat.valor}
+            </span>
+            <span class="text-foreground font-semibold text-sm mb-1">{stat.etiqueta}</span>
+            <span class="text-muted text-xs">{stat.descripcion}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Valores -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="text-center mb-12 lg:mb-16">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg mx-auto">
+            Lo que nos define
+          </p>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
+            Nuestros valores
+          </h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 stagger-children">
+        {valores.map((valor) => (
+          <div
+            class="group flex flex-col gap-4 bg-white/70 border border-warm-border/50 rounded-3xl p-8 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default"
+          >
+            <div class="size-12 flex items-center justify-center bg-surface text-foreground rounded-xl border border-nav-border group-hover:bg-foreground-dark group-hover:text-white group-hover:border-foreground-dark transition-colors duration-300">
+              <svg class="size-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={valor.iconoPath} />
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-foreground">{valor.titulo}</h3>
+            <p class="text-muted leading-relaxed text-sm">{valor.descripcion}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Marcas -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div class="lg:col-span-4">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+              Materiales de primera
+            </p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+              Marcas con las que trabajamos
+            </h2>
+            <p class="text-muted leading-relaxed">
+              Solo instalamos sistemas de fabricantes líderes. Esto garantiza homologaciones, disponibilidad
+              de piezas y soporte técnico durante toda la vida útil de la instalación.
+            </p>
+          </div>
+        </div>
+        <div class="lg:col-span-8 space-y-4">
+          {marcas.map((marca) => (
+            <div
+              class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default"
+            >
+              <div class="shrink-0 size-16 bg-white rounded-xl border border-warm-border/60 flex items-center justify-center p-2 group-hover:border-warm-border transition-[border-color] duration-300">
+                <img
+                  src={marca.logo}
+                  alt={`Logo ${marca.nombre}`}
+                  width="48"
+                  height="48"
+                  class="object-contain w-full h-full"
+                  loading="lazy"
+                />
+              </div>
+              <div>
+                <h3 class="font-bold text-foreground mb-1">{marca.nombre}</h3>
+                <p class="text-muted text-sm leading-relaxed">{marca.descripcion}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Certificaciones -->
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="text-center mb-12">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg mx-auto">
+            Garantías y homologaciones
+          </p>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            Certificaciones
+          </h2>
+          <p class="text-muted leading-relaxed max-w-xl mx-auto">
+            Trabajamos con todos los respaldos técnicos y legales que un proyecto de construcción requiere.
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 stagger-children">
+        {certificaciones.map((cert) => (
+          <div
+            class="group bg-white/70 border border-warm-border/50 rounded-3xl p-8 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default"
+          >
+            <div class="flex items-center gap-3 mb-4">
+              <div class="size-10 flex items-center justify-center bg-surface text-foreground rounded-xl shrink-0 border border-nav-border group-hover:bg-foreground-dark group-hover:text-white group-hover:border-foreground-dark transition-colors duration-300">
+                <svg class="size-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d={cert.iconoPath} />
+                </svg>
+              </div>
+              <h3 class="font-bold text-foreground text-base">{cert.titulo}</h3>
+            </div>
+            <p class="text-muted text-sm leading-relaxed">{cert.descripcion}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <FaqAccordion
+    client:visible
+    categoria="sobreNosotros"
+    titulo="Preguntas frecuentes sobre Pladur Mallorca"
+    subtitulo="Todo lo que necesitas saber sobre nuestra empresa, equipo y forma de trabajar."
+  />
+
+  <!-- 8. CTA -->
+  <CtaBanner />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

@@ -1,0 +1,161 @@
+---
+import { preciosResumen, preciosCategorias, type PrecioItem } from '@/data/precios'
+
+interface Props {
+  variant?: string
+  hideHeader?: boolean
+}
+
+const { variant = 'resumen', hideHeader = false } = Astro.props
+
+const isResumen = variant === 'resumen'
+
+const categoriaData = !isResumen
+  ? preciosCategorias.find(
+      (c) =>
+        c.categoria.toLowerCase().replace(/\s+/g, '-') === variant ||
+        c.categoria === variant
+    )
+  : null
+
+const titulosH2: Record<string, string> = {
+  'resumen': 'Precios pladur Mallorca 2026',
+  'Falsos Techos': 'Precio falsos techos pladur 2026',
+  'Tabiques y Particiones': 'Precio tabiques pladur 2026',
+  'Aislamiento Acústico': 'Precio aislamiento acústico 2026',
+  'Aislamiento Térmico': 'Precio aislamiento térmico 2026',
+}
+
+const tituloH2 = titulosH2[variant] ?? titulosH2[categoriaData?.categoria ?? ''] ?? `Precio ${variant.toLowerCase()} 2026`
+---
+
+<section class:list={[hideHeader ? 'w-full' : 'w-full py-20 lg:py-28']}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    {!hideHeader && (
+      <div class="mb-12 lg:mb-14 max-w-2xl">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Tarifas actualizadas
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {tituloH2}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {isResumen
+            ? 'Guía de precios por tipo de servicio. El presupuesto exacto lo recibirás tras la visita técnica gratuita.'
+            : categoriaData?.descripcion ?? 'Precios por servicio. Consulta gratuita y sin compromiso.'}
+        </p>
+      </div>
+    )}
+
+    {/* Note box */}
+    <div class="flex items-start gap-3 p-4 bg-white/70 border border-warm-border/50 rounded-2xl mb-8">
+      <svg class="size-5 text-muted mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z" clip-rule="evenodd" />
+      </svg>
+      <p class="text-sm text-muted">
+        <strong class="text-foreground">Los precios incluyen materiales y mano de obra.</strong>{' '}
+        IVA no incluido (21%). Precios de pladur en Mallorca 2026; el precio definitivo puede variar según superficie, acceso y complejidad de la instalación.
+      </p>
+    </div>
+
+    {/* Table container */}
+    <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div class="rounded-3xl border border-warm-border overflow-hidden min-w-[540px]">
+        <table class="min-w-full divide-y divide-warm-border">
+          <thead>
+            <tr class="bg-foreground">
+              <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Servicio</th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Desde</th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Hasta</th>
+              <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">Unidad</th>
+              {!isResumen && (
+                <th class="px-6 py-4 text-left text-xs font-bold text-white uppercase tracking-wider hidden lg:table-cell">
+                  Incluye
+                </th>
+              )}
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-warm-border">
+            {isResumen
+              ? preciosResumen.map((item, index) => (
+                  <tr class={index % 2 === 0 ? 'bg-white/70' : 'bg-white/40'}>
+                    <td class="px-6 py-5 text-sm font-semibold text-foreground">{item.servicio}</td>
+                    <td class="px-6 py-5">
+                      <span class="text-xl font-bold text-foreground tabular-nums">{item.desde}&euro;</span>
+                      <span class="text-xs text-muted ml-1">{item.unidad}</span>
+                    </td>
+                    <td class="px-6 py-5 text-sm text-muted">Precio orientativo</td>
+                    <td class="px-6 py-5 text-sm text-muted">Incluye mat. + m.o.</td>
+                  </tr>
+                ))
+              : categoriaData?.items.map((item, index) => (
+                  <tr class={index % 2 === 0 ? 'bg-white/70' : 'bg-white/40'}>
+                    <td class="px-6 py-4 text-sm font-medium text-foreground">
+                      <div>{item.servicio}</div>
+                      <div class="text-xs text-muted font-normal mt-0.5">{item.descripcion}</div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-foreground whitespace-nowrap tabular-nums">
+                      {item.precioMin}&euro;
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-muted whitespace-nowrap tabular-nums">
+                      {item.precioMax}&euro;
+                    </td>
+                    <td class="px-6 py-4 text-sm text-muted whitespace-nowrap">
+                      {item.unidad}
+                    </td>
+                    <td class="px-6 py-4 hidden lg:table-cell">
+                      <div class="flex flex-wrap gap-1">
+                        {item.incluye.slice(0, 3).map((inc) => (
+                          <span class="text-xs px-2.5 py-0.5 rounded-lg bg-surface text-foreground font-medium">
+                            {inc}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {/* All categories (only in resumen mode) */}
+    {isResumen && (
+      <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {preciosCategorias.map((cat) => (
+          <div class="p-5 rounded-3xl bg-white/70 border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-200 group h-full">
+            <h3 class="font-bold text-foreground text-sm mb-1 group-hover:text-muted transition-colors">
+              {cat.categoria}
+            </h3>
+            <p class="text-xs text-muted mb-3 leading-relaxed">{cat.descripcion}</p>
+            <p class="text-xs text-foreground font-semibold">
+              Desde {Math.min(...cat.items.map((i) => i.precioMin))}&euro;/m&sup2;
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {/* Footer CTA */}
+    <div class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 p-8 bg-white/70 rounded-3xl border border-warm-border/50 shadow-card">
+      <div>
+        <p class="font-bold text-foreground text-lg">
+          ¿Quieres saber el precio exacto de tu proyecto?
+        </p>
+        <p class="text-muted text-sm mt-1">
+          La visita técnica es gratuita. Recibirás el presupuesto detallado en 24-48 horas.
+        </p>
+      </div>
+      <a
+        href="/presupuesto-pladur"
+        class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide transition-[background-color,box-shadow] duration-200 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+      >
+        Pide tu presupuesto exacto
+        <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

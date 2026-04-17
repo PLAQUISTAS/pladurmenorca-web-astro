@@ -1,0 +1,315 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import { Image } from 'astro:assets'
+import { siteConfig } from '@/data/site'
+import Hero from '@/components/sections/Hero'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import { proyectosFaqs } from '@/data/faqs/proyectos'
+import GalleryMasonry from '@/components/gallery/GalleryMasonry'
+import { galleryItems } from '@/data/proyectos'
+
+const meta = {
+  title: '+6.000 Proyectos de Pladur en Mallorca | Galería Real',
+  description: 'Descubre +6.000 proyectos de pladur realizados en Mallorca. Falsos techos, tabiques, aislamiento y reformas en viviendas, oficinas y locales de toda la isla.',
+  canonical: '/proyectos',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Proyectos', href: '/proyectos' }]} />
+    <SchemaFAQ faqs={proyectosFaqs} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — galería de proyectos realizados en Mallorca. Falsos techos, tabiques, aislamiento acústico y térmico. +6.000 proyectos en toda la isla. Tel: 627 829 723.
+  </p>
+
+  <Hero
+    client:visible
+    dark
+    title="Galería de Proyectos de Pladur en Mallorca"
+    description="Descubre nuestros trabajos reales de pladur en viviendas, oficinas y locales comerciales de toda la isla. Más de 6.000 proyectos avalan nuestra experiencia."
+    badges={['+6.000 Proyectos', '+20 Años', 'Toda Mallorca']}
+    ctaPrimario={{ texto: 'Pedir presupuesto gratis', href: '/presupuesto-pladur' }}
+    ctaSecundario={{ texto: `Llamar: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <GalleryMasonry client:visible items={galleryItems} />
+
+  <!-- Proyectos destacados con microdata -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">Casos reales</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance">Proyectos destacados con detalle técnico</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-children">
+        {[
+          {
+            image: '/images/proyectos/reforma-integral-piso-santa-catalina-pladur-mallorca.webp',
+            imageAlt: 'Reforma con pladur en apartamento de 85m² en Santa Catalina, Palma de Mallorca',
+            title: 'Reforma integral con pladur — Apartamento 85m² en Santa Catalina, Palma',
+            location: 'Santa Catalina, Palma de Mallorca',
+            description: 'Redistribución completa de un apartamento de 85m² en el barrio de Santa Catalina. Instalación de 6 tabiques de pladur con aislamiento acústico de lana de roca 48mm (reducción de 47 dBA), 3 falsos techos con LED empotrado y trasdosado térmico en fachada norte.',
+            stats: [{ value: '85m²', label: 'Superficie' }, { value: '8 días', label: 'Duración' }, { value: '12.800€', label: 'Inversión' }],
+            tags: ['Tabiques', 'Falsos techos', 'Aislamiento'],
+          },
+          {
+            image: '/images/proyectos/aislamiento-acustico-apartamento-turistico-pladur-mallorca.webp',
+            imageAlt: 'Aislamiento acústico con pladur en apartamento turístico de 60m² en Calvià',
+            title: 'Aislamiento acústico — Apartamento turístico 60m² en Calvià',
+            location: 'Calvià, Mallorca',
+            description: 'Insonorización completa de un apartamento turístico de 60m² para mejorar las valoraciones de huéspedes. Trasdosados con placa Placo Phonique + lana de roca de 48mm en medianeras (52 dBA de reducción). Falso techo acústico con suspensión antivibratoria.',
+            stats: [{ value: '60m²', label: 'Superficie' }, { value: '5 días', label: 'Duración' }, { value: '52 dBA', label: 'Reducción' }],
+            tags: ['Aislamiento acústico', 'Turístico'],
+          },
+          {
+            image: '/images/proyectos/oficina-open-space-tabiques-pladur-mallorca.webp',
+            imageAlt: 'Distribución de oficina open space con tabiques de pladur en Manacor',
+            title: 'Distribución oficina open space — 120m² en Manacor',
+            location: 'Manacor, Mallorca',
+            description: 'Compartimentación de una nave diáfana de 120m² en 4 despachos, sala de reuniones y zona de recepción. Tabiques de pladur con doble placa Knauf y lana mineral para aislamiento acústico entre despachos. Falso techo registrable para acceso a instalaciones.',
+            stats: [{ value: '120m²', label: 'Superficie' }, { value: '6 días', label: 'Duración' }, { value: '9.600€', label: 'Inversión' }],
+            tags: ['Tabiques', 'Oficinas'],
+          },
+          {
+            image: '/images/proyectos/salon-falso-techo-pladur-villa-mallorca.webp',
+            imageAlt: 'Falso techo de pladur con iluminación LED en villa de Mallorca',
+            title: 'Falsos techos con LED integrado — Villa 200m² en Son Vida',
+            location: 'Son Vida, Palma de Mallorca',
+            description: 'Instalación de falsos techos continuos de pladur con iluminación LED perimetral empotrada en salón, comedor y 4 dormitorios de una villa de 200m². Placas Placo BA13 con acabado nivel Q4 para pintura mate premium. Integración de climatización por conductos.',
+            stats: [{ value: '200m²', label: 'Superficie' }, { value: '10 días', label: 'Duración' }, { value: 'Q4', label: 'Acabado' }],
+            tags: ['Falsos techos', 'LED integrado'],
+          },
+        ].map((proyecto) => (
+          <article itemscope itemtype="https://schema.org/CreativeWork" class="group bg-white/70 rounded-3xl border border-warm-border/50 overflow-hidden shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative">
+            <div class="absolute top-0 left-0 w-0 h-0.5 bg-foreground-dark group-hover:w-full transition-[width] duration-500 z-10"></div>
+
+            <!-- Image with location badge -->
+            <div class="relative overflow-hidden">
+              <Image
+                itemprop="image"
+                src={proyecto.image}
+                alt={proyecto.imageAlt}
+                width={600}
+                height={400}
+                class="w-full aspect-[3/2] object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 backdrop-blur-sm text-foreground text-xs font-semibold shadow-sm">
+                <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+                {proyecto.location.split(',')[0]}
+              </div>
+            </div>
+
+            <meta itemprop="locationCreated" content={proyecto.location} />
+
+            <!-- Stats bar -->
+            <div class="flex flex-wrap gap-2 px-5 lg:px-7 py-4">
+              {proyecto.stats.map((stat) => (
+                <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface border border-nav-border">
+                  <span class="text-xs sm:text-sm font-bold text-foreground-dark">{stat.value}</span>
+                  <span class="text-[10px] sm:text-xs text-muted">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 lg:p-7">
+              <h3 itemprop="name" class="text-base lg:text-lg font-bold text-foreground mb-3 leading-snug">{proyecto.title}</h3>
+              <p itemprop="description" class="text-muted text-sm leading-relaxed">{proyecto.description}</p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                {proyecto.tags.map((tag) => (
+                  <span class="text-xs px-2.5 py-1 rounded-lg bg-surface border border-nav-border text-foreground font-medium">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Texto SEO -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-8">
+          <span class="animate-fade-up inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Nuestra trayectoria
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+            Más de 6.000 Proyectos de Pladur en Mallorca desde 2004
+          </h2>
+
+          <div class="prose-pladur max-w-prose">
+            <p>
+              Desde 2004, nuestro equipo ha ejecutado más de 6.000 proyectos de pladur en toda la isla de Mallorca. Cada uno de ellos refleja nuestro compromiso con la calidad de ejecución, el cumplimiento de plazos y el trato cercano con el cliente. Esta galería recoge una selección representativa de trabajos reales realizados en los últimos años.
+            </p>
+
+            <h3>Proyectos en todo tipo de espacios</h3>
+            <p>
+              Trabajamos en viviendas particulares, apartamentos turísticos, locales comerciales, oficinas profesionales, hoteles y establecimientos de restauración. Desde la reforma integral de un piso en el centro de Palma hasta la compartimentación acústica de un hotel en la costa, cada proyecto tiene sus particularidades y recibe una solución adaptada. Nuestros servicios de <a href="/instalacion-pladur-mallorca">instalación de pladur</a> cubren todas las necesidades: <a href="/falsos-techos-pladur-mallorca">falsos techos</a>, tabiques divisorios, trasdosados con aislamiento térmico y acústico, y acabados decorativos de alta calidad.
+            </p>
+
+            <h3>Cobertura en toda Mallorca</h3>
+            <p>
+              Realizamos proyectos en todos los municipios de la isla: Palma, Calvià, Marratxí, Llucmajor, Inca, Manacor, Alcúdia, Pollença, Sóller, Andratx, Santa Ponsa, Son Servera y el resto de localidades. Disponemos de equipos de montaje móviles que se desplazan a cualquier punto de Mallorca, y realizamos la visita técnica gratuita sin importar la ubicación del proyecto.
+            </p>
+
+            <h3>Materiales de primeras marcas</h3>
+            <p>
+              Utilizamos exclusivamente materiales de los principales fabricantes europeos: Placo (Saint-Gobain), Knauf y Lafarge. Esto garantiza certificaciones de calidad, fichas técnicas contrastadas y un rendimiento probado en las condiciones climáticas de Mallorca. Cada placa, perfil y tornillo cumple con la normativa vigente y se selecciona en función de las exigencias de cada proyecto: placas estándar, hidrófugas para baños y cocinas, ignífugas para establecimientos con requisitos de protección contra incendios, y placas de alta densidad para aislamiento acústico.
+            </p>
+
+            <h3>Garantía y compromiso</h3>
+            <p>
+              Todos nuestros trabajos incluyen una garantía de 2 años que cubre defectos de instalación y materiales. Ofrecemos presupuesto cerrado sin sorpresas, con un desglose detallado de materiales y mano de obra. Consulta nuestra <a href="/precios-pladur-mallorca">tabla de precios de pladur en Mallorca</a> para conocer las tarifas orientativas por metro cuadrado de cada sistema.
+            </p>
+          </div>
+
+          <div class="mt-10">
+            <a
+              href="/presupuesto-pladur"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200"
+            >
+              Solicitar presupuesto gratuito
+              <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="sticky top-28">
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card relative overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-0.5 bg-foreground-dark"></div>
+              <div class="p-7">
+                <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-6">Cifras clave</span>
+                <div class="space-y-5">
+                  {[
+                    { valor: '+6.000', label: 'Proyectos completados' },
+                    { valor: '+20', label: 'Años de experiencia' },
+                    { valor: '2 años', label: 'Garantía incluida' },
+                    { valor: '100%', label: 'Mallorca cubierta' },
+                  ].map((stat) => (
+                    <div class="flex items-center gap-4 border-b border-warm-border/50 pb-5 last:border-0 last:pb-0">
+                      <div class="size-11 shrink-0 rounded-xl bg-surface border border-nav-border flex items-center justify-center text-foreground">
+                        {stat.label === 'Proyectos completados' && (
+                          <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                          </svg>
+                        )}
+                        {stat.label === 'Años de experiencia' && (
+                          <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                          </svg>
+                        )}
+                        {stat.label === 'Garantía incluida' && (
+                          <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                          </svg>
+                        )}
+                        {stat.label === 'Mallorca cubierta' && (
+                          <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                          </svg>
+                        )}
+                      </div>
+                      <div>
+                        <span class="block text-2xl font-bold text-foreground-dark leading-tight">{stat.valor}</span>
+                        <span class="text-sm text-muted">{stat.label}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="border-t border-warm-border/50 px-7 py-5">
+                <a
+                  href="/presupuesto-pladur"
+                  class="flex items-center justify-center gap-2 w-full px-6 py-3.5 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200"
+                >
+                  Pedir presupuesto gratis
+                  <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <FaqAccordion
+    client:visible
+    categoria="proyectos"
+    titulo="Preguntas frecuentes sobre nuestros proyectos"
+    subtitulo="Dudas habituales sobre plazos, cobertura y ejemplos de trabajos realizados en Mallorca."
+  />
+
+  <CtaBanner
+    titulo="¿Te gusta lo que ves? Tu proyecto puede ser el siguiente"
+    subtitulo="Presupuesto gratuito y sin compromiso. Te visitamos en toda Mallorca."
+    showForm={true}
+  />
+
+  <!-- Enlazado interno -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">También te puede interesar</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight">
+          Servicios relacionados
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        {[
+          { href: '/instalacion-pladur-mallorca', label: 'Instalación de Pladur en Mallorca', descripcion: 'Todo sobre nuestros servicios de instalación de pladur en la isla.' },
+          { href: '/falsos-techos-pladur-mallorca', label: 'Falsos Techos de Pladur', descripcion: 'Techos lisos, decorativos y con aislamiento para todo tipo de espacios.' },
+          { href: '/tabiques-pladur-mallorca', label: 'Tabiques de Pladur', descripcion: 'Redistribuye tu vivienda o local con tabiques de pladur rápidos y limpios.' },
+          { href: '/aislamiento-termico-mallorca', label: 'Aislamiento Térmico', descripcion: 'Mejora la eficiencia energética de tu vivienda con trasdosados aislantes.' },
+          { href: '/precios-pladur-mallorca', label: 'Precios de Pladur en Mallorca', descripcion: 'Consulta nuestras tarifas y precios orientativos por m².' },
+          { href: '/reformas-interiores-pladur-mallorca', label: 'Reformas Interiores', descripcion: 'Reformas integrales con pladur para viviendas, oficinas y locales.' },
+        ].map((link) => (
+          <a
+            href={link.href}
+            class="group block bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+          >
+            <div class="absolute top-0 left-0 w-0 h-0.5 bg-foreground-dark group-hover:w-full transition-[width] duration-500"></div>
+            <h3 class="font-bold text-foreground text-base mb-1">{link.label}</h3>
+            <p class="text-muted text-sm">{link.descripcion}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

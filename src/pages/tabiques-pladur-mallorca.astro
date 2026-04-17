@@ -1,0 +1,550 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import Container from '@/components/ui/Container.astro'
+import { tabiquesFaqs } from '@/data/faqs/tabiques'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+
+const servicio = getServicioBySlug('tabiques-pladur-mallorca')!
+const pageFaqs = tabiquesFaqs
+
+const meta = {
+  title: 'Tabiques de Pladur en Mallorca | Sin Obra | 45€/m²',
+  description: 'Instala tabiques de pladur en Mallorca para redistribuir viviendas y oficinas sin obra sucia. Montaje en 1-2 días. Desde 45€/m². Presupuesto gratis 24h.',
+  canonical: '/tabiques-pladur-mallorca',
+}
+
+const tiposTabiques = [
+  {
+    titulo: 'Tabique de distribución simple',
+    desc: 'El tabique más utilizado en viviendas y oficinas. Formado por montantes de 70 mm, una placa de yeso BA13 en cada cara y, opcionalmente, lana mineral de 40-50 mm en el interior. Ofrece un aislamiento acústico básico (Rw 35-40 dB) que es suficiente para la mayoría de separaciones entre estancias. Disponible en espesores de 70, 98 y 120 mm según los requisitos del proyecto.',
+    precio: 'Desde 45€/m²',
+    tiempo: '1 día/30 m²',
+    tags: ['Montante M70', 'Placa BA13 ambas caras', 'Opción con lana mineral', 'Listo para pintar'],
+  },
+  {
+    titulo: 'Tabique acústico de doble placa',
+    desc: 'Para los casos donde el aislamiento acústico es prioritario: dormitorios junto a salones ruidosos, oficinas junto a salas de reuniones, habitaciones de hotel, locales junto a viviendas. Utiliza doble placa en cada cara (4 placas en total), montantes de 70-100 mm con banda perimetral resiliente y lana mineral de alta densidad en el interior. Alcanza valores de Rw de 50-55 dB, superando los mínimos del CTE-HR.',
+    precio: 'Desde 52€/m²',
+    tiempo: '1-2 días/30 m²',
+    tags: ['4 placas BA13', 'Lana mineral 45mm', 'Banda perimetral resiliente', 'Rw 50-55 dB'],
+  },
+  {
+    titulo: 'Tabique cortafuego (EI-30 / EI-60 / EI-90 / EI-120)',
+    desc: 'Sistema certificado de resistencia al fuego para los casos en que la normativa exige compartimentación. Utiliza placas especiales de yeso con fibra de vidrio (DF90) y un sistema de instalación que garantiza la estabilidad mecánica y el sellado total en caso de incendio. Se especifica según el tiempo de resistencia requerido: EI-30, EI-60, EI-90 o EI-120 minutos. Obligatorio en separaciones entre locales comerciales y zonas comunes, en trasteros y garajes, y en edificios de uso público.',
+    precio: 'Desde 52€/m²',
+    tiempo: '2-3 días/30 m²',
+    tags: ['Placa DF90', 'Sellado perimetral', 'Clasificación CE', 'EI-30 a EI-120'],
+  },
+  {
+    titulo: 'Trasdosado autoportante',
+    desc: 'No es un tabique sino un revestimiento interior de pared existente. Se instala a unos centímetros de la pared original, creando una cámara de aire que se rellena con aislante. Permite mejorar el aislamiento acústico y térmico de medianeras, fachadas o paredes con problemas de humedad sin necesidad de intervenir en la pared portante. Muy utilizado en la rehabilitación de edificios históricos en el centro de Palma.',
+    precio: 'Desde 29€/m²',
+    tiempo: '1 día/30 m²',
+    tags: ['Sin tocar la pared original', 'Aislante interior', 'Mejora acústica y térmica', 'Ideal para medianeras'],
+  },
+  {
+    titulo: 'Mamparas de oficina desmontables',
+    desc: 'Sistemas modulares de pladur para distribución de espacios de trabajo que pueden desmontarse y reinstalarse en otra configuración. Especialmente valorados por empresas que necesitan flexibilidad en la distribución de sus oficinas en Mallorca. Se pueden combinar con módulos de cristal para mantener la visibilidad y la iluminación natural. El sistema es completamente desmontable y los materiales son reutilizables.',
+    precio: 'Desde 45€/m²',
+    tiempo: '1-2 días según m²',
+    tags: ['Desmontable y reutilizable', 'Módulos de cristal opcionales', 'Distribución flexible', 'Sin obra permanente'],
+  },
+]
+
+const comparativa = [
+  { criterio: 'Tiempo de instalación', pladur: '1-2 días / 30 m²', ladrillo: '1-2 semanas / 30 m²', pladurBetter: true },
+  { criterio: 'Generación de escombros', pladur: 'Mínima (embalajes y recortes)', ladrillo: 'Alta (ladrillos, mortero, polvo)', pladurBetter: true },
+  { criterio: 'Peso por m²', pladur: '25-40 kg/m²', ladrillo: '120-200 kg/m²', pladurBetter: true },
+  { criterio: 'Aislamiento acústico', pladur: 'Rw 35-55 dB (con doble placa)', ladrillo: 'Rw 40-50 dB (con revoco)', pladurBetter: false },
+  { criterio: 'Precio total instalado', pladur: 'Inferior (menos mano de obra)', ladrillo: 'Superior (más tiempo y materiales)', pladurBetter: true },
+  { criterio: 'Flexibilidad futura', pladur: 'Total: se desmonta y cambia fácil', ladrillo: 'Escasa: demolición necesaria', pladurBetter: true },
+  { criterio: 'Acabado superficial', pladur: 'Plano y homogéneo de serie', ladrillo: 'Requiere revoco + yesado', pladurBetter: true },
+  { criterio: 'Cargas empotradas pesadas', pladur: 'Con refuerzo de estructura', ladrillo: 'Sin limitación', pladurBetter: false },
+]
+
+const pladurVentajas = ['Rapidez de instalación', 'Limpieza de obra', 'Menor peso', 'Precio más bajo', 'Flexibilidad futura', 'Acabado superior']
+
+const ventajasCards = [
+  { titulo: 'Rapidez sin precedentes', desc: 'Un tabique de 30 m² se instala en una sola jornada. Lo que con ladrillo llevaría 1-2 semanas, con pladur se termina en un día. Ideal para pisos alquilados, locales o negocios que no pueden parar semanas.' },
+  { titulo: 'Obra limpia y seca', desc: 'Sin mortero, sin paletas, sin charcos de agua en el suelo. Los únicos residuos son recortes de placa y embalajes. Los vecinos apenas se enteran. El espacio puede seguir utilizándose durante las obras.' },
+  { titulo: 'Mucho más ligero', desc: 'Un tabique de pladur pesa entre 5 y 7 veces menos que uno de ladrillo equivalente. Esto elimina la preocupación por la capacidad portante del forjado, especialmente crítica en edificios antiguos del centro histórico de Palma.' },
+  { titulo: 'Fácilmente modificable', desc: 'Si en el futuro necesitas cambiar la distribución, los tabiques de pladur se pueden abrir, mover o eliminar sin necesidad de demolición. Una ventaja enorme para locales y oficinas con necesidades cambiantes.' },
+]
+
+const pasosProceso = [
+  { num: '01', titulo: 'Marcado y replanteo', desc: 'Marcamos la posición exacta del tabique en suelo y techo mediante láser de nivel. Es el paso más crítico para garantizar la verticalidad y el alineamiento con otros elementos del espacio.' },
+  { num: '02', titulo: 'Instalación de perfiles guía', desc: 'Fijamos los perfiles guía en suelo y techo con taco y tornillo. Antes de fijarlos, colocamos la banda perimetral resiliente que desvincula la estructura del tabique del forjado y mejora el aislamiento acústico.' },
+  { num: '03', titulo: 'Montantes y paso de instalaciones', desc: 'Instalamos los montantes verticales cada 40 o 60 cm según la tipología y resistencia requeridas. En esta fase pasan las instalaciones eléctricas, de datos o telecomunicaciones que sean necesarias.' },
+  { num: '04', titulo: 'Aislante y primera cara de placa', desc: 'Colocamos el aislante interior (lana mineral si se requiere aislamiento acústico o térmico adicional) y atornillamos la primera cara de placas de yeso. El atornillado se realiza siguiendo las distancias normalizadas.' },
+  { num: '05', titulo: 'Segunda cara y tratamiento de juntas', desc: 'Instalamos la segunda cara de placas y procedemos al tratamiento de juntas: cintas de papel o fibra de vidrio + pasta de juntas. Este proceso requiere al menos dos capas con secado intermedio para conseguir un acabado perfecto.' },
+  { num: '06', titulo: 'Acabado final listo para pintar', desc: 'Lijamos las juntas y la superficie, sellamos los encuentros con paredes y techo, y dejamos el tabique completamente listo para pintar. Limpieza de obra incluida. No pintamos, pero dejamos la superficie en condiciones óptimas para el pintor.' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Tabiques de Pladur', href: '/tabiques-pladur-mallorca' }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url="https://www.pladurmallorca.com/tabiques-pladur-mallorca"
+      image="https://www.pladurmallorca.com/images/proyectos/pasillo-tabiques-pladur-villa-mallorca.webp"
+     
+    />
+    <SchemaHowTo
+      name="Cómo instalar tabiques de pladur"
+      description="Proceso de instalación de tabiques de pladur en 6 pasos: desde el marcado y replanteo hasta el acabado final listo para pintar."
+      totalTime="PT16H"
+      steps={[
+        { name: 'Marcado y replanteo', text: 'Se marca la posición exacta del tabique en suelo y techo mediante láser de nivel para garantizar la verticalidad.' },
+        { name: 'Instalación de perfiles guía', text: 'Se fijan los perfiles guía en suelo y techo con taco y tornillo, con banda perimetral resiliente para aislamiento acústico.' },
+        { name: 'Montantes y paso de instalaciones', text: 'Se instalan montantes verticales cada 40 o 60 cm según tipología y se pasan las instalaciones eléctricas por el interior de la estructura.' },
+        { name: 'Aislante y primera cara de placa', text: 'Se coloca el aislante interior (lana mineral o similar) y se atornilla la primera cara de placas de yeso laminado.' },
+        { name: 'Segunda cara y tratamiento de juntas', text: 'Se instala la segunda cara de placas y se tratan las juntas con cintas y pasta de juntas para lograr una superficie continua.' },
+        { name: 'Acabado final listo para pintar', text: 'Se lijan las juntas, se sella el encuentro con paredes y techo, y se deja la superficie lista para pintar.' },
+      ]}
+    />
+    <SchemaOffers
+      offers={[
+        { name: 'Tabique sencillo estándar', price: '45', description: 'Tabique de pladur con estructura de 46mm, placa a cada lado y aislante básico. Precio por m².' },
+        { name: 'Tabique doble placa', price: '52', description: 'Tabique reforzado con doble placa por cara para mayor resistencia y aislamiento. Precio por m².' },
+        { name: 'Tabique acústico premium', price: '52', description: 'Tabique de máximo aislamiento acústico con doble estructura, doble placa y lana de roca de alta densidad. Precio por m².' },
+        { name: 'Tabique hidrófugo para baños', price: '45', description: 'Tabique con placa hidrófuga (verde) para zonas húmedas como baños y cocinas. Precio por m².' },
+        { name: 'Tabique cortafuegos', price: '52', description: 'Tabique con placa cortafuegos (rosa) para cumplir normativa de protección contra incendios. Precio por m².' },
+      ]}
+    />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Mallorca — tabiques de pladur y trasdosados en Mallorca. Divisiones de espacios, redistribución de pisos. Precios desde 45€/m². Tel: 627 829 723.
+  </p>
+
+  <!-- Hero -->
+  <Hero
+    client:visible
+    title="Tabiques de Pladur en Mallorca — Distribución Rápida y Sin Obra"
+    subtitle="Redistribuye tu espacio sin escombros ni semanas de obra"
+    description="Instalamos tabiques de pladur en Mallorca para viviendas, oficinas y locales. Sin demoler, sin escombros, sin polvo excesivo. Distribución de espacios en 1-2 días desde 45€/m². Presupuesto gratis."
+    dark={true}
+    badges={['Desde 45€/m²', 'Sin escombros', 'En 1-2 días']}
+    ctaPrimario={{ texto: 'Pedir presupuesto gratis', href: '/presupuesto-pladur' }}
+    ctaSecundario={{ texto: `Llamar: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- ¿Qué es un tabique de pladur? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+              Introducción
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+              ¿Qué es un tabique de pladur?
+            </h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>
+              Un tabique de pladur es una pared no estructural construida con el sistema de construcción en seco de
+              yeso laminado. A diferencia de las paredes de ladrillo, no requiere mortero, no necesita tiempo de
+              fraguado y no genera residuos de envergadura. Se construye mediante una estructura de perfiles
+              metálicos de acero galvanizado —guides en suelo y techo, y montantes verticales— sobre la que se
+              atornillan las placas de yeso laminado en una o ambas caras.
+            </p>
+            <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+              <p>"Los trasdosados autoportantes con placa de yeso laminado y lana mineral de 48mm alcanzan un índice de reducción acústica de 43 a 52 dBA, dependiendo de la configuración"</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">— Placo Saint-Gobain, Manual de Soluciones Constructivas, Edición 2024</cite>
+            </blockquote>
+            <p>
+              En el interior de la estructura pueden pasar instalaciones eléctricas, de telefonía, datos o
+              climatización, y también puede alojarse material aislante (lana mineral, lana de roca) para mejorar
+              el comportamiento acústico y térmico del tabique. El resultado es una pared terminada, perfectamente
+              plana y lista para pintar en cuestión de horas.
+            </p>
+            <p>
+              En Mallorca, los tabiques de pladur se utilizan principalmente para redistribuir viviendas existentes
+              (crear habitaciones adicionales, separar salón y comedor, añadir un aseo), para la distribución de
+              oficinas y espacios de trabajo, y para compartimentar locales comerciales. Su rapidez y limpieza los
+              hacen especialmente adecuados en entornos habitados o en locales que no pueden cerrar durante
+              semanas.
+            </p>
+            <p class="text-sm">
+              Ver también:
+              <a href="/instalacion-pladur-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">
+                todos nuestros servicios de instalación de pladur
+              </a>
+              &middot;
+              <a href="/aislamiento-acustico-mallorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">
+                aislamiento acústico con tabiques de pladur
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <div class="p-6 bg-foreground rounded-3xl text-white">
+              <p class="text-xs font-bold uppercase tracking-widest text-nav-border/60 mb-3">
+                Presupuesto gratis
+              </p>
+              <p class="font-bold text-lg mb-2">Distribuye tu espacio sin obras</p>
+              <p class="text-gray-300 text-sm mb-5 leading-relaxed">
+                Visitamos tu espacio, medimos y te enviamos presupuesto en 24h.
+              </p>
+              <a
+                href={`tel:${siteConfig.phoneRaw}`}
+                class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide transition-colors"
+              >
+                {siteConfig.phone}
+              </a>
+              <a
+                href="/presupuesto-pladur"
+                class="flex items-center justify-center gap-2 w-full py-3 mt-3 rounded-xl border border-white/30 hover:border-white text-white font-bold text-sm tracking-wide transition-colors"
+              >
+                Pedir presupuesto online
+              </a>
+            </div>
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl">
+              <p class="font-semibold text-foreground text-sm mb-3">Ver también:</p>
+              <ul class="space-y-2">
+                {[
+                  { label: 'Instalación de Pladur', href: '/instalacion-pladur-mallorca' },
+                  { label: 'Precios del Pladur', href: '/precios-pladur-mallorca' },
+                  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
+                ].map((s) => (
+                  <li>
+                    <a href={s.href} class="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors py-0.5">
+                      <svg aria-hidden="true" class="size-3.5 text-foreground shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de tabiques -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+          Catálogo de soluciones
+        </p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">
+          Tipos de tabiques de pladur que instalamos
+        </h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">
+          Desde la distribución básica hasta los sistemas cortafuego certificados, disponemos de la solución
+          adecuada para cada tipo de proyecto en Mallorca.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 stagger-children">
+        {tiposTabiques.map((tipo) => (
+          <div class="bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default p-7 lg:p-8">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <h3 class="text-lg font-bold text-foreground leading-snug">{tipo.titulo}</h3>
+              <div class="shrink-0 text-right">
+                <p class="text-xs font-bold text-muted uppercase tracking-wider">Precio</p>
+                <p class="font-bold text-foreground text-sm">{tipo.precio}</p>
+              </div>
+            </div>
+            <p class="text-sm text-muted leading-relaxed mb-5">{tipo.desc}</p>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-xs font-bold text-muted uppercase tracking-wider">Plazo:</span>
+              <span class="text-xs font-semibold text-foreground">{tipo.tiempo}</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              {tipo.tags.map((t) => (
+                <span class="text-xs px-2.5 py-1 bg-surface text-foreground rounded-lg font-medium">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Comparativa Pladur vs Ladrillo -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: sticky header -->
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28">
+            <div>
+              <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+                Comparativa
+              </span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+                Pladur vs ladrillo: la comparativa definitiva
+              </h2>
+              <p class="text-muted leading-relaxed mb-8">
+                Si tienes dudas sobre qué sistema elegir para tu proyecto, esta comparativa te ayudará a tomar la decisión más adecuada para tu caso particular.
+              </p>
+            </div>
+
+            <div class="bg-foreground rounded-3xl p-7">
+              <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-5">Pladur gana en 6 de 8 criterios</p>
+              <div class="space-y-3">
+                {pladurVentajas.map((v) => (
+                  <div class="flex items-center gap-3">
+                    <div class="shrink-0 w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <p class="text-white/70 text-sm">{v}</p>
+                  </div>
+                ))}
+              </div>
+              <div class="mt-6 pt-5 border-t border-white/10">
+                <p class="text-white/50 text-xs leading-relaxed">
+                  Para cargas empotradas muy pesadas (bañeras, boilers) se puede reforzar la estructura del tabique de pladur.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Comparison cards -->
+        <div class="lg:col-span-7 space-y-5">
+          {comparativa.map((fila) => (
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 p-6 lg:p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+              <p class="font-bold text-foreground text-base mb-4">{fila.criterio}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Pladur -->
+                <div class={`rounded-2xl p-4 ${fila.pladurBetter ? 'bg-surface border border-nav-border' : 'bg-transparent'}`}>
+                  <div class="flex items-center gap-2 mb-2">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Pladur</p>
+                    {fila.pladurBetter && (
+                      <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <p class={`text-sm leading-relaxed ${fila.pladurBetter ? 'text-foreground font-medium' : 'text-muted'}`}>
+                    {fila.pladur}
+                  </p>
+                </div>
+                <!-- Ladrillo -->
+                <div class={`rounded-2xl p-4 ${!fila.pladurBetter ? 'bg-surface border border-nav-border' : 'bg-transparent'}`}>
+                  <div class="flex items-center gap-2 mb-2">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-muted">Ladrillo</p>
+                    {!fila.pladurBetter && (
+                      <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <p class={`text-sm leading-relaxed ${!fila.pladurBetter ? 'text-foreground font-medium' : 'text-muted'}`}>
+                    {fila.ladrillo}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner
+    titulo="¿Redistribuyes tu espacio en Mallorca?"
+    subtitulo="Sin obra, sin polvo, sin semanas de espera. Presupuesto gratis en 24h."
+    showForm={false}
+  />
+
+  <!-- Ventajas -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+          Por qué elegirnos
+        </p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-12 max-w-2xl">
+          Ventajas de los tabiques de pladur en Mallorca
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {ventajasCards.map((v) => (
+          <div class="p-6 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="size-8 bg-surface border border-nav-border rounded-xl flex items-center justify-center mb-4">
+              <svg aria-hidden="true" class="size-4 text-foreground" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-foreground text-base mb-2">{v.titulo}</h3>
+            <p class="text-sm text-muted leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Proceso -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: sticky header -->
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28">
+            <div>
+              <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+                Metodología
+              </span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+                ¿Cómo instalamos un tabique de pladur?
+              </h2>
+              <p class="text-muted leading-relaxed mb-8">
+                Nuestro proceso de instalación sigue 6 pasos estandarizados que garantizan un resultado profesional, limpio y duradero en cada proyecto.
+              </p>
+            </div>
+
+            <div class="bg-foreground rounded-3xl p-7">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <p class="text-3xl font-bold text-white">6</p>
+                  <p class="text-white/50 text-sm">Pasos del proceso</p>
+                </div>
+                <div>
+                  <p class="text-3xl font-bold text-white">1-2</p>
+                  <p class="text-white/50 text-sm">Días de instalación</p>
+                </div>
+              </div>
+              <div class="mt-6 pt-6 border-t border-white/10">
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <p class="text-white/70 text-sm">Limpieza de obra incluida</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Timeline steps -->
+        <div class="lg:col-span-7">
+          <div class="relative">
+            <!-- Connecting timeline line -->
+            <div class="absolute left-[1.19rem] top-10 bottom-10 w-px bg-gradient-to-b from-nav-border via-nav-border to-transparent hidden lg:block" aria-hidden="true"></div>
+
+            <div class="space-y-5">
+              {pasosProceso.map((paso) => (
+                <div class="group flex gap-5 bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative">
+                  <!-- Number indicator -->
+                  <div class="shrink-0 size-10 rounded-xl bg-surface border border-nav-border flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300 relative z-10">
+                    <span class="text-sm font-bold text-foreground group-hover:text-white transition-colors duration-300">{paso.num}</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-foreground text-base mb-2">{paso.titulo}</h3>
+                    <p class="text-sm text-muted leading-relaxed">{paso.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- PreciosTable -->
+  <PreciosTable variant="Tabiques y Particiones" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/oficina-open-space-tabiques-pladur-mallorca.webp', alt: 'Tabiques de pladur en oficina open space en Mallorca' },
+    { src: '/images/proyectos/pasillo-tabiques-pladur-villa-mallorca.webp', alt: 'Pasillo con tabiques de pladur en villa de Mallorca' },
+    { src: '/images/proyectos/habitacion-armario-empotrado-pladur-mallorca.webp', alt: 'Habitación con armario empotrado de pladur en Mallorca' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral-mallorca.webp', alt: 'Tabiques de pladur en villa de obra nueva en Mallorca' },
+  ]} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={[
+    { slug: 'pladur-vs-ladrillo', titulo: 'Pladur vs ladrillo: comparativa completa', descripcion: 'Comparación detallada entre tabiques de pladur y de ladrillo. Precios, plazos y rendimiento.' },
+    { slug: 'precio-pladur-mallorca-2026', titulo: 'Precio del pladur en Mallorca 2026', descripcion: 'Precios actualizados de tabiques de pladur en Mallorca. Tabla de tarifas completa.' },
+    { slug: 'normativa-cte-hr-baleares', titulo: 'Normativa CTE-HR en Baleares', descripcion: 'Requisitos de aislamiento acústico en tabiques según la normativa vigente en Baleares.' },
+  ]} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    faqs={pageFaqs}
+    titulo="Preguntas frecuentes sobre tabiques de pladur"
+    subtitulo="Resolvemos las dudas más habituales sobre la instalación de tabiques de pladur en Mallorca."
+  />
+
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">Para zonas húmedas como baños y cocinas, utilizamos <strong class="text-white">placa hidrófuga (verde)</strong> con absorción de agua inferior al 5%. Un tabique resistente a la humedad ambiental sin deteriorarse.</p>
+        <a href="/pladur-hidrofugo-mallorca" class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          Ver pladur hidrófugo
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner final -->
+  <CtaBanner
+    titulo="¿Necesitas redistribuir tu espacio en Mallorca?"
+    subtitulo="Presupuesto gratis en 24 horas. Sin escombros, sin semanas de espera."
+    showForm={true}
+  />
+
+  <ServiciosRelacionados currentPath="/tabiques-pladur-mallorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

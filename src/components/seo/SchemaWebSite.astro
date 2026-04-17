@@ -1,0 +1,5 @@
+---
+import { webSiteSchema } from '@/lib/schema'
+const schema = webSiteSchema()
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

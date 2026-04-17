@@ -1,0 +1,4 @@
+export interface FAQ {
+  pregunta: string
+  respuesta: string
+}

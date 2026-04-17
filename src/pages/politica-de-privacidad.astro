@@ -1,0 +1,588 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import Hero from '@/components/sections/Hero'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Política de Privacidad | Pladur Mallorca',
+  description: 'Política de privacidad de Pladur Mallorca (PLAQUISTAS Y ACABADOS SL). Información sobre el tratamiento de tus datos personales conforme al RGPD y la LOPDGDD.',
+  canonical: '/politica-de-privacidad',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Política de Privacidad', href: '/politica-de-privacidad' }]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <Hero
+    client:visible
+    title="Política de Privacidad"
+    subtitle="Información sobre el tratamiento de tus datos personales conforme al RGPD y la LOPDGDD."
+    dark={true}
+  />
+
+  <section class="w-full py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- 1. Responsable del tratamiento -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            01
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Responsable del tratamiento
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            En cumplimiento del Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos (en adelante, <strong class="text-foreground">RGPD</strong>), y de la Ley Orgánica 3/2018, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (en adelante, <strong class="text-foreground">LOPDGDD</strong>), le informamos de que sus datos personales serán tratados por:
+          </p>
+          <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Responsable:</strong> PLAQUISTAS Y ACABADOS SL (en adelante, <strong class="text-foreground">PLADUR MALLORCA</strong>)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">CIF:</strong> B16648487</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Domicilio social:</strong> Carrer Jacint Verdaguer 37, ESC A, 4, 2 — 07004 Palma de Mallorca, Illes Balears, España</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Correo electrónico:</strong> <a href="mailto:info@plaquistas.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">info@plaquistas.com</a></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Teléfono:</strong> <a href={`tel:${siteConfig.phoneRaw}`} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">{siteConfig.phone}</a></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Actividad:</strong> Instalación de sistemas de construcción en seco (pladur)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Datos que recabamos y finalidad del tratamiento -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            02
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Datos que recabamos y finalidad del tratamiento
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            PLADUR MALLORCA recaba y trata datos personales a través de los siguientes canales, siempre con las finalidades que se indican a continuación:
+          </p>
+
+          <div class="space-y-4">
+            <!-- Formulario de contacto -->
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+              <h3 class="text-lg font-bold text-foreground mb-3">Formulario de contacto</h3>
+              <p class="text-muted leading-relaxed mb-3">
+                <strong class="text-foreground">Datos recabados:</strong> nombre y apellidos, número de teléfono, dirección de correo electrónico y mensaje.
+              </p>
+              <p class="text-muted leading-relaxed">
+                <strong class="text-foreground">Finalidad:</strong> gestionar las consultas y solicitudes de información que el usuario remita a través del formulario de contacto disponible en el sitio web.
+              </p>
+            </div>
+
+            <!-- Formulario de solicitud de presupuesto -->
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+              <h3 class="text-lg font-bold text-foreground mb-3">Formulario de solicitud de presupuesto</h3>
+              <p class="text-muted leading-relaxed mb-3">
+                <strong class="text-foreground">Datos recabados:</strong> nombre y apellidos, número de teléfono, dirección de correo electrónico, tipo de trabajo solicitado y dirección de la obra.
+              </p>
+              <p class="text-muted leading-relaxed">
+                <strong class="text-foreground">Finalidad:</strong> elaborar y remitir presupuestos personalizados para los servicios de instalación de sistemas de construcción en seco solicitados por el usuario.
+              </p>
+            </div>
+
+            <!-- WhatsApp Business -->
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+              <h3 class="text-lg font-bold text-foreground mb-3">WhatsApp Business</h3>
+              <p class="text-muted leading-relaxed mb-3">
+                <strong class="text-foreground">Datos recabados:</strong> número de teléfono, nombre de perfil y contenido de los mensajes intercambiados.
+              </p>
+              <p class="text-muted leading-relaxed">
+                <strong class="text-foreground">Finalidad:</strong> atender consultas en tiempo real, facilitar la comunicación directa con el cliente y agilizar la coordinación de servicios.
+              </p>
+            </div>
+
+            <!-- Navegación web -->
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+              <h3 class="text-lg font-bold text-foreground mb-3">Navegación web</h3>
+              <p class="text-muted leading-relaxed mb-3">
+                <strong class="text-foreground">Datos recabados:</strong> dirección IP, tipo de navegador, sistema operativo, páginas visitadas, duración de la visita, fuente de tráfico y otros datos de uso del sitio web.
+              </p>
+              <p class="text-muted leading-relaxed">
+                <strong class="text-foreground">Finalidad:</strong> análisis estadístico del tráfico web, mejora de la experiencia de usuario, optimización del rendimiento del sitio y medición de la eficacia de las campañas publicitarias.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Base legal del tratamiento -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            03
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Base legal del tratamiento
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            El tratamiento de los datos personales del usuario se fundamenta en las siguientes bases jurídicas, de conformidad con el artículo 6 del RGPD:
+          </p>
+
+          <div class="space-y-4">
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+              <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                  <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                    <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  </span>
+                  <span class="text-muted"><strong class="text-foreground">Formularios de contacto y solicitud de presupuesto:</strong> el consentimiento del interesado (art. 6.1.a RGPD), prestado de forma libre, específica, informada e inequívoca al cumplimentar y enviar el formulario correspondiente; y la ejecución de medidas precontractuales a petición del interesado (art. 6.1.b RGPD), en la medida en que el tratamiento sea necesario para la elaboración de presupuestos y la eventual formalización de una relación contractual.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                    <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  </span>
+                  <span class="text-muted"><strong class="text-foreground">WhatsApp Business:</strong> el consentimiento del interesado (art. 6.1.a RGPD), manifestado al iniciar voluntariamente la conversación a través de dicho canal de comunicación.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                    <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  </span>
+                  <span class="text-muted"><strong class="text-foreground">Navegación web y cookies:</strong> el consentimiento del interesado (art. 6.1.a RGPD) para las cookies analíticas y de marketing, otorgado a través del banner de cookies del sitio web; y el interés legítimo del responsable (art. 6.1.f RGPD) para las cookies técnicas estrictamente necesarias para el correcto funcionamiento del sitio web, cuya instalación no requiere consentimiento previo.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                    <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  </span>
+                  <span class="text-muted"><strong class="text-foreground">Cumplimiento de obligaciones legales:</strong> el cumplimiento de obligaciones fiscales y mercantiles aplicables (art. 6.1.c RGPD), incluidas las derivadas de la Ley General Tributaria, el Código de Comercio y la normativa de facturación vigente.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Destinatarios y transferencias internacionales de datos -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            04
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Destinatarios y transferencias internacionales de datos
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            Los datos personales del usuario podrán ser comunicados a los siguientes terceros prestadores de servicios, en calidad de encargados del tratamiento, con las garantías adecuadas para las transferencias internacionales de datos:
+          </p>
+
+          <!-- Table - Desktop -->
+          <div class="hidden sm:block rounded-2xl overflow-hidden border border-warm-border/50 shadow-card">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-foreground text-white">
+                  <th class="px-4 py-3 text-left text-sm font-semibold">Destinatario</th>
+                  <th class="px-4 py-3 text-left text-sm font-semibold">Finalidad</th>
+                  <th class="px-4 py-3 text-left text-sm font-semibold">País</th>
+                  <th class="px-4 py-3 text-left text-sm font-semibold">Base legal de la transferencia</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-warm-border">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Google LLC</strong><br />Google Analytics 4, Google Tag Manager, Google Ads</td>
+                  <td class="px-4 py-3 text-sm text-muted">Análisis estadístico del tráfico web y gestión de campañas publicitarias</td>
+                  <td class="px-4 py-3 text-sm text-muted">EE.&nbsp;UU.</td>
+                  <td class="px-4 py-3 text-sm text-muted">Marco de Privacidad de Datos UE-EE.&nbsp;UU. (EU-US Data Privacy Framework), en virtud de la decisión de adecuación de la Comisión Europea de 10 de julio de 2023</td>
+                </tr>
+                <tr class="border-b border-warm-border bg-warm-100">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Meta Platforms Ireland Ltd.</strong><br />Meta Pixel / Facebook Pixel</td>
+                  <td class="px-4 py-3 text-sm text-muted">Medición de la eficacia de campañas publicitarias en plataformas de Meta y creación de audiencias personalizadas</td>
+                  <td class="px-4 py-3 text-sm text-muted">EE.&nbsp;UU. / Irlanda</td>
+                  <td class="px-4 py-3 text-sm text-muted">Cláusulas Contractuales Tipo (SCC) aprobadas por la Comisión Europea y Marco de Privacidad de Datos UE-EE.&nbsp;UU.</td>
+                </tr>
+                <tr class="border-b border-warm-border">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Vercel Inc.</strong><br />Hosting y despliegue del sitio web</td>
+                  <td class="px-4 py-3 text-sm text-muted">Alojamiento, entrega y ejecución del sitio web</td>
+                  <td class="px-4 py-3 text-sm text-muted">EE.&nbsp;UU.</td>
+                  <td class="px-4 py-3 text-sm text-muted">Marco de Privacidad de Datos UE-EE.&nbsp;UU. (EU-US Data Privacy Framework), en virtud de la decisión de adecuación de la Comisión Europea de 10 de julio de 2023</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table - Mobile (stacked cards) -->
+          <div class="sm:hidden space-y-4">
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Google LLC</h3>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Servicios:</strong> Google Analytics 4, Google Tag Manager, Google Ads</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Finalidad:</strong> Análisis estadístico del tráfico web y gestión de campañas publicitarias</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">País:</strong> EE.&nbsp;UU.</p>
+              <p class="text-sm text-muted"><strong class="text-foreground">Base legal:</strong> Marco de Privacidad de Datos UE-EE.&nbsp;UU. (decisión de adecuación de 10/07/2023)</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Meta Platforms Ireland Ltd.</h3>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Servicios:</strong> Meta Pixel / Facebook Pixel</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Finalidad:</strong> Medición de la eficacia de campañas publicitarias y creación de audiencias personalizadas</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">País:</strong> EE.&nbsp;UU. / Irlanda</p>
+              <p class="text-sm text-muted"><strong class="text-foreground">Base legal:</strong> Cláusulas Contractuales Tipo (SCC) y Marco de Privacidad de Datos UE-EE.&nbsp;UU.</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Vercel Inc.</h3>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Servicios:</strong> Hosting y despliegue del sitio web</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">Finalidad:</strong> Alojamiento, entrega y ejecución del sitio web</p>
+              <p class="text-sm text-muted mb-1"><strong class="text-foreground">País:</strong> EE.&nbsp;UU.</p>
+              <p class="text-sm text-muted"><strong class="text-foreground">Base legal:</strong> Marco de Privacidad de Datos UE-EE.&nbsp;UU. (decisión de adecuación de 10/07/2023)</p>
+            </div>
+          </div>
+
+          <p class="text-muted leading-relaxed mt-6">
+            PLADUR MALLORCA no vende, alquila ni cede datos personales a terceros con fines comerciales propios. Los datos únicamente se comunicarán a los encargados del tratamiento mencionados anteriormente y, en su caso, a las Administraciones Públicas competentes en cumplimiento de las obligaciones legales aplicables.
+          </p>
+        </div>
+      </div>
+
+      <!-- 5. Conservación de los datos -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            05
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Conservación de los datos
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            Los datos personales se conservarán durante el tiempo estrictamente necesario para cumplir con la finalidad para la que fueron recabados y, posteriormente, durante los plazos legales de prescripción que resulten de aplicación:
+          </p>
+
+          <!-- Table - Desktop -->
+          <div class="hidden sm:block rounded-2xl overflow-hidden border border-warm-border/50 shadow-card">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-foreground text-white">
+                  <th class="px-4 py-3 text-left text-sm font-semibold">Categoría de datos</th>
+                  <th class="px-4 py-3 text-left text-sm font-semibold">Plazo de conservación</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-warm-border">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Datos de contacto y presupuesto</strong></td>
+                  <td class="px-4 py-3 text-sm text-muted">Mientras dure la relación comercial y, una vez finalizada, durante los plazos de prescripción legal aplicables (5 años, conforme al art. 1964 del Código Civil)</td>
+                </tr>
+                <tr class="border-b border-warm-border bg-warm-100">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Datos fiscales y de facturación</strong></td>
+                  <td class="px-4 py-3 text-sm text-muted">4 años, conforme al art. 66 de la Ley 58/2003, de 17 de diciembre, General Tributaria</td>
+                </tr>
+                <tr class="border-b border-warm-border">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Datos de navegación y cookies</strong></td>
+                  <td class="px-4 py-3 text-sm text-muted">Según la duración específica de cada cookie (consulte la Política de Cookies en la página de Aviso Legal)</td>
+                </tr>
+                <tr class="border-b border-warm-border bg-warm-100">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Currículum vitae</strong></td>
+                  <td class="px-4 py-3 text-sm text-muted">12 meses desde su recepción, salvo que el candidato preste consentimiento para un plazo superior</td>
+                </tr>
+                <tr class="border-b border-warm-border">
+                  <td class="px-4 py-3 text-sm text-muted"><strong class="text-foreground">Consentimiento de cookies</strong></td>
+                  <td class="px-4 py-3 text-sm text-muted">12 meses desde su otorgamiento, momento en que se solicitará su renovación</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Table - Mobile (stacked cards) -->
+          <div class="sm:hidden space-y-4">
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Datos de contacto y presupuesto</h3>
+              <p class="text-sm text-muted">Mientras dure la relación comercial y, una vez finalizada, durante los plazos de prescripción legal aplicables (5 años, conforme al art. 1964 del Código Civil)</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Datos fiscales y de facturación</h3>
+              <p class="text-sm text-muted">4 años, conforme al art. 66 de la Ley 58/2003, de 17 de diciembre, General Tributaria</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Datos de navegación y cookies</h3>
+              <p class="text-sm text-muted">Según la duración específica de cada cookie (consulte la Política de Cookies en la página de Aviso Legal)</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Currículum vitae</h3>
+              <p class="text-sm text-muted">12 meses desde su recepción, salvo que el candidato preste consentimiento para un plazo superior</p>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 shadow-card">
+              <h3 class="text-base font-bold text-foreground mb-2">Consentimiento de cookies</h3>
+              <p class="text-sm text-muted">12 meses desde su otorgamiento, momento en que se solicitará su renovación</p>
+            </div>
+          </div>
+
+          <p class="text-muted leading-relaxed mt-6">
+            Una vez cumplidos los plazos indicados, los datos serán suprimidos o, en su caso, anonimizados de forma irreversible, de modo que no sea posible identificar al interesado.
+          </p>
+        </div>
+      </div>
+
+      <!-- 6. Derechos del interesado (ARSLOP) -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            06
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Derechos del interesado
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            De conformidad con los artículos 15 a 22 del RGPD y los artículos 12 a 18 de la LOPDGDD, el usuario tiene derecho a ejercer en cualquier momento los siguientes derechos:
+          </p>
+
+          <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card mb-6">
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho de acceso:</strong> obtener confirmación de si se están tratando o no sus datos personales y, en caso afirmativo, acceder a los mismos y a la información prevista en el art. 15 del RGPD.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho de rectificación:</strong> solicitar la modificación de los datos personales inexactos o completar aquellos que resulten incompletos.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho de supresión (&laquo;derecho al olvido&raquo;):</strong> solicitar la eliminación de los datos personales cuando, entre otros motivos, los datos ya no sean necesarios para los fines que fueron recogidos, el interesado retire su consentimiento o los datos hayan sido tratados ilícitamente.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho a la limitación del tratamiento:</strong> solicitar que se limite el tratamiento de los datos personales en los supuestos contemplados en el art. 18 del RGPD, en cuyo caso únicamente se conservarán para el ejercicio o la defensa de reclamaciones.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho de oposición:</strong> oponerse al tratamiento de los datos personales en los supuestos previstos en el art. 21 del RGPD, incluido el tratamiento basado en el interés legítimo o con fines de marketing directo.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Derecho a la portabilidad:</strong> recibir los datos personales facilitados al responsable en un formato estructurado, de uso común y lectura mecánica, y transmitirlos a otro responsable del tratamiento sin impedimentos.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+            <h3 class="text-lg font-bold text-foreground mb-4">Cómo ejercer sus derechos</h3>
+            <p class="text-muted leading-relaxed mb-4">
+              El usuario podrá ejercer cualquiera de los derechos anteriormente descritos dirigiendo una comunicación por escrito a PLAQUISTAS Y ACABADOS SL a través de los siguientes medios:
+            </p>
+            <ul class="space-y-3 mb-4">
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Correo electrónico:</strong> <a href="mailto:info@plaquistas.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">info@plaquistas.com</a></span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Correo postal:</strong> Carrer Jacint Verdaguer 37, ESC A, 4, 2 — 07004 Palma de Mallorca, Illes Balears, España</span>
+              </li>
+            </ul>
+            <p class="text-muted leading-relaxed mb-4">
+              En ambos casos, la solicitud deberá incluir una <strong class="text-foreground">copia del DNI, NIE o pasaporte</strong> del interesado (o documento equivalente que acredite su identidad), así como una descripción clara del derecho que desea ejercer.
+            </p>
+            <p class="text-muted leading-relaxed">
+              El responsable del tratamiento dará respuesta a la solicitud en el plazo máximo de <strong class="text-foreground">30 días naturales</strong> desde su recepción. Este plazo podrá prorrogarse en otros dos meses en caso de que la solicitud resulte especialmente compleja o se reciba un elevado número de solicitudes, en cuyo caso se informará al interesado de dicha prórroga dentro del primer mes.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Reclamación ante la AEPD -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            07
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Derecho a presentar una reclamación ante la autoridad de control
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            Si el usuario considera que el tratamiento de sus datos personales vulnera la normativa vigente en materia de protección de datos, tiene derecho a presentar una reclamación ante la <strong class="text-foreground">Agencia Española de Protección de Datos (AEPD)</strong>, autoridad de control competente en España:
+          </p>
+          <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Organismo:</strong> Agencia Española de Protección de Datos (AEPD)</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Dirección:</strong> C/ Jorge Juan, 6 — 28001 Madrid, España</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Sitio web:</strong> <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">www.aepd.es</a></span>
+              </li>
+            </ul>
+          </div>
+          <p class="text-muted leading-relaxed mt-6">
+            No obstante, con carácter previo a la presentación de la reclamación, le agradeceríamos que se pusiera en contacto con nosotros a través de <a href="mailto:info@plaquistas.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">info@plaquistas.com</a> para que podamos intentar resolver cualquier cuestión de forma directa y satisfactoria.
+          </p>
+        </div>
+      </div>
+
+      <!-- 8. Uso de cookies -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            08
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Uso de cookies
+          </h2>
+          <p class="text-muted leading-relaxed mb-4">
+            El sitio web de PLADUR MALLORCA utiliza cookies propias y de terceros con distintas finalidades: técnicas (necesarias para el correcto funcionamiento del sitio), analíticas (para medir el tráfico y el comportamiento de los usuarios) y de marketing (para personalizar la publicidad y medir la eficacia de las campañas).
+          </p>
+          <p class="text-muted leading-relaxed mb-4">
+            El usuario puede configurar, aceptar o rechazar el uso de cookies a través del banner de cookies que se muestra en su primera visita al sitio web, así como modificar sus preferencias en cualquier momento desde los ajustes de su navegador.
+          </p>
+          <p class="text-muted leading-relaxed">
+            Para obtener información detallada sobre las cookies utilizadas, su finalidad, duración y proveedor, consulte nuestra{' '}
+            <a href="/aviso-legal" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">
+              Política de Cookies
+            </a>{' '}
+            disponible en la página de Aviso Legal.
+          </p>
+        </div>
+      </div>
+
+      <!-- 9. Cambios en la política -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            09
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Cambios en la política de privacidad
+          </h2>
+          <p class="text-muted leading-relaxed mb-4">
+            PLADUR MALLORCA se reserva el derecho a modificar la presente política de privacidad en cualquier momento, con el fin de adaptarla a novedades legislativas, criterios jurisprudenciales, prácticas del sector o cambios en los servicios ofrecidos a través del sitio web.
+          </p>
+          <p class="text-muted leading-relaxed mb-4">
+            Cualquier modificación sustancial será comunicada al usuario de forma visible en el sitio web. Se recomienda al usuario revisar periódicamente esta página para mantenerse informado sobre cómo protegemos sus datos personales.
+          </p>
+          <p class="text-muted leading-relaxed">
+            La continuación del uso del sitio web tras la publicación de las modificaciones implicará la aceptación de las mismas por parte del usuario.
+          </p>
+        </div>
+      </div>
+
+      <!-- 10. Normativa aplicable -->
+      <div>
+        <div class="mb-16">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            10
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Normativa aplicable
+          </h2>
+          <p class="text-muted leading-relaxed mb-6">
+            La presente política de privacidad se rige por la siguiente normativa vigente en materia de protección de datos y servicios de la sociedad de la información:
+          </p>
+          <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
+            <ul class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Reglamento (UE) 2016/679</strong> del Parlamento Europeo y del Consejo, de 27 de abril de 2016 (Reglamento General de Protección de Datos — RGPD).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Ley Orgánica 3/2018</strong>, de 5 de diciembre, de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Ley 34/2002</strong>, de 11 de julio, de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI-CE).</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
+                  <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </span>
+                <span class="text-muted"><strong class="text-foreground">Directiva 2002/58/CE</strong> del Parlamento Europeo y del Consejo, de 12 de julio de 2002, relativa al tratamiento de los datos personales y a la protección de la intimidad en el sector de las comunicaciones electrónicas (Directiva ePrivacy).</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Fecha de última actualización -->
+      <div>
+        <div class="mb-0">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            11
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance mb-6">
+            Fecha de última actualización
+          </h2>
+          <p class="text-muted leading-relaxed">
+            La presente política de privacidad ha sido actualizada por última vez el <strong class="text-foreground">7 de marzo de 2026</strong>.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

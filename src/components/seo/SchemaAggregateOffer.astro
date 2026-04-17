@@ -1,0 +1,13 @@
+---
+import { aggregateOfferSchema } from '@/lib/schema'
+interface Props {
+  name: string
+  description: string
+  lowPrice: string
+  highPrice: string
+  offerCount: number
+}
+const props = Astro.props
+const schema = aggregateOfferSchema(props)
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

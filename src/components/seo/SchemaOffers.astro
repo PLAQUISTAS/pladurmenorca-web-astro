@@ -1,0 +1,12 @@
+---
+import { offersSchema } from '@/lib/schema'
+
+interface Props {
+  offers: { name: string; price: string; description?: string }[]
+}
+
+const { offers } = Astro.props
+const schema = offersSchema(offers)
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

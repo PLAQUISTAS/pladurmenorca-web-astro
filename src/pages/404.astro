@@ -1,0 +1,119 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton'
+import CookieBanner from '@/components/layout/CookieBanner'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import { siteConfig } from '@/data/site'
+
+const meta = {
+  title: 'Página no encontrada | Pladur Mallorca',
+  description: 'La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de instalación de pladur en Mallorca. Tel: 627 829 723.',
+  canonical: '/404',
+  noindex: true,
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Error 404', href: '/404' }]} />
+  </Fragment>
+
+  <Header client:idle slot="header" />
+
+  <section class="min-h-[80vh] flex items-center justify-center py-24 lg:py-32 relative overflow-hidden">
+    <!-- Subtle background decorations -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-warm-border-light/10 blur-3xl"></div>
+      <div class="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-warm-border/8 blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-16 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <!-- Giant decorative 404 -->
+        <div
+          class="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
+          aria-hidden="true"
+        >
+          <span class="text-[180px] sm:text-[240px] lg:text-[300px] font-bold leading-none text-warm-border/40 tracking-tighter">
+            404
+          </span>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 text-center">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-6">
+            Error 404
+          </span>
+
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            Página no encontrada
+          </h1>
+
+          <p class="text-lg text-muted leading-relaxed max-w-lg mx-auto mb-10">
+            La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de pladur en Mallorca.
+          </p>
+
+          <!-- Actions -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-foreground-dark hover:bg-foreground text-white font-bold text-base tracking-wide shadow-lg shadow-black/5 hover:shadow-xl transition-[background-color,box-shadow] duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+              </svg>
+              Ir al inicio
+            </a>
+
+            <a
+              href="/presupuesto-pladur"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              Pide presupuesto gratis
+              <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick contact strip -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-5 text-sm">
+        <span class="text-muted">o contacta directamente</span>
+        <div class="flex items-center gap-5">
+          <a
+            href={`tel:${siteConfig.phoneRaw}`}
+            class="inline-flex items-center gap-2 font-semibold text-foreground hover:text-muted transition-colors"
+          >
+            <svg class="size-4 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            {siteConfig.phone}
+          </a>
+          <span class="size-1 rounded-full bg-warm-border" aria-hidden="true"></span>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            class="inline-flex items-center gap-2 font-semibold text-foreground hover:text-muted transition-colors"
+          >
+            <svg class="size-4 text-muted" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            {siteConfig.email}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton client:visible />
+    <CookieBanner client:idle />
+  </Fragment>
+</BaseLayout>

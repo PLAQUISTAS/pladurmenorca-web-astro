@@ -1,0 +1,46 @@
+---
+interface Props {
+  currentPath: string
+}
+
+const { currentPath } = Astro.props
+
+const todosServicios = [
+  { href: '/pladur-en-mallorca', label: 'Pladur en Mallorca', descripcion: 'Servicio integral de instalación de pladur en toda la isla.' },
+  { href: '/instalacion-pladur-mallorca', label: 'Instalación de Pladur', descripcion: 'Instalación profesional de sistemas de pladur con acabados de calidad.' },
+  { href: '/escayola-mallorca', label: 'Escayola', descripcion: 'Techos de escayola, molduras, cornisas y restauración histórica.' },
+  { href: '/falsos-techos-pladur-mallorca', label: 'Falsos Techos', descripcion: 'Techos modernos con iluminación LED integrada.' },
+  { href: '/tabiques-pladur-mallorca', label: 'Tabiques y Trasdosados', descripcion: 'Tabiques divisorios y trasdosados para redistribución de espacios.' },
+  { href: '/aislamiento-acustico-mallorca', label: 'Aislamiento Acústico', descripcion: 'Soluciones de insonorización para mejorar el confort acústico.' },
+  { href: '/aislamiento-termico-mallorca', label: 'Aislamiento Térmico', descripcion: 'Aislamiento térmico para mejorar la eficiencia energética.' },
+  { href: '/reformas-interiores-pladur-mallorca', label: 'Reformas Interiores', descripcion: 'Reformas interiores completas con sistemas de pladur.' },
+  { href: '/pladur-apartamentos-turisticos-mallorca', label: 'Apartamentos Turísticos', descripcion: 'Reforma de apartamentos turísticos con plazos garantizados.' },
+]
+
+const servicios = todosServicios.filter((s) => s.href !== currentPath)
+---
+
+<section class="py-20 lg:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 animate-fade-up">
+      <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+        Servicios relacionados
+      </span>
+      <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight">
+        También te puede interesar
+      </h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 stagger-children">
+      {servicios.map((link) => (
+        <a
+          href={link.href}
+          class="group block bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative overflow-hidden h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+        >
+          <div class="absolute top-0 left-0 w-0 h-0.5 bg-foreground-dark group-hover:w-full transition-[width] duration-500" />
+          <h3 class="font-bold text-foreground text-base mb-1">{link.label}</h3>
+          <p class="text-muted text-sm">{link.descripcion}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

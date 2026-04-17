@@ -1,0 +1,40 @@
+---
+import Head from '@/components/seo/Head.astro'
+import SchemaWebSite from '@/components/seo/SchemaWebSite.astro'
+import SchemaOrganization from '@/components/seo/SchemaOrganization.astro'
+import SpeculationRules from '@/components/seo/SpeculationRules.astro'
+import type { PageMeta } from '@/lib/metadata'
+import '@/styles/globals.css'
+
+interface Props {
+  meta: PageMeta
+}
+
+const { meta } = Astro.props
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <Head meta={meta} />
+    <SchemaWebSite />
+    <SchemaOrganization />
+    <slot name="head" />
+  </head>
+  <body class="font-sans antialiased bg-white text-foreground">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-white focus:px-4 focus:py-2 focus:text-foreground">
+      Ir al contenido principal
+    </a>
+
+    <slot name="header" />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <slot name="footer" />
+    <slot name="after-footer" />
+
+    <SpeculationRules />
+  </body>
+</html>
