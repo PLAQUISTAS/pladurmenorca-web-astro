@@ -1,12 +1,32 @@
 ---
 import { servicios, type Servicio } from '@/data/servicios'
+import { localizedHref } from '@/i18n'
 
 interface Props {
+  lang?: 'es' | 'en'
   servicios?: Servicio[]
 }
 
-const { servicios: serviciosProp } = Astro.props
-const items = serviciosProp ?? servicios
+const { lang = 'es', servicios: serviciosProp } = Astro.props
+const items = (serviciosProp ?? servicios).map((s) => ({
+  ...s,
+  href: localizedHref(s.href, lang),
+}))
+const ctaHref = localizedHref('/presupuesto-pladur', lang)
+
+const t = lang === 'en' ? {
+  eyebrow: 'What we do',
+  title: 'Our Services',
+  intro: 'Specialists in drywall systems (known in Spain as "pladur") for homes, commercial spaces and offices across Menorca. Professional installation, premium materials and fixed pricing.',
+  ctaText: "Can't find what you're looking for?",
+  ctaLink: "Tell us about your project and we'll advise you",
+} : {
+  eyebrow: 'Lo que hacemos',
+  title: 'Nuestros Servicios',
+  intro: 'Especialistas en sistemas de pladur para viviendas, locales y oficinas en toda Menorca. Instalación profesional, materiales premium y precio cerrado.',
+  ctaText: '¿No encuentras lo que buscas?',
+  ctaLink: 'Cuéntanos tu proyecto y te asesoramos',
+}
 
 const iconCls = 'size-6'
 ---
@@ -17,13 +37,13 @@ const iconCls = 'size-6'
     {/* Section header */}
     <div class="mb-14 lg:mb-16 max-w-2xl animate-fade-up">
       <p class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
-        Lo que hacemos
+        {t.eyebrow}
       </p>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
-        Nuestros Servicios
+      <h2 aria-label={t.title} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+        {t.title}
       </h2>
       <p class="text-lg text-muted leading-relaxed">
-        Especialistas en sistemas de pladur para viviendas, locales y oficinas en toda Mallorca. Instalación profesional, materiales premium y precio cerrado.
+        {t.intro}
       </p>
     </div>
 
@@ -32,6 +52,7 @@ const iconCls = 'size-6'
       {items.slice(0, 6).map((servicio) => (
         <a
           href={servicio.href}
+          aria-label={servicio.nombre}
           class="group bg-white rounded-3xl border border-warm-border/40 p-8 flex flex-col gap-5 h-full shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300"
         >
           {/* Icon */}
@@ -75,7 +96,7 @@ const iconCls = 'size-6'
 
           {/* Content */}
           <div class="flex flex-col gap-3 flex-1">
-            <h3 class="font-semibold text-lg text-foreground leading-snug group-hover:text-muted transition-colors">
+            <h3 aria-label={servicio.nombre} class="font-semibold text-lg text-foreground leading-snug group-hover:text-muted transition-colors">
               {servicio.nombre}
             </h3>
             <p class="text-sm text-muted leading-relaxed line-clamp-2">
@@ -102,12 +123,12 @@ const iconCls = 'size-6'
 
     {/* Bottom CTA */}
     <div class="mt-12 text-center">
-      <p class="text-muted mb-4">¿No encuentras lo que buscas?</p>
+      <p class="text-muted mb-4">{t.ctaText}</p>
       <a
-        href="/presupuesto-pladur"
+        href={ctaHref}
         class="inline-flex items-center gap-2 text-foreground font-bold border-b-2 border-warm-border pb-0.5 hover:text-muted hover:border-muted transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-      >
-        Cuéntanos tu proyecto y te asesoramos
+       aria-label={t.ctaLink}>
+        {t.ctaLink}
         <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
         </svg>

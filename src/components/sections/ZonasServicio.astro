@@ -1,46 +1,88 @@
 ---
-import { allMunicipiosMallorca } from '@/data/municipios'
+import { allMunicipiosMenorca } from '@/data/municipios'
+import { localizedHref } from '@/i18n'
 
 interface Props {
+  lang?: 'es' | 'en'
   municipios?: string[]
 }
 
-const { municipios: municipiosProp } = Astro.props
-const todosMunicipios = municipiosProp ?? allMunicipiosMallorca
+const { lang = 'es', municipios: municipiosProp } = Astro.props
+const todosMunicipios = municipiosProp ?? allMunicipiosMenorca
 
-const municipiosDestacados = [
+interface MunicipioDestacado {
+  nombre: string
+  href: string
+  descripcion: string
+  barrios: string[]
+}
+
+const municipiosDestacadosEs: MunicipioDestacado[] = [
   {
-    nombre: 'Palma de Mallorca',
-    slug: 'pladur-palma',
-    href: '/pladur-palma',
-    descripcion: 'Capital de Mallorca. Pisos históricos, apartamentos modernos y locales comerciales. Sin coste de desplazamiento.',
-    barrios: ['Santa Catalina', 'El Terreno', 'Portixol', 'Centro Histórico', 'Son Vida'],
+    nombre: 'Maó',
+    href: localizedHref('/pladur-mao', lang),
+    descripcion: 'Capital de Menorca. Pisos históricos, apartamentos modernos y locales comerciales.',
+    barrios: ['Centro Histórico', 'Sant Climent', 'Cala Llonga', 'Malbúger', 'Son Parc'],
   },
   {
-    nombre: 'Calvià',
-    slug: 'pladur-calvia',
-    href: '/pladur-calvia',
+    nombre: 'Ciutadella',
+    href: localizedHref('/pladur-ciutadella', lang),
     descripcion: 'Chalets de lujo, villas y apartamentos turísticos. Especialistas en reformas entre temporadas.',
-    barrios: ['Santa Ponça', 'Palmanova', 'Portals Nous', 'Magaluf', 'Illetes'],
+    barrios: ['Cala en Bosc', 'Son Xoriguer', 'Cala Santandria', 'Sa Caleta', 'Centro Histórico'],
   },
 ]
 
-const municipiosConLanding = ['Palma de Mallorca', 'Calvià']
+const municipiosDestacadosEn: MunicipioDestacado[] = [
+  {
+    nombre: 'Maó',
+    href: localizedHref('/pladur-mao', lang),
+    descripcion: 'Capital of Menorca. Historic apartments, modern flats and shops.',
+    barrios: ['Old Town', 'Sant Climent', 'Cala Llonga', 'Malbúger', 'Son Parc'],
+  },
+  {
+    nombre: 'Ciutadella',
+    href: localizedHref('/pladur-ciutadella', lang),
+    descripcion: 'Luxury villas and tourist apartments. Specialists in between-season renovations.',
+    barrios: ['Cala en Bosc', 'Son Xoriguer', 'Cala Santandria', 'Sa Caleta', 'Historic Centre'],
+  },
+]
+
+const municipiosConLanding = ['Maó', 'Ciutadella']
 
 const municipiosConPagina: Record<string, string> = {
-  'Manacor': '/pladur-manacor',
-  'Inca': '/pladur-inca',
-  'Llucmajor': '/pladur-llucmajor',
-  'Alcúdia': '/pladur-alcudia',
-  'Sóller': '/pladur-soller',
-  'Andratx': '/pladur-andratx',
-  'Pollença': '/pladur-pollenca',
-  'Marratxí': '/pladur-marratxi',
+  'Alaior': '/pladur-alaior',
+  'Es Mercadal': '/pladur-es-mercadal',
+  'Ferreries': '/pladur-ferreries',
+  'Sant Lluís': '/pladur-sant-lluis',
+  'Es Migjorn Gran': '/pladur-es-migjorn-gran',
+  'Es Castell': '/pladur-es-castell',
 }
 
 const restanteMunicipios = todosMunicipios.filter(
   (m) => !municipiosConLanding.includes(m)
 )
+
+const municipiosDestacados = lang === 'en' ? municipiosDestacadosEn : municipiosDestacadosEs
+
+const t = lang === 'en' ? {
+  eyebrow: 'Island-wide coverage',
+  title: 'We work across all of Menorca',
+  intro: 'From Maó to Sant Lluís, from Ferreries to Es Mercadal. We cover all 8 municipalities of Menorca with the same team and the same standards.',
+  andMore: 'and more...',
+  seeMunicipality: (name: string) => `See ${name} page`,
+  alsoWork: 'We also work in',
+  noTravelTitle: 'Fixed quote with travel already included — no surprise charges',
+  noTravelDesc: 'Our parent company is based in Mallorca; travel to Menorca is factored transparently into the fixed quote from day one. The quote itself is always free and no-obligation.',
+} : {
+  eyebrow: 'Cobertura total',
+  title: 'Trabajamos en toda Menorca',
+  intro: 'Desde Maó hasta Sant Lluís, desde Ferreries hasta Es Mercadal. Cubrimos los 8 municipios de Menorca con el mismo equipo y la misma calidad.',
+  andMore: 'y más...',
+  seeMunicipality: (name: string) => `Ver página de ${name}`,
+  alsoWork: 'También trabajamos en',
+  noTravelTitle: 'Presupuesto cerrado con desplazamiento incluido — sin cargos sorpresa',
+  noTravelDesc: 'Nuestra SL matriz está en Mallorca; el desplazamiento a Menorca va reflejado de forma transparente en el presupuesto cerrado desde el primer momento. El presupuesto es siempre gratuito y sin compromiso.',
+}
 ---
 
 <section class="w-full py-20 lg:py-28">
@@ -49,13 +91,13 @@ const restanteMunicipios = todosMunicipios.filter(
     {/* Section header */}
     <div class="mb-14 lg:mb-16 max-w-3xl animate-fade-up">
       <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
-        Cobertura total
+        {t.eyebrow}
       </p>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
-        Trabajamos en toda Mallorca
+      <h2 aria-label={t.title} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+        {t.title}
       </h2>
       <p class="text-lg text-muted leading-relaxed">
-        Desde Palma hasta Alcúdia, desde Andratx hasta Manacor. Cubrimos los 53 municipios de Mallorca con el mismo equipo y la misma calidad.
+        {t.intro}
       </p>
     </div>
 
@@ -74,7 +116,7 @@ const restanteMunicipios = todosMunicipios.filter(
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
               </div>
-              <h3 class="text-xl sm:text-2xl font-bold text-foreground">
+              <h3 aria-label={municipio.nombre} class="text-xl sm:text-2xl font-bold text-foreground">
                 {municipio.nombre}
               </h3>
             </div>
@@ -92,19 +134,17 @@ const restanteMunicipios = todosMunicipios.filter(
           {/* Barrios */}
           <div class="flex flex-wrap gap-2">
             {municipio.barrios.map((barrio) => (
-              <span
-                class="text-xs px-2.5 py-1 bg-surface text-foreground font-medium rounded-lg"
-              >
+              <span class="text-xs px-2.5 py-1 bg-surface text-foreground font-medium rounded-lg">
                 {barrio}
               </span>
             ))}
             <span class="text-xs px-2.5 py-1 text-muted font-medium">
-              y más...
+              {t.andMore}
             </span>
           </div>
 
           <p class="text-sm font-bold text-foreground flex items-center gap-1 mt-auto">
-            Ver página de {municipio.nombre}
+            {t.seeMunicipality(municipio.nombre)}
             <svg class="size-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
@@ -122,26 +162,25 @@ const restanteMunicipios = todosMunicipios.filter(
           </svg>
         </div>
         <p class="text-sm font-semibold text-foreground uppercase tracking-wide">
-          También trabajamos en
+          {t.alsoWork}
         </p>
       </div>
       <div class="flex flex-wrap gap-2 lg:gap-2.5">
         {restanteMunicipios.map((municipio) => {
-          const href = municipiosConPagina[municipio]
+          const base = municipiosConPagina[municipio]
+          const href = base ? localizedHref(base, lang) : null
           return href ? (
             <a
               href={href}
               class="inline-flex items-center gap-1 px-3 py-1.5 text-sm text-foreground bg-surface font-semibold rounded-lg hover:bg-foreground-dark hover:text-white transition-colors duration-200"
-            >
+             aria-label={municipio}>
               {municipio}
               <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
             </a>
           ) : (
-            <span
-              class="inline-flex items-center px-3 py-1.5 text-sm text-muted bg-surface font-medium rounded-lg hover:bg-warm-border hover:text-foreground transition-colors duration-200 cursor-default"
-            >
+            <span class="inline-flex items-center px-3 py-1.5 text-sm text-muted bg-surface font-medium rounded-lg hover:bg-warm-border hover:text-foreground transition-colors duration-200 cursor-default">
               {municipio}
             </span>
           )
@@ -158,10 +197,10 @@ const restanteMunicipios = todosMunicipios.filter(
       </div>
       <div>
         <p class="font-bold text-foreground text-base">
-          Sin coste de desplazamiento en toda la isla para obras +500&euro;
+          {t.noTravelTitle}
         </p>
         <p class="text-muted text-sm mt-1">
-          Para presupuestos inferiores, consulta condiciones. La visita técnica previa es siempre gratuita sin excepción.
+          {t.noTravelDesc}
         </p>
       </div>
     </div>

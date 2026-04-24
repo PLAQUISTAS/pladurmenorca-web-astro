@@ -1,0 +1,842 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Container from '@/components/ui/Container.astro'
+import { getFalsosTechosFaqs } from '@/data/faqs/falsos-techos'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('falsos-techos-pladur-menorca')!
+const pageFaqs = getFalsosTechosFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall False Ceilings in Menorca | From €29/m² Since 2004',
+  description: 'Drywall false ceilings in Menorca from €29/m². Seamless, accessible, decorative, acoustic (CTE-HR) and LED systems. 6,000+ works since 2004. ☎ 627 829 723',
+  canonical: '/en/falsos-techos-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/falsos-techos-pladur-menorca',
+} : {
+  title: 'Falsos Techos de Pladur en Menorca | 29€/m² · Desde 2004',
+  description: 'Falsos techos de pladur en Menorca desde 29€/m². Continuos, decorativos, acústicos (CTE-HR) y con integración LED. 6.000 obras desde 2004. ☎ 627 829 723',
+  canonical: '/falsos-techos-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/falsos-techos-pladur-menorca',
+}
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall false ceilings across Menorca. Seamless, accessible, decorative and acoustic ceilings. Prices from €29/m². 6,000+ projects delivered. Phone: 627 829 723.',
+  heroSubtitle: 'Installation across Menorca from €29/m²',
+  heroDescription: 'Drywall false ceilings in Menorca from €29/m² (basic seamless). Five-system catalogue: seamless, accessible, decorative, acoustic (8–15 dB reduction, CTE-HR) and technical with integrated LED. Placo BA13, BA15 or moisture-resistant board. 50 m² installed in 1–2 working days.',
+  heroBadges: ['From €29/m²', '20+ years', 'All Menorca'],
+  ctaPrimario: 'Request a free quote',
+  ctaCallPrefix: 'Call:',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'False Ceilings',
+  schemaHowToName: 'How to install a drywall false ceiling',
+  schemaHowToDescription: 'Full seven-step installation process for a drywall false ceiling: from initial measurement to the final finish ready to paint.',
+  schemaSteps: [
+    { name: 'Measurement and planning', text: 'Exact measurements of the room are taken and the false ceiling height, light fixture locations and any service hatches are planned.' },
+    { name: 'Level marking', text: 'The false ceiling level is marked on every wall using a rotary laser to ensure a perfectly horizontal surface.' },
+    { name: 'Perimeter profile installation', text: 'L- or U-shaped profiles are fixed around the room, with an acoustic band to prevent noise transmission.' },
+    { name: 'Hangers and framing', text: 'Threaded suspension rods are anchored to the slab and primary and secondary profiles are fitted to form the supporting framework.' },
+    { name: 'Services routing', text: 'Electrical services, HVAC ducts and any other services that need to be hidden above the false ceiling are routed.' },
+    { name: 'Board screwing', text: 'Laminated plasterboards are screwed onto the metal framework with self-tapping screws every 20–25 cm, leaving expansion joints.' },
+    { name: 'Joint treatment and finish', text: 'Joints are treated with tape and compound, sanded and left completely smooth and ready to paint.' },
+  ],
+  schemaOffers: [
+    { name: 'Seamless smooth false ceiling', description: 'Seamless drywall false ceiling with metal framework and a finish ready to paint. Price per m².' },
+    { name: 'False ceiling with acoustic insulation', description: 'Drywall false ceiling with mineral wool for acoustic insulation included. Price per m².' },
+    { name: 'Decorative false ceiling with mouldings', description: 'Decorative drywall false ceiling with custom mouldings. Price per m².' },
+    { name: 'Accessible false ceiling', description: 'Accessible false ceiling with removable boards for easy access to services. Price per m².' },
+    { name: 'False ceiling with integrated LED lighting', description: 'False ceiling with perimeter reveal and integrated LED lighting. Price per m².' },
+  ],
+  sectionIntroEyebrow: 'Introduction',
+  sectionIntroTitle: 'What is a drywall false ceiling?',
+  intro1: 'A drywall false ceiling is a horizontal structure suspended from the slab by galvanised steel profiles and threaded rods, with laminated plasterboards screwed to it under UNE-EN 520. The drop ranges from 10 to 30 cm depending on the system, hiding cables, pipes and irregular slabs under a flat surface ready to paint.',
+  citaTexto: '"The Spanish Building Code states that horizontal construction elements must meet the basic requirement SI 1 on internal propagation, ensuring safety in the event of fire"',
+  citaFuente: '— CTE-DB-SI, Basic Fire Safety Document, Article 4',
+  intro2: 'According to Knauf technical datasheets, D112 false ceiling systems achieve fire resistance of up to EI 120 with double fire-resistant board, far exceeding the Balearic Islands regulatory requirements.',
+  intro3: 'In Menorca drywall false ceilings serve three main contexts. Historic buildings in central Maó with exposed beams or irregular one-way slabs. Holiday apartments in Ciutadella, Sant Lluís or Es Castell that modernise interiors between seasons without touching the structure. And offices and commercial premises that integrate HVAC, lighting and telecoms above the board.',
+  intro4: 'Installation requires no wet work: no cement or mortar, minimal debris and space usable again the day after. A 50 m² ceiling installs in 1–2 working days; a 90 m² ceiling with integrated electrics in 3–5 days.',
+  interno: 'Want to know how much it costs?',
+  internoLink1: 'Check our drywall pricing guide for Menorca',
+  internoOr: 'or',
+  internoLink2: 'see all our installation services',
+  sidebarBadge: 'Free quote',
+  sidebarTitle: 'False ceiling for your home or business',
+  sidebarDesc: 'We visit your space, take measurements and send you a quote within 24 hours.',
+  sidebarOnlineCta: 'Request a quote online',
+  sidebarVerTambien: 'See also:',
+  sidebarLinks: [
+    { label: 'Drywall Installation', href: '/en/instalacion-pladur-menorca' },
+    { label: 'Drywall Prices', href: '/en/precios-pladur-menorca' },
+    { label: 'Drywall in Maó', href: '/en/pladur-mao' },
+    { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+  ],
+  tiposEyebrow: 'Solutions catalogue',
+  tiposTitle: 'Types of false ceilings we install in Menorca',
+  tiposIntro: 'Five false ceiling systems matched to each case: basic seamless (€29/m²), accessible (€29/m²), decorative with mouldings (€45/m²), acoustic under CTE-HR (€35/m²) and technical with integrated LED (€47/m²).',
+  tiposTecho: [
+    {
+      num: '01',
+      titulo: 'Basic seamless false ceiling',
+      desc: 'The most installed solution in homes and offices, from €29/m². Framework of primary and secondary galvanised steel channels anchored to the slab with Placo BA13 board (12.5 mm) screwed every 25 cm. Smooth, joint-free finish ready to paint. Compatible with recessed spotlights of 70–90 mm diameter.',
+      bajada: '10–15 cm',
+      precio: 'From €29/m²',
+      ideal: 'Homes, offices, commercial premises',
+      ventajas: ['Clean, uniform finish', 'Recessed lighting option', 'Fast installation', 'Affordable'],
+    },
+    {
+      num: '02',
+      titulo: 'Accessible seamless false ceiling',
+      desc: 'Variant of the basic seamless ceiling with 30×30 cm or 60×60 cm access hatches. Allow inspection of pipes, sprinklers, HVAC heads or wiring without demolition. Mandatory in flats with systems requiring regular maintenance under regulation (e.g. fire protection).',
+      bajada: '10–20 cm',
+      precio: 'From €29/m²',
+      ideal: 'Flats with services to maintain',
+      ventajas: ['Access to hidden services', 'No building work for inspections', 'Same finish as seamless', 'Greater maintenance safety'],
+    },
+    {
+      num: '03',
+      titulo: 'Decorative false ceiling with mouldings',
+      desc: 'From €45/m². Includes perimeter mouldings, cornices, coffers, waffle patterns and curved or geometric shapes with plaster pieces or curved drywall. Higher planning requirement and the greatest visual impact. In strong demand in luxury villas in Son Parc, Binibeca Vell or Cala Galdana.',
+      bajada: '15–25 cm',
+      precio: 'From €45/m²',
+      ideal: 'Luxury homes, restaurants, hotels',
+      ventajas: ['High visual impact', 'Full customisation', 'Property value uplift', 'Premium finishes'],
+    },
+    {
+      num: '04',
+      titulo: 'Acoustic false ceiling',
+      desc: 'From €35/m². Anti-vibration suspension decouples the new ceiling from the slab, combined with mineral wool at 40–70 kg/m³ in the cavity and double screwed board. Delivers 8–15 dB additional reduction over a conventional ceiling and supports compliance with CTE-HR for separation between dwellings.',
+      bajada: '15–25 cm',
+      precio: 'From €35/m²',
+      ideal: 'Flats with noisy neighbours, hotels, studios',
+      ventajas: ['8–15 dB additional reduction', 'CTE-HR compliant', 'Ideal for holiday lets and hostels', 'Anti-vibration suspension'],
+    },
+    {
+      num: '05',
+      titulo: 'Technical false ceiling with LED integration',
+      desc: 'From €47/m². Integrates drywall framework, recessed LED housings, perimeter LED reveal strips, wiring, dimmers and KNX or Zigbee smart control, plus HVAC outlets or ventilation diffusers. The whole ceiling operates as a unified lighting and ambience system.',
+      bajada: '20–30 cm',
+      precio: 'From €47/m²',
+      ideal: 'Commercial premises, restaurants, premium homes',
+      ventajas: ['Integrated lighting', 'Hidden wiring', 'Optional smart management', 'Advanced interior design'],
+    },
+  ],
+  tablaEyebrow: 'Summary',
+  tablaTitle: 'False ceiling types at a glance',
+  tablaHeaders: ['Ceiling type', 'Min. drop', 'From', 'Ideal for'],
+  tablaResumen: [
+    ['Basic seamless', '10 cm', '€29/m²', 'Homes and offices'],
+    ['Accessible seamless', '10 cm', '€29/m²', 'Spaces with services'],
+    ['Decorative with mouldings', '15 cm', '€45/m²', 'Luxury homes'],
+    ['Acoustic', '15 cm', '€35/m²', 'Hotels and noisy homes'],
+    ['Technical with LED', '20 cm', '€47/m²', 'Premium premises and spaces'],
+  ],
+  tablaMobileCols: { bajada: 'Drop', precio: 'From', ideal: 'Ideal' },
+  tablaFootnote: '* 2026 drywall false ceiling prices in Menorca, VAT not included. The exact quote is issued after the on-site survey.',
+  tablaFootnoteLink: 'See full pricing guide',
+  ctaMidTitulo: 'Request your false ceiling quote',
+  ctaMidSubtitulo: 'Free quote with no obligation. We cover every municipality in Menorca.',
+  ventajasEyebrow: 'Why choose drywall',
+  ventajasTitle: 'Advantages of drywall false ceilings',
+  ventajas: [
+    {
+      titulo: 'Conceals services',
+      desc: 'The 10–30 cm cavity hides electrical cabling, plumbing, HVAC ducts and ventilation. Integrates every service with no intervention in the load-bearing structure.',
+      iconPath: 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21',
+    },
+    {
+      titulo: 'Improves acoustic insulation',
+      desc: 'A false ceiling with mineral wool and anti-vibration suspension cuts impact and airborne noise between floors by 8–15 dB, in line with CTE-HR. Essential in multi-storey buildings and tourist areas like Punta Prima or Arenal d\'en Castell.',
+      iconPath: 'M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z',
+    },
+    {
+      titulo: 'Thermal reduction',
+      desc: 'The cavity with mineral wool cuts heat transfer by up to 30%. In Menorca, with 80–90 days/year above 30 °C, that means lower air-conditioning consumption and alignment with CTE-DB-HE.',
+      iconPath: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z',
+    },
+    {
+      titulo: 'Finish ready to paint',
+      desc: 'With joints treated with tape and compound and sanded to 120 grit, the surface meets a flatness tolerance below 2 mm. Accepts plastic paint, textures or wallpaper with no added preparation.',
+      iconPath: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42',
+    },
+    {
+      titulo: 'No building work or demolition',
+      desc: 'The original ceiling is not broken up, no tonnes of debris are generated and dust is vacuumed during board cutting. Compatible with occupied flats and residents’ associations.',
+      iconPath: 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+    {
+      titulo: 'Fast execution timeline',
+      desc: 'A 50 m² ceiling installs in 1–2 working days. A full ceiling refurbishment in a 90 m² flat is delivered in 3–5 days. Critical for holiday lets with rotation between seasons.',
+      iconPath: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+  ],
+  procesoEyebrow: 'Installation process',
+  procesoTitle: 'How long does a drywall false ceiling take?',
+  proceso1: 'The timeline depends on three factors: area to cover, chosen system (seamless, acoustic, decorative, technical with LED) and whether electrical or HVAC services need to be integrated above the board.',
+  proceso2: 'A 50 m² seamless ceiling with no services installs in a single working day. With recessed LED spotlights the timeline rises to 1.5–2 days. For double-board acoustic systems, coffers or curved shapes the timeline reaches 3–5 days.',
+  proceso3: 'Joint treatment with tape and compound, priming and sanding to 120 grit are carried out the next day and do not block use of the adjacent space. Painting is not included in the standard offer and can be done 24–48 h after the compound is fully dry.',
+  plazos: [
+    { superficie: 'Up to 30 m²', tipo: 'Basic ceiling', tiempo: '4–6 hours', incluye: 'Framework and board only' },
+    { superficie: '30–80 m²', tipo: 'Basic ceiling + electrics', tiempo: '1–2 days', incluye: 'Framework, board and wiring' },
+    { superficie: '50–100 m²', tipo: 'Acoustic ceiling', tiempo: '2–3 days', incluye: 'Suspension, mineral wool, double board' },
+    { superficie: 'Any m²', tipo: 'Decorative ceiling', tiempo: '3–7 days', incluye: 'Mouldings, shapes and premium finishes' },
+  ],
+  plazosLabelSuperficie: 'Area',
+  plazosLabelIncluye: 'Includes',
+  galeriaAlts: [
+    'False ceiling with LED lighting outside a Balearic villa',
+    'Living room with drywall false ceiling in a Balearic villa',
+    'Dressing room with LED false ceiling and sea views in the Balearics',
+    'Bedroom with drywall false ceiling and sea views in the Balearics',
+  ],
+  articulos: [
+    { slug: 'techos-pladur-led-menorca', titulo: 'Drywall ceilings with LED in Menorca', descripcion: 'False ceiling designs with integrated LED lighting. Ideas and prices for your refurbishment.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Drywall prices in Menorca 2026', descripcion: 'Complete 2026 drywall pricing guide for Menorca. From false ceilings to partitions.' },
+    { slug: 'ventajas-reforma-pladur-menorca', titulo: 'Advantages of refurbishing with drywall', descripcion: 'Discover why drywall is the best choice for refurbishments in Menorca compared with traditional masonry.' },
+  ],
+  faqTitulo: 'Frequently asked questions about false ceilings',
+  faqSubtitulo: 'Everything you need to know about drywall false ceiling installation in Menorca.',
+  banner: 'For bathrooms and kitchens, we install false ceilings with',
+  bannerBold: 'moisture-resistant board',
+  bannerTail: 'that withstands ambient humidity without deteriorating. Water absorption below 5%.',
+  bannerCta: 'See moisture-resistant drywall',
+  ctaFinalTitulo: 'Transform the ceiling of your space',
+  ctaFinalSubtitulo: 'Fixed quote within 24h. Installing drywall in Menorca since 2004, 6,000+ works delivered.',
+} : {
+  srOnly: 'Pladur Menorca — falsos techos de pladur en toda Menorca. Techos lisos, registrables, decorativos y acústicos. Precios desde 29€/m². Más de 6.000 proyectos. Tel: 627 829 723.',
+  heroSubtitle: 'Instalación en toda Menorca desde 29€/m²',
+  heroDescription: 'Falsos techos de pladur en Menorca desde 29€/m² (continuo básico). Catálogo de cinco sistemas: continuo, registrable, decorativo, acústico (reducción 8-15 dB, CTE-HR) y técnico con LED. Placa Placo BA13, BA15 o hidrófuga. Instalación de 50 m² en 1-2 jornadas.',
+  heroBadges: ['Desde 29€/m²', '+20 años', 'Toda Menorca'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaCallPrefix: 'Llamar:',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Falsos Techos',
+  schemaHowToName: 'Cómo instalar un falso techo de pladur',
+  schemaHowToDescription: 'Proceso completo de instalación de falso techo de pladur en 7 pasos: desde la medición inicial hasta el acabado final listo para pintar.',
+  schemaSteps: [
+    { name: 'Medición y planificación', text: 'Se toman medidas exactas de la estancia y se planifica la altura del falso techo, ubicación de luminarias y posibles registros para instalaciones.' },
+    { name: 'Marcado de niveles', text: 'Se marca el nivel del falso techo en todas las paredes con láser rotativo para garantizar una superficie perfectamente horizontal.' },
+    { name: 'Instalación de perfiles perimetrales', text: 'Se fijan los perfiles en L o en U en todo el perímetro de la estancia, con banda acústica para evitar transmisión de ruido.' },
+    { name: 'Colocación de varillas y perfilería', text: 'Se instalan las varillas roscadas de suspensión ancladas al forjado y los perfiles primarios y secundarios formando la estructura portante.' },
+    { name: 'Paso de instalaciones', text: 'Se distribuyen las instalaciones eléctricas, conductos de aire acondicionado y cualquier otro servicio que deba quedar oculto sobre el falso techo.' },
+    { name: 'Atornillado de placas', text: 'Se atornillan las placas de yeso laminado a la estructura metálica con tornillos autoroscantes cada 20-25 cm, dejando juntas de dilatación.' },
+    { name: 'Tratamiento de juntas y acabado', text: 'Se tratan las juntas con cinta y pasta, se lijan y se deja la superficie completamente lisa y lista para pintar.' },
+  ],
+  schemaOffers: [
+    { name: 'Falso techo continuo liso', description: 'Falso techo de pladur continuo liso con estructura metálica y acabado listo para pintar. Precio por m².' },
+    { name: 'Falso techo con aislamiento acústico', description: 'Falso techo de pladur con lana mineral para aislamiento acústico incluido. Precio por m².' },
+    { name: 'Falso techo decorativo con molduras', description: 'Falso techo decorativo con molduras de pladur, diseño personalizado. Precio por m².' },
+    { name: 'Falso techo registrable', description: 'Falso techo registrable con placas desmontables para fácil acceso a instalaciones. Precio por m².' },
+    { name: 'Falso techo con iluminación LED integrada', description: 'Falso techo con foseado perimetral e iluminación LED integrada. Precio por m².' },
+  ],
+  sectionIntroEyebrow: 'Introducción',
+  sectionIntroTitle: '¿Qué es un falso techo de pladur?',
+  intro1: 'Un falso techo de pladur es una estructura horizontal suspendida del forjado mediante perfiles de acero galvanizado y varillas roscadas, sobre la que se atornillan placas de yeso laminado según UNE-EN 520. La bajada oscila entre 10 y 30 cm según el sistema, y oculta cables, tuberías y forjados irregulares bajo una superficie plana lista para pintar.',
+  citaTexto: '"El Código Técnico de la Edificación establece que los elementos constructivos horizontales deben cumplir la exigencia básica SI 1 de propagación interior, garantizando la seguridad en caso de incendio"',
+  citaFuente: '— CTE-DB-SI, Documento Básico de Seguridad en caso de Incendio, Art. 4',
+  intro2: 'Según las fichas técnicas de Knauf, los sistemas de falso techo D112 alcanzan una resistencia al fuego de hasta EI 120 con doble placa cortafuegos, superando con creces los requisitos normativos de Baleares.',
+  intro3: 'En Menorca el falso techo de pladur se usa en tres contextos principales. Edificios históricos del centro de Maó con vigas vistas o forjados unidireccionales irregulares. Apartamentos turísticos en Ciutadella, Sant Lluís o Es Castell que modernizan interiores entre temporadas sin tocar la estructura. Y oficinas y locales comerciales que integran climatización, iluminación y telecomunicaciones sobre la placa.',
+  intro4: 'La instalación no usa obra húmeda: sin cementos ni morteros, con escombros mínimos y espacio utilizable al día siguiente. Un techo de 50 m² se instala en 1-2 jornadas; uno de 90 m² con electricidad integrada, en 3-5 días.',
+  interno: '¿Quieres saber cuánto cuesta?',
+  internoLink1: 'Consulta nuestra guía de precios de pladur en Menorca',
+  internoOr: 'o',
+  internoLink2: 'conoce todos nuestros servicios de instalación',
+  sidebarBadge: 'Presupuesto gratis',
+  sidebarTitle: 'Falso techo en tu hogar o negocio',
+  sidebarDesc: 'Visitamos tu espacio, tomamos medidas y te enviamos presupuesto en 24h.',
+  sidebarOnlineCta: 'Pedir presupuesto online',
+  sidebarVerTambien: 'Ver también:',
+  sidebarLinks: [
+    { label: 'Instalación de Pladur', href: '/instalacion-pladur-menorca' },
+    { label: 'Precios del Pladur', href: '/precios-pladur-menorca' },
+    { label: 'Pladur en Maó', href: '/pladur-mao' },
+    { label: 'Tabiques de Pladur', href: '/tabiques-pladur-menorca' },
+  ],
+  tiposEyebrow: 'Catálogo de soluciones',
+  tiposTitle: 'Tipos de falsos techos que instalamos en Menorca',
+  tiposIntro: 'Cinco sistemas de falso techo ajustados a cada caso: continuo básico (29€/m²), registrable (29€/m²), decorativo con molduras (45€/m²), acústico con CTE-HR (35€/m²) y técnico con LED integrado (47€/m²).',
+  tiposTecho: [
+    {
+      num: '01',
+      titulo: 'Falso techo continuo básico',
+      desc: 'Sistema más instalado en viviendas y oficinas desde 29€/m². Estructura de maestras y omegas de acero galvanizado anclada al forjado con placa Placo BA13 (12,5 mm) atornillada cada 25 cm. Acabado liso sin juntas visibles, listo para pintar. Compatible con focos empotrados de diámetro 70-90 mm.',
+      bajada: '10-15 cm',
+      precio: 'Desde 29€/m²',
+      ideal: 'Viviendas, oficinas, locales',
+      ventajas: ['Acabado limpio y homogéneo', 'Posibilidad de iluminación empotrada', 'Rápida instalación', 'Económico'],
+    },
+    {
+      num: '02',
+      titulo: 'Falso techo continuo registrable',
+      desc: 'Variante del continuo básico con trampillas de 30×30 cm o 60×60 cm. Permiten revisar tuberías, sprinklers, cabezales de climatización o cableado sin demoler. Solución obligada en pisos con sistemas que requieran mantenimiento periódico según normativa (p. ej. protección contra incendios).',
+      bajada: '10-20 cm',
+      precio: 'Desde 29€/m²',
+      ideal: 'Pisos con instalaciones que mantener',
+      ventajas: ['Acceso a instalaciones ocultas', 'Sin obra para revisiones', 'Mismo acabado que continuo', 'Mayor seguridad de mantenimiento'],
+    },
+    {
+      num: '03',
+      titulo: 'Falso techo decorativo con molduras',
+      desc: 'Desde 45€/m². Incorpora molduras perimetrales, cornisas, artesonados, casetones y formas geométricas o curvas con piezas de escayola o pladur curvado. Requiere mayor planificación y es el techo con más impacto visual. Muy demandado en villas de lujo en Son Parc, Binibeca Vell o Cala Galdana.',
+      bajada: '15-25 cm',
+      precio: 'Desde 45€/m²',
+      ideal: 'Viviendas de lujo, restaurantes, hoteles',
+      ventajas: ['Alto impacto visual', 'Personalización total', 'Revalorización del inmueble', 'Acabados premium'],
+    },
+    {
+      num: '04',
+      titulo: 'Falso techo acústico',
+      desc: 'Desde 35€/m². Suspensión antivibratoria que desvincula el techo nuevo del forjado, lana mineral de densidad 40-70 kg/m³ en la cámara y doble placa atornillada. Aporta 8-15 dB adicionales frente a un techo convencional y contribuye al cumplimiento del CTE-HR para separación entre viviendas.',
+      bajada: '15-25 cm',
+      precio: 'Desde 35€/m²',
+      ideal: 'Pisos con vecinos ruidosos, hoteles, estudios',
+      ventajas: ['Reducción 8-15 dB adicionales', 'Cumple CTE-HR', 'Ideal para turísticos y hostales', 'Suspensión antivibratoria'],
+    },
+    {
+      num: '05',
+      titulo: 'Falso techo técnico con integración LED',
+      desc: 'Desde 47€/m². Integra estructura de pladur, cajetines para focos LED empotrados, tiras LED en foseado perimetral, cableado eléctrico, dimmers y control KNX o Zigbee, y salidas de climatización o difusores de ventilación. Todo el techo funciona como un sistema unificado de iluminación y ambiente.',
+      bajada: '20-30 cm',
+      precio: 'Desde 47€/m²',
+      ideal: 'Locales, restaurantes, viviendas premium',
+      ventajas: ['Iluminación integrada', 'Cableado oculto', 'Gestión inteligente opcional', 'Diseño de interiores avanzado'],
+    },
+  ],
+  tablaEyebrow: 'Resumen',
+  tablaTitle: 'Comparativa de tipos de falso techo',
+  tablaHeaders: ['Tipo de techo', 'Bajada mínima', 'Precio desde', 'Ideal para'],
+  tablaResumen: [
+    ['Continuo básico', '10 cm', '29€/m²', 'Viviendas y oficinas'],
+    ['Continuo registrable', '10 cm', '29€/m²', 'Espacios con instalaciones'],
+    ['Decorativo con molduras', '15 cm', '45€/m²', 'Residencias de lujo'],
+    ['Acústico', '15 cm', '35€/m²', 'Hoteles y viviendas ruidosas'],
+    ['Técnico con LED', '20 cm', '47€/m²', 'Locales y espacios premium'],
+  ],
+  tablaMobileCols: { bajada: 'Bajada', precio: 'Precio', ideal: 'Ideal' },
+  tablaFootnote: '* Precios falsos techos pladur en Menorca 2026, sin IVA. El presupuesto exacto se obtiene tras la visita técnica.',
+  tablaFootnoteLink: 'Ver guía completa de precios',
+  ctaMidTitulo: 'Solicita tu presupuesto de falso techo',
+  ctaMidSubtitulo: 'Presupuesto gratis y sin compromiso. Cubrimos todos los municipios de Menorca.',
+  ventajasEyebrow: 'Por qué elegir pladur',
+  ventajasTitle: 'Ventajas de los falsos techos de pladur',
+  ventajas: [
+    {
+      titulo: 'Oculta instalaciones',
+      desc: 'La cámara de 10-30 cm esconde cables, tuberías de fontanería, conductos de climatización y ventilación. Integra todas las instalaciones sin intervención en la estructura portante.',
+      iconPath: 'M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21',
+    },
+    {
+      titulo: 'Mejora el aislamiento acústico',
+      desc: 'Un falso techo con lana mineral y suspensión antivibratoria reduce el ruido de impacto y aéreo entre plantas en 8-15 dB, conforme al CTE-HR. Esencial en edificios de varias plantas y zonas turísticas de Punta Prima o Arenal d\'en Castell.',
+      iconPath: 'M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z',
+    },
+    {
+      titulo: 'Reducción térmica',
+      desc: 'La cámara con lana mineral reduce la transmisión de calor hasta un 30%. En Menorca, con 80-90 días/año por encima de 30 °C, esto se traduce en menor consumo de aire acondicionado y alineación con el CTE-DB-HE.',
+      iconPath: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1.001A3.75 3.75 0 0012 18z',
+    },
+    {
+      titulo: 'Acabado listo para pintar',
+      desc: 'Con las juntas tratadas con cinta y pasta y lijado a grano 120, la superficie queda plana con tolerancia <2 mm. Acepta pintura plástica, texturas o papel pintado sin preparación adicional.',
+      iconPath: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42',
+    },
+    {
+      titulo: 'Sin obras ni demoliciones',
+      desc: 'No se pica el techo original, no se generan toneladas de escombros y el polvo se aspira durante el corte de placas. Reforma compatible con pisos habitados y comunidades de vecinos.',
+      iconPath: 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+    {
+      titulo: 'Plazo rápido de ejecución',
+      desc: 'Un techo de 50 m² se instala en 1-2 jornadas. Una reforma completa en un piso de 90 m² se entrega en 3-5 días. Plazo crítico para apartamentos turísticos con rotación entre temporadas.',
+      iconPath: 'M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+  ],
+  procesoEyebrow: 'Proceso de instalación',
+  procesoTitle: '¿Cuánto tarda instalar un falso techo de pladur?',
+  proceso1: 'El plazo depende de tres factores: superficie a cubrir, tipo de sistema elegido (continuo, acústico, decorativo, técnico con LED) y presencia de instalaciones eléctricas o de climatización a integrar sobre la placa.',
+  proceso2: 'Un techo continuo de 50 m² sin instalaciones se ejecuta en una jornada. Con focos LED empotrados el plazo sube a 1,5-2 jornadas. Para sistemas acústicos con doble placa, artesonados o formas curvas, el plazo alcanza los 3-5 días.',
+  proceso3: 'El tratamiento de juntas con cinta y pasta, imprimación y lijado a grano 120 se realiza al día siguiente y no impide el uso del espacio adyacente. El pintado no está incluido en la oferta estándar y puede ejecutarse 24-48h después del secado completo de la pasta.',
+  plazos: [
+    { superficie: 'Hasta 30 m²', tipo: 'Techo básico', tiempo: '4-6 horas', incluye: 'Solo estructura y placa' },
+    { superficie: '30-80 m²', tipo: 'Techo básico + electricidad', tiempo: '1-2 días', incluye: 'Estructura, placa y cableado' },
+    { superficie: '50-100 m²', tipo: 'Techo acústico', tiempo: '2-3 días', incluye: 'Suspensión, lana mineral, doble placa' },
+    { superficie: 'Cualquier m²', tipo: 'Techo decorativo', tiempo: '3-7 días', incluye: 'Molduras, formas y acabados premium' },
+  ],
+  plazosLabelSuperficie: 'Superficie',
+  plazosLabelIncluye: 'Incluye',
+  galeriaAlts: [
+    'Falso techo con iluminación LED en exterior de villa en Baleares',
+    'Salón con falso techo de pladur en villa de Baleares',
+    'Vestidor con falso techo LED y vistas al mar en Baleares',
+    'Dormitorio con falso techo de pladur y vistas al mar en Baleares',
+  ],
+  articulos: [
+    { slug: 'techos-pladur-led-menorca', titulo: 'Techos de pladur con LED en Menorca', descripcion: 'Diseños de falsos techos con iluminación LED integrada. Ideas y precios para tu reforma.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Precio del pladur en Menorca 2026', descripcion: 'Guía completa de precios del pladur en Menorca actualizada a 2026. Desde falsos techos hasta tabiques.' },
+    { slug: 'ventajas-reforma-pladur-menorca', titulo: 'Ventajas de reformar con pladur', descripcion: 'Descubre por qué el pladur es la mejor opción para reformas en Menorca frente a la obra tradicional.' },
+  ],
+  faqTitulo: 'Preguntas frecuentes sobre falsos techos',
+  faqSubtitulo: 'Todo lo que necesitas saber sobre la instalación de falsos techos de pladur en Menorca.',
+  banner: 'En baños y cocinas, instalamos falsos techos con',
+  bannerBold: 'placa hidrófuga',
+  bannerTail: 'que resiste la humedad ambiental sin deteriorarse. Absorción de agua inferior al 5%.',
+  bannerCta: 'Ver pladur hidrófugo',
+  ctaFinalTitulo: 'Transforma el techo de tu espacio',
+  ctaFinalSubtitulo: 'Presupuesto cerrado en 24h. Instalando pladur en Menorca desde 2004, más de 6.000 obras ejecutadas.',
+}
+
+const schemaOffersPrices = ['29', '35', '45', '29', '47']
+const schemaOffers = t.schemaOffers.map((o, i) => ({ ...o, price: schemaOffersPrices[i] }))
+
+const pageBase = lang === 'en' ? '/en/falsos-techos-pladur-menorca' : '/falsos-techos-pladur-menorca'
+const homeHref = lang === 'en' ? '/en/' : '/'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: homeHref }, { label: t.breadcrumbCurrent, href: pageBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url={`https://www.pladurmenorca.com${pageBase}`}
+      image="https://www.pladurmenorca.com/images/proyectos/salon-falso-techo-villa.webp"
+
+    />
+    <SchemaHowTo
+      name={t.schemaHowToName}
+      description={t.schemaHowToDescription}
+      totalTime="PT2D"
+      steps={t.schemaSteps}
+    />
+    <SchemaOffers offers={schemaOffers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <!-- Hero -->
+  <Hero
+    title={servicio.h1}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaCallPrefix} ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- ¿Qué es un falso techo de pladur? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+              {t.sectionIntroEyebrow}
+            </p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.sectionIntroTitle}
+            </h2>
+          </div>
+          <div class="space-y-7 text-muted leading-relaxed">
+            <p class="text-lg">{t.intro1}</p>
+
+            {/* Key facts strip */}
+            <div class="grid grid-cols-3 gap-px bg-warm-border/50 rounded-3xl overflow-hidden border border-warm-border/50">
+              {[
+                { k: lang === 'en' ? 'Drop' : 'Bajada', v: '10–30 cm' },
+                { k: lang === 'en' ? 'Install time' : 'Ejecución', v: lang === 'en' ? '1–2 days / 50 m²' : '1–2 días / 50 m²' },
+                { k: lang === 'en' ? 'Fire rating' : 'Resistencia fuego', v: 'EI 120' },
+              ].map((s) => (
+                <div class="bg-white/80 px-4 py-5 text-center">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-muted/80 mb-1">{s.k}</p>
+                  <p class="text-sm font-bold text-foreground">{s.v}</p>
+                </div>
+              ))}
+            </div>
+
+            <blockquote class="border-l-4 border-foreground/20 pl-5 italic text-muted">
+              <p>{t.citaTexto}</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">{t.citaFuente}</cite>
+            </blockquote>
+
+            <p>{t.intro2}</p>
+
+            {/* intro3 as a clean typographic list */}
+            <ul class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-4 pt-2 not-prose list-none pl-0">
+              {[
+                { title: lang === 'en' ? 'Historic centre' : 'Centros históricos', desc: lang === 'en' ? 'Maó buildings with exposed beams or irregular slabs.' : 'Edificios de Maó con vigas vistas o forjados irregulares.' },
+                { title: lang === 'en' ? 'Holiday apartments' : 'Apartamentos turísticos', desc: lang === 'en' ? 'Ciutadella, Sant Lluís or Es Castell, modernised between seasons.' : 'Ciutadella, Sant Lluís o Es Castell, modernizados entre temporadas.' },
+                { title: lang === 'en' ? 'Offices & premises' : 'Oficinas y locales', desc: lang === 'en' ? 'HVAC, lighting and telecoms integrated above the board.' : 'Climatización, iluminación y telecom integrados sobre la placa.' },
+              ].map((c) => (
+                <li class="border-l-2 border-warm-border pl-4">
+                  <strong class="block font-bold text-foreground text-sm mb-1">{c.title}</strong>
+                  <span class="block text-sm text-muted leading-relaxed">{c.desc}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p>{t.intro4}</p>
+
+            <!-- Enlace interno -->
+            <p class="text-sm text-muted pt-2">
+              {t.interno}
+              <a href={p('/precios-pladur-menorca')} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">
+                {t.internoLink1}
+              </a>
+              {t.internoOr}
+              <a href={lang === 'en' ? '/en/instalacion-pladur-menorca' : '/instalacion-pladur-menorca'} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">
+                {t.internoLink2}
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar CTA -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <ContactoRapidoCard lang={lang} />
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl">
+              <p class="font-semibold text-foreground text-sm mb-3">{t.sidebarVerTambien}</p>
+              <ul class="space-y-2">
+                {t.sidebarLinks.map((s) => (
+                  <li>
+                    <a
+                      href={s.href}
+                      class="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors py-0.5"
+                    >
+                      <svg class="size-3.5 text-foreground shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de falsos techos -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+          {t.tiposEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">
+          {t.tiposTitle}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">
+          {t.tiposIntro}
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        {t.tiposTecho.map((tipo) => (
+          <div class="bg-white/70 border border-warm-border/50 rounded-3xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+              <div class="lg:col-span-8 p-8 lg:p-10">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="size-10 rounded-xl bg-foreground text-white text-xs font-bold flex items-center justify-center shrink-0">{tipo.num}</span>
+                  <h3 class="text-xl font-bold text-foreground">{tipo.titulo}</h3>
+                </div>
+                <p class="text-sm text-muted leading-relaxed mb-5">{tipo.desc}</p>
+                <div class="flex flex-wrap gap-2">
+                  {tipo.ventajas.map((v) => (
+                    <span class="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 bg-surface text-foreground font-medium rounded-lg">
+                      <svg aria-hidden="true" class="size-3 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                      {v}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div class="lg:col-span-4 bg-foreground p-8 flex flex-col justify-center gap-5 lg:rounded-r-3xl">
+                {[
+                  { label: lang === 'en' ? 'Min. drop' : 'Bajada mínima', value: tipo.bajada },
+                  { label: lang === 'en' ? 'From' : 'Precio desde', value: tipo.precio },
+                  { label: lang === 'en' ? 'Ideal for' : 'Ideal para', value: tipo.ideal },
+                ].map((d) => (
+                  <div>
+                    <p class="text-[10px] font-semibold text-white/50 uppercase tracking-wide mb-1">{d.label}</p>
+                    <p class="text-white font-bold text-sm">{d.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tabla resumen tipos -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+          {t.tablaEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-10 max-w-2xl">
+          {t.tablaTitle}
+        </h2>
+      </div>
+
+      <!-- Desktop table -->
+      <div class="hidden sm:block">
+        <div class="rounded-3xl overflow-hidden border border-warm-border shadow-card">
+          <table class="min-w-full">
+            <thead>
+              <tr class="bg-foreground">
+                {t.tablaHeaders.map((h) => (
+                  <th class="px-5 py-4 text-left text-xs font-bold text-white uppercase tracking-wider">
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-warm-border/50">
+              {t.tablaResumen.map(([tipo, bajada, precio, ideal], i) => (
+                <tr class={`${i % 2 === 0 ? 'bg-white/70' : 'bg-white/40'} hover:bg-surface/60 transition-colors duration-200`}>
+                  <td class="px-5 py-3.5 text-sm font-semibold text-foreground">{tipo}</td>
+                  <td class="px-5 py-3.5 text-sm text-muted">{bajada}</td>
+                  <td class="px-5 py-3.5 text-sm font-bold text-foreground">{precio}</td>
+                  <td class="px-5 py-3.5 text-sm text-muted">{ideal}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile cards -->
+      <div class="sm:hidden space-y-3">
+        {t.tablaResumen.map(([tipo, bajada, precio, ideal]) => (
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+            <p class="font-bold text-foreground text-sm mb-3">{tipo}</p>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-muted mb-0.5">{t.tablaMobileCols.bajada}</p>
+                <p class="text-sm text-muted">{bajada}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-muted mb-0.5">{t.tablaMobileCols.precio}</p>
+                <p class="text-sm font-bold text-foreground">{precio}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-semibold uppercase tracking-wide text-muted mb-0.5">{t.tablaMobileCols.ideal}</p>
+                <p class="text-sm text-muted">{ideal}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p class="text-xs text-muted mt-4">
+        {t.tablaFootnote}
+        <a href={p('/precios-pladur-menorca')} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">
+          {t.tablaFootnoteLink}
+        </a>
+      </p>
+    </Container>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaMidTitulo}
+    subtitulo={t.ctaMidSubtitulo}
+    showForm={false}
+  />
+
+  <!-- Ventajas -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+          {t.ventajasEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-12 max-w-2xl">
+          {t.ventajasTitle}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {t.ventajas.map((v) => (
+          <div class="p-7 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="size-10 bg-surface border border-nav-border rounded-xl flex items-center justify-center mb-5">
+              <svg class="size-5 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={v.iconPath} />
+              </svg>
+            </div>
+            <h3 class="font-bold text-foreground text-base mb-2">{v.titulo}</h3>
+            <p class="text-sm text-muted leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Proceso: ¿Cuánto tarda instalar un falso techo? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+              {t.procesoEyebrow}
+            </p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.procesoTitle}
+            </h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>{t.proceso1}</p>
+            <p>{t.proceso2}</p>
+            <p>{t.proceso3}</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          {t.plazos.map((fila, i) => (
+            <div class="bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover transition-shadow duration-300">
+              <div class="flex items-start gap-4">
+                <div class="w-9 h-9 rounded-full bg-foreground text-white text-xs font-bold flex items-center justify-center shrink-0">
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <div class="flex-1">
+                  <div class="flex items-center justify-between gap-3 mb-3">
+                    <p class="text-sm font-bold text-foreground">{fila.tipo}</p>
+                    <span class="text-xs font-bold text-foreground bg-surface px-2.5 py-1 rounded-lg shrink-0">{fila.tiempo}</span>
+                  </div>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div>
+                      <p class="text-[10px] font-semibold text-muted uppercase tracking-wide mb-0.5">{t.plazosLabelSuperficie}</p>
+                      <p class="text-sm text-muted">{fila.superficie}</p>
+                    </div>
+                    <div>
+                      <p class="text-[10px] font-semibold text-muted uppercase tracking-wide mb-0.5">{t.plazosLabelIncluye}</p>
+                      <p class="text-sm text-muted">{fila.incluye}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales de falsos techos -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — false ceilings' : 'Nuestras cifras — falsos techos'}
+    title={lang === 'en' ? '80% of our works include a false ceiling' : 'El 80% de nuestras obras incluye falso techo'}
+    intro={lang === 'en'
+      ? 'False ceilings are our most installed system. Concrete figures from the Mallorca parent company (2004-2025) that backs every Menorca project.'
+      : 'El falso techo es el sistema que más instalamos. Estas son las cifras reales de la SL matriz (Mallorca, 2004-2025) que respalda cada proyecto en Menorca.'}
+    metrics={lang === 'en' ? [
+      { value: '~406', label: 'false ceilings in 2025', context: '80% of the 508 projects delivered' },
+      { value: '1-2', label: 'working days for 50 m²', context: 'Dry build, no wet trades involved' },
+      { value: 'Placo · Knauf · Lafarge', label: 'brands installed', context: 'Exclusive suppliers since 2004' },
+      { value: '22', label: 'years as specialists', context: 'Exclusively drywall and plaster' },
+    ] : [
+      { value: '~406', label: 'falsos techos en 2025', context: '80% de los 508 proyectos ejecutados' },
+      { value: '1-2', label: 'días laborables para 50 m²', context: 'Montaje en seco, sin obra húmeda' },
+      { value: 'Placo · Knauf · Lafarge', label: 'marcas que instalamos', context: 'Proveedores exclusivos desde 2004' },
+      { value: '22', label: 'años especialistas', context: 'Exclusivamente pladur y escayola' },
+    ]}
+  />
+
+  <!-- PreciosTable -->
+  <PreciosTable lang={lang} variant="Falsos Techos" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/falso-techo-led-exterior-villa.webp', alt: t.galeriaAlts[0] },
+    { src: '/images/proyectos/salon-falso-techo-villa.webp', alt: t.galeriaAlts[1] },
+    { src: '/images/proyectos/vestidor-falso-techo-led-vistas-mar.webp', alt: t.galeriaAlts[2] },
+    { src: '/images/proyectos/dormitorio-vistas-mar-falso-techo.webp', alt: t.galeriaAlts[3] },
+  ]} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    faqs={pageFaqs}
+    lang={lang}
+    titulo={t.faqTitulo}
+    subtitulo={t.faqSubtitulo}
+  />
+
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">{t.banner} <strong class="text-white">{t.bannerBold}</strong> {t.bannerTail}</p>
+        <a href={p('/pladur-hidrofugo-menorca')} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.bannerCta}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner final -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaFinalTitulo}
+    subtitulo={t.ctaFinalSubtitulo}
+    showForm={true}
+  />
+
+  <ServiciosRelacionados currentPath="/falsos-techos-pladur-menorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

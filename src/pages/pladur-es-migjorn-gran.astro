@@ -1,0 +1,234 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getEsMigjornGranFaqs } from '@/data/faqs/es-migjorn-gran'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getEsMigjornGranFaqs(lang)
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Es Migjorn Gran. False ceilings, partitions, acoustic and thermal insulation. Free quote. Phone: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbPage: 'Drywall in Es Migjorn Gran',
+  schemaServiceName: 'Drywall installation in Es Migjorn Gran and Sant Tomàs',
+  schemaServiceDesc: 'Professional drywall installation in Es Migjorn Gran, Sant Tomàs and Sant Adeodat. Specialists in coastal apartment renovations, acoustic insulation and space modernisation in the smallest municipality of Menorca.',
+  heroTitle: 'Drywall in Es Migjorn Gran and Sant Tomàs — Specialists in Coastal Renovations',
+  heroBadge: 'Es Migjorn Gran · Sant Tomàs · Sant Adeodat',
+  heroDescription: 'Drywall specialists in Es Migjorn Gran, Sant Tomàs and Sant Adeodat — the smallest municipality of Menorca. Holiday apartments, village houses and coastal villas. Guaranteed deadlines to have your property ready before season.',
+  faqTitulo: 'Frequently asked questions about drywall in Es Migjorn Gran',
+  faqSubtitulo: 'Answers to the most common questions from owners in Es Migjorn Gran, Sant Tomàs and Sant Adeodat.',
+  proyectoTitulo: 'Holiday apartment refurbishment in Sant Tomàs with moisture-resistant board',
+  ctaTitulo: 'Is your project in Es Migjorn Gran or Sant Tomàs?',
+  ctaSubtitulo: 'Get in touch and receive your free quote in less than 24 hours. Specialists in coastal tourist renovations.',
+  seoEyebrow: 'Coastal tourist-renovation specialists',
+  seoH2: 'Drywall in Es Migjorn Gran: from the inland village to the southern coast',
+  seoP1: "Es Migjorn Gran is the smallest municipality of Menorca by population (~1,600 residents), with a compact inland village and a southern coastal strip (Sant Tomàs, Sant Adeodat) built around mid-to-high-end holiday apartments and villas. The volume of works is lower than in larger municipalities, but demand is steady — especially between seasons, when owners and tourist-rental managers want to refresh properties fast and reliably.",
+  seoP2: "Sant Tomàs and Sant Adeodat are the heart of our work in this area. Holiday apartments built mainly in the 1980s and 1990s need periodic updates to stay competitive in an increasingly demanding market. Holiday-rental owners and managers look for renovations that tick three boxes: speed (the between-seasons window is short in Menorca, from November to April), cleanliness (neighbouring flats may be occupied) and professional finish (the property photos are key to bookings).",
+  seoP3: 'Drywall meets all three criteria. A 50-60 m² holiday flat can have a brand-new <a href="/falsos-techos-pladur-menorca">false ceiling</a> with recessed LED lighting, upgraded <a href="/aislamiento-acustico-menorca">acoustic insulation</a> between neighbours and a partial layout change in under two weeks of work. No wet-trades demolition, no rubble and a quick final clean that lets the apartment be put back into service almost immediately.',
+  seoP4: 'Acoustic insulation is likely the improvement with the highest ROI in a holiday rental. Noise complaints are the most common cause of negative reviews on platforms like Airbnb and Booking, and a half-point bump in average rating can translate into a 10-15% increase in nightly price and a significant improvement in occupancy rate. Our drywall systems with high-density mineral wool and decoupled framing can cut noise transmission between dwellings by 45-55 dB.',
+  seoP5: 'In the village of Es Migjorn Gran the demand is different: traditional stone houses needing <a href="/aislamiento-termico-menorca">thermal linings</a> to be comfortable in winter (Menorca is climate zone B3 per CTE-HE), inherited layouts that no longer match modern life, and beam ceilings that benefit from a modern false ceiling with integrated lighting. Smaller residential pockets near Sant Tomàs bring single-family projects with higher-end finishes.',
+  seoP6: "The ideal window to refurbish a holiday apartment in Sant Tomàs or Sant Adeodat is November to April. We recommend contacting us in September-October to plan the project, book dates and make sure everything is ready before Easter or the start of the high season in Menorca.",
+  seoTrust: 'Guaranteed coastal renovations',
+  seoTrustText: "We guarantee deadlines by contract. Your apartment will be ready before the season starts. Coastal tourist renovations in Sant Tomàs and Sant Adeodat since 2026 (parent company in Mallorca since 2004).",
+  seoServicesLabel: 'Related services',
+  seoRating: 'New service · building local reviews',
+  proyectoP1: "A 58 m² holiday apartment on the second floor in Sant Tomàs (Es Migjorn Gran), 80 metres from the beach, had combined coastal-moisture and neighbour-noise problems. The original plaster ceiling showed recurring damp marks reappearing each winter, and the party walls transmitted noise from the neighbouring flat, generating constant guest complaints in high season.",
+  proyectoP2: 'A full false ceiling was installed with moisture-resistant board (H-type) throughout the home (58 m²), with recessed LED lighting in the living room and bedroom. On the two party walls a standard 15 mm drywall lining was installed with 48 mm high-density mineral wool and a perimeter acoustic band (24 m² of treated surface). In the bathroom and kitchen, moisture-resistant board was also used on the wall linings to protect against the ambient humidity typical of a seafront location.',
+  proyectoP3: "The works were carried out in 6 working days in February, with a total cost of 5,100€. Moisture has not returned in the two seasons since, and the acoustic reduction eliminated noise complaints. The apartment's Airbnb rating rose from 4.0 to 4.6 stars, allowing the owner to raise the nightly rate by 13% and improve occupancy in mid season.",
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Es Migjorn Gran. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbPage: 'Pladur en Es Migjorn Gran',
+  schemaServiceName: 'Instalación de Pladur en Es Migjorn Gran y Sant Tomàs',
+  schemaServiceDesc: 'Servicio profesional de instalación de pladur en Es Migjorn Gran, Sant Tomàs y Sant Adeodat. Especialistas en reformas de apartamentos costeros, aislamiento acústico y modernización de espacios en el municipio más pequeño de Menorca.',
+  heroTitle: 'Pladur en Es Migjorn Gran y Sant Tomàs — Especialistas en Reformas Costeras',
+  heroBadge: 'Es Migjorn Gran · Sant Tomàs · Sant Adeodat',
+  heroDescription: 'Instalamos pladur en Es Migjorn Gran, Sant Tomàs y Sant Adeodat (el municipio más pequeño de Menorca, ~1.600 habitantes). Falsos techos desde 29€/m², tabiques desde 45€/m² y presupuesto en 24-48h. Plazos por contrato para abrir apartamentos turísticos antes de Semana Santa.',
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Es Migjorn Gran',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de propietarios en Es Migjorn Gran, Sant Tomàs y Sant Adeodat.',
+  proyectoTitulo: 'Reforma de apartamento turístico en Sant Tomàs con placa hidrófuga',
+  ctaTitulo: '¿Tu proyecto está en Es Migjorn Gran o Sant Tomàs?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Especialistas en reformas turísticas costeras.',
+  seoEyebrow: 'Reformas turísticas costeras con pladur',
+  seoH2: 'Pladur en Es Migjorn Gran: del pueblo del interior a la costa sur',
+  seoP1: 'Es Migjorn Gran es el municipio más pequeño de Menorca en población (~1.600 habitantes), con un pueblo interior compacto y una franja costera al sur (Sant Tomàs, Sant Adeodat) articulada en torno a apartamentos y villas vacacionales de gama media-alta. El volumen de obra es menor que en municipios mayores, pero la demanda es constante, especialmente entre temporadas, cuando propietarios y gestores turísticos quieren renovar sus inmuebles de forma rápida y fiable.',
+  seoP2: 'Sant Tomàs y Sant Adeodat son el epicentro de nuestro trabajo en este municipio. Miles de apartamentos turísticos levantados principalmente en los años 80 y 90 necesitan actualizaciones cada 6-8 años para mantener la competitividad en Airbnb, Booking y Vrbo. Los propietarios buscan tres cosas: rapidez (la ventana entre temporadas en Menorca va de noviembre a abril), limpieza (apartamentos contiguos suelen estar ocupados) y acabado profesional, porque las fotos determinan el precio por noche.',
+  seoP3: 'El pladur cumple los tres requisitos. Un apartamento de 50-60 m² puede estrenar <a href="/falsos-techos-pladur-menorca">falso techo de placa Placo o Knauf</a> con LED empotrado, <a href="/aislamiento-acustico-menorca">aislamiento acústico</a> entre medianeras y redistribución parcial en menos de dos semanas. Sin demolición de obra húmeda, sin escombros a granel y con una limpieza final que deja el piso listo para check-in en 48 horas.',
+  seoP4: 'El aislamiento acústico es la mejora con mayor ROI en apartamento turístico. Las quejas por ruido son la principal causa de reseñas negativas en Airbnb y Booking, y medio punto extra en la puntuación media supone un 10-15% más en el precio por noche. Nuestros sistemas de pladur Knauf con lana mineral Isover o Rockwool de 48 mm y estructura desacoplada reducen la transmisión aérea 45-55 dB, cumpliendo el CTE DB-HR para vivienda colindante.',
+  seoP5: 'En el pueblo de Es Migjorn Gran la demanda es distinta: casas de pueblo de piedra que necesitan <a href="/aislamiento-termico-menorca">trasdosados térmicos</a> (placa Knauf + lana mineral 40-60 mm) para ser confortables en invierno (Menorca es zona climática B3 según CTE-HE), distribuciones de otra época y techos de vigas que piden falso techo con iluminación integrada. Pequeños núcleos residenciales próximos a Sant Tomàs concentran chalets y villas con acabados de mayor gama.',
+  seoP6: 'La ventana óptima para reformar un apartamento turístico en Sant Tomàs o Sant Adeodat va de noviembre a abril. Recomendamos solicitar presupuesto en septiembre-octubre para bloquear fechas y entregar antes de Semana Santa, inicio efectivo de la temporada alta en Menorca.',
+  seoTrust: 'Reformas costeras con plazo por contrato',
+  seoTrustText: 'Plazos de entrega por contrato: tu apartamento estará listo antes de Semana Santa. Trabajamos en Sant Tomàs y Sant Adeodat desde 2026 (SL matriz en Mallorca desde 2004).',
+  seoServicesLabel: 'Servicios relacionados',
+  seoRating: 'Nuevo servicio · recogiendo reseñas locales',
+  proyectoP1: 'Apartamento turístico de 58 m² en segunda línea de Sant Tomàs (Es Migjorn Gran), a 80 m de la playa. El cliente, gestor de 3 pisos en alquiler vacacional, sufría dos problemas combinados: humedad costera (manchas recurrentes en el techo de escayola original cada invierno) y transmisión acústica de la vivienda medianera, con quejas repetidas de huéspedes en temporada alta.',
+  proyectoP2: 'Se instaló falso techo completo con placa hidrófuga Knauf H (58 m²) e iluminación LED empotrada en salón y dormitorio. En las dos medianeras se montó trasdosado con placa estándar de 15 mm, lana mineral Isover de alta densidad de 48 mm y banda acústica perimetral (24 m² tratados). En baño y cocina se utilizó también placa H para resistir la humedad ambiental típica de la primera línea, y en todo el sistema se cumplió el CTE DB-HR.',
+  proyectoP3: 'Obra ejecutada en 6 días hábiles en febrero por un total de 5.100 € (88 €/m² incluyendo electricidad LED). La humedad no ha reaparecido tras dos temporadas y la reducción acústica medida en obra fue de 48 dB, eliminando las quejas por ruido. La valoración en Airbnb subió de 4,0 a 4,6 estrellas, lo que permitió al propietario subir la tarifa nocturna un 13% y amortizar la inversión en menos de 6 meses de alquiler.',
+}
+
+const zonas = lang === 'en' ? [
+  { nombre: 'Es Migjorn Gran village', descripcion: 'Traditional inland village, smallest municipality of Menorca (~1,600 residents). Drywall refurbishment of village houses: modern false ceilings, space redistribution and thermal linings to improve comfort in winter (B3 climate).' },
+  { nombre: 'Sant Tomàs', descripcion: 'Main coastal area of the municipality, with a long beach and holiday apartments. Fast between-season refurbishments: ceiling modernisation, acoustic insulation and layout changes to maximise occupancy.' },
+  { nombre: 'Sant Adeodat', descripcion: 'Coastal neighbourhood next to Sant Tomàs. Tight-deadline refurbishment projects: false ceilings with LED, soundproofing between rooms and upgrades to common areas of apartment blocks.' },
+] : [
+  { nombre: 'Es Migjorn Gran pueblo', descripcion: 'Pueblo tradicional del interior, municipio más pequeño de Menorca (~1.600 habitantes). Rehabilitación con pladur de casas de pueblo: falsos techos modernos, redistribución de espacios y trasdosados térmicos para mejorar el confort invernal (zona climática B3).' },
+  { nombre: 'Sant Tomàs', descripcion: 'Principal núcleo costero del municipio, con playa larga y apartamentos vacacionales. Reformas rápidas entre temporadas: modernización de techos, aislamiento acústico y redistribución para maximizar ocupación.' },
+  { nombre: 'Sant Adeodat', descripcion: 'Núcleo costero contiguo a Sant Tomàs. Proyectos de renovación con plazos ajustados: falsos techos con LED, insonorización entre habitaciones y actualización de zonas comunes de bloques de apartamentos.' },
+]
+
+const breadcrumbs = [
+  { label: t.breadcrumbHome, href: lang === 'en' ? '/en' : '/' },
+  { label: t.breadcrumbPage, href: lang === 'en' ? '/en/pladur-es-migjorn-gran' : '/pladur-es-migjorn-gran' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Floor area', valor: '58 m²' },
+  { label: 'Location', valor: "Sant Tomàs, Es Migjorn Gran" },
+  { label: 'Works', valor: 'Ceiling + Acoustic insulation + H-board' },
+  { label: 'Duration', valor: '6 working days' },
+  { label: 'Investment', valor: '5,100€' },
+  { label: 'Result', valor: 'Rating 4.0 → 4.6 stars' },
+] : [
+  { label: 'Superficie', valor: '58 m²' },
+  { label: 'Ubicación', valor: "Sant Tomàs, Es Migjorn Gran" },
+  { label: 'Trabajos', valor: 'Techo + Aislamiento acústico + Placa H' },
+  { label: 'Duración', valor: '6 días hábiles' },
+  { label: 'Inversión', valor: '5.100 €' },
+  { label: 'Resultado', valor: 'Valoración 4,0 → 4,6 estrellas' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'Holiday rentals', href: '/en/pladur-apartamentos-turisticos-menorca' },
+  { label: 'False ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Acoustic insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Apartamentos Turísticos', href: '/pladur-apartamentos-turisticos-menorca' },
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const meta = lang === 'en' ? {
+  title: "Drywall in Es Migjorn Gran and Sant Tomàs | From 29€/m²",
+  description: "Drywall installation in Es Migjorn Gran, Sant Tomàs and Sant Adeodat. Specialists in holiday rentals and fast coastal renovations. From 29€/m². Free quote.",
+  canonical: '/en/pladur-es-migjorn-gran',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-es-migjorn-gran',
+} : {
+  title: "Pladur en Es Migjorn Gran y Sant Tomàs | Presupuesto Gratis",
+  description: "Instala pladur en Es Migjorn Gran, Sant Tomàs y Sant Adeodat. Especialistas en apartamentos turísticos y reformas rápidas. Desde 29€/m². Presupuesto gratis.",
+  canonical: '/pladur-es-migjorn-gran',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-es-migjorn-gran',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType="Instalación de Pladur"
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio="Es Migjorn Gran"
+    zonas={zonas}
+    faqKey="esMigjornGran"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoEyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoH2}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p>{t.seoP2}</p>
+            <p set:html={t.seoP3} />
+          </div>
+          <div class="space-y-5">
+            <p>{t.seoP4}</p>
+            <p set:html={t.seoP5} />
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.seoTrust}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.seoTrustText}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-white/60 text-xs">{t.seoRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.seoServicesLabel}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyectoP1}</p>
+      <p>{t.proyectoP2}</p>
+      <p>{t.proyectoP3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

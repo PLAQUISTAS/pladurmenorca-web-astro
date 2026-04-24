@@ -1,0 +1,515 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import Button from '@/components/ui/Button.astro'
+import { getHotelesFaqs } from '@/data/faqs/hoteles'
+import { siteConfig } from '@/data/site'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getHotelesFaqs(lang)
+
+const t = lang === 'en' ? {
+  heroBadge: 'Hotel sector · Menorca',
+  h1: 'Drywall for Hotels in Menorca — 120 Rooms in 8-10 Weeks Refurbishment',
+  heroSubtitle: 'Drywall hotel refurbishment in Menorca: 120 rooms in 8-10 weeks during the October-April low season, with CTE-HR acoustic insulation, EI-60 fire compartmentation and timelines guaranteed by contract.',
+  ctaPrimary: 'Get a quote for your hotel',
+  s1Eyebrow: 'Benefits',
+  s1Title: 'Why choose drywall for your hotel refurbishment in Menorca?',
+  s1P1: "Menorca's hotel sector — approximately <strong>400 hotels</strong> across the island — operates in very tight refurbishment windows: the season closes on <strong>1 November</strong> and reopens on <strong>15 April</strong>, with the optimum between October and March. <strong>Drywall</strong> is the construction system that best fits this reality because it allows phased refurbishment with 3-4 parallel crews without shutting the whole hotel, generates minimal debris and is completed in half the time of masonry. At Pladur Menorca we work with Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema and Valentin <strong>since 2004</strong>, on 5-7 year room renovation cycles and 10-12 year full refurbishments.",
+  s1Quote: "\"For public residential use, CTE DB-SI requires <strong>EI-60</strong> floor-by-floor compartmentation and <strong>EI-90</strong> in staircases; car-park sectors under 100 m² with Knauf Fireboard. CTE DB-HR requires <strong>50 dB DnT,A</strong> between rooms and 45 dB toward corridors\"",
+  s1Cite: "— <strong>CTE DB-SI</strong> (Fire Safety) and <strong>CTE DB-HR</strong> (Protection against Noise) · <strong>RD 1371/2007</strong>",
+  s1Cards: [
+    { titulo: 'Throughput', valor: '120 rooms / 8-10 wks', detalle: '3-4 parallel crews' },
+    { titulo: 'Cleanliness', valor: 'Dry construction', detalle: 'No dust or debris' },
+    { titulo: 'CTE-DB-SI', valor: 'EI-60 / EI-90 / EI-120', detalle: 'Corridors, stairs, car park' },
+    { titulo: 'CTE-DB-HR', valor: '50 dB DnT,A', detalle: 'Placo Phonique/Silence rooms' },
+    { titulo: 'Cycle', valor: '5-7 / 10-12 years', detalle: 'Rooms / full refurbishment' },
+    { titulo: 'Savings', valor: '30-40%', detalle: 'Vs traditional masonry' },
+  ] as { titulo: string; valor: string; detalle: string }[],
+  s2Eyebrow: 'Services',
+  s2Title: 'Specialised services for hotels in Menorca',
+  s2Intro: 'Solutions tailored to hotel refurbishment: throughput of 120 rooms in 8-10 weeks, certified CTE-DB-SI and CTE-HR, handover with per-day delay penalty (1-2% of daily revenue).',
+  s2Items: [
+    { titulo: 'Room layout changes', descripcion: 'Decoupled Placo Silence or Knauf Silentboard partitions with Rockwool 70 kg/m³ for 50-58 dB DnT,A between rooms. Create suites, extend bathrooms with Glasroc H Ocean or split double rooms into connecting units.' },
+    { titulo: 'Placo false ceilings with LED', descripcion: 'Recessed LED lighting in rooms, corridors and public areas (lobby, restaurant, spa). Accessible Placo or Knauf ceilings for maintenance access. Modern design that elevates the guest experience and cuts electricity use.' },
+    { titulo: 'CTE-HR acoustic insulation', descripcion: 'Placo Phonique / Placo Silence / Knauf Silentboard systems reaching 50-58 dB DnT,A between rooms and 45 dB toward corridors, meeting CTE-HR (RD 1371/2007) for public residential use. Rw certificate on handover.' },
+    { titulo: 'Fire compartmentation', descripcion: 'Knauf Fireboard or Placo Glasroc F in EI-60 corridors, EI-90 stairs and car-park sectors under 100 m² under CTE-DB-SI. Fire doors, evacuation ducts and EI certificate on handover.' },
+    { titulo: 'Services concealment', descripcion: 'Concealment of pipework, HVAC ducts and structured cabling with accessible inspection hatches for maintenance. Knauf Aquapanel on beachfront (first-line) facades exposed to salt air.' },
+    { titulo: 'Structural fire protection', descripcion: 'Steel structure protection with Knauf Fireboard, including Z275 hot-dip galvanisation and vapour barrier in wet areas. Technical documentation, EI certificates and justification memo.' },
+  ] as { titulo: string; descripcion: string }[],
+  s3Eyebrow: 'Planning',
+  s3Title: 'Optimal hotel renovation calendar',
+  s3CalHeader: 'Renovation calendar',
+  s3CalItems: [
+    { mes: 'October', actividad: 'Partial closure, works begin', ocupacion: 'Low (~40%)', activo: false },
+    { mes: 'November', actividad: 'Main works phase', ocupacion: 'Very low (~20%)', activo: true },
+    { mes: 'Dec-January', actividad: 'Finishes and paint', ocupacion: 'Minimum (~15%)', activo: true },
+    { mes: 'Feb-March', actividad: 'Snagging and cleaning', ocupacion: 'Rising (~30%)', activo: false },
+    { mes: 'April', actividad: 'Handover and opening', ocupacion: 'Mid season', activo: false },
+  ] as { mes: string; actividad: string; ocupacion: string; activo: boolean }[],
+  s3P1: '<strong>Low season</strong> in Menorca (1 November-15 April, optimum October-March) is the hotel refurbishment window. Occupancy drops to 15-20% in core winter months, which allows entire floors to be refurbished in Son Bou, Cala Galdana, Arenal d\'en Castell, Son Parc, Cala en Bosc, Son Xoriguer or Punta Prima without significantly hitting revenue.',
+  s3P2: 'We recommend planning the refurbishment from September: on-site visit, quote approval and material reservation for Placo Silence, Knauf Fireboard, Glasroc H Ocean, Rockwool and Isover. Sea freight of boards and profiles from mainland Spain takes 1-2 weeks, and some technical products need up to 3 weeks, so placing orders early is key to meeting deadlines.',
+  s3P3: 'For large 120-room hotels we deploy 3-4 parallel crews on different floors and complete the refurbishment in 8-10 weeks, with margin for finishes, deep cleaning and pre-opening before Easter. For 60-300+ room hotels we scale throughput while preserving floor- and room-level traceability.',
+  s3P4: 'We offer contracts with a per-day delay penalty (1-2% of daily revenue): if we miss the agreed deadline we apply a discount. This guarantee is particularly valued by chains such as Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema and Valentin that need absolute certainty on season opening dates.',
+  s4Eyebrow: 'Regulation',
+  s4Title: 'Applicable regulations for hotels in Menorca (CTE-DB-SI and CTE-HR)',
+  s4P1: 'Hotel premises are subject to stricter regulations than private homes. The CTE classifies hotels as "public residential use" (RD 1371/2007), which entails specific fire-protection (CTE DB-SI) and acoustic (CTE DB-HR) requirements that drywall meets with the right Placo and Knauf configurations. Handover includes Rw acoustic certificates, EI fire-protection certificates and, in bathrooms and wet areas, Z275 hot-dip galvanisation plus vapour barrier and H1 class.',
+  s4Items: [
+    { norma: 'CTE DB-SI', requisito: 'EI-60 corridors, EI-90 stairs, car-park sectors under 100 m²', solucion: '<strong>Knauf Fireboard</strong> or <strong>Placo Glasroc F</strong> in double layer: up to <strong>EI-120</strong>' },
+    { norma: 'CTE DB-HR', requisito: 'Between rooms: 50 dB DnT,A · corridors: 45 dB', solucion: 'Placo Silence / Knauf Silentboard + Rockwool 70 kg/m³: 52-58 dB Rw' },
+    { norma: 'CTE DB-SI', requisito: 'EI-60/EI-90 fire doors in corridors', solucion: 'Knauf Fireboard frames ready for certified EI doors' },
+    { norma: 'CTE DB-SI', requisito: 'Protected evacuation ducts and service shafts', solucion: 'Knauf Fireboard boxing, intumescent sealing and RF collars' },
+  ] as { norma: string; requisito: string; solucion: string }[],
+  s5Eyebrow: 'Prices',
+  s5Title: 'Hotel drywall refurbishment price 2026',
+  s5Intro: '2026 prices, VAT excluded. Unit rates from €29/m² Placo ceilings, €45/m² Knauf partitions, €35/m² Isover thermal lining, €6/m² Rockwool acoustic material and €52/m² Knauf Fireboard compartmentation. Volume discounts from 10 rooms. Final price after on-site visit.',
+  s5Cols: { concepto: 'Item', desde: 'From', hasta: 'To', unidad: 'Unit' },
+  s5Items: [
+    { concepto: 'Full Placo/Knauf room (partitions + ceiling + Rockwool)', desde: '€2,500', hasta: '€4,500', unidad: 'per room' },
+    { concepto: 'Placo LED false ceiling in corridor (€29/m²)', desde: '€29', hasta: '€45', unidad: 'm²' },
+    { concepto: 'Knauf Fireboard EI-60/EI-90 compartmentation (€52/m²)', desde: '€52', hasta: '€85', unidad: 'm²' },
+    { concepto: 'Placo Silence acoustic lining 50 dB DnT,A', desde: '€45', hasta: '€65', unidad: 'm²' },
+  ] as { concepto: string; desde: string; hasta: string; unidad: string }[],
+  s5MobileDesde: 'From',
+  s5MobileHasta: 'To',
+  s5MobileUnidad: 'Unit',
+  s5Note: 'Volume discounts from 10 rooms onwards; chain-specific rates from 60 rooms.',
+  s5Link: 'See full pricing table',
+  faqTitle: 'Frequently asked questions about hotel drywall refurbishment',
+  faqSubtitle: 'Answers to the most common questions from technical and maintenance departments of chains such as Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema and Valentin.',
+  ctaTitle: 'Planning your hotel refurbishment?',
+  ctaSubtitle: 'Free quote in 24 hours. Timelines guaranteed by contract with 1-2% daily-revenue penalty clauses. 120 rooms in 8-10 weeks. Refurbishing hotels since 2004.',
+  srOnly: 'Pladur Menorca — hotel refurbishment since 2004 for Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema and Valentin. 120 rooms in 8-10 weeks with 3-4 parallel crews. Knauf Fireboard EI-60/EI-90/EI-120 compartmentation (CTE-DB-SI), Placo Silence 50 dB DnT,A (CTE-HR), Glasroc H Ocean bathrooms and Aquapanel on beachfront. Tel: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbLabel: 'Drywall for Hotels',
+  schemaServiceName: 'Hotel Drywall Refurbishment in Menorca',
+  schemaServiceDesc: 'Hotel drywall refurbishment in Menorca since 2004. 120 rooms in 8-10 weeks with 3-4 parallel crews. Knauf Fireboard EI-60/EI-90 compartmentation (CTE-DB-SI), Placo Silence 50 dB DnT,A (CTE-HR), Glasroc H Ocean in bathrooms and handover certificates.',
+  schemaServiceType: 'Hotel Refurbishment',
+} : {
+  heroBadge: 'Sector hotelero · Menorca',
+  h1: 'Pladur para Hoteles en Menorca — Reforma de 120 Habitaciones en 8-10 Semanas',
+  heroSubtitle: 'Reforma de hoteles con pladur en Menorca: 120 habitaciones en 8-10 semanas durante la ventana de octubre a abril, con aislamiento acústico CTE-HR, sectorización ignífuga EI-60 y plazos garantizados por contrato.',
+  ctaPrimary: 'Presupuesto para tu hotel',
+  s1Eyebrow: 'Ventajas',
+  s1Title: '¿Por qué reformar con pladur un hotel en Menorca?',
+  s1P1: 'El sector hotelero de Menorca —cerca de <strong>400 hoteles</strong> distribuidos por la isla— opera con ventanas de reforma muy ajustadas: la temporada operativa se cierra el <strong>1 de noviembre</strong> y se reabre el <strong>15 de abril</strong>, con el óptimo entre octubre y marzo. El <strong>pladur</strong> es el sistema constructivo que mejor se adapta a esta realidad porque permite reformar por fases con 3-4 equipos paralelos sin paralizar todo el hotel, genera mínimos escombros y se ejecuta en la mitad de tiempo que la albañilería. En Pladur Menorca trabajamos con Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema y Valentin <strong>desde 2004</strong>, con ciclos de renovación de habitaciones cada 5-7 años y reforma integral cada 10-12.',
+  s1Quote: '"Para uso residencial público, el CTE DB-SI exige <strong>EI-60</strong> de sectorización entre plantas y <strong>EI-90</strong> en escaleras; sectores de aparcamiento menores de 100 m² con Knauf Fireboard. El CTE DB-HR exige <strong>50 dB DnT,A</strong> entre habitaciones y 45 dB hacia pasillos"',
+  s1Cite: '— <strong>CTE DB-SI</strong> (Seguridad en caso de Incendio) y <strong>CTE DB-HR</strong> (Protección frente al Ruido) · <strong>RD 1371/2007</strong>',
+  s1Cards: [
+    { titulo: 'Volumen', valor: '120 hab. / 8-10 sem.', detalle: '3-4 equipos paralelos' },
+    { titulo: 'Limpieza', valor: 'Obra seca', detalle: 'Sin polvo ni escombros' },
+    { titulo: 'CTE-DB-SI', valor: 'EI-60 / EI-90 / EI-120', detalle: 'Pasillos, escaleras, aparcamiento' },
+    { titulo: 'CTE-DB-HR', valor: '50 dB DnT,A', detalle: 'Placo Phonique/Silence habitaciones' },
+    { titulo: 'Ciclo', valor: '5-7 / 10-12 años', detalle: 'Habitaciones / reforma integral' },
+    { titulo: 'Ahorro', valor: '30-40%', detalle: 'Sobre albañilería tradicional' },
+  ] as { titulo: string; valor: string; detalle: string }[],
+  s2Eyebrow: 'Servicios',
+  s2Title: 'Servicios específicos para hoteles en Menorca',
+  s2Intro: 'Soluciones adaptadas a la reforma hotelera: throughput 120 habitaciones en 8-10 semanas, CTE-DB-SI y CTE-HR certificados, entrega con penalización por día de retraso (1-2% facturación/día).',
+  s2Items: [
+    { titulo: 'Redistribución de habitaciones', descripcion: 'Tabiques desvinculados Placo Silence o Knauf Silentboard con Rockwool 70 kg/m³ para 50-58 dB DnT,A entre estancias. Creación de suites, ampliación de baños con Glasroc H Ocean y división de habitaciones dobles en comunicadas.' },
+    { titulo: 'Falsos techos Placo con LED', descripcion: 'Iluminación LED empotrada en habitaciones, pasillos y zonas comunes (lobby, restaurante, spa). Techos registrables Placo o Knauf para mantenimiento de instalaciones. Diseño moderno que eleva la experiencia del huésped y recorta consumo.' },
+    { titulo: 'Aislamiento acústico CTE-HR', descripcion: 'Sistemas Placo Phonique / Placo Silence / Knauf Silentboard que alcanzan 50-58 dB DnT,A entre habitaciones y 45 dB hacia pasillos, cumpliendo el CTE-HR (RD 1371/2007) para uso residencial público. Certificado Rw de entrega.' },
+    { titulo: 'Sectorización contra incendios', descripcion: 'Knauf Fireboard o Placo Glasroc F en pasillos EI-60, escaleras EI-90 y sectores de aparcamiento menores de 100 m² según CTE-DB-SI. Puertas cortafuegos, conductos de evacuación y certificado EI de entrega.' },
+    { titulo: 'Revestimiento de instalaciones', descripcion: 'Ocultación de bajantes, conductos de climatización y cableado estructurado con registros accesibles para mantenimiento. Aquapanel Knauf en primera línea de playa para frentes expuestos a salinidad.' },
+    { titulo: 'Protección ignífuga de estructura', descripcion: 'Protección de estructura metálica con placa cortafuegos Knauf Fireboard, incluyendo hidrofugación Z275 + barrera de vapor en zonas húmedas. Documentación técnica, certificados EI y memoria justificativa.' },
+  ] as { titulo: string; descripcion: string }[],
+  s3Eyebrow: 'Planificación',
+  s3Title: 'Calendario óptimo de reforma hotelera',
+  s3CalHeader: 'Calendario de reforma',
+  s3CalItems: [
+    { mes: 'Octubre', actividad: 'Cierre parcial, inicio obra', ocupacion: 'Baja (~40%)', activo: false },
+    { mes: 'Noviembre', actividad: 'Fase principal de obra', ocupacion: 'Muy baja (~20%)', activo: true },
+    { mes: 'Dic-Enero', actividad: 'Acabados y pintura', ocupacion: 'Mínima (~15%)', activo: true },
+    { mes: 'Feb-Marzo', actividad: 'Remates y limpieza', ocupacion: 'Subiendo (~30%)', activo: false },
+    { mes: 'Abril', actividad: 'Entrega y apertura', ocupacion: 'Temporada media', activo: false },
+  ] as { mes: string; actividad: string; ocupacion: string; activo: boolean }[],
+  s3P1: 'La <strong>temporada baja</strong> en Menorca (1 noviembre - 15 abril, óptimo octubre-marzo) es la ventana de reforma para hoteles. La ocupación desciende al 15-20% en los meses centrales, lo que permite intervenir plantas enteras en Son Bou, Cala Galdana, Arenal d\'en Castell, Son Parc, Cala en Bosc, Son Xoriguer o Punta Prima sin afectar significativamente a los ingresos.',
+  s3P2: 'Recomendamos planificar la reforma desde septiembre: visita técnica, aprobación de presupuesto y reserva de Placo Silence, Knauf Fireboard, Glasroc H Ocean, Rockwool e Isover. El transporte marítimo de placas y perfilería desde la península tarda 1-2 semanas y algunos productos técnicos requieren hasta 3 semanas, por lo que anticipar pedidos es clave para cumplir plazos.',
+  s3P3: 'Para hoteles grandes de 120 habitaciones desplegamos 3-4 equipos paralelos en distintas plantas y completamos la reforma en 8-10 semanas, con margen para acabados, limpieza profesional y puesta en marcha antes de Semana Santa. Para 60-300+ habitaciones ajustamos el volumen de obra manteniendo la trazabilidad por planta y por habitación.',
+  s3P4: 'Ofrecemos contratos con penalización por día de retraso (1-2% facturación/día): si no cumplimos el plazo acordado, aplicamos descuento. Esta garantía es especialmente valorada por cadenas como Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema y Valentin, que necesitan certeza absoluta en las fechas de apertura de temporada.',
+  s4Eyebrow: 'Normativa',
+  s4Title: 'Normativa aplicable en hoteles de Menorca (CTE-DB-SI y CTE-HR)',
+  s4P1: 'Los establecimientos hoteleros están sujetos a normativa más exigente que las viviendas. El CTE clasifica los hoteles como "uso residencial público" (RD 1371/2007), lo que implica requisitos específicos de protección contra incendios (CTE DB-SI) y aislamiento acústico (CTE DB-HR) que el pladur cumple con las configuraciones Placo y Knauf adecuadas. La entrega incluye certificados acústicos Rw, certificados EI de ignifugación y, en baños y zonas húmedas, hidrofugación Z275 con barrera de vapor y clase H1.',
+  s4Items: [
+    { norma: 'CTE DB-SI', requisito: 'Pasillos EI-60, escaleras EI-90, aparcamiento menores de 100 m²', solucion: '<strong>Knauf Fireboard</strong> o <strong>Placo Glasroc F</strong> en doble capa: hasta <strong>EI-120</strong>' },
+    { norma: 'CTE DB-HR', requisito: 'Entre habitaciones: 50 dB DnT,A · pasillos: 45 dB', solucion: 'Placo Silence / Knauf Silentboard + Rockwool 70 kg/m³: 52-58 dB Rw' },
+    { norma: 'CTE DB-SI', requisito: 'Puertas cortafuegos EI-60/EI-90 en pasillos', solucion: 'Marcos Knauf Fireboard preparados para puerta EI certificada' },
+    { norma: 'CTE DB-SI', requisito: 'Conductos de evacuación y patinillos protegidos', solucion: 'Cajeado Knauf Fireboard + sellado intumescente y collarines RF' },
+  ] as { norma: string; requisito: string; solucion: string }[],
+  s5Eyebrow: 'Precios',
+  s5Title: 'Precio de reforma de hotel con pladur 2026',
+  s5Intro: 'Precios 2026, IVA no incluido. Unitarios desde 29€/m² techos Placo, 45€/m² tabiques Knauf, 35€/m² térmico Isover, 6€/m² material acústico Rockwool y 52€/m² cortafuego Knauf Fireboard. Descuentos por volumen desde 10 habitaciones. Precio final tras la visita técnica.',
+  s5Cols: { concepto: 'Concepto', desde: 'Precio desde', hasta: 'Hasta', unidad: 'Unidad' },
+  s5Items: [
+    { concepto: 'Habitación completa Placo/Knauf (tabiques + techo + Rockwool)', desde: '2.500€', hasta: '4.500€', unidad: 'por habitación' },
+    { concepto: 'Falso techo Placo LED en pasillo (29€/m²)', desde: '29€', hasta: '45€', unidad: 'm²' },
+    { concepto: 'Sectorización Knauf Fireboard EI-60/EI-90 (52€/m²)', desde: '52€', hasta: '85€', unidad: 'm²' },
+    { concepto: 'Trasdosado acústico Placo Silence 50 dB DnT,A', desde: '45€', hasta: '65€', unidad: 'm²' },
+  ] as { concepto: string; desde: string; hasta: string; unidad: string }[],
+  s5MobileDesde: 'Desde',
+  s5MobileHasta: 'Hasta',
+  s5MobileUnidad: 'Unidad',
+  s5Note: 'Descuentos por volumen desde 10 habitaciones; tarifa específica por cadena desde 60 habitaciones.',
+  s5Link: 'Ver tabla de precios completa',
+  faqTitle: 'Preguntas frecuentes sobre reforma de hoteles con pladur',
+  faqSubtitle: 'Respuestas a las dudas más habituales de direcciones técnicas y mantenimiento de cadenas como Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema y Valentin.',
+  ctaTitle: '¿Planificando la reforma de tu hotel?',
+  ctaSubtitle: 'Presupuesto gratuito en 24 horas. Plazos garantizados por contrato con penalización 1-2% facturación/día. 120 habitaciones en 8-10 semanas. Reformando hoteles desde 2004.',
+  srOnly: 'Pladur Menorca — reforma de hoteles desde 2004 para Barceló, Meliá, Iberostar, RIU, Hipotels, Artiem, Blau, Grupotel, Sol, Prinsotel, Carema y Valentin. 120 habitaciones en 8-10 semanas con 3-4 equipos paralelos. Sectorización Knauf Fireboard EI-60/EI-90/EI-120 (CTE-DB-SI), Placo Silence 50 dB DnT,A (CTE-HR), Glasroc H Ocean baños, Aquapanel primera línea playa. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbLabel: 'Pladur para Hoteles',
+  schemaServiceName: 'Reforma de Hoteles con Pladur en Menorca',
+  schemaServiceDesc: 'Reforma de hoteles con pladur en Menorca desde 2004. 120 habitaciones en 8-10 semanas con 3-4 equipos paralelos. Sectorización Knauf Fireboard EI-60/EI-90 (CTE-DB-SI), Placo Silence 50 dB DnT,A (CTE-HR), Glasroc H Ocean en baños y certificados de entrega.',
+  schemaServiceType: 'Reforma de Hoteles',
+}
+
+const meta = lang === 'en' ? {
+  title: 'Drywall Hotels Menorca | 120 Rooms in 8-10 Weeks Since 2004',
+  description: 'Hotel drywall refurbishment in Menorca since 2004: Barceló, Meliá, Iberostar, RIU. 120 rooms in 8-10 wks, CTE-DB-SI EI-60, CTE-HR 50 dB DnT,A. Oct-Mar.',
+  canonical: '/en/pladur-hoteles-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-hoteles-menorca',
+} : {
+  title: 'Pladur Hoteles Menorca | 120 Habitaciones en 8-10 semanas',
+  description: 'Reforma de hoteles con pladur en Menorca desde 2004: Barceló, Meliá, Iberostar, RIU. 120 hab. en 8-10 semanas, CTE-DB-SI EI-60, CTE-HR 50 dB. Oct-mar.',
+  canonical: '/pladur-hoteles-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-hoteles-menorca',
+}
+
+const breadcrumbHref = lang === 'en' ? '/en/pladur-hoteles-menorca' : '/pladur-hoteles-menorca'
+const preciosHref = lang === 'en' ? '/en/precios-pladur-menorca' : '/precios-pladur-menorca'
+const presupuestoHref = lang === 'en' ? '/en/presupuesto-pladur' : '/presupuesto-pladur'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType={t.schemaServiceType}
+      url={breadcrumbHref}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbLabel, href: breadcrumbHref }]} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            {t.heroBadge}
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.h1}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            {t.heroSubtitle}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button href={presupuestoHref} variant="primary" size="lg" withArrow>
+              {t.ctaPrimary}
+            </Button>
+            <Button href={`tel:${siteConfig.phoneRaw}`} variant="secondary" size="lg">
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué pladur -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s1Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          {t.s1Title}
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p set:html={t.s1P1} />
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p set:html={t.s1Quote} />
+          <cite class="block mt-2 text-sm not-italic text-muted/70" set:html={t.s1Cite} />
+        </blockquote>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+        {t.s1Cards.map((card) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 cursor-default">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-2">{card.titulo}</p>
+            <p class="text-2xl font-bold text-foreground-dark mb-1">{card.valor}</p>
+            <p class="text-sm text-muted">{card.detalle}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios específicos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s2Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s2Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s2Intro}
+        </p>
+      </div>
+      <div class="space-y-3">
+        {t.s2Items.map((s) => (
+          <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+              <svg aria-hidden="true" class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-foreground text-base mb-1">{s.titulo}</h3>
+              <p class="text-sm text-muted leading-relaxed" set:html={s.descripcion} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendario -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <div class="sticky top-28">
+            <div class="relative overflow-hidden rounded-3xl bg-foreground-dark p-7 lg:p-8 shadow-card">
+              <div aria-hidden="true" class="pointer-events-none absolute -top-16 -right-16 size-40 rounded-full bg-white/[0.04] blur-3xl"></div>
+              <div class="relative">
+                <p class="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/60 mb-6">
+                  <span class="size-1.5 rounded-full bg-white/60 animate-pulse motion-reduce:animate-none"></span>
+                  {t.s3CalHeader}
+                </p>
+                <ol class="relative">
+                  {t.s3CalItems.map((item, index) => (
+                    <li class="relative pl-9 pb-6 last:pb-0">
+                      {index < t.s3CalItems.length - 1 && (
+                        <span aria-hidden="true" class="absolute left-[11px] top-6 bottom-0 w-px bg-white/10"></span>
+                      )}
+                      <span
+                        aria-hidden="true"
+                        class:list={[
+                          'absolute left-0 top-1 flex size-[22px] items-center justify-center rounded-full transition-colors',
+                          item.activo ? 'bg-white/15 ring-2 ring-white/40' : 'bg-white/5 ring-1 ring-white/15',
+                        ]}
+                      >
+                        <span class:list={['size-2 rounded-full', item.activo ? 'bg-white' : 'bg-white/40']}></span>
+                      </span>
+                      <div class="flex items-center justify-between gap-3 mb-1">
+                        <span class="text-sm font-bold text-white tabular-nums">{item.mes}</span>
+                        <span
+                          class:list={[
+                            'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide border',
+                            item.activo
+                              ? 'bg-white/10 text-white border-white/20'
+                              : 'bg-white/5 text-white/50 border-white/10',
+                          ]}
+                        >
+                          {item.ocupacion}
+                        </span>
+                      </div>
+                      <p class="text-[13px] text-white/70 leading-relaxed">{item.actividad}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 order-1 lg:order-2">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s3Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.s3Title}
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p set:html={t.s3P1} />
+            <p>{t.s3P2}</p>
+            <p>{t.s3P3}</p>
+            <p>{t.s3P4}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Normativa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s4Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          {t.s4Title}
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p>{t.s4P1}</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {t.s4Items.map((item) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-3">{item.norma}</span>
+            <p class="font-bold text-foreground text-sm mb-2">{item.requisito}</p>
+            <p class="text-sm text-muted" set:html={item.solucion} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s5Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s5Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s5Intro}
+        </p>
+      </div>
+      {/* Desktop table */}
+      <div class="hidden md:block">
+        <div class="rounded-3xl overflow-hidden border border-warm-border/80 bg-white/60 shadow-card backdrop-blur-sm">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-foreground-dark">
+                <th class="px-6 py-4 text-left text-[11px] font-bold text-white/90 uppercase tracking-[0.08em]">{t.s5Cols.concepto}</th>
+                <th class="px-6 py-4 text-left text-[11px] font-bold text-white/90 uppercase tracking-[0.08em] whitespace-nowrap">{t.s5Cols.desde}</th>
+                <th class="px-6 py-4 text-left text-[11px] font-bold text-white/90 uppercase tracking-[0.08em] whitespace-nowrap">{t.s5Cols.hasta}</th>
+                <th class="px-6 py-4 text-left text-[11px] font-bold text-white/90 uppercase tracking-[0.08em] whitespace-nowrap">{t.s5Cols.unidad}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.s5Items.map((p, i) => (
+                <tr class={`border-t border-warm-border/50 transition-colors duration-200 hover:bg-surface/40 ${i % 2 === 0 ? 'bg-white/40' : 'bg-transparent'}`}>
+                  <td class="px-6 py-5 align-top">
+                    <span class="block text-sm font-semibold text-foreground leading-snug">{p.concepto}</span>
+                  </td>
+                  <td class="px-6 py-5 align-top whitespace-nowrap">
+                    <span class="text-xl sm:text-2xl font-bold text-foreground tabular-nums">{p.desde.replace('€', '')}</span>
+                    <span class="text-base font-bold text-foreground">€</span>
+                  </td>
+                  <td class="px-6 py-5 align-top whitespace-nowrap">
+                    <span class="text-base font-semibold text-muted tabular-nums">{p.hasta.replace('€', '')}</span>
+                    <span class="text-sm font-semibold text-muted">€</span>
+                  </td>
+                  <td class="px-6 py-5 align-top whitespace-nowrap text-sm text-muted">{p.unidad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Mobile cards */}
+      <div class="md:hidden space-y-3">
+        {t.s5Items.map((p) => (
+          <article class="rounded-2xl border border-warm-border/60 bg-white/70 shadow-card p-5 backdrop-blur-sm">
+            <h3 class="font-semibold text-foreground text-base leading-snug">{p.concepto}</h3>
+            <div class="mt-4 flex items-end justify-between gap-3 border-t border-warm-border/40 pt-4">
+              <div>
+                <span class="block text-[10px] font-semibold uppercase tracking-wider text-muted mb-0.5">{t.s5MobileDesde}</span>
+                <div class="flex items-baseline gap-0.5">
+                  <span class="text-2xl font-bold text-foreground tabular-nums leading-none">{p.desde.replace('€', '')}</span>
+                  <span class="text-lg font-bold text-foreground leading-none">€</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="block text-[10px] font-semibold uppercase tracking-wider text-muted mb-0.5">{t.s5MobileHasta}</span>
+                <div class="flex items-baseline gap-0.5 justify-end text-muted">
+                  <span class="text-base font-semibold tabular-nums leading-none">{p.hasta.replace('€', '')}</span>
+                  <span class="text-sm font-semibold leading-none">€</span>
+                </div>
+              </div>
+              <div class="text-right">
+                <span class="block text-[10px] font-semibold uppercase tracking-wider text-muted mb-0.5">{t.s5MobileUnidad}</span>
+                <span class="text-sm font-semibold text-foreground">{p.unidad}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-10 flex items-center justify-between gap-4 flex-wrap">
+        <p class="text-sm text-muted">{t.s5Note}</p>
+        <a
+          href={preciosHref}
+          class="group inline-flex items-center gap-2 text-foreground font-semibold text-sm transition-colors hover:text-foreground-dark"
+        >
+          {t.s5Link}
+          <svg aria-hidden="true" class="size-4 group-hover:translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitle}
+    subtitulo={t.faqSubtitle}
+  />
+
+  <!-- CTA -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitle}
+    subtitulo={t.ctaSubtitle}
+  />
+
+  <ServiciosRelacionados currentPath={breadcrumbHref} />
+
+  <Footer lang={lang} slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

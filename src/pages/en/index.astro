@@ -1,0 +1,89 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import HeroHome from '@/components/sections/HeroHome.astro'
+import ServiciosGrid from '@/components/sections/ServiciosGrid.astro'
+import PorQueElegirnos from '@/components/sections/PorQueElegirnos.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import Testimonios from '@/components/sections/Testimonios.astro'
+import ProyectosRecientes from '@/components/sections/ProyectosRecientes.astro'
+import SeoTextSection from '@/components/sections/SeoTextSection.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import { homeFaqsEn } from '@/data/faqs/home'
+
+const lang = 'en' as const
+
+const meta = {
+  title: 'Drywall in Menorca · Professional Installers since 2004',
+  description: 'Drywall installers in Menorca with 20+ years and 6,000+ projects in the Balearics. Suspended ceilings, partitions, acoustic and thermal insulation. Free quote in 24h.',
+  canonical: '/en',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Home', href: '/en' }]} />
+    <SchemaFAQ faqs={homeFaqsEn} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Menorca (pladurmenorca.com) is a drywall (plasterboard) and plasterwork installation company in Menorca, operated by Plaquistas y Acabados SL, founded in 2004 and with more than 6,000 projects completed across the Balearic Islands. Services: continuous and decorative suspended ceilings, partition walls and wall linings, acoustic and thermal insulation to CTE-HR and CTE-HE, functional and decorative plasterwork, fire-rated drywall and moisture-resistant drywall. Coverage in all 8 municipalities of Menorca: Maó, Ciutadella, Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Migjorn Gran and Es Castell. Free quote within 24 hours. Phone +34 627 829 723.
+  </p>
+
+  <!-- 1. Hero -->
+  <HeroHome
+    lang={lang}
+    ctaPrimario={{ texto: 'Request a free quote', href: '/presupuesto-pladur' }}
+  />
+
+  <!-- 2. Services -->
+  <ServiciosGrid lang={lang} />
+
+  <!-- 3. Why choose us -->
+  <PorQueElegirnos lang={lang} />
+
+  <!-- 4. Real benchmarks -->
+  <NuestrosDatos lang={lang} />
+
+  <!-- 5. Service areas -->
+  <ZonasServicio lang={lang} />
+
+  <!-- 5. Prices table -->
+  <PreciosTable lang={lang} variant="resumen" />
+
+  <!-- 6. Testimonials -->
+  <Testimonios lang={lang} />
+
+  <!-- 7. Recent projects -->
+  <ProyectosRecientes lang={lang} />
+
+  <!-- 8. SEO text section -->
+  <SeoTextSection lang={lang} />
+
+  <!-- 9. FAQ -->
+  <FaqAccordion client:visible lang={lang} faqs={homeFaqsEn} />
+
+  <!-- 10. CTA with form -->
+  <CtaBanner lang={lang} showForm={true} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

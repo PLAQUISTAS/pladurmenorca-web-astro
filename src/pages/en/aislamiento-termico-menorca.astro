@@ -1,0 +1,709 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Container from '@/components/ui/Container.astro'
+import { getAislamientoTermicoFaqs } from '@/data/faqs/aislamiento-termico'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('aislamiento-termico-menorca')!
+const pageFaqs = getAislamientoTermicoFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Thermal Insulation in Menorca | Pladur from €7/m²',
+  description: 'Thermal insulation with drywall in Menorca. Wall linings from €7/m² with EPS, XPS or rock wool. Cut HVAC by 30%. Free quote in 24-48h.',
+  canonical: '/en/aislamiento-termico-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/aislamiento-termico-menorca',
+} : {
+  title: 'Aislamiento Térmico en Menorca | Pladur desde 7€/m²',
+  description: 'Aislamiento térmico con pladur en Menorca. Trasdosados desde 7€/m² con EPS, XPS o lana de roca. Reduce 30% climatización. Presupuesto en 24-48h.',
+  canonical: '/aislamiento-termico-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/aislamiento-termico-menorca',
+}
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — interior thermal insulation installers with drywall (pladur) wall linings. CTE climate zone B3, 20-35% HVAC savings. Knauf, Isover and Rockwool materials: EPS, XPS and mineral wool. Wall linings from €7/m². Service in Maó, Ciutadella, Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Castell, Es Migjorn Gran and the whole island. Quote in 24h. Tel: +34 627 829 723.',
+  heroTitle: 'Thermal Insulation in Menorca — Save up to 30% on HVAC',
+  heroSubtitle: 'Drywall (pladur) wall linings tailored to the Mediterranean climate',
+  heroDescription: 'Drywall wall linings with interior insulation from €7/m² in Menorca (CTE climate zone B3), using Knauf and Isover EPS, XPS and Rockwool mineral wool. Cut HVAC energy use by 20-35% in homes, hotels and commercial premises. Free quote in 24 h.',
+  heroBadges: ['Save up to 30%', 'Mediterranean climate', 'All of Menorca'],
+  ctaPrimarioHero: 'Request a free quote',
+  ctaLlamar: 'Call',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Thermal Insulation',
+  howToName: 'How to install thermal insulation with drywall',
+  howToDescription: 'Process for installing thermal insulation with a drywall wall lining in 5 steps: from envelope assessment to final finish.',
+  howToSteps: [
+    { name: 'Envelope assessment', text: 'We evaluate the wall condition, envelope composition and current U-value, calculating the insulation thickness needed to comply with regulations.' },
+    { name: 'Choice of insulation', text: 'We select the best material (EPS, XPS or rock wool) based on thermal needs, budget and available space.' },
+    { name: 'Framework installation', text: 'We fix guide rails and vertical studs, using materials with thermal break where needed to maximise performance.' },
+    { name: 'Insulation placement', text: 'We fit the insulation into the cavities between studs with no gaps or thermal bridges, ensuring continuous coverage.' },
+    { name: 'Plasterboard and finish', text: 'We screw on the plasterboard, treat the joints and deliver a final finish ready to paint.' },
+  ],
+  offers: [
+    { name: 'Thermal wall lining with EPS', price: '30', description: 'Direct wall lining with drywall (pladur) board and expanded polystyrene (EPS) insulation. Price per m².' },
+    { name: 'Thermal wall lining with rock wool', price: '45', description: 'Self-supporting lining with metal frame and rock wool for maximum thermal and acoustic performance. Price per m².' },
+    { name: 'Thermal wall lining with XPS', price: '40', description: 'Lining with high-density extruded polystyrene (XPS) for damp-prone areas. Price per m².' },
+  ],
+  secContext: 'The context',
+  secContextH2: 'Menorca’s climate and the need for thermal insulation',
+  ctxP1: 'Menorca sits in CTE climate zone B3, with summers above 32-35 °C from June to September and long sunny hours. An 80 m² flat without insulation can burn 400-800 kWh a month on HVAC during July and August — the biggest single item on the electricity bill. Interior insulation cuts solar heat gain through facades by 30-40%.',
+  ctxQuote: '"Dwellings in climate zone B3, which includes Menorca, must reach a maximum thermal transmittance of 0.38 W/m²K on facade walls"',
+  ctxQuoteCite: '— CTE-HE, Basic Document on Energy Efficiency, Anejo B (climate zoning) and Table D.2.7',
+  ctxP2: 'Menorcan winters are mild but not trivial: January averages of 10-14 °C, high humidity and tramontana winds blowing across the whole island force 3-4 months of heating a year. Thermal insulation works both ways: it blocks heat in summer and heat loss in winter, cutting annual HVAC spend by 20-30%.',
+  ctxP3: 'The main thermal problem in Menorca is high envelope transmittance. Most pre-1990s buildings have single-leaf facades of marès stone or brick with no air cavity, reaching U-values of 1.8-2.5 W/m²K — far above the CTE limit of 0.38 W/m²K for zone B3. A drywall wall lining with insulation fixes this in 2-5 days, without scaffolding and without touching the outer facade.',
+  ctxSeeAlso: 'See also',
+  ctxLink1: 'all our drywall services in Menorca',
+  ctxLink1Href: '/en/instalacion-pladur-menorca',
+  ctxLink2: 'thermal insulation prices',
+  ctxLink2Href: '/en/precios-pladur-menorca',
+  ctxLink3: 'interior renovations with drywall',
+  ctxLink3Href: '/en/reformas-interiores-pladur-menorca',
+  sidebarBadge: 'Free quote',
+  sidebarTitle: 'Cut your Menorca electricity bill',
+  sidebarText: 'We calculate the annual saving in €/year and send a detailed quote within 24h.',
+  sidebarCta: 'Request an online quote',
+  datosTitle: 'Menorca reference figures:',
+  datosReferencia: [
+    { label: 'Maximum summer temperature', valor: '35°C' },
+    { label: 'Months requiring AC', valor: '4-5 months' },
+    { label: 'Estimated insulation savings', valor: '20-30%' },
+    { label: 'Menorca climate zone', valor: 'B3' },
+    { label: 'Average payback', valor: '5-10 years' },
+  ],
+  matBadge: 'Insulation materials',
+  matH2: 'Types of thermal insulation we use',
+  matLead: 'The right insulation depends on budget, available space and whether acoustic performance is also required. We work with the three families certified for drywall linings under CTE-HE:',
+  tiposAislante: [
+    {
+      nombre: 'Expanded Polystyrene (EPS)',
+      color: 'border-foreground-dark',
+      desc: 'The cheapest insulation on the market, with thermal conductivity 0.035-0.037 W/m·K. Lightweight (15-30 kg/m³), cuts with a utility knife, with a good price-to-performance ratio. Common brands: Knauf Therm, Ursa XPE. Supplied as rigid boards 30-100 mm thick.',
+      ventajas: ['Very competitive price', 'Easy to install', 'Light and easy to handle', 'Moisture-resistant'],
+      rValue: 'R = 0.70-1.25 m²K/W (40mm)',
+      precio: 'From €3-5/m² (material)',
+      mejorPara: 'Standard walls, tight budget',
+    },
+    {
+      nombre: 'Extruded Polystyrene (XPS)',
+      color: 'border-foreground',
+      desc: 'Thermal conductivity 0.032-0.034 W/m·K and closed-cell structure: higher efficiency per centimetre and high water-vapour resistance. Common references: Ursa XPS, Danosa Danopren. Thicknesses 20-100 mm with tongue-and-groove edges that remove thermal bridges between boards.',
+      ventajas: ['Higher efficiency per cm', 'Compression-resistant', 'Excellent moisture resistance', 'Machined edges, no bridges'],
+      rValue: 'R = 1.00-1.40 m²K/W (40mm)',
+      precio: 'From €6-10/m² (material)',
+      mejorPara: 'Roofs, damp-prone areas',
+    },
+    {
+      nombre: 'Rock Wool (Rockwool)',
+      color: 'border-foreground-dark',
+      desc: 'Thermal conductivity 0.034-0.040 W/m·K and sound absorption αw=0.90-1.00: combines thermal and acoustic insulation in a single layer. The go-to material for Knauf and Placo linings that need to meet CTE-HR simultaneously. Manufacturers: Rockwool, Isover (mineral wool). Supplied as blanket or rigid panel.',
+      ventajas: ['Dual function: thermal + acoustic', 'Fire class A1', 'Vapour-permeable', 'CTE-HR compliant'],
+      rValue: 'R = 1.05-1.40 m²K/W (60mm)',
+      precio: 'From €5-9/m² (material)',
+      mejorPara: 'Projects with dual acoustic + thermal goals',
+    },
+  ],
+  matVentajas: 'Advantages',
+  matResistencia: 'R value:',
+  matPrecio: 'Material price:',
+  matMejorPara: 'Best for:',
+  compBadge: 'Comparison',
+  compH2: 'Thermal insulation comparison table',
+  compLead: 'Values for Menorca’s climate zone B3 under CTE-HE.',
+  compTop: 'Top',
+  compValor: 'R value',
+  compEspesor: 'Thickness',
+  compPrecio: 'Price',
+  compMejor: 'Best for',
+  compFootnote: 'Thicknesses shown are those needed to reach U≤0.38 in zone B3. Actual values depend on the existing wall.',
+  tablaComparativa: [
+    { nombre: 'EPS 035', valorR: '1.14', espesor: '60-80mm', precio: '€3-5/m²', mejorPara: 'Standard walls and ceilings', destacado: false },
+    { nombre: 'XPS 034', valorR: '1.18', espesor: '50-70mm', precio: '€6-10/m²', mejorPara: 'Roofs, moisture', destacado: false },
+    { nombre: 'Rock wool 035', valorR: '1.14', espesor: '60-80mm', precio: '€5-9/m²', mejorPara: 'Walls + acoustic', destacado: false },
+    { nombre: 'Rock wool 040', valorR: '1.00', espesor: '70-90mm', precio: '€4-7/m²', mejorPara: 'Partitions and ceilings', destacado: false },
+    { nombre: 'Polyurethane 024', valorR: '1.67', espesor: '40-60mm', precio: '€12-18/m²', mejorPara: 'Tight spaces', destacado: true },
+  ],
+  solBadge: 'The solution',
+  solH2: 'Thermal drywall linings: how they work and what they cost',
+  solP1: 'A drywall thermal lining is an interior wall built against the facade with the highest heat transfer. It combines galvanised steel framing, insulation (EPS, XPS or rock wool) and a 12.5-15 mm Knauf or Placo plasterboard sheet, sitting 5-10 cm from the original wall. Installation takes 2-5 days depending on surface area.',
+  solP2: 'The process has four stages: floor and ceiling track profiles, vertical studs every 40-60 cm, insulation between studs and a screwed plasterboard sheet. The result brings the envelope U-value down from 1.8-2.5 W/m²K to 0.30-0.38 W/m²K, within the CTE-HE limit for zone B3. No scaffolding and no owners’ association permits required.',
+  solP3: 'Loss of floor space is 5-10 cm per treated wall, equivalent to 1-2 m² in an 80 m² flat when all four facades are lined. In return you get a 20-35% cut in energy demand and a perfectly flat wall ready to paint.',
+  roiTitle: 'Estimated ROI in Menorca',
+  roiText: 'An 80 m² flat with a €4,000-6,000 investment in thermal linings saves €300-600 a year on HVAC, paying back in 5-10 years. Insulation lasts the lifetime of the building (50+ years), so once paid off it continues to generate net savings for decades.',
+  procesoBadge: 'Installation process',
+  pasosInstalacion: [
+    { num: '01', titulo: 'Envelope assessment', desc: 'We evaluate the wall condition, envelope composition and current U-value. We calculate the insulation thickness required to reach the target U-value under CTE-HE.' },
+    { num: '02', titulo: 'Insulation selection', desc: 'Depending on budget, available space and whether acoustic upgrades are required too, we choose the most suitable material: EPS, XPS or rock wool.' },
+    { num: '03', titulo: 'Framework installation', desc: 'We fix the guide rails to floor and ceiling and install the vertical studs. Where there is a thermal-bridge risk, we use thermal-break profiles.' },
+    { num: '04', titulo: 'Insulation placement', desc: 'We fit the insulation into the cavities between studs. Panels must fit perfectly with no gaps that could become thermal bridges.' },
+    { num: '05', titulo: 'Plasterboard and finish', desc: 'We screw the plasterboard on, treat the joints and deliver the final finish ready to paint. The result is a brand-new, perfectly flat wall.' },
+  ],
+  subvCta: 'Did you know you can recover up to',
+  subvCtaStrong: '60% of the cost',
+  subvCta2: 'of your thermal insulation? Income-tax deductions, European funds and IBI rebates. See our complete guide.',
+  subvCtaLink: 'See 2026 grants',
+  ctaIntTitulo: 'Improve the energy efficiency of your Menorca flat',
+  ctaIntSubtitulo: 'Free quote with estimated savings calculation.',
+  certBadge: 'Property value',
+  certH2: 'How insulation improves your energy certificate',
+  certP1: 'The energy-performance certificate has been mandatory since 2013 to sell or rent a home in Spain (RD 390/2021). A rating of E, F or G reduces market value by 5-15%. A drywall lining with insulation can raise the rating by 1-2 letters (e.g. from E to C) after recalculating demand with HULC or CE3X certification software.',
+  certP2: 'The calculation is direct: lower envelope U-values lower heating and cooling demand expressed in kWh/m²·year. That reduction moves the energy label up a letter and is filed in the IBAVI regional register for 10 years.',
+  certP3: 'In the Menorcan market, very active with German, British and Nordic buyers who pay close attention to efficiency, moving from E to C adds 5-15% to the appraised value. For tourist rentals (ETV), a better label also helps re-certification and meets the Consell Insular de Menorca’s requirements.',
+  subvBadge: 'Extra savings',
+  subvH2: 'Grants and incentives in the Balearic Islands',
+  subvP1: 'The Balearic Government and the Spanish state keep active grant programmes for energy retrofits, funded by Next Generation EU. PIREP and PREE cover 40-80% of envelope-upgrade costs, including interior drywall insulation. The IRPF personal-income-tax deduction adds up to 60% on top, capped at €5,000 per year.',
+  subvP2: 'We recommend checking current calls with the Departament de Transició Energètica at the Conselleria de Medi Ambient i Territori of the Govern Balear, or through your building manager if the works affect common areas. Combining PIREP, the IRPF deduction and IBI rebates, the real cost can drop by 50-70% against the headline quote.',
+  programasAyudas: [
+    { programa: 'PIREP Balears', cobertura: 'Up to 80%', tipo: 'Energy retrofit of buildings' },
+    { programa: 'PREE programme', cobertura: 'Up to 40%', tipo: 'Envelope upgrades for homes' },
+    { programa: 'IRPF deductions', cobertura: 'Up to 60%', tipo: 'Annual income-tax deduction' },
+    { programa: 'ICO loans', cobertura: 'Soft financing', tipo: 'Low-interest loans' },
+  ],
+  subvFootnote: '* Calls and amounts may change. Check current status with the competent authorities.',
+  appBadge: 'Applications',
+  appH2: 'Thermal insulation for every type of home in Menorca',
+  appLead: 'We tailor the insulation solution to the property, the budget and the state of the existing envelope. Typical cases in Menorca:',
+  tipoVivienda: [
+    { titulo: 'Flats in Maó', desc: 'City-centre flats with uninsulated marès-stone facades. A 50 mm rock-wool lining cuts indoor temperature by 3-5 °C in summer and eliminates the cold tramontana draughts in winter. Works take 2-4 days per flat.', foot: 'Typical investment: €3,500-5,500 · Payback: 6-9 years' },
+    { titulo: 'Villas and chalets', desc: 'Detached villas in Ciutadella, Sant Lluís, Alaior or Es Castell with facades exposed to the west-facing sun. A 60 mm XPS lining plus roof insulation cuts summer AC use by 30-40%, especially in south-west bedrooms.', foot: 'Typical investment: €6,000-12,000 · Payback: 5-8 years' },
+    { titulo: 'Commercial premises', desc: 'Restaurants, shops and offices in Maó and Ciutadella with large glazing and summer overheating. A perimeter lining plus insulated false ceiling cuts thermal load by 25-35% and reduces the AC kW needed.', foot: 'Typical investment: €2,000-5,000 · Payback: 3-5 years' },
+    { titulo: 'Hotels and holiday flats', desc: 'Menorca’s hotel sector spends 40-60% of electricity on AC. Lining rooms with rock wool and Knauf plasterboard boosts reviews on thermal comfort and permanently lowers the bill.', foot: 'Estimated savings: 25-40% on HVAC bills' },
+    { titulo: 'New-build projects', desc: 'On new builds, a lining with insulation is the standard way to meet CTE-HE zone B3 (U≤0.38 W/m²K). We install it during the partitioning phase, integrating frame, insulation and Knauf or Placo board in a single workflow.', foot: 'Guaranteed CTE-HE zone B3 compliance' },
+    { titulo: 'Energy retrofits', desc: 'Envelope-upgrade projects in homeowner associations and existing buildings, eligible for PIREP Balears and PREE grants. We insulate facades, roofs and partitions to reach current CTE U-values and upgrade the energy label.', foot: 'Eligible for PIREP and PREE grants' },
+  ],
+  gallery: [
+    { src: '/images/proyectos/detalle-perfileria-aislamiento-pladur.webp', alt: 'Detail of framework for drywall thermal insulation' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral.webp', alt: 'Full thermal insulation in a new-build villa in the Balearics' },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina.webp', alt: 'Drywall finishes with thermal insulation in a kitchen' },
+    { src: '/images/proyectos/reforma-integral-piso.webp', alt: 'Full renovation with thermal insulation in the historic centre' },
+  ],
+  articulos: [
+    { slug: 'aislamiento-termico-chalets-ciutadella', titulo: 'Thermal insulation for villas in Ciutadella', descripcion: 'How to improve thermal insulation in villas and chalets in the Ciutadella area with drywall.' },
+    { slug: 'sate-vs-trasdosado-pladur-menorca', titulo: 'ETICS vs drywall wall lining in Menorca', descripcion: 'Comparison between ETICS (SATE) and drywall wall linings for thermal insulation in Menorca.' },
+    { slug: 'mejorar-certificado-energetico-mao', titulo: 'Improve your energy certificate in Maó', descripcion: 'How to upgrade the energy rating of your Maó home with drywall insulation.' },
+  ],
+  faqTitle: 'Thermal insulation FAQs',
+  faqSubtitle: 'Everything you need to know about drywall thermal insulation in Menorca.',
+  ctaFinalTitulo: 'Invest in comfort and save on HVAC',
+  ctaFinalSubtitulo: 'Free quote with savings estimate. Financing available.',
+} : {
+  srOnly: 'Pladur Menorca — instaladores de aislamiento térmico interior con trasdosados de pladur. Zona climática B3 según CTE-HE, ahorro del 20-35% en climatización. Materiales Knauf, Isover, Rockwool: EPS, XPS y lana de roca. Trasdosados desde 7€/m². Servicio en Maó, Ciutadella, Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Castell, Es Migjorn Gran y toda Menorca. Presupuesto en 24h. Tel: 627 829 723.',
+  heroTitle: 'Aislamiento Térmico en Menorca — Ahorra hasta un 30% en Climatización',
+  heroSubtitle: 'Trasdosados con pladur adaptados al clima mediterráneo',
+  heroDescription: 'Trasdosados de pladur con aislante interior desde 7€/m² en Menorca, zona climática B3. Materiales Knauf e Isover: EPS, XPS y lana de roca Rockwool. Reducen la demanda de climatización un 20-35% en viviendas, hoteles y locales. Presupuesto gratis en 24h.',
+  heroBadges: ['Ahorro hasta 30%', 'Clima mediterráneo', 'Toda Menorca'],
+  ctaPrimarioHero: 'Pedir presupuesto gratis',
+  ctaLlamar: 'Llamar',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Aislamiento Térmico',
+  howToName: 'Cómo instalar aislamiento térmico con pladur',
+  howToDescription: 'Proceso de instalación de aislamiento térmico con trasdosado de pladur en 5 pasos: desde el análisis del cerramiento hasta el acabado final.',
+  howToSteps: [
+    { name: 'Análisis del cerramiento', text: 'Se evalúa el estado de las paredes, composición del cerramiento y valor U actual, calculando el espesor de aislante necesario para cumplir normativa.' },
+    { name: 'Selección del aislante', text: 'Se elige el material más adecuado (EPS, XPS o lana de roca) según las necesidades térmicas, presupuesto y espacio disponible.' },
+    { name: 'Instalación de la estructura', text: 'Se fijan los perfiles guía y montantes verticales, utilizando materiales con rotura de puente térmico si es necesario para maximizar el rendimiento.' },
+    { name: 'Colocación del aislante', text: 'Se introduce el aislante en las cavidades entre montantes sin dejar huecos ni puentes térmicos, asegurando una cobertura continua.' },
+    { name: 'Placa de yeso y acabado', text: 'Se atornilla la placa de yeso laminado, se tratan las juntas y se realiza el acabado final listo para pintar.' },
+  ],
+  offers: [
+    { name: 'Trasdosado térmico con EPS', price: '30', description: 'Trasdosado directo con placa de pladur y aislante de poliestireno expandido (EPS). Precio por m².' },
+    { name: 'Trasdosado térmico con lana de roca', price: '45', description: 'Trasdosado autoportante con estructura metálica y lana de roca para máximo rendimiento térmico y acústico. Precio por m².' },
+    { name: 'Trasdosado térmico con XPS', price: '40', description: 'Trasdosado con poliestireno extruido (XPS) de alta densidad para zonas con humedad. Precio por m².' },
+  ],
+  secContext: 'El contexto',
+  secContextH2: 'El clima de Menorca y la necesidad de aislamiento térmico',
+  ctxP1: 'Menorca está en la zona climática B3 del CTE, con veranos que superan los 32-35 °C de junio a septiembre y abundantes horas de sol al año. Un piso de 80 m² sin aislamiento puede consumir 400-800 kWh mensuales en climatización durante julio y agosto, la mayor partida de la factura eléctrica estival. El aislamiento interior reduce la ganancia térmica por fachada un 30-40%.',
+  ctxQuote: '"Las viviendas en zona climática B3, correspondiente a Menorca, deben alcanzar una transmitancia térmica máxima de 0,38 W/m²K en muros de fachada"',
+  ctxQuoteCite: '— CTE-HE, Documento Básico de Ahorro de Energía, Anejo B (zonificación climática) y Tabla D.2.7',
+  ctxP2: 'Los inviernos menorquines son templados pero no despreciables: medias de 10-14 °C en enero, humedad alta y viento de tramontana que sopla sobre toda la isla y obliga a encender calefacción 3-4 meses al año. El aislamiento térmico trabaja en ambas estaciones: frena la entrada de calor en verano y la fuga en invierno, y reduce el gasto anual en climatización un 20-30%.',
+  ctxP3: 'El principal problema térmico en Menorca es la transmitancia elevada de los cerramientos. La mayoría de edificios anteriores a los años 90 tienen fachada de una sola hoja de marés o ladrillo sin cámara de aire, con valores U de 1,8-2,5 W/m²K muy por encima del límite CTE (0,38 W/m²K) para la zona B3. Los trasdosados de pladur con aislante interior corrigen esta transmitancia en 2-5 días, sin andamios y sin tocar la fachada exterior.',
+  ctxSeeAlso: 'Ver también:',
+  ctxLink1: 'todos nuestros servicios de pladur en Menorca',
+  ctxLink1Href: '/instalacion-pladur-menorca',
+  ctxLink2: 'precios de aislamiento térmico',
+  ctxLink2Href: '/precios-pladur-menorca',
+  ctxLink3: 'reformas interiores con pladur',
+  ctxLink3Href: '/reformas-interiores-pladur-menorca',
+  sidebarBadge: 'Presupuesto gratis',
+  sidebarTitle: 'Reduce tu factura eléctrica en Menorca',
+  sidebarText: 'Calculamos el ahorro anual en €/año y te enviamos el presupuesto detallado en 24h.',
+  sidebarCta: 'Pedir presupuesto online',
+  datosTitle: 'Datos de referencia en Menorca:',
+  datosReferencia: [
+    { label: 'Temperatura máxima verano', valor: '35°C' },
+    { label: 'Meses con AC obligatorio', valor: '4-5 meses' },
+    { label: 'Ahorro estimado con aislamiento', valor: '20-30%' },
+    { label: 'Zona climática Menorca', valor: 'B3' },
+    { label: 'Amortización media', valor: '5-10 años' },
+  ],
+  matBadge: 'Materiales aislantes',
+  matH2: 'Tipos de aislante térmico que utilizamos',
+  matLead: 'El aislante adecuado depende del presupuesto, del espacio disponible y de si se necesita también rendimiento acústico. Trabajamos con las tres familias homologadas para trasdosados de pladur según CTE-HE:',
+  tiposAislante: [
+    {
+      nombre: 'Poliestireno Expandido (EPS)',
+      color: 'border-foreground-dark',
+      desc: 'El aislante más económico del mercado, con conductividad térmica de 0,035-0,037 W/m·K. Material ligero (15-30 kg/m³), fácil de cortar con cúter y con buena relación precio/prestación. Fabricantes habituales: Knauf Therm, Ursa XPE. Disponible en planchas rígidas de 30-100 mm.',
+      ventajas: ['Precio muy competitivo', 'Fácil de instalar', 'Ligero y manejable', 'Resiste la humedad'],
+      rValue: 'R = 0,70-1,25 m²K/W (40mm)',
+      precio: 'Desde 3-5€/m² (material)',
+      mejorPara: 'Cerramientos estándar, presupuesto ajustado',
+    },
+    {
+      nombre: 'Poliestireno Extruido (XPS)',
+      color: 'border-foreground',
+      desc: 'Conductividad térmica de 0,032-0,034 W/m·K y celda cerrada: mejor eficiencia por centímetro y alta resistencia al vapor de agua. Referencias habituales: Ursa XPS, Danosa Danopren. Espesores de 20-100 mm con borde machihembrado que elimina puentes térmicos entre planchas.',
+      ventajas: ['Mayor eficiencia por cm', 'Resistente a compresión', 'Excelente resistencia a humedad', 'Bordes mecanizados sin puentes'],
+      rValue: 'R = 1,00-1,40 m²K/W (40mm)',
+      precio: 'Desde 6-10€/m² (material)',
+      mejorPara: 'Cubiertas, espacios con riesgo de humedad',
+    },
+    {
+      nombre: 'Lana de Roca (Rockwool)',
+      color: 'border-foreground-dark',
+      desc: 'Conductividad térmica de 0,034-0,040 W/m·K y absorción acústica αw=0,90-1,00: combina aislamiento térmico y acústico en una sola capa. Es el material de referencia para trasdosados Knauf o Placo que cumplen CTE-HR simultáneamente. Fabricantes: Rockwool, Isover (lana mineral). Formato manta o panel rígido.',
+      ventajas: ['Doble función: térmica + acústica', 'Clasificación fuego A1', 'Transpirable al vapor', 'Cumplimiento CTE-HR'],
+      rValue: 'R = 1,05-1,40 m²K/W (60mm)',
+      precio: 'Desde 5-9€/m² (material)',
+      mejorPara: 'Proyectos con doble objetivo acústico + térmico',
+    },
+  ],
+  matVentajas: 'Ventajas',
+  matResistencia: 'Resistencia R:',
+  matPrecio: 'Precio material:',
+  matMejorPara: 'Mejor para:',
+  compBadge: 'Comparativa',
+  compH2: 'Tabla comparativa de aislantes térmicos',
+  compLead: 'Valores para la zona climática B3 de Menorca según CTE-HE.',
+  compTop: 'Top',
+  compValor: 'Valor R',
+  compEspesor: 'Espesor',
+  compPrecio: 'Precio',
+  compMejor: 'Mejor para',
+  compFootnote: 'Los espesores necesarios son para alcanzar U≤0,38 en zona B3. Los valores reales dependen del cerramiento existente.',
+  tablaComparativa: [
+    { nombre: 'EPS 035', valorR: '1,14', espesor: '60-80mm', precio: '3-5€/m²', mejorPara: 'Paredes y techos estándar', destacado: false },
+    { nombre: 'XPS 034', valorR: '1,18', espesor: '50-70mm', precio: '6-10€/m²', mejorPara: 'Cubiertas, humedad', destacado: false },
+    { nombre: 'Lana de roca 035', valorR: '1,14', espesor: '60-80mm', precio: '5-9€/m²', mejorPara: 'Paredes + acústico', destacado: false },
+    { nombre: 'Lana de roca 040', valorR: '1,00', espesor: '70-90mm', precio: '4-7€/m²', mejorPara: 'Tabiques y techos', destacado: false },
+    { nombre: 'Poliuretano 024', valorR: '1,67', espesor: '40-60mm', precio: '12-18€/m²', mejorPara: 'Espacios limitados', destacado: true },
+  ],
+  solBadge: 'La solución',
+  solH2: 'Trasdosados térmicos con pladur: cómo funciona y cuánto cuesta',
+  solP1: 'Un trasdosado térmico con pladur es un muro interior que se adosa a la fachada con mayor transmisión de calor. Se compone de estructura de acero galvanizado, aislante (EPS, XPS o lana de roca) y placa de yeso laminado Knauf o Placo de 12,5-15 mm, separado 5-10 cm de la pared original. La instalación dura 2-5 días según superficie.',
+  solP2: 'El proceso tiene cuatro fases: perfilería guía en suelo y techo, montantes verticales cada 40-60 cm, aislante entre montantes y placa de pladur atornillada. El resultado baja el valor U del cerramiento de 1,8-2,5 W/m²K a 0,30-0,38 W/m²K, dentro del límite CTE-HE para zona B3. No requiere andamios ni permisos de comunidad.',
+  solP3: 'La pérdida de superficie útil es de 5-10 cm por pared tratada, equivalente a 1-2 m² en un piso de 80 m² si se trasdosan las cuatro fachadas. A cambio se obtiene una reducción del 20-35% en demanda energética y se recupera una pared perfectamente plana lista para pintar.',
+  roiTitle: 'ROI estimado en Menorca',
+  roiText: 'Un piso de 80 m² con inversión de 4.000-6.000€ en trasdosados térmicos ahorra 300-600€/año en climatización, con amortización en 5-10 años. El aislamiento dura toda la vida útil del edificio (50+ años), por lo que tras amortizarlo sigue generando ahorro neto durante décadas.',
+  procesoBadge: 'Proceso de instalación',
+  pasosInstalacion: [
+    { num: '01', titulo: 'Análisis del cerramiento', desc: 'Evaluamos el estado de las paredes, la composición del cerramiento y el valor U actual. Calculamos el espesor de aislante necesario para alcanzar el valor U objetivo según CTE-HE.' },
+    { num: '02', titulo: 'Selección del aislante', desc: 'En función del presupuesto, el espacio disponible y si se requiere también mejora acústica, seleccionamos el material más adecuado: EPS, XPS o lana de roca.' },
+    { num: '03', titulo: 'Instalación de la estructura', desc: 'Fijamos los perfiles guía en suelo y techo y los montantes verticales. Si hay riesgo de puente térmico en los perfiles, utilizamos materiales con rotura de puente térmico.' },
+    { num: '04', titulo: 'Colocación del aislante', desc: 'Introducimos el aislante en las cavidades entre montantes. Los paneles deben encajar perfectamente sin dejar huecos que puedan convertirse en puentes térmicos.' },
+    { num: '05', titulo: 'Placa de yeso y acabado', desc: 'Atornillamos la placa de yeso, tratamos las juntas y realizamos el acabado final listo para pintar. El resultado es una pared nueva perfectamente plana.' },
+  ],
+  subvCta: '¿Sabías que puedes recuperar hasta el',
+  subvCtaStrong: '60% del coste',
+  subvCta2: 'de tu aislamiento térmico? Deducciones IRPF, fondos europeos y bonificaciones IBI. Consulta nuestra guía completa.',
+  subvCtaLink: 'Ver subvenciones 2026',
+  ctaIntTitulo: 'Mejora la eficiencia energética de tu piso en Menorca',
+  ctaIntSubtitulo: 'Presupuesto gratis con cálculo de ahorro estimado incluido.',
+  certBadge: 'Valor del inmueble',
+  certH2: 'Cómo mejora el certificado energético con el aislamiento',
+  certP1: 'El certificado de eficiencia energética es obligatorio desde 2013 para vender o alquilar vivienda en España (RD 390/2021). Una calificación E, F o G reduce el valor de mercado entre un 5% y un 15%. Un trasdosado de pladur con aislante puede subir la calificación 1-2 letras (de E a C, por ejemplo) tras recalcular la demanda con software HULC o CE3X.',
+  certP2: 'El cálculo es directo: al bajar la transmitancia U de los cerramientos, baja la demanda de calefacción y refrigeración expresada en kWh/m²·año. Esa reducción traslada la etiqueta energética a la letra superior y queda inscrita en el registro autonómico del IBAVI durante 10 años.',
+  certP3: 'En el mercado menorquín, muy activo con compradores alemanes, británicos y nórdicos con alta sensibilidad a la eficiencia, pasar de E a C añade un 5-15% al valor de tasación. En alquiler turístico (ETV), una mejor etiqueta también facilita la recalificación y el cumplimiento de los requisitos del Consell Insular de Menorca.',
+  subvBadge: 'Ahorro adicional',
+  subvH2: 'Ayudas y subvenciones en Baleares',
+  subvP1: 'El Govern de les Illes Balears y el Estado mantienen ayudas activas para rehabilitación energética financiadas con fondos Next Generation EU. Los programas PIREP y PREE cubren entre el 40% y el 80% del coste de la mejora de envolvente térmica, incluido el aislamiento interior con trasdosados de pladur. La deducción IRPF añade hasta un 60% adicional sobre 5.000€/año.',
+  subvP2: 'Recomendamos consultar las convocatorias vigentes en el Departament de Transició Energètica de la Conselleria de Medi Ambient i Territori del Govern Balear, o a través del gestor de comunidad si la obra afecta a zonas comunes. Combinando PIREP, deducción IRPF y bonificación del IBI, la inversión real puede reducirse un 50-70% respecto al presupuesto inicial.',
+  programasAyudas: [
+    { programa: 'PIREP Balears', cobertura: 'Hasta 80%', tipo: 'Rehabilitación energética edificios' },
+    { programa: 'Programa PREE', cobertura: 'Hasta 40%', tipo: 'Mejora de cerramientos viviendas' },
+    { programa: 'Deducciones IRPF', cobertura: 'Hasta 60%', tipo: 'Deducción fiscal en IRPF anual' },
+    { programa: 'Préstamos ICO', cobertura: 'Financiación blanda', tipo: 'Préstamos a bajo interés' },
+  ],
+  subvFootnote: '* Las convocatorias y cuantías pueden variar. Consulta el estado actual de las ayudas con las administraciones competentes.',
+  appBadge: 'Aplicaciones',
+  appH2: 'Aislamiento térmico para cada tipo de vivienda en Menorca',
+  appLead: 'Adaptamos la solución de aislamiento al tipo de inmueble, al presupuesto y al estado del cerramiento existente. Algunos casos típicos en Menorca:',
+  tipoVivienda: [
+    { titulo: 'Pisos en Maó', desc: 'Pisos del centro de Maó con fachada de marés sin aislamiento. Un trasdosado de lana de roca de 50 mm baja 3-5 °C la temperatura interior en verano y elimina las corrientes frías de la tramontana en invierno. Instalación en 2-4 días por vivienda.', foot: 'Inversión media: 3.500-5.500 € · Amortización: 6-9 años' },
+    { titulo: 'Chalets y villas', desc: 'Viviendas unifamiliares en Ciutadella, Sant Lluís, Alaior o Es Castell con fachadas expuestas al sol de poniente. Trasdosado con XPS 60 mm + aislamiento de cubierta baja el consumo de AC un 30-40% en verano, especialmente en dormitorios orientados a suroeste.', foot: 'Inversión media: 6.000-12.000 € · Amortización: 5-8 años' },
+    { titulo: 'Locales comerciales', desc: 'Restaurantes, tiendas y oficinas de Maó y Ciutadella con grandes acristalamientos y sobrecalentamiento en verano. Trasdosado perimetral + falso techo aislado baja la carga térmica un 25-35% y reduce la potencia de AC necesaria.', foot: 'Inversión media: 2.000-5.000 € · Amortización: 3-5 años' },
+    { titulo: 'Hoteles y apartamentos turísticos', desc: 'El sector hotelero menorquín destina el 40-60% del consumo eléctrico a climatización. Aislar habitaciones con lana de roca y trasdosados Knauf mejora las reseñas por confort térmico y reduce la factura de forma permanente.', foot: 'Ahorro estimado: 25-40% en factura de climatización' },
+    { titulo: 'Edificios de obra nueva', desc: 'En obra nueva, el trasdosado con aislante es el sistema estándar para cumplir CTE-HE zona B3 (U≤0,38 W/m²K). Lo instalamos durante la división interior, integrando estructura, aislante y placa Knauf o Placo en un solo montaje.', foot: 'Cumplimiento garantizado CTE-HE zona B3' },
+    { titulo: 'Rehabilitación energética', desc: 'Proyectos de mejora de envolvente en comunidades de vecinos y edificios existentes, elegibles para PIREP Balears y PREE. Aislamos fachadas, cubiertas y particiones hasta alcanzar los valores U del CTE actual y mejorar la letra energética.', foot: 'Elegible para subvenciones PIREP y PREE' },
+  ],
+  gallery: [
+    { src: '/images/proyectos/detalle-perfileria-aislamiento-pladur.webp', alt: 'Detalle de perfilería para aislamiento térmico con pladur' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral.webp', alt: 'Aislamiento térmico integral en villa de obra nueva en Baleares' },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina.webp', alt: 'Acabados de pladur con aislamiento térmico en cocina' },
+    { src: '/images/proyectos/reforma-integral-piso.webp', alt: 'Reforma integral con aislamiento térmico en el centro histórico' },
+  ],
+  articulos: [
+    { slug: 'aislamiento-termico-chalets-ciutadella', titulo: 'Aislamiento térmico en chalets de Ciutadella', descripcion: 'Cómo mejorar el aislamiento térmico en chalets y villas de la zona de Ciutadella con pladur.' },
+    { slug: 'sate-vs-trasdosado-pladur-menorca', titulo: 'SATE vs trasdosado de pladur en Menorca', descripcion: 'Comparativa entre sistema SATE y trasdosado de pladur para aislamiento térmico en Menorca.' },
+    { slug: 'mejorar-certificado-energetico-mao', titulo: 'Mejorar certificado energético en Maó', descripcion: 'Cómo mejorar la calificación energética de tu vivienda en Maó con aislamiento de pladur.' },
+  ],
+  faqTitle: 'Preguntas frecuentes sobre aislamiento térmico',
+  faqSubtitle: 'Todo lo que necesitas saber sobre el aislamiento térmico con pladur en Menorca.',
+  ctaFinalTitulo: 'Invierte en confort y ahorra en climatización',
+  ctaFinalSubtitulo: 'Presupuesto gratis con estimación de ahorro. Financiación disponible.',
+}
+
+const pagePathBase = lang === 'en' ? '/en/aislamiento-termico-menorca' : '/aislamiento-termico-menorca'
+const urlBase = `https://www.pladurmenorca.com${pagePathBase}`
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbCurrent, href: pagePathBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService name={servicio.schema.name} description={servicio.schema.description} serviceType={servicio.schema.serviceType} url={urlBase} image="https://www.pladurmenorca.com/images/proyectos/detalle-perfileria-aislamiento-pladur.webp" />
+    <SchemaHowTo name={t.howToName} description={t.howToDescription} totalTime="PT24H" steps={t.howToSteps} />
+    <SchemaOffers offers={t.offers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <Hero title={t.heroTitle} subtitle={t.heroSubtitle} description={t.heroDescription} dark={true} badges={t.heroBadges} ctaPrimario={{ texto: t.ctaPrimarioHero, href: p('/presupuesto-pladur') }} ctaSecundario={{ texto: `${t.ctaLlamar}: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }} />
+
+  <!-- El clima de Menorca y el aislamiento -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.secContext}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.secContextH2}</h2>
+          </div>
+          <div class="space-y-7 text-muted leading-relaxed">
+            <p class="text-lg">{t.ctxP1}</p>
+
+            {/* Climate zone strip */}
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-warm-border/50 rounded-3xl overflow-hidden border border-warm-border/50">
+              {[
+                { k: lang === 'en' ? 'Climate zone' : 'Zona climática', v: 'B3 (CTE-HE)' },
+                { k: lang === 'en' ? 'Summer peak' : 'Verano pico', v: '32–35 °C' },
+                { k: 'U máx.', v: '0,38 W/m²K' },
+                { k: lang === 'en' ? 'AC savings' : 'Ahorro A/C', v: '20–30 %' },
+              ].map((s) => (
+                <div class="bg-white/80 px-4 py-5 text-center">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-muted/80 mb-1">{s.k}</p>
+                  <p class="text-sm font-bold text-foreground">{s.v}</p>
+                </div>
+              ))}
+            </div>
+
+            <blockquote class="border-l-4 border-foreground/20 pl-5 italic text-muted">
+              <p>{t.ctxQuote}</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">{t.ctxQuoteCite}</cite>
+            </blockquote>
+
+            {/* Two-season card split */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-5">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground-dark mb-2">{lang === 'en' ? 'Summer · Block heat' : 'Verano · Bloquea el calor'}</p>
+                <p class="text-sm text-muted leading-relaxed">{t.ctxP1.split('. ').slice(-1)[0]}</p>
+              </div>
+              <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-5">
+                <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground-dark mb-2">{lang === 'en' ? 'Winter · Keep heat in' : 'Invierno · Retiene el calor'}</p>
+                <p class="text-sm text-muted leading-relaxed">{t.ctxP2}</p>
+              </div>
+            </div>
+
+            <p>{t.ctxP3}</p>
+
+            <p class="text-sm pt-2">
+              {t.ctxSeeAlso}
+              <a href={t.ctxLink1Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.ctxLink1}</a>
+              &middot;
+              <a href={t.ctxLink2Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.ctxLink2}</a>
+              &middot;
+              <a href={t.ctxLink3Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.ctxLink3}</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <ContactoRapidoCard lang={lang} />
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+              <p class="font-bold text-foreground text-sm mb-3">{t.datosTitle}</p>
+              <div class="space-y-2">
+                {t.datosReferencia.map((d) => (
+                  <div class="flex justify-between items-center py-1.5 border-b border-warm-border/50 last:border-0">
+                    <span class="text-xs text-muted">{d.label}</span>
+                    <span class="text-xs font-bold text-foreground">{d.valor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de aislante térmico -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.matBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">{t.matH2}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">{t.matLead}</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 stagger-children">
+        {t.tiposAislante.map((mat) => (
+          <div class={`bg-white/70 border-t-4 ${mat.color} border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default`}>
+            <h3 class="text-lg font-bold text-foreground mb-3">{mat.nombre}</h3>
+            <p class="text-sm text-muted leading-relaxed mb-5">{mat.desc}</p>
+            <div class="mb-4">
+              <p class="text-xs font-bold text-muted uppercase tracking-wider mb-2">{t.matVentajas}</p>
+              <ul class="space-y-1">
+                {mat.ventajas.map((v) => (
+                  <li class="flex items-center gap-2 text-xs text-muted">
+                    <svg class="size-3 text-foreground shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    {v}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="space-y-2 pt-4 border-t border-warm-border/50">
+              <div class="flex justify-between items-center"><span class="text-xs font-bold text-foreground">{t.matResistencia}</span><span class="text-xs font-semibold text-foreground">{mat.rValue}</span></div>
+              <div class="flex justify-between items-center"><span class="text-xs font-bold text-foreground">{t.matPrecio}</span><span class="text-xs font-semibold text-foreground">{mat.precio}</span></div>
+              <div class="pt-1"><span class="text-xs font-bold text-foreground">{t.matMejorPara} </span><span class="text-xs text-muted">{mat.mejorPara}</span></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tabla comparativa aislantes -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.compBadge}</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">{t.compH2}</h2>
+        <p class="text-muted leading-relaxed mb-12 max-w-2xl">{t.compLead}</p>
+      </div>
+      <div class="space-y-3">
+        {t.tablaComparativa.map((a) => (
+          <div class={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 bg-white/70 rounded-2xl border ${a.destacado ? 'border-foreground-dark' : 'border-warm-border/50'} shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default`}>
+            <div class="sm:w-44 shrink-0 flex items-center gap-3">
+              <h3 class="text-sm font-bold text-foreground">{a.nombre}</h3>
+              {a.destacado && (<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-foreground-dark text-white text-[9px] font-bold uppercase tracking-wider">{t.compTop}</span>)}
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compValor}</p><p class="text-sm font-bold text-foreground">{a.valorR} <span class="text-xs font-normal text-muted">m²K/W</span></p></div>
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compEspesor}</p><p class="text-sm font-bold text-foreground">{a.espesor}</p></div>
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compPrecio}</p><p class="text-sm font-bold text-foreground">{a.precio}</p></div>
+              <div class="sm:ml-auto"><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compMejor}</p><p class="text-sm text-foreground">{a.mejorPara}</p></div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-xs text-muted mt-4">{t.compFootnote}</p>
+    </Container>
+  </section>
+
+  <!-- Trasdosados térmicos con pladur -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.solBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.solH2}</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.solP1}</p>
+            <p>{t.solP2}</p>
+            <p>{t.solP3}</p>
+            <div class="p-5 bg-foreground text-white mt-6 rounded-3xl">
+              <p class="font-bold text-base mb-2">{t.roiTitle}</p>
+              <p class="text-gray-300 text-sm leading-relaxed">{t.roiText}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Proceso paso a paso -->
+        <div class="space-y-4">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-2 inline-flex items-center px-3 py-1 rounded-lg">{t.procesoBadge}</p>
+          {t.pasosInstalacion.map((paso) => (
+            <div class="bg-white/70 border border-warm-border/50 p-5 flex gap-4 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+              <div class="shrink-0 size-10 bg-foreground-dark flex items-center justify-center rounded-xl">
+                <span class="text-white font-bold text-xs">{paso.num}</span>
+              </div>
+              <div>
+                <p class="font-bold text-foreground text-sm mb-1">{paso.titulo}</p>
+                <p class="text-xs text-muted leading-relaxed">{paso.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Enlace a subvenciones -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">{t.subvCta} <strong class="text-white">{t.subvCtaStrong}</strong> {t.subvCta2}</p>
+        <a href={p('/blog/subvenciones-aislamiento-baleares-2026')} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.subvCtaLink}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner lang={lang} titulo={t.ctaIntTitulo} subtitulo={t.ctaIntSubtitulo} showForm={false} />
+
+  <!-- Certificado energético -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.certBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.certH2}</h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>{t.certP1}</p>
+            <p>{t.certP2}</p>
+            <p>{t.certP3}</p>
+          </div>
+        </div>
+
+        <!-- Subvenciones y ayudas -->
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.subvBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.subvH2}</h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>{t.subvP1}</p>
+            <p>{t.subvP2}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              {t.programasAyudas.map((prog) => (
+                <div class="p-4 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+                  <p class="font-bold text-foreground text-sm">{prog.programa}</p>
+                  <p class="text-foreground font-bold text-sm">{prog.cobertura}</p>
+                  <p class="text-xs text-muted mt-1">{prog.tipo}</p>
+                </div>
+              ))}
+            </div>
+            <p class="text-xs text-muted">{t.subvFootnote}</p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Aislamiento por tipo de vivienda -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.appBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">{t.appH2}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">{t.appLead}</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        {t.tipoVivienda.map((v) => (
+          <div class="bg-white/70 border border-warm-border/50 p-7 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="size-10 bg-foreground-dark flex items-center justify-center rounded-xl mb-4">
+              <svg class="size-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" /></svg>
+            </div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{v.titulo}</h3>
+            <p class="text-sm text-muted leading-relaxed mb-4">{v.desc}</p>
+            <p class="text-xs text-foreground font-semibold">{v.foot}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales de aislamiento térmico -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — thermal insulation' : 'Nuestras cifras — aislamiento térmico'}
+    title={lang === 'en' ? 'Every thermal lining we install meets CTE DB-HE' : 'Cada trasdosado que instalamos cumple CTE DB-HE'}
+    intro={lang === 'en'
+      ? 'Thermal drywall wall linings are one of our most in-demand systems in the Balearics. Real figures from the Mallorca parent company.'
+      : 'El trasdosado térmico es uno de los sistemas con más demanda en Baleares. Cifras reales de la SL matriz.'}
+    metrics={lang === 'en' ? [
+      { value: '6,000+', label: 'cumulative works', context: 'Track record since 2004 across the Balearics' },
+      { value: 'B3', label: 'Menorca climate zone', context: 'Per CTE DB-HE — we design for this specifically' },
+      { value: 'Rockwool · Isover', label: 'mineral wools we use', context: '40-100 mm depending on the system' },
+      { value: '22', label: 'years of thermal systems', context: 'Placo · Knauf · Lafarge exclusively' },
+    ] : [
+      { value: '+6.000', label: 'obras acumuladas', context: 'Histórico en Baleares desde 2004' },
+      { value: 'B3', label: 'zona climática de Menorca', context: 'Según CTE DB-HE — diseñamos para esto específicamente' },
+      { value: 'Rockwool · Isover', label: 'lanas minerales que usamos', context: '40-100 mm según sistema' },
+      { value: '22', label: 'años en sistemas térmicos', context: 'Placo · Knauf · Lafarge exclusivamente' },
+    ]}
+  />
+
+  <!-- PreciosTable -->
+  <PreciosTable lang={lang} variant="Aislamiento Térmico" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={t.gallery} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion client:visible lang={lang} faqs={pageFaqs} titulo={t.faqTitle} subtitulo={t.faqSubtitle} />
+
+  <!-- CtaBanner final -->
+  <CtaBanner lang={lang} titulo={t.ctaFinalTitulo} subtitulo={t.ctaFinalSubtitulo} showForm={true} />
+
+  <ServiciosRelacionados currentPath={pagePathBase} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

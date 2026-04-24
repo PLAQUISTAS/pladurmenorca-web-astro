@@ -55,7 +55,7 @@ export function buildClientConfirmationHtml(data: ContactData): string {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Hemos recibido tu solicitud — Pladur Mallorca</title>
+  <title>Hemos recibido tu solicitud — Pladur Menorca</title>
   <!--[if mso]>
   <style>table { border-collapse: collapse; }</style>
   <![endif]-->
@@ -81,7 +81,7 @@ export function buildClientConfirmationHtml(data: ContactData): string {
           <tr>
             <td class="header-td" align="center" style="background-color: ${C.headerBg}; padding: 32px 40px;">
               <p style="margin: 0; color: ${C.white}; line-height: 1;">
-                <span style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-style: italic; font-size: 26px; letter-spacing: 3px;">PLADUR MALLORCA</span>
+                <span style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-weight: 700; font-style: italic; font-size: 26px; letter-spacing: 3px;">PLADUR MENORCA</span>
               </p>
             </td>
           </tr>
@@ -101,7 +101,7 @@ export function buildClientConfirmationHtml(data: ContactData): string {
               <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 28px;">
                 ${step(1, 'Solicitud recibida', 'Hemos registrado tu solicitud con todos los datos proporcionados.', true)}
                 ${step(2, 'Revisi\u00f3n del equipo', 'Nuestro equipo t\u00e9cnico revisar\u00e1 los detalles de tu proyecto.', false)}
-                ${step(3, 'Visita t\u00e9cnica gratuita', isPresupuesto ? 'En caso que sea necesario coordinamos una visita sin coste ni compromiso para tomar medidas exactas.' : 'Te llamaremos o escribiremos para resolver tu consulta.', false)}
+                ${step(3, 'Visita t\u00e9cnica', isPresupuesto ? 'En caso necesario coordinamos una visita para tomar medidas exactas in situ.' : 'Te llamaremos o escribiremos para resolver tu consulta.', false)}
                 ${step(4, 'Presupuesto detallado', 'Recibir\u00e1s un presupuesto cerrado, sin sorpresas, en 24-48h.', false, true)}
               </table>
 
@@ -116,7 +116,7 @@ export function buildClientConfirmationHtml(data: ContactData): string {
                       Ll\u00e1manos al <a href="tel:${siteConfig.phoneRaw}" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">${siteConfig.phone}</a> o escr\u00edbenos por <a href="https://wa.me/${siteConfig.whatsapp}" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">WhatsApp</a>.
                     </p>
                     <p style="margin: 0; font-size: 12px; color: ${C.body}; line-height: 1.5;">
-                      Tambi\u00e9n puedes escribirnos a <a href="mailto:info@plaquistas.com" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">info@plaquistas.com</a> o visitarnos en <a href="https://www.pladurmallorca.com" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">www.pladurmallorca.com</a>.
+                      Tambi\u00e9n puedes escribirnos a <a href="mailto:info@plaquistas.com" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">info@plaquistas.com</a> o visitarnos en <a href="https://www.pladurmenorca.com" style="color: ${C.heading}; font-weight: 600; text-decoration: none;">www.pladurmenorca.com</a>.
                     </p>
                   </td>
                 </tr>
@@ -174,16 +174,16 @@ Hemos recibido tu solicitud correctamente.
 Pr\u00f3ximos pasos:
 1. \u2713 Solicitud recibida
 2. Revisi\u00f3n del equipo t\u00e9cnico
-3. Visita t\u00e9cnica gratuita
+3. Visita t\u00e9cnica
 4. Presupuesto detallado en 24-48h
 
 \u00bfNecesitas algo urgente? Ll\u00e1manos al ${siteConfig.phone} o escr\u00edbenos por WhatsApp.
-Tambi\u00e9n puedes escribirnos a info@plaquistas.com o visitarnos en www.pladurmallorca.com
+Tambi\u00e9n puedes escribirnos a info@plaquistas.com o visitarnos en www.pladurmenorca.com
 
 ---
 PLAQUISTAS Y ACABADOS SL
 CIF: B16648487
-www.pladurmallorca.com`
+www.pladurmenorca.com`
 }
 
 // ─────────────────────────────────────────────────────────
@@ -236,7 +236,7 @@ export function buildInternalNotificationHtml(
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>PLADUR MALLORCA \u2014 ${escapeHtml(data.nombre)}</title>
+  <title>PLADUR MENORCA \u2014 ${escapeHtml(data.nombre)}</title>
   <!--[if mso]>
   <style>table { border-collapse: collapse; }</style>
   <![endif]-->
@@ -266,7 +266,7 @@ export function buildInternalNotificationHtml(
                 <tr>
                   <td>
                     <p style="margin: 0 0 14px; color: #FFFFFF; line-height: 1;">
-                      <span style="font-family: 'Inter', sans-serif; font-weight: 700; font-style: italic; font-size: 18px; letter-spacing: 2px;">PLADUR MALLORCA</span>
+                      <span style="font-family: 'Inter', sans-serif; font-weight: 700; font-style: italic; font-size: 18px; letter-spacing: 2px;">PLADUR MENORCA</span>
                     </p>
                     <h1 style="margin: 0 0 10px; font-size: 18px; font-weight: 700; color: #FFFFFF; line-height: 1.3;">${escapeHtml(data.nombre)}</h1>
                     <table role="presentation" cellpadding="0" cellspacing="0">
@@ -324,13 +324,13 @@ export function buildInternalNotificationHtml(
                   </td>
                   ${data.email ? `
                   <td class="btn-td" style="padding-right: 8px;">
-                    <a href="mailto:${data.email}?subject=Re: Tu solicitud \u2014 Pladur Mallorca"
+                    <a href="mailto:${data.email}?subject=Re: Tu solicitud \u2014 Pladur Menorca"
                        style="display: inline-block; padding: 10px 20px; background-color: #404040; color: #FFFFFF; text-decoration: none; font-size: 12px; font-weight: 700; border-radius: 12px;">
                       Email
                     </a>
                   </td>` : ''}
                   <td class="btn-td">
-                    <a href="https://wa.me/${data.telefono.replace(/[\s\-+()]/g, '')}?text=Hola%20${encodeURIComponent(data.nombre.split(' ')[0])},%20soy%20de%20Pladur%20Mallorca.%20Hemos%20recibido%20tu%20solicitud."
+                    <a href="https://wa.me/${data.telefono.replace(/[\s\-+()]/g, '')}?text=Hola%20${encodeURIComponent(data.nombre.split(' ')[0])},%20soy%20de%20Pladur%20Menorca.%20Hemos%20recibido%20tu%20solicitud."
                        style="display: inline-block; padding: 10px 20px; background-color: #F5F3F0; color: #404040; text-decoration: none; font-size: 12px; font-weight: 700; border-radius: 12px; border: 1px solid rgba(232,228,223,0.6);">
                       WhatsApp
                     </a>
@@ -344,7 +344,7 @@ export function buildInternalNotificationHtml(
           <tr>
             <td style="padding: 14px 28px; background-color: #FDFCFB; border-top: 1px solid #E8E4DF;">
               <p style="margin: 0; font-size: 10px; color: #737373;">
-                Generado autom\u00e1ticamente por pladurmallorca.com &middot; ${dateStr}
+                Generado autom\u00e1ticamente por pladurmenorca.com &middot; ${dateStr}
               </p>
             </td>
           </tr>
@@ -371,7 +371,7 @@ Descripci\u00f3n: ${data.descripcion || data.mensaje || '(sin descripci\u00f3n)'
 Tipo: ${data.tipo || 'contacto'}
 ${meta.paginaOrigen ? `P\u00e1gina origen: ${meta.paginaOrigen}\n` : ''}${meta.hasAttachments ? `Archivos: ${meta.attachmentNames?.join(', ')}\n` : ''}
 ---
-Generado por pladurmallorca.com`
+Generado por pladurmenorca.com`
 }
 
 function escapeHtml(str: string): string {

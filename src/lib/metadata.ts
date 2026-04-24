@@ -12,6 +12,10 @@ export interface PageMeta {
   articleTags?: string[]
   preloadImage?: string
   noindex?: boolean
+  /** Path del equivalente en inglés. Genera hreflang alternate. */
+  alternateEn?: string
+  /** Path del equivalente en español cuando la página actual es EN. */
+  alternateEs?: string
 }
 
 export function generatePageMetadata({

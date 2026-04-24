@@ -1,0 +1,737 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import { getApartamentosTuristicosFaqs } from '@/data/faqs/apartamentos-turisticos'
+import { siteConfig } from '@/data/site'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getApartamentosTuristicosFaqs(lang)
+
+const t = lang === 'en' ? {
+  heroBadge: 'Holiday apartments · Menorca',
+  h1: 'Drywall for Holiday Apartments in Menorca — 5-10 day Turnaround',
+  heroSubtitle: 'Holiday apartment drywall refurbishment in Menorca in 5-10 days: false ceilings, CTE-HR acoustic insulation and moisture-resistant bathrooms, with deadlines guaranteed by contract.',
+  ctaPrimary: 'Request a free quote',
+  s1Eyebrow: 'Why drywall',
+  s1Title: 'Why renovate a holiday apartment with drywall?',
+  s1P1: 'Menorca has more than <strong>40,000 tourist beds</strong> regulated by the Govern Balear. At Pladur Menorca we refurbish <strong>holiday apartments</strong> <strong>backed by the SL matriz since 2004</strong>: a full 55-85 m² apartment layout change is executed in 5-10 working days with Placo (Saint-Gobain) or Knauf boards, concentrated in the <strong>low season</strong> (October-March) to avoid missing high-occupancy nights.',
+  s1Quote: '"For public residential use, CTE-HR requires 45 dB DnT,A between bedrooms of different units and 50 dB on vertical separations; a decoupled Placo Silence 13+70+13 partition with Rockwool 70 kg/m³ easily exceeds that threshold, reaching 52-58 dB Rw"',
+  s1Cite: '— <strong>CTE DB-HR</strong>, Basic Document on Protection against Noise (RD 1371/2007) · <strong>Decreto 20/2015</strong>, Balearic tourist accommodation regulations',
+  s1P2: 'Drywall meets all three holiday-apartment requirements optimally. It is a dry construction system that generates no significant debris, requires no drying time and avoids the cement dust that soaks into fabrics and furniture for weeks. A 50-60 m² holiday apartment with a Placo BA13 ceiling, recessed LED downlights and skim-coated finish is delivered in 2-3 working days.',
+  s1P3: 'Compared with traditional building work, drywall saves 60-75% of the time and 25-40% of the cost when the total cost is calculated (materials + labour + cleaning + debris disposal + days off-market on Booking/Airbnb). Every day a holiday apartment in Menorca is off-market in high season means losing €80-€300, and each rating point on Booking/Airbnb translates into more than 15% additional revenue per season.',
+  s1P4: 'Drywall versatility supports several upgrades in a single intervention: false ceiling with integrated LED (from €29/m²), acoustic wall lining with Placo Silence + Rockwool 70 kg/m³ (acoustic material from €6/m²), Knauf partitions at €45/m² to create an extra bedroom or dressing area, and Isover thermal wall lining (€35/m²) to cut the air-conditioning bill. The full holiday-apartment renovation is delivered in a single phase with a fixed deadline.',
+  s1P5: 'If your holiday apartment is part of a mixed-use building with storage rooms, plant rooms or car-park sectors subject to CTE-DB-SI, check our <a href="/pladur-ignifugo-menorca" class="text-foreground font-semibold underline underline-offset-2">fire-rated drywall service in Menorca</a> with <strong>Knauf Fireboard</strong> or <strong>Placo Glasroc F</strong> and EI-60 / EI-120 certification from €52/m².',
+  s1Cards: [
+    { titulo: 'Speed', items: ['55-85 m² apartment in 5-10 days', 'Timelines guaranteed by contract'] },
+    { titulo: 'Cleanliness', items: ['Dry construction, no debris', 'Ready for Booking/Airbnb'] },
+    { titulo: 'Comfort', items: ['Placo Silence + Rockwool 70 kg/m³', 'Meets CTE-HR 45 dB DnT,A'] },
+    { titulo: 'Savings', items: ['25-40% less than masonry', '€600k liability + 1-year warranty'] },
+  ] as { titulo: string; items: string[] }[],
+  s2Calendar: 'Optimal calendar',
+  s2CalItems: [
+    { mes: 'Sep-Oct', accion: 'Contact and on-site visit' },
+    { mes: 'Oct-Nov', accion: 'Quote and date booking' },
+    { mes: 'Nov-Feb', accion: 'Renovation works' },
+    { mes: 'Mar', accion: 'Ready for the season' },
+  ] as { mes: string; accion: string }[],
+  s2Eyebrow: 'Planning',
+  s2Title: 'Holiday-apartment renovation window: October to March',
+  s2P1: "Menorca's tourist season sets the renovation calendar for holiday apartments. Between October and March Booking/Airbnb occupancy drops below 25%, timelines are flexible and the apartment can be offline without significant revenue loss against the €80-€300/night of high season.",
+  s2P2: 'Planning is critical for a successful holiday-apartment renovation. We recommend getting in touch in September or early October for the on-site visit, quote approval and date booking. Placo, Knauf and Isover materials are ordered 2-3 weeks in advance: boards and metal profiles depend on sea freight from mainland Spain, especially technical products such as Glasroc H Ocean or Placo Silence.',
+  s2P3: 'The optimal execution window is November to February, when our teams have greater availability and timelines can be adjusted with margin. Renovations planned for March or April carry more schedule pressure from the incoming season and leave less room for unexpected issues (scope changes, plumbing or HVAC replacements).',
+  s2P4: 'For owners with several holiday apartments, we offer rolling planning: we renovate one apartment while the next stays on Booking/Airbnb, and rotate until the whole portfolio is complete. We always work during daytime hours 8:00-20:00 to comply with the Balearic noise regulations and we carry €600,000 public liability insurance with the community of owners.',
+  s3Eyebrow: 'Acoustic insulation',
+  s3Title: 'CTE-HR acoustic insulation: the direct lever for Booking/Airbnb rating',
+  s3P1: 'Noise complaints are the leading cause of low reviews in Menorca holiday apartments. The 1960s-80s buildings that make up most of the tourist stock in Cala en Bosc, Son Bou and Arenal d\'en Castell predate CTE-HR (RD 1371/2007), with single hollow-brick party walls (~35 dB Rw) that transmit conversations, music and impact noise (footsteps, dragged chairs, dropped items).',
+  s3P2: 'A single review mentioning noise deters dozens of potential guests. Booking and Airbnb filters penalise listings below 4.2 stars and each rating point translates into more than 15% additional revenue per season. That is why acoustic insulation with Placo Silence or Knauf Silentboard is the highest-return investment you can make on a holiday apartment in Menorca.',
+  s3P3: 'Our drywall acoustic systems combine double Placo Silence (or Knauf Silentboard 12.5+12.5 mm) with Rockwool 70 kg/m³ or Isover 60 kg/m³ mineral wool inside 70 mm studs and, for the most demanding cases, a decoupled structure with SAN anti-vibration bands to cut structural transmission. The result is a 45-55 dB Rw reduction, comfortably above the 45 dB DnT,A required by CTE-HR.',
+  s3P4: 'The acoustic insulation investment for a 50 m² holiday apartment ranges from €1,800 to €4,000 depending on walls treated and the level required (acoustic material from €6/m²; full installed system 45-€65/m²). With a 10-15% price-per-night uplift after renovation and the rating boost, payback usually comes within 1-2 seasons.',
+  s3Metrics: [
+    { metrica: 'Noise reduction', valor: '45-55 dB' },
+    { metrica: 'Rating uplift', valor: '+0.3 to +0.5 ★' },
+    { metrica: 'Price/night', valor: '+10-15%' },
+    { metrica: 'Payback', valor: '1-2 seasons' },
+  ] as { metrica: string; valor: string }[],
+  s3Link: 'See soundproofing solutions',
+  s4Eyebrow: 'Modern lighting',
+  s4Title: 'Placo false ceilings with LED: the change that shows in the listing photos',
+  s4P1: 'A drywall false ceiling (Placo BA13 or Knauf Standard) with recessed LED lighting transforms the image of a holiday apartment in Menorca. Listing photos improve directly, which translates into more clicks, higher CTR on Booking/Airbnb and more bookings at a higher price per night.',
+  s4P2: 'Holiday apartments with dated ceilings — yellowed lampshades, exposed pendants, damp stains — signal neglect and hurt both rating and price. A seamless Placo false ceiling with recessed LED downlights creates a modern, bright and welcoming atmosphere that photographs better and attracts guests willing to pay more. Renovated holiday apartments achieve prices 15-30% higher than unrenovated units in the same area (Menorca tourist market data).',
+  s4P3: 'The false ceiling also solves functional issues: it hides old wiring, allows ducted air-conditioning (replacing wall splits), improves HVAC efficiency by reducing the volume of air to cool and carries Rockwool or Isover mineral wool for overhead acoustic insulation. On ground floor or top floor under roof, an Isover thermal lining cuts August A/C bills by up to 30%.',
+  s4P4: 'A Placo false ceiling with 6-8 recessed LED downlights for a 50 m² apartment costs €1,500-€2,500 ex VAT (unit rate from €29/m² for accessible ceilings; €45-€80 per installed LED spot). It is the highest cost-to-visual-impact investment in a holiday-apartment renovation.',
+  s4Benefits: 'False ceiling benefits',
+  s4BenefitItems: [
+    'Modern recessed LED',
+    'Hides old wiring',
+    'Ducted A/C integration',
+    'Cuts cooling costs',
+    'Better listing photos',
+    'Installed in 2-3 days',
+  ],
+  s4Link: 'See false ceilings',
+  s5Eyebrow: 'Tourist areas',
+  s5Title: 'Holiday apartment renovations by area in Menorca',
+  s5Intro: 'Each tourist area in Menorca has a different building stock and rental profile. Backed by the SL matriz (Mallorca 2004), we work across the eight municipalities of the island matching Placo or Knauf solutions to each case.',
+  s5Zones: [
+    { zona: 'Cala en Bosc / Son Xoriguer (Ciutadella)', tipo: '1970s-90s beach apartment blocks', demanda: 'Placo Silence between units, LED ceilings, layout changes' },
+    { zona: 'Punta Prima / Binibeca (Sant Lluís)', tipo: 'Aparthotels and holiday studios', demanda: 'Soundproofing, ceiling modernisation, Isover thermal linings' },
+    { zona: "Arenal d'en Castell / Son Parc (Es Mercadal)", tipo: 'Coastal apartment blocks, residential-tourist mix', demanda: 'False ceilings, acoustic insulation, studio layout changes' },
+    { zona: 'Son Bou / Cala en Porter (Alaior)', tipo: '1980s tourist blocks, holiday apartments', demanda: 'LED ceilings, soundproofing against nightlife, full refresh' },
+    { zona: 'Cala Galdana / Cala Mitjana (Ferreries)', tipo: 'Premium apartments and townhouses', demanda: 'High-end finishes, Isover thermal linings, decorative ceilings' },
+    { zona: 'Port de Maó / Cala Llonga (Maó)', tipo: 'Holiday flats in the old town and seafront', demanda: 'Insulation against port noise, false ceilings, neighbour acoustics' },
+  ] as { zona: string; tipo: string; demanda: string }[],
+  s5Type: 'Type',
+  s5Demand: 'Most in-demand renovations',
+  s6Eyebrow: 'ROI',
+  s6Title: 'Renovation ROI: impact on bookings and price per night',
+  s6P1: "A drywall renovation isn't an expense — it's an investment with a measurable return. Menorca tourist market data shows that holiday apartments renovated with Placo and modern finishes achieve prices 15-30% higher than unrenovated units in the same area. Typical investment per 55-85 m² apartment ranges €4,500-€8,500 for a full refurbishment.",
+  s6P2: 'Acoustic upgrades with Placo Silence + Rockwool lift the listing rating by 0.3-0.5 points on Booking/Airbnb, which improves algorithmic visibility and translates into more bookings. A Placo false ceiling with LED also improves listing photos — the single most decisive booking factor: each rating point is worth >+15% in season revenue.',
+  s6P3: 'A Knauf-partition layout change can add an extra bedroom or bathroom: it lifts the listing category and can drive a 30-50% price-per-night jump. Taken together, a full drywall renovation of €4,500-€8,500 (or €5,000-€12,000 for 60-80 m² apartments with full acoustic package) pays back in 1-2 seasons.',
+  s6P4: 'Holiday-apartment bathrooms need <a href="/pladur-hidrofugo-menorca" class="text-foreground font-semibold underline underline-offset-2">moisture-resistant Glasroc H Ocean drywall</a> (Placo, H1 class) to withstand the humidity and heavy use of holiday rentals.',
+  s6RoiTitle: 'Estimated return on investment',
+  s6RoiItems: [
+    { concepto: 'Price/night uplift after renovation', valor: '+15-30%' },
+    { concepto: 'Occupancy rate uplift', valor: '+5-15%' },
+    { concepto: 'Uplift per extra bedroom', valor: '+30-50%' },
+    { concepto: 'Full renovation payback', valor: '1-2 seasons' },
+    { concepto: 'Typical investment (50-60 m² apt.)', valor: '€5-12k' },
+  ] as { concepto: string; valor: string }[],
+  s7Eyebrow: 'Holiday-apartment renovation prices',
+  s7Title: 'Holiday-apartment drywall renovation prices 2026',
+  s7Intro: '2026 prices, VAT excluded. Unit rates from €29/m² ceilings, €45/m² Knauf partitions, €35/m² Isover thermal lining, €6/m² Rockwool acoustic material. Exact price after on-site visit.',
+  s7Items: [
+    { servicio: 'Placo LED false ceiling (from €29/m²)', precio: '€1,500-2,500', nota: '50 m² apartment' },
+    { servicio: 'Placo Silence + Rockwool acoustic lining', precio: '€1,800-4,000', nota: '45-55 dB Rw' },
+    { servicio: 'Knauf partition layout change (€45/m²)', precio: '€1,200-3,000', nota: 'New bedroom/dressing' },
+    { servicio: 'Isover thermal wall lining (€35/m²)', precio: '€1,200-2,800', nota: 'External facade' },
+    { servicio: 'Turnkey full renovation', precio: '€4,500-8,500', nota: '55-85 m² typical' },
+    { servicio: 'Recessed LED downlight, installed', precio: '€45-80', nota: 'Per unit' },
+  ] as { servicio: string; precio: string; nota: string }[],
+  s7Link: 'See full pricing table',
+  s8Eyebrow: 'Our process',
+  s8Title: 'Holiday-apartment renovation process with guaranteed timelines',
+  s8Intro: 'Transparent process, fixed deadline and €600,000 public liability from first contact to delivering the apartment ready for Booking/Airbnb.',
+  proceso: [
+    { paso: '01', titulo: 'Contact and on-site visit', descripcion: 'You get in touch by phone, WhatsApp or form. We book an on-site visit to the apartment to assess the existing building stock, take acoustic/thermal measurements and understand your Booking/Airbnb timing.' },
+    { paso: '02', titulo: 'Fixed quote in 24-48h', descripcion: 'We send a detailed quote with a fixed price, a guaranteed timeline and a list of materials (Placo, Knauf, Isover, Rockwool, Glasroc H Ocean in bathrooms). No surprises, no hidden costs.' },
+    { paso: '03', titulo: 'Planning and date booking', descripcion: 'We agree start and end dates within the October-March window, coordinate with your booking calendar to avoid losing occupancy nights and reserve materials 2-3 weeks in advance.' },
+    { paso: '04', titulo: 'Execution 8:00-20:00 with €600k liability', descripcion: 'In-house crew working daytime hours 8:00-20:00 under Balearic noise regulations, with €600,000 public liability and coordination with the community of owners. If we miss the deadline, we apply a per-day penalty.' },
+    { paso: '05', titulo: 'Handover, cleaning and certificates', descripcion: 'We hand over the apartment finished, cleaned and ready to go live. Joint inspection, handover record and certificates (Rw acoustic, H1 moisture class in bathrooms). 1-year warranty on workmanship and materials.' },
+  ] as { paso: string; titulo: string; descripcion: string }[],
+  faqTitle: 'Frequently asked questions about holiday apartment renovations',
+  faqSubtitle: 'Answers to the most common questions from holiday-apartment and vacation rental owners and managers in Menorca.',
+  hotelLink: 'For hotels with more than 20 rooms, see our <strong class="text-white">dedicated hotel service</strong> with guaranteed timelines and volume discounts.',
+  hotelLinkLabel: 'See drywall for hotels',
+  ctaTitle: 'Ready to renovate your holiday apartment before the season?',
+  ctaSubtitle: 'Free quote in 24 hours. Timelines guaranteed by contract, €600,000 liability, 1-year warranty. Backed by the SL matriz since 2004.',
+  srOnly: 'Pladur Menorca — holiday apartment drywall renovations in Menorca, backed by the SL matriz since 2004. 5-10 day timelines, Placo Silence + Rockwool 70 kg/m³ for CTE-HR 45 dB DnT,A, Glasroc H Ocean in bathrooms, 8:00-20:00 community-coordinated works and €600,000 public liability. Tel: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbLabel: 'Holiday Apartments',
+  schemaServiceName: 'Holiday Apartment Drywall Renovation in Menorca',
+  schemaServiceDesc: 'Holiday apartment drywall renovation service in Menorca backed by the SL matriz since 2004. 5-10 day low-season timelines, CTE-HR 45 dB DnT,A acoustic insulation with Placo Silence and Rockwool, Glasroc H Ocean bathrooms and €600,000 public liability.',
+  schemaServiceType: 'Holiday Apartment Renovation',
+  schemaHowToName: 'How to renovate a holiday apartment with drywall in Menorca',
+  schemaHowToDesc: 'Holiday-apartment drywall renovation in 5 steps: on-site visit, fixed quote, October-March planning, 8:00-20:00 execution with €600,000 public liability and certified handover.',
+} : {
+  heroBadge: 'Apartamentos turísticos · Menorca',
+  h1: 'Pladur para Apartamentos Turísticos en Menorca — Reforma en 5-10 días',
+  heroSubtitle: 'Reforma de apartamentos turísticos con pladur en Menorca en 5-10 días: falsos techos, aislamiento acústico CTE-HR y baños hidrófugos, con plazos garantizados por contrato.',
+  ctaPrimary: 'Pide presupuesto gratis',
+  s1Eyebrow: 'Por qué pladur',
+  s1Title: '¿Por qué reformar un apartamento turístico con pladur?',
+  s1P1: 'Menorca cuenta con más de <strong>40.000 plazas turísticas</strong> reguladas según datos del Govern Balear. En Pladur Menorca reformamos <strong>apartamentos turísticos</strong> <strong>respaldados por la SL matriz desde 2004</strong>: una redistribución completa de un apartamento de 55-85 m² se ejecuta en 5-10 días laborables con placas Placo (Saint-Gobain) o Knauf, concentrando la obra en la ventana de <strong>temporada baja</strong> (octubre-marzo) para no perder ingresos de alta ocupación.',
+  s1Quote: '"Para uso residencial público, el CTE-HR exige 45 dB DnT,A entre dormitorios de distinta unidad y 50 dB en separaciones verticales; un tabique desvinculado Placo Silence 13+70+13 con Rockwool 70 kg/m³ supera holgadamente ese umbral y alcanza 52-58 dB Rw"',
+  s1Cite: '— <strong>CTE DB-HR</strong>, Documento Básico de Protección frente al Ruido · <strong>Decreto 20/2015</strong>, Reglamento de alojamientos turísticos de Baleares',
+  s1P2: 'El pladur cumple los tres requisitos del apartamento turístico de forma óptima. Es un sistema de construcción en seco que no genera escombros significativos, no requiere tiempo de secado y evita el polvo de cemento que impregna textiles y mobiliario durante semanas. Un apartamento turístico de 50-60 m² con Placo BA13 en techo, focos LED empotrados y masillado listo para pintar queda entregado en 2-3 jornadas.',
+  s1P3: 'Frente a la obra tradicional, el pladur supone un ahorro de tiempo del 60-75% y un ahorro de coste del 25-40% cuando se computa el coste total (materiales + mano de obra + limpieza + gestión de escombros + días fuera de Booking/Airbnb). Cada día que un apartamento turístico en Menorca no puede alquilarse en temporada alta representa una pérdida de 80-300€ según zona, y cada punto de rating en Booking/Airbnb se traduce en más del 15% de ingresos adicionales por temporada.',
+  s1P4: 'La versatilidad del pladur permite varias mejoras en una sola intervención: falso techo con LED integrado (desde 29€/m²), trasdosado acústico con Placo Silence + Rockwool 70 kg/m³ (material acústico desde 6€/m²), redistribución con tabiques Knauf a 45€/m² para crear un dormitorio adicional o vestidor, y trasdosado térmico de fachada con Isover (35€/m²) para bajar la factura de aire acondicionado. Toda la reforma del apartamento turístico se concentra en una única fase y plazo cerrado.',
+  s1P5: 'Si tu apartamento turístico forma parte de un edificio mixto con trasteros, cuartos de instalaciones o sectores de garaje bajo CTE-DB-SI, consulta nuestro servicio de <a href="/pladur-ignifugo-menorca" class="text-foreground font-semibold underline underline-offset-2">pladur ignífugo en Menorca</a> con <strong>Knauf Fireboard</strong> o <strong>Placo Glasroc F</strong> y certificación EI-60 / EI-120 desde 52€/m².',
+  s1Cards: [
+    { titulo: 'Rapidez', items: ['Apartamento 55-85 m² en 5-10 días', 'Plazos garantizados por contrato'] },
+    { titulo: 'Limpieza', items: ['Obra seca sin escombros', 'Listo para Booking/Airbnb'] },
+    { titulo: 'Confort', items: ['Placo Silence + Rockwool 70 kg/m³', 'Cumple CTE-HR 45 dB DnT,A'] },
+    { titulo: 'Ahorro', items: ['25-40% menos que albañilería', 'RC 600.000€ y garantía 1 año'] },
+  ] as { titulo: string; items: string[] }[],
+  s2Calendar: 'Calendario óptimo',
+  s2CalItems: [
+    { mes: 'Sep-Oct', accion: 'Contacto y visita técnica' },
+    { mes: 'Oct-Nov', accion: 'Presupuesto y reserva de fechas' },
+    { mes: 'Nov-Feb', accion: 'Ejecución de la reforma' },
+    { mes: 'Mar', accion: 'Entrega lista para temporada' },
+  ] as { mes: string; accion: string }[],
+  s2Eyebrow: 'Planificación',
+  s2Title: 'Ventana de reforma del apartamento turístico: octubre a marzo',
+  s2P1: 'La temporada turística en Menorca marca el calendario de reformas de apartamentos turísticos. Entre octubre y marzo la ocupación en Booking/Airbnb cae por debajo del 25%, los plazos son flexibles y el apartamento puede estar fuera de servicio sin pérdida significativa de ingresos frente a los 80-300€/noche de temporada alta.',
+  s2P2: 'La planificación es clave para una reforma exitosa. Recomendamos contactar en septiembre o principios de octubre para realizar la visita técnica, aprobar el presupuesto y reservar las fechas de ejecución. El material Placo, Knauf e Isover se pide con 2-3 semanas de antelación: los suministros de placa y perfilería dependen del transporte marítimo desde la Península, especialmente en tableros técnicos como Glasroc H Ocean o Placo Silence.',
+  s2P3: 'La ejecución óptima se concentra entre noviembre y febrero, cuando la disponibilidad de nuestros equipos es mayor y los plazos se ajustan con margen. Las reformas planificadas para marzo o abril soportan más presión de fecha por el arranque de temporada y disponen de menos holgura para imprevistos (cambios de obra, sustituciones de fontanería o climatización).',
+  s2P4: 'Para propietarios con varios apartamentos turísticos, ofrecemos planificación rotatoria: reformamos un apartamento mientras el siguiente permanece en alquiler, y rotamos hasta completar toda la cartera. Trabajamos siempre en horario diurno 8:00-20:00 para respetar la normativa balear sobre ruido y mantenemos cobertura de responsabilidad civil de 600.000€ frente a la comunidad de propietarios.',
+  s3Eyebrow: 'Aislamiento acústico',
+  s3Title: 'Aislamiento acústico CTE-HR: la palanca directa del rating Booking/Airbnb',
+  s3P1: 'Las quejas de ruido son la causa principal de reseñas bajas en apartamentos turísticos de Menorca. Los edificios de los años 60-80 que concentran la mayor parte de la oferta en Cala en Bosc, Son Bou o Arenal d\'en Castell se construyeron antes del CTE-HR (RD 1371/2007), con medianeras de ladrillo hueco sencillo (~35 dB Rw) que transmiten conversaciones, música e impactos (pasos, arrastres, sillas).',
+  s3P2: 'Una sola reseña mencionando ruido disuade a decenas de potenciales huéspedes. Los filtros de Booking y Airbnb penalizan a partir de 4,2 estrellas y cada punto de rating se traduce en más del 15% de ingresos por temporada. Por eso el aislamiento acústico con Placo Silence o Knauf Silentboard es la inversión de mayor retorno en un apartamento turístico en Menorca.',
+  s3P3: 'Nuestros sistemas de pladur para aislamiento acústico combinan doble placa Placo Silence (o Knauf Silentboard 12,5+12,5 mm) con lana mineral Rockwool 70 kg/m³ o Isover 60 kg/m³ entre montantes de 70 mm y, en los casos más exigentes, estructura desvinculada con bandas antivibratorias SAN para cortar la transmisión estructural. El resultado es una reducción de 45-55 dB Rw, que convierte un apartamento ruidoso en un espacio que cumple con holgura los 45 dB DnT,A exigidos por el CTE-HR.',
+  s3P4: 'La inversión en aislamiento acústico para un apartamento turístico de 50 m² oscila entre 1.800€ y 4.000€ según paredes tratadas y nivel exigido (material acústico desde 6€/m², sistema completo instalado 45-65€/m²). Con un incremento de 10-15% en precio/noche tras reforma y la mejora de rating, la amortización suele producirse en 1-2 temporadas.',
+  s3Metrics: [
+    { metrica: 'Reducción de ruido', valor: '45-55 dB' },
+    { metrica: 'Mejora puntuación', valor: '+0.3 a +0.5 ★' },
+    { metrica: 'Precio/noche', valor: '+10-15%' },
+    { metrica: 'Amortización', valor: '1-2 temporadas' },
+  ] as { metrica: string; valor: string }[],
+  s3Link: 'Ver soluciones de aislamiento acústico',
+  s4Eyebrow: 'Iluminación moderna',
+  s4Title: 'Falsos techos Placo con LED: el cambio que se ve en las fotos del anuncio',
+  s4P1: 'Un falso techo de pladur (Placo BA13 o Knauf Standard) con iluminación LED empotrada transforma la imagen de un apartamento turístico en Menorca. Las fotos del anuncio mejoran de forma directa, lo que se traduce en más clics, mayor CTR en Booking/Airbnb y más reservas a precio/noche superior.',
+  s4P2: 'Los apartamentos turísticos con techos antiguos —plafones amarillentos, lámparas colgadas, manchas de humedad— transmiten abandono y penalizan el rating. Un falso techo Placo continuo con focos LED empotrados crea un ambiente moderno y luminoso que fotografía mejor y atrae a huéspedes dispuestos a pagar más. Los apartamentos reformados logran precios por noche 15-30% superiores a los no reformados en la misma zona (datos del sector turístico de Menorca).',
+  s4P3: 'El falso techo resuelve además problemas funcionales: oculta cableado antiguo, permite integrar el aire acondicionado por conductos (eliminando splits a la vista), mejora la eficiencia del climatizador al reducir volumen de aire y aloja lana Rockwool o Isover para aislamiento acústico cenital. En planta baja o última planta bajo cubierta, el trasdosado térmico Isover reduce la factura de A/C durante agosto en hasta un 30%.',
+  s4P4: 'Un falso techo Placo con 6-8 puntos LED empotrados para un apartamento de 50 m² cuesta entre 1.500€ y 2.500€ sin IVA (precio unitario desde 29€/m² en techo registrable, 45-80€ por punto LED instalado). Es la inversión con mejor relación coste-impacto visual en una reforma de apartamento turístico.',
+  s4Benefits: 'Beneficios del falso techo',
+  s4BenefitItems: [
+    'LED empotrada moderna',
+    'Oculta cableado antiguo',
+    'Integra A/C por conductos',
+    'Reduce coste climatización',
+    'Mejores fotos del anuncio',
+    'Instalación en 2-3 días',
+  ],
+  s4Link: 'Ver falsos techos',
+  s5Eyebrow: 'Zonas turísticas',
+  s5Title: 'Reformas de apartamentos turísticos por zona en Menorca',
+  s5Intro: 'Cada zona turística de Menorca tiene un parque edificado y un perfil de apartamento distinto. Respaldados por la SL matriz (Mallorca 2004), trabajamos en los ocho municipios de la isla adaptando soluciones Placo o Knauf a cada caso.',
+  s5Zones: [
+    { zona: 'Cala en Bosc / Son Xoriguer (Ciutadella)', tipo: 'Bloques de apartamentos de playa años 70-90', demanda: 'Placo Silence entre unidades, techos LED, redistribución' },
+    { zona: 'Punta Prima / Binibeca (Sant Lluís)', tipo: 'Aparthoteles y estudios turísticos', demanda: 'Insonorización, modernización de techos, trasdosados térmicos Isover' },
+    { zona: "Arenal d'en Castell / Son Parc (Es Mercadal)", tipo: 'Apartamentos costeros en bloque, residencial-turístico', demanda: 'Falsos techos, aislamiento acústico, redistribución en estudios' },
+    { zona: 'Son Bou / Cala en Porter (Alaior)', tipo: 'Bloques turísticos años 80, apartamentos vacacionales', demanda: 'Techos LED, insonorización frente a ocio nocturno, actualización integral' },
+    { zona: 'Cala Galdana / Cala Mitjana (Ferreries)', tipo: 'Apartamentos premium y casas adosadas', demanda: 'Acabados alta gama, trasdosados térmicos Isover, techos decorativos' },
+    { zona: 'Port de Maó / Cala Llonga (Maó)', tipo: 'Pisos turísticos en casco urbano y primera línea', demanda: 'Aislamiento frente a ruido del puerto, falsos techos, acústica vecinal' },
+  ] as { zona: string; tipo: string; demanda: string }[],
+  s5Type: 'Tipo',
+  s5Demand: 'Reformas más demandadas',
+  s6Eyebrow: 'Rentabilidad',
+  s6Title: 'ROI de la reforma: impacto en reservas y precio por noche',
+  s6P1: 'Una reforma con pladur no es un gasto, es una inversión con retorno medible. Los datos del mercado turístico de Menorca muestran que los apartamentos turísticos reformados con Placo y acabados modernos obtienen precios por noche 15-30% superiores a los no reformados de la misma zona y características. La inversión orientativa por apartamento 55-85 m² oscila entre 4.500€ y 8.500€ para reforma completa.',
+  s6P2: 'La mejora acústica con Placo Silence + Rockwool eleva la puntuación media del alojamiento en 0,3-0,5 puntos en Booking/Airbnb, lo que mejora la visibilidad algorítmica y se traduce en más reservas. Un falso techo Placo con LED mejora también las fotos del anuncio, factor decisivo de reserva: cada punto de rating >+15% ingresos/temporada según datos del sector.',
+  s6P3: 'La redistribución con tabiques Knauf puede crear un dormitorio adicional o un baño extra: cambia la categoría del alojamiento y puede suponer un salto del 30-50% en el precio por noche. Una reforma integral con pladur de 4.500-8.500€ (o 5.000-12.000€ para apartamentos de 60-80 m² con aislamiento acústico completo) se amortiza en 1-2 temporadas.',
+  s6P4: 'Los baños de apartamentos turísticos requieren <a href="/pladur-hidrofugo-menorca" class="text-foreground font-semibold underline underline-offset-2">pladur hidrófugo Glasroc H Ocean</a> (Placo, clase H1) para soportar la humedad y el uso intensivo del alquiler vacacional.',
+  s6RoiTitle: 'Retorno de inversión estimado',
+  s6RoiItems: [
+    { concepto: 'Incremento precio/noche tras reforma', valor: '+15-30%' },
+    { concepto: 'Mejora tasa de ocupación', valor: '+5-15%' },
+    { concepto: 'Incremento por dormitorio adicional', valor: '+30-50%' },
+    { concepto: 'Amortización reforma integral', valor: '1-2 temp.' },
+    { concepto: 'Inversión típica (apto. 50-60 m²)', valor: '5-12k€' },
+  ] as { concepto: string; valor: string }[],
+  s7Eyebrow: 'Precios reforma turística',
+  s7Title: 'Precio reforma apartamento turístico con pladur 2026',
+  s7Intro: 'Precios 2026, IVA no incluido. Unitarios desde 29€/m² techos, 45€/m² tabiques Knauf, 35€/m² trasdosado térmico Isover, 6€/m² material acústico Rockwool. Precio exacto tras la visita técnica.',
+  s7Items: [
+    { servicio: 'Falso techo Placo con LED (29€/m²)', precio: '1.500-2.500€', nota: 'Apto. 50 m²' },
+    { servicio: 'Aislamiento acústico Placo Silence + Rockwool', precio: '1.800-4.000€', nota: '45-55 dB Rw' },
+    { servicio: 'Redistribución tabiques Knauf (45€/m²)', precio: '1.200-3.000€', nota: 'Nuevo dormitorio/vestidor' },
+    { servicio: 'Trasdosado térmico Isover (35€/m²)', precio: '1.200-2.800€', nota: 'Fachada exterior' },
+    { servicio: 'Reforma integral llave en mano', precio: '4.500-8.500€', nota: 'Apto. 55-85 m² típico' },
+    { servicio: 'Punto LED empotrado instalado', precio: '45-80€', nota: 'Por unidad' },
+  ] as { servicio: string; precio: string; nota: string }[],
+  s7Link: 'Ver tabla de precios completa',
+  s8Eyebrow: 'Nuestro proceso',
+  s8Title: 'Proceso de reforma con plazos garantizados',
+  s8Intro: 'Proceso transparente, plazo cerrado y RC 600.000€ desde el primer contacto hasta la entrega del apartamento listo para Booking/Airbnb.',
+  proceso: [
+    { paso: '01', titulo: 'Contacto y visita técnica', descripcion: 'Nos contactas por teléfono, WhatsApp o formulario. Concertamos visita técnica al apartamento para evaluar el estado del parque edificado, tomar medidas acústicas/térmicas y entender tus plazos de Booking/Airbnb.' },
+    { paso: '02', titulo: 'Presupuesto cerrado en 24-48h', descripcion: 'Enviamos presupuesto detallado con precio cerrado, plazo garantizado y lista de materiales (Placo, Knauf, Isover, Rockwool, Glasroc H Ocean en baños). Sin sorpresas ni costes ocultos.' },
+    { paso: '03', titulo: 'Planificación y reserva de fechas', descripcion: 'Acordamos inicio y fin dentro de la ventana octubre-marzo. Coordinamos con tu calendario de reservas para no perder noches de ocupación y reservamos materiales con 2-3 semanas de antelación.' },
+    { paso: '04', titulo: 'Ejecución 8:00-20:00 con RC 600.000€', descripcion: 'Equipo propio trabajando en horario diurno (8:00-20:00) conforme a la normativa balear sobre ruido, con cobertura RC de 600.000€ y coordinación con la comunidad de propietarios. Si hay retraso por nuestra causa, aplicamos penalización por día.' },
+    { paso: '05', titulo: 'Entrega, limpieza y certificados', descripcion: 'Entregamos el apartamento terminado, limpio y listo para alquiler. Inspección conjunta, acta de entrega y certificados (acústico Rw, hidrófugo H1 en baños). Garantía de 1 año en obra y materiales.' },
+  ] as { paso: string; titulo: string; descripcion: string }[],
+  faqTitle: 'Preguntas frecuentes sobre reforma de apartamentos turísticos',
+  faqSubtitle: 'Respuestas a las dudas más habituales de propietarios y gestores de alquiler vacacional en Menorca.',
+  hotelLink: 'Para hoteles con más de 20 habitaciones, consulta nuestro <strong class="text-white">servicio específico para hoteles</strong> con plazos garantizados y descuentos por volumen.',
+  hotelLinkLabel: 'Ver pladur para hoteles',
+  ctaTitle: '¿Listo para reformar tu apartamento turístico antes de temporada?',
+  ctaSubtitle: 'Presupuesto gratuito en 24 horas. Plazos garantizados por contrato, RC 600.000€, garantía 1 año. Respaldados por la SL matriz desde 2004.',
+  srOnly: 'Pladur Menorca — reforma de apartamentos turísticos en Menorca, respaldados por la SL matriz desde 2004. Plazos 5-10 días, Placo Silence + Rockwool 70 kg/m³ para CTE-HR 45 dB DnT,A, Glasroc H Ocean en baños, coordinación comunidad 8:00-20:00 y RC 600.000€. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbLabel: 'Apartamentos Turísticos',
+  schemaServiceName: 'Reforma de Apartamentos Turísticos con Pladur en Menorca',
+  schemaServiceDesc: 'Reforma de apartamentos turísticos con pladur en Menorca respaldada por la SL matriz desde 2004. Plazos 5-10 días en temporada baja, aislamiento acústico CTE-HR 45 dB DnT,A con Placo Silence y Rockwool, baños con Glasroc H Ocean, RC 600.000€.',
+  schemaServiceType: 'Reforma de Apartamentos Turísticos',
+  schemaHowToName: 'Cómo reformar un apartamento turístico con pladur en Menorca',
+  schemaHowToDesc: 'Proceso completo de reforma de apartamento turístico con pladur en 5 pasos: visita técnica, presupuesto cerrado, planificación octubre-marzo, ejecución 8:00-20:00 con RC 600.000€ y entrega con certificados.',
+}
+
+const meta = lang === 'en' ? {
+  title: 'Holiday Apartment Drywall Menorca | 5-10 days',
+  description: 'Holiday apartment drywall renovation in Menorca, backed by the SL matriz since 2004: Placo Silence + Rockwool, CTE-HR 45 dB, Glasroc H Ocean baths. 5-10 days Oct-Mar. From €45/m².',
+  canonical: '/en/pladur-apartamentos-turisticos-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-apartamentos-turisticos-menorca',
+} : {
+  title: 'Pladur Apartamentos Turísticos Menorca | 5-10 días',
+  description: 'Reforma de apartamentos turísticos con pladur en Menorca, SL matriz desde 2004: Placo Silence + Rockwool, CTE-HR 45 dB, Glasroc H Ocean en baños. 5-10 días oct-mar. Desde 45€/m².',
+  canonical: '/pladur-apartamentos-turisticos-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-apartamentos-turisticos-menorca',
+}
+
+const breadcrumbHref = lang === 'en' ? '/en/pladur-apartamentos-turisticos-menorca' : '/pladur-apartamentos-turisticos-menorca'
+const hotelesHref = '/pladur-hoteles-menorca'
+const preciosHref = '/precios-pladur-menorca'
+const acusticoHref = lang === 'en' ? '/en/aislamiento-acustico-menorca' : '/aislamiento-acustico-menorca'
+const techosHref = lang === 'en' ? '/en/falsos-techos-pladur-menorca' : '/falsos-techos-pladur-menorca'
+const presupuestoHref = lang === 'en' ? '/en/presupuesto-pladur' : '/presupuesto-pladur'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType={t.schemaServiceType}
+      url={breadcrumbHref}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en' : '/' }, { label: t.breadcrumbLabel, href: breadcrumbHref }]} />
+    <SchemaHowTo
+      name={t.schemaHowToName}
+      description={t.schemaHowToDesc}
+      totalTime="P14D"
+      steps={t.proceso.map((p) => ({ name: p.titulo, text: p.descripcion }))}
+    />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            {t.heroBadge}
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.h1}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            {t.heroSubtitle}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={presupuestoHref}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              {t.ctaPrimary}
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. Por qué pladur -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="max-w-3xl mb-10 animate-fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s1Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.s1Title}
+          </h2>
+        </div>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p set:html={t.s1P1} />
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p set:html={t.s1Quote} />
+          <cite class="block mt-2 text-sm not-italic text-muted/70" set:html={t.s1Cite} />
+        </blockquote>
+        <p>{t.s1P2}</p>
+        <p>{t.s1P3}</p>
+        <p>{t.s1P4}</p>
+        <p set:html={t.s1P5} />
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 stagger-children">
+        {t.s1Cards.map((card) => (
+          <div>
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 h-full cursor-default">
+              <p class="text-xs font-bold uppercase tracking-wider text-foreground-dark mb-3">{card.titulo}</p>
+              <ul class="space-y-2">
+                {card.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-muted">
+                    <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center mt-0.5">
+                      <svg aria-hidden="true" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Ventana de reforma -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <div class="sticky top-28">
+            <div>
+              <div class="bg-foreground rounded-3xl p-7">
+                <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">{t.s2Calendar}</p>
+                <div class="space-y-4">
+                  {t.s2CalItems.map((item, index) => (
+                    <div class="flex items-center gap-3">
+                      <div class="flex flex-col items-center shrink-0">
+                        <div class:list={['w-2.5 h-2.5 rounded-full', index === 2 ? 'bg-white' : 'bg-white/30']} />
+                        {index < 3 && <div class="w-px h-4 bg-white/15 mt-1" />}
+                      </div>
+                      <div class="flex-1">
+                        <span class="block text-xs font-bold text-white/80 tabular-nums">{item.mes}</span>
+                        <span class="text-sm text-white/60">{item.accion}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-7 order-1 lg:order-2">
+          <div>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+              {t.s2Eyebrow}
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.s2Title}
+            </h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.s2P1}</p>
+            <p>{t.s2P2}</p>
+            <p>{t.s2P3}</p>
+            <p>{t.s2P4}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Aislamiento acústico -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="max-w-3xl mb-10 animate-fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s3Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.s3Title}
+          </h2>
+        </div>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-10">
+        <p>{t.s3P1}</p>
+        <p>{t.s3P2}</p>
+        <p>{t.s3P3}</p>
+        <p>{t.s3P4}</p>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        {t.s3Metrics.map((item) => (
+          <div>
+            <div class="bg-foreground rounded-2xl p-5 text-center cursor-default">
+              <p class="text-lg sm:text-xl font-bold text-white mb-1">{item.valor}</p>
+              <p class="text-[11px] text-white/50 uppercase tracking-wider font-semibold">{item.metrica}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <a
+        href={acusticoHref}
+        class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+      >
+        {t.s3Link}
+        <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- 4. Falsos techos LED -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 mb-10">
+        <div>
+          <div>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+              {t.s4Eyebrow}
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.s4Title}
+            </h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.s4P1}</p>
+            <p>{t.s4P2}</p>
+          </div>
+        </div>
+        <div>
+          <div class="space-y-5 text-muted leading-relaxed lg:mt-[72px]">
+            <p>{t.s4P3}</p>
+            <p>{t.s4P4}</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-2">{t.s4Benefits}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-2">
+                {t.s4BenefitItems.map((item) => (
+                  <div class="flex items-center gap-2 text-sm text-white/70">
+                    <div class="shrink-0 w-1.5 h-1.5 rounded-full bg-white/40" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <a
+              href={techosHref}
+              class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0 transition-colors"
+            >
+              {t.s4Link}
+              <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Reformas por zona -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="mb-12">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s5Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            {t.s5Title}
+          </h2>
+          <p class="text-lg text-muted leading-relaxed max-w-3xl">
+            {t.s5Intro}
+          </p>
+        </div>
+      </div>
+      <div class="space-y-3">
+        {t.s5Zones.map((z) => (
+          <div>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default">
+              <div class="sm:w-52 shrink-0">
+                <h3 class="text-sm font-bold text-foreground">{z.zona}</h3>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s5Type}</p>
+                  <p class="text-sm text-foreground">{z.tipo}</p>
+                </div>
+                <div class="sm:ml-auto">
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s5Demand}</p>
+                  <p class="text-sm text-muted">{z.demanda}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. ROI -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <div>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+              {t.s6Eyebrow}
+            </span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.s6Title}
+            </h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.s6P1}</p>
+            <p>{t.s6P2}</p>
+            <p>{t.s6P3}</p>
+            <p set:html={t.s6P4} />
+          </div>
+        </div>
+        <div>
+          <div class="bg-foreground rounded-3xl p-7 lg:mt-12">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">{t.s6RoiTitle}</p>
+            <div class="space-y-0">
+              {t.s6RoiItems.map((item) => (
+                <div class="flex justify-between items-center gap-4 py-3.5 border-b border-white/10 last:border-0">
+                  <span class="text-sm text-white/60">{item.concepto}</span>
+                  <span class="text-sm font-bold text-white shrink-0">{item.valor}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Precios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="mb-12 max-w-2xl">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s7Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            {t.s7Title}
+          </h2>
+          <p class="text-lg text-muted leading-relaxed">
+            {t.s7Intro}
+          </p>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {t.s7Items.map((item) => (
+          <div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-3xl p-5 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default h-full">
+              <p class="font-bold text-foreground text-sm mb-1">{item.servicio}</p>
+              <p class="text-lg font-bold text-foreground-dark mb-1">{item.precio}</p>
+              <p class="text-xs text-muted">{item.nota}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a
+          href={preciosHref}
+          class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+        >
+          {t.s7Link}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Proceso -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div>
+        <div class="mb-14 max-w-3xl">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s8Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+            {t.s8Title}
+          </h2>
+          <p class="text-lg text-muted leading-relaxed">
+            {t.s8Intro}
+          </p>
+        </div>
+      </div>
+      <div class="space-y-4">
+        {t.proceso.map((etapa) => (
+          <div>
+            <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+              <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+                <span class="text-sm font-bold text-foreground group-hover:text-white transition-colors duration-300">{etapa.paso}</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-foreground text-base mb-1">{etapa.titulo}</h3>
+                <p class="text-sm text-muted leading-relaxed">{etapa.descripcion}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. FAQs -->
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitle}
+    subtitulo={t.faqSubtitle}
+  />
+
+  <!-- Enlace a hoteles -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed" set:html={t.hotelLink} />
+        <a href={hotelesHref} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.hotelLinkLabel}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitle}
+    subtitulo={t.ctaSubtitle}
+  />
+
+  <ServiciosRelacionados currentPath={breadcrumbHref} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

@@ -1,194 +1,154 @@
 ---
 import Container from '@/components/ui/Container.astro'
+import Button from '@/components/ui/Button.astro'
 import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+
+interface Props {
+  lang?: 'es' | 'en'
+}
+
+const { lang = 'es' } = Astro.props
+const p = (h: string) => localizedHref(h, lang)
+const presupuestoHref = p('/presupuesto-pladur')
+
+const t = lang === 'en' ? {
+  badge: 'All about drywall in Menorca',
+  h2: 'Installing drywall in Menorca',
+  lead: 'Dry construction has replaced brick as the standard for interior renovations in Menorca — faster, cleaner and better suited to the island\'s seasonality.',
+  trust: '22 years · 6,000+ projects · 8 municipalities',
+  ctaQuote: 'Request a free quote',
+  ctaCall: 'Call',
+  items: [
+    {
+      tag: 'The material',
+      title: 'What drywall is and why it works in Menorca',
+      body: 'Plasterboard screwed to a galvanised metal frame: no mortar, no drying times. The standard choice in Menorca because it lets owners refurbish holiday homes between seasons in days instead of weeks — no wet works, no rubble, paint-ready in the same week.',
+    },
+    {
+      tag: 'Our services',
+      titleRich: 'Four specialist pillars',
+      bodyRich: 'From <a href="/en/falsos-techos-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">suspended ceilings</a> and <a href="/en/tabiques-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">partitions</a> for layout changes to <a href="/en/aislamiento-acustico-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">acoustic and thermal insulation</a> to CTE standards, plus <a href="/en/escayola-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">hand-applied plasterwork</a> for premium finishes and heritage restoration.',
+    },
+    {
+      tag: 'Pricing',
+      titleRich: 'From €29/m² — all-in, VAT itemised',
+      bodyRich: 'Ceilings from <strong class="text-foreground">€29/m²</strong>, partitions from <strong class="text-foreground">€45/m²</strong>, acoustic partitions from <strong class="text-foreground">€52/m²</strong>. Prices run 10-20% above mainland Spain due to shipping — still 25-40% below traditional brick when total cost is factored in. <a href="/en/precios-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">Full price table →</a>',
+    },
+    {
+      tag: 'Performance',
+      title: 'Rw 50 dB+ acoustic · 30-40% thermal gain reduction',
+      body: 'Our decoupled wall linings with mineral wool exceed CTE-HR requirements between dwellings. Thermal linings with mineral wool or XPS on sun-exposed façades measurably lower AC consumption during Mediterranean summers.',
+    },
+    {
+      tag: 'Local factors',
+      title: 'Coastal salinity, heritage stock, tourist seasons',
+      body: 'Three factors shape every Menorca project: salinity within 500 m of the sea (reinforced profiles + H moisture board even in dry areas); ageing housing in Maó and Ciutadella requiring antivibration wall linings; and the October-April refurbishment window that demands 3-6 months of advance planning.',
+    },
+    {
+      tag: 'Our commitment',
+      title: 'Plaquistas y Acabados SL · since 2004',
+      body: '22 years in drywall and plaster, 6,000+ projects across the Balearics, Placo · Knauf · Lafarge exclusively, installers trained by the manufacturers. Fixed-price quotes, 1-year workmanship warranty on top of manufacturer warranty.',
+    },
+  ],
+} : {
+  badge: 'Todo sobre el pladur en Menorca',
+  h2: 'Instalar pladur en Menorca',
+  lead: 'La construcción en seco ha sustituido al ladrillo como estándar para reformas interiores en Menorca: más rápida, más limpia y mejor adaptada a la estacionalidad de la isla.',
+  trust: '22 años · +6.000 proyectos · 8 municipios',
+  ctaQuote: 'Solicitar presupuesto gratuito',
+  ctaCall: 'Llamar',
+  items: [
+    {
+      tag: 'El material',
+      title: 'Qué es el pladur y por qué funciona en Menorca',
+      body: 'Placa de yeso laminado atornillada sobre perfilería metálica galvanizada: sin mortero, sin tiempos de secado. Es la opción estándar en Menorca porque permite reformar viviendas vacacionales entre temporadas en días en lugar de semanas, sin obra húmeda ni escombros y lista para pintar la misma semana.',
+    },
+    {
+      tag: 'Servicios',
+      titleRich: 'Cuatro pilares especializados',
+      bodyRich: 'De <a href="/falsos-techos-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">falsos techos</a> y <a href="/tabiques-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">tabiques</a> para redistribuciones, a <a href="/aislamiento-acustico-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">aislamiento acústico y térmico</a> según CTE, más <a href="/escayola-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">escayola artesanal</a> para acabados premium y restauración patrimonial.',
+    },
+    {
+      tag: 'Precios',
+      titleRich: 'Desde 29 €/m² · todo incluido, IVA desglosado',
+      bodyRich: 'Techos desde <strong class="text-foreground">29 €/m²</strong>, tabiques desde <strong class="text-foreground">45 €/m²</strong>, tabiques acústicos desde <strong class="text-foreground">52 €/m²</strong>. Los precios son un 10-20 % superiores a Península por transporte marítimo, aun así 25-40 % más económicos que la obra tradicional en coste total. <a href="/precios-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">Tabla completa de precios →</a>',
+    },
+    {
+      tag: 'Rendimiento',
+      title: 'Rw 50 dB+ acústico · 30-40 % menos ganancia térmica',
+      body: 'Nuestros trasdosados desvinculados con lana mineral superan los requisitos del CTE-HR entre viviendas. Los trasdosados térmicos con lana mineral o XPS en fachadas soleadas bajan medible el consumo de aire acondicionado durante los veranos mediterráneos.',
+    },
+    {
+      tag: 'Factores locales',
+      title: 'Salinidad costera, parque antiguo, temporalidad turística',
+      body: 'Tres factores condicionan cada proyecto en Menorca: la salinidad a menos de 500 m del mar (perfilería reforzada + placa hidrófuga H incluso en zonas secas); el parque antiguo de Maó y Ciutadella que exige trasdosados antivibratorios; y la ventana real de reforma octubre-abril que obliga a planificar con 3-6 meses de antelación.',
+    },
+    {
+      tag: 'Nuestro compromiso',
+      title: 'Plaquistas y Acabados SL · desde 2004',
+      body: '22 años en pladur y escayola, +6.000 proyectos en Baleares, uso exclusivo de Placo, Knauf y Lafarge con instaladores formados por los fabricantes. Presupuestos cerrados, garantía de 1 año en mano de obra sobre la garantía de fabricante.',
+    },
+  ],
+}
 ---
 
 <section class="w-full py-20 lg:py-28">
   <Container size="md">
-    <div>
-      <div class="max-w-none">
-        {/* Label */}
+    <div class="max-w-3xl mx-auto">
+
+      {/* Header */}
+      <div class="mb-16">
         <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
-          Todo sobre el pladur en Mallorca
+          {t.badge}
         </span>
-
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-8">
-          Pladur y escayola en Mallorca: el instalador profesional nº1 de la isla
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-[1.05] text-balance mb-5">
+          {t.h2}
         </h2>
-
-        <div class="prose prose-lg max-w-none text-muted space-y-8">
-          <p class="text-lg leading-relaxed">
-            Cuando hablamos de <strong class="text-foreground">pladur en Mallorca</strong>, nos referimos al sistema de construcción
-            en seco más extendido de la isla. El término "pladur" &mdash;nombre comercial de la marca Pladur&reg; de
-            Saint-Gobain, adoptado popularmente para referirse a cualquier sistema de yeso laminado&mdash; ha
-            transformado la manera en que se reforman viviendas, locales comerciales y hoteles en las Islas
-            Baleares. En <a href="/" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">Pladur Mallorca</a> llevamos desde 2004 especializándonos exclusivamente en estos
-            sistemas y en <strong class="text-foreground">escayola</strong>, lo que nos ha permitido acumular más de 6.000 proyectos y convertirnos en la empresa
-            líder del sector en la isla.
-          </p>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            ¿Qué es el pladur y por qué es tan popular en Mallorca?
-          </h3>
-          <p class="leading-relaxed">
-            El yeso laminado consiste en un núcleo de yeso deshidratado recubierto por dos láminas de
-            cartón especial. Las placas se fijan sobre una estructura metálica de perfiles galvanizados,
-            creando superficies planas, lisas y listas para pintar o revestir. Esta tecnología, importada
-            de Estados Unidos en los años 50, se ha convertido en el estándar europeo para la construcción
-            en seco por razones muy concretas: rapidez de instalación, limpieza de obra, versatilidad
-            formal y excelentes prestaciones técnicas.
-          </p>
-          <p class="leading-relaxed">
-            En Mallorca, el sistema ha ganado especial relevancia por el alto ritmo de reforma de viviendas
-            vacacionales y apartamentos turísticos entre temporadas. Un propietario que necesita reformar
-            su piso en Playa de Palma o su apartamento en Alcúdia antes del inicio de la temporada estival
-            no puede esperar semanas de obra húmeda tradicional. Con pladur, la misma reforma puede
-            completarse en días, reduciendo plazos y costes de alojamiento alternativo.
-          </p>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            Servicios de instalación de pladur en Mallorca
-          </h3>
-          <p class="leading-relaxed">
-            Nuestra empresa cubre la totalidad del espectro de trabajos con yeso laminado. La{' '}
-            <a href="/instalacion-pladur-mallorca" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">
-              instalación de pladur en Mallorca
-            </a>{' '}
-            abarca desde proyectos residenciales sencillos hasta grandes intervenciones en hoteles y
-            edificios de oficinas. A continuación describimos los cuatro pilares de nuestro trabajo:
-          </p>
-
-          <div class="bg-white/70 border-l-4 border-foreground-dark rounded-r-2xl shadow-warm-sm p-6 my-6">
-            <h4 class="font-bold text-foreground text-lg mb-2">Falsos techos de pladur</h4>
-            <p class="text-muted leading-relaxed text-base">
-              Los{' '}
-              <a href="/falsos-techos-pladur-mallorca" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">
-                falsos techos de pladur en Mallorca
-              </a>{' '}
-              son sin duda el servicio más demandado. Permiten ocultar instalaciones (cables eléctricos,
-              tuberías de climatización, ventilación mecánica), mejorar el aislamiento acústico con
-              vecinos superiores, integrar iluminación empotrada y dar un acabado premium a cualquier
-              estancia. Trabajamos con techos continuos planos, techos con pendientes, techos curvos y
-              techos con iluminación perimetral tipo "floating ceiling", muy solicitados en viviendas de
-              lujo en Calvià y Son Vida.
-            </p>
-          </div>
-
-          <div class="bg-white/70 border-l-4 border-nav-border rounded-r-2xl shadow-warm-sm p-6 my-6">
-            <h4 class="font-bold text-foreground text-lg mb-2">Tabiques y particiones de pladur</h4>
-            <p class="text-muted leading-relaxed text-base">
-              La redistribución de espacios mediante{' '}
-              <a href="/tabiques-pladur-mallorca" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">
-                tabiques de pladur en Mallorca
-              </a>{' '}
-              es una de las soluciones más eficientes para adaptar una vivienda a nuevas necesidades sin
-              derribar muros estructurales. En apenas 1 o 2 días se puede crear una habitación adicional,
-              dividir un espacio diáfano en zonas funcionales o construir una sala de reuniones en una
-              oficina. Los tabiques de pladur ofrecen además la posibilidad de incorporar aislamiento
-              acústico de alta eficiencia en su interior, algo imprescindible en apartamentos turísticos
-              y comunidades de propietarios.
-            </p>
-          </div>
-
-          <div class="bg-white/70 border-l-4 border-amber-500 rounded-r-2xl shadow-warm-sm p-6 my-6">
-            <h4 class="font-bold text-foreground text-lg mb-2">Escayola decorativa y funcional</h4>
-            <p class="text-muted leading-relaxed text-base">
-              Además de pladur, somos especialistas en <strong class="text-foreground">escayola en Mallorca</strong>.
-              Realizamos molduras de escayola, cornisas, arcos, columnas y revestimientos continuos.
-              La escayola es el complemento perfecto al pladur para acabados de alta gama en viviendas
-              de lujo, hoteles y restaurantes. Nuestro equipo de yeseros cuenta con más de 15 años
-              de experiencia en trabajos de escayola artística y funcional en toda la isla.
-            </p>
-          </div>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            Precios del pladur en Mallorca: lo que debes saber
-          </h3>
-          <p class="leading-relaxed">
-            Los{' '}
-            <a href="/precios-pladur-mallorca" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">
-              precios del pladur en Mallorca
-            </a>{' '}
-            son, en general, entre un 10 y un 20% superiores a los de la Península. Este sobrecoste tiene
-            una causa directa: el transporte marítimo de materiales eleva el precio de placa, perfilería
-            y tornillería. A pesar de ello, el coste total de una reforma con pladur sigue siendo
-            significativamente inferior al de la obra tradicional, especialmente cuando se tienen en cuenta
-            los plazos de ejecución y la limpieza del proceso.
-          </p>
-          <p class="leading-relaxed">
-            Un falso techo básico en Mallorca parte de aproximadamente 29&euro;/m&sup2; (materiales y mano de obra
-            incluidos, sin IVA). Un tabique estándar comienza en 45&euro;/m&sup2;. El aislamiento acústico de alta
-            prestación, con doble placa y lana mineral de alta densidad, puede alcanzar los 58&euro;/m&sup2; o más
-            según la solución técnica requerida. En cualquier caso, el precio exacto solo puede
-            determinarse tras una visita técnica: las condiciones de acceso, el estado del soporte, la
-            altura libre disponible y las instalaciones a integrar afectan siempre al precio final.
-          </p>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            Aislamiento acústico y térmico con pladur
-          </h3>
-          <p class="leading-relaxed">
-            Mallorca tiene un parque inmobiliario con una media de edad elevada. Muchos edificios
-            construidos en los años 60, 70 y 80 carecen prácticamente de aislamiento acústico entre
-            viviendas, lo que genera conflictos vecinales habituales. La solución más eficiente para
-            estos casos, sin obra de demolición, es la instalación de sistemas de trasdosado acústico
-            y falsos techos con suspensión antivibratoria. Nuestros sistemas cumplen el Documento Básico
-            CTE-HR y pueden superar los 50 dB de reducción de ruido aéreo.
-          </p>
-          <p class="leading-relaxed">
-            En cuanto al aislamiento térmico, el clima mediterráneo de Mallorca genera demandas muy
-            diferentes a las de la Península: el mayor consumo energético se produce en verano, cuando
-            la refrigeración de los espacios supone una parte importante de la factura eléctrica. Un
-            trasdosado con placa de pladur e interior de lana mineral o poliestireno extruido en las
-            fachadas más soleadas puede reducir la ganancia de calor un 30-40%, mejorando el confort
-            interior y la calificación energética del inmueble.
-          </p>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            ¿Por qué elegir Pladur Mallorca como empresa instaladora?
-          </h3>
-          <p class="leading-relaxed">
-            Llevar más de veinte años instalando pladur y escayola en Mallorca nos ha enseñado que cada obra es diferente.
-            Los pisos del centro histórico de Palma tienen techos altos y escaleras estrechas que exigen
-            materiales en pequeño formato y técnicas específicas. Las villas de lujo de Santa Ponsa
-            demandan acabados milimétricos y discreción total durante la ejecución. Los hoteles en
-            reforma exigen coordinación con otros gremios y cumplimiento estricto de plazos. Hemos
-            aprendido a movernos con solvencia en todos estos escenarios.
-          </p>
-          <p class="leading-relaxed">
-            Trabajamos exclusivamente con materiales de primera marca &mdash;Placo (Saint-Gobain), Knauf y
-            Lafarge&mdash; y contamos con instaladores certificados por los propios fabricantes. Nuestros
-            presupuestos son cerrados: el precio que acordamos es el precio que facturamos, sin sorpresas
-            al final de la obra. Y todos los trabajos incluyen garantía de 2 años en mano de obra.
-          </p>
-
-          <h3 class="text-2xl font-bold text-foreground mt-8">
-            Cobertura en toda la isla de Mallorca
-          </h3>
-          <p class="leading-relaxed">
-            Como <a href="/" class="text-foreground font-semibold hover:text-foreground-dark transition-colors underline underline-offset-2">empresa de pladur en Mallorca</a> trabajamos en todos los municipios de la isla: Palma, Calvià, Llucmajor, Marratxí, Inca,
-            Manacor, Alcúdia, Pollença, Felanitx, Andratx, Santanyí, Sóller, Sa Pobla, Campos y el
-            resto de la isla. Para proyectos a partir de 500&euro; no aplicamos suplemento por
-            desplazamiento dentro de Mallorca. Si tu proyecto está en cualquier punto de la isla,
-            podemos acudir a realizar la visita técnica gratuita sin coste adicional.
-          </p>
-
-          <div class="mt-10 flex flex-col sm:flex-row gap-4">
-            <a
-              href="/presupuesto-pladur"
-              class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200"
-            >
-              Solicitar presupuesto gratuito
-            </a>
-            <a
-              href={`tel:${siteConfig.phoneRaw}`}
-              class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl border-2 border-foreground text-foreground hover:bg-foreground hover:text-white font-bold text-base tracking-wide transition-[background-color,box-shadow] duration-200"
-            >
-              Llamar: {siteConfig.phone}
-            </a>
-          </div>
-        </div>
+        <p class="text-lg text-muted leading-relaxed max-w-2xl">
+          {t.lead}
+        </p>
+        <p class="mt-6 text-xs font-semibold uppercase tracking-[0.18em] text-muted/70">
+          {t.trust}
+        </p>
       </div>
+
+      {/* Editorial numbered sections — linear, clean, all text in DOM for SEO */}
+      <ol class="space-y-10 lg:space-y-12">
+        {t.items.map((item, i) => (
+          <li class="grid grid-cols-[auto_1fr] gap-x-5 sm:gap-x-8 items-baseline">
+            <span class="text-sm font-bold text-foreground-dark tabular-nums tracking-wider select-none">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted mb-2">
+                {item.tag}
+              </p>
+              {item.titleRich ? (
+                <h3 class="text-xl sm:text-2xl font-bold text-foreground leading-snug mb-3" set:html={item.titleRich} />
+              ) : (
+                <h3 class="text-xl sm:text-2xl font-bold text-foreground leading-snug mb-3">{item.title}</h3>
+              )}
+              {item.bodyRich ? (
+                <p class="text-muted leading-relaxed" set:html={item.bodyRich} />
+              ) : (
+                <p class="text-muted leading-relaxed">{item.body}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      {/* CTAs */}
+      <div class="mt-16 pt-10 border-t border-warm-border/50 flex flex-col sm:flex-row gap-3">
+        <Button href={presupuestoHref} variant="primary" size="lg">
+          {t.ctaQuote}
+        </Button>
+        <Button href={`tel:${siteConfig.phoneRaw}`} variant="ghost" size="lg">
+          {t.ctaCall}: {siteConfig.phone}
+        </Button>
+      </div>
+
     </div>
   </Container>
 </section>

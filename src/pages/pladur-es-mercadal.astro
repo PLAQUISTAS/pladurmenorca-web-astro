@@ -1,0 +1,283 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getEsMercadalFaqs } from '@/data/faqs/es-mercadal'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getEsMercadalFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: "Drywall in Es Mercadal & Fornells | Since 2004",
+  description: "Drywall in Es Mercadal, Fornells, Son Parc and Arenal d'en Castell. False ceilings, partitions and insulation for homes and villas. Free quote in 24-48h.",
+  canonical: '/en/pladur-es-mercadal',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-es-mercadal',
+} : {
+  title: 'Pladur en Es Mercadal | Fornells, Son Parc | Presupuesto',
+  description: "Instala pladur en Es Mercadal, Fornells, Son Parc y Arenal d'en Castell. Falsos techos, tabiques y aislamiento para villas y apartamentos. Gratis 24h.",
+  canonical: '/pladur-es-mercadal',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-es-mercadal',
+}
+
+const zonas = lang === 'en' ? [
+  {
+    nombre: 'Es Mercadal centre',
+    descripcion: 'Traditional inland village at the geographic centre of Menorca (~5,500 residents). Village houses with thick walls and beam ceilings. Renovations that modernise old homes: false ceilings, thermal linings and respectful space redistribution.',
+  },
+  {
+    nombre: 'Fornells',
+    descripcion: "Fishing port with an international gastronomic reputation (home of the famous caldereta de langosta). Restaurants and apartments demanding moisture-resistant board, acoustic insulation against customer noise and premium decorative false ceilings.",
+  },
+  {
+    nombre: "Arenal d'en Castell",
+    descripcion: "Large sheltered bay on the north coast with holiday apartment blocks. Refurbishments for tourist rentals: between-season false ceilings with LED, 45-55 dB acoustic insulation and quick layout changes.",
+  },
+  {
+    nombre: 'Son Parc',
+    descripcion: "Premium residential development with an 18-hole golf course. Villas, townhouses and mid-to-high-end apartments: decorative false ceilings, rock wool thermal insulation and reinforced partitions for high-end finishes.",
+  },
+  {
+    nombre: 'Platges de Fornells',
+    descripcion: "Coastal residential area near Fornells. Holiday homes exposed to the tramontana wind (north coast) that benefit from drywall thermal linings, moisture control and soundproofing between units.",
+  },
+] : [
+  {
+    nombre: 'Es Mercadal centro',
+    descripcion: 'Pueblo tradicional del interior en el centro geográfico de Menorca (~5.500 habitantes). Casas de pueblo con muros gruesos y techos de vigas. Reformas para modernizar viviendas antiguas: falsos techos, trasdosados térmicos y redistribución respetuosa del espacio.',
+  },
+  {
+    nombre: 'Fornells',
+    descripcion: 'Puerto pesquero con reputación gastronómica internacional (sede de la famosa caldereta de langosta). Restaurantes y apartamentos que requieren placa hidrófuga, aislamiento acústico frente al ruido de clientes y falsos techos decorativos de gama alta.',
+  },
+  {
+    nombre: "Arenal d'en Castell",
+    descripcion: 'Gran cala resguardada de la costa norte con bloques de apartamentos vacacionales. Reformas para alquiler turístico: falsos techos con LED entre temporadas, aislamiento acústico 45-55 dB y redistribuciones rápidas.',
+  },
+  {
+    nombre: 'Son Parc',
+    descripcion: 'Urbanización residencial premium con campo de golf de 18 hoyos. Villas, adosados y apartamentos de gama media-alta: falsos techos decorativos, aislamiento térmico con lana de roca y tabiques reforzados para acabados de alta calidad.',
+  },
+  {
+    nombre: 'Platges de Fornells',
+    descripcion: 'Zona residencial costera próxima a Fornells. Segundas residencias expuestas al viento de tramontana (costa norte) que se benefician de trasdosados térmicos de pladur, control de humedad y aislamiento acústico entre viviendas.',
+  },
+]
+
+const breadcrumbs = lang === 'en' ? [
+  { label: 'Home', href: '/en' },
+  { label: 'Drywall in Es Mercadal', href: '/en/pladur-es-mercadal' },
+] : [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Es Mercadal', href: '/pladur-es-mercadal' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Surface', valor: '140 m²' },
+  { label: 'Location', valor: 'Son Parc, Es Mercadal' },
+  { label: 'Works', valor: 'Wall lining + Ceiling + Partitions' },
+  { label: 'Duration', valor: '14 working days' },
+  { label: 'Outcome', valor: 'Golf-course villa fully modernised' },
+] : [
+  { label: 'Superficie', valor: '140 m²' },
+  { label: 'Ubicación', valor: 'Son Parc, Es Mercadal' },
+  { label: 'Trabajos', valor: 'Trasdosado + Techo + Tabiques' },
+  { label: 'Duración', valor: '14 días hábiles' },
+  { label: 'Resultado', valor: 'Villa de campo de golf completamente modernizada' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'False Ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+  { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal Insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Es Mercadal, Fornells, Son Parc and Arenal d\'en Castell. False ceilings, partitions, acoustic and thermal insulation. Free quote. Phone: +34 627 829 723.',
+  municipio: 'Es Mercadal',
+  heroTitle: 'Drywall in Es Mercadal — Professional Installers in Central Menorca',
+  heroBadge: 'Es Mercadal · Northern Menorca',
+  heroDescription: "We install drywall in Es Mercadal and across central-northern Menorca: Fornells (gastronomic port), Arenal d'en Castell, Son Parc (golf course) and Platges de Fornells. False ceilings, partitions, acoustic and thermal insulation. Free quote within 24 hours.",
+  faqTitulo: 'Frequently asked questions about drywall in Es Mercadal',
+  faqSubtitulo: 'Answers to the most common questions from our customers in Es Mercadal and northern Menorca.',
+  proyectoTitulo: "Villa renovation in Son Parc (Es Mercadal)",
+  ctaTitulo: 'Is your project in Es Mercadal or northern Menorca?',
+  ctaSubtitulo: 'Contact us now and get your free quote in under 24 hours, no obligation.',
+  schemaName: 'Drywall installation in Es Mercadal',
+  schemaDescription: "Professional drywall installation service in Es Mercadal and the north of Menorca: false ceilings, partitions, acoustic and thermal insulation in Fornells, Arenal d'en Castell and Son Parc.",
+  seoBadge: 'Specialists in the north of Menorca',
+  seoTitle: "Drywall renovations in Es Mercadal: from the gastronomic port of Fornells to Son Parc",
+  seoP1: "Es Mercadal (~5,500 residents) sits at the geographic heart of Menorca and stretches north to the coast, where Fornells — an internationally renowned gastronomic port (home of the caldereta de langosta) —, Arenal d'en Castell, Son Parc (with its 18-hole golf course) and Platges de Fornells concentrate a strong demand for drywall renovations on both tourist and residential properties.",
+  seoP2Start: "Fornells is a singular case in Menorca: a small fishing port of barely a thousand residents that hosts high-end gastronomy and receives thousands of visitors in summer. Restaurants, guest houses and apartments need constant updates to keep a high standard. Drywall is the ideal solution for these ",
+  seoP2Link: { href: '/en/reformas-interiores-pladur-menorca', label: 'interior renovations' },
+  seoP2Mid: ': it lets you modernise a restaurant or apartment in under two weeks, installing ',
+  seoP2Link2: { href: '/en/falsos-techos-pladur-menorca', label: 'false ceilings with recessed LED lighting' },
+  seoP2End: ', improving acoustic insulation between dining room and kitchen, and creating functional layouts.',
+  seoP3: "Acoustic insulation is especially critical in the hospitality sector of Fornells. Customer noise in restaurants, kitchen extraction and adjacent apartments combined require drywall systems with high-density mineral wool and decoupled framing that deliver 45-55 dB reductions, complying with CTE DB-HR for residential use next to hospitality premises.",
+  seoP4Start: "The centre of Es Mercadal, with its inland village architecture, presents specific construction challenges. Thick stone and lime walls, high beam ceilings and layouts inherited from the past. Drywall makes it possible to create wall linings that provide ",
+  seoP4Link: { href: '/en/aislamiento-termico-menorca', label: 'thermal insulation' },
+  seoP4End: " against the winter cold of inland Menorca (climate zone B3 per CTE-HE) without significantly reducing the usable space, install false ceilings that conceal modern services and reconfigure rooms to present-day use.",
+  seoP5: "Son Parc and Arenal d'en Castell have established themselves as highly desirable residential and tourist areas on the north coast. Their villas, townhouses and mid-to-high-end apartments demand premium finishes: decorative false ceilings with mouldings, high-performance thermal wall linings and partitions reinforced to support heavy loads such as large TVs or built-in shelving.",
+  seoP6: "We work across the whole north of Menorca with a fixed, transparent quote. Our team knows the construction quirks of each area: from the thick stone walls of Es Mercadal centre to the prefabricated floor structures of the Arenal d'en Castell tourist blocks, via the villas of Son Parc and the homes exposed to the tramontana of Platges de Fornells.",
+  experienceTitle: 'The north of Menorca trusts us',
+  experienceText: "Working in Es Mercadal and the north of Menorca since 2026 (parent company in Mallorca since 2004). We know the buildings, the local materials and the specific challenges of each area — from the tramontana exposure to the coastal humidity.",
+  googleRating: 'New service · building local reviews',
+  servicesInTown: 'Services in Es Mercadal',
+  proyecto1: "An international couple bought a 140 m² villa in the Son Parc residential development (Es Mercadal), facing the 18-hole golf course, intending to turn it into their Mediterranean residence. The 1990s house kept its original layout with small rooms, a flat roof with no insulation above, and partition walls that transmitted noise between bedrooms. Summers were hot and the fabric offered no real thermal insulation.",
+  proyecto2: "The project covered the entire ground floor. Placo standard-board linings with 60 mm Isover rock wool were installed on all external walls (55 m²), cutting heat gains in summer by 65%. A continuous false ceiling was fitted at 2.90 m across the whole home (140 m²), creating an air cavity that further improves insulation and houses the new electrical wiring, HVAC ducts and recessed LED lighting. The space was reconfigured with drywall partitions (22 linear metres) to create an open living-dining room, a master suite, two guest bedrooms and two bathrooms.",
+  proyecto3: "The work was completed in 14 working days at an approximate cost of 11,900€ for the drywall scope. The owners highlighted the radical difference in summer thermal comfort: in the first summer after the renovation, air-conditioning consumption was 45% lower than in an equivalent neighbouring villa, and the home keeps a pleasant temperature even in August. The modern layout transformed a compartmentalised 1990s house into a bright, contemporary home.",
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Es Mercadal, Fornells, Son Parc y Arenal d\'en Castell. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.',
+  municipio: 'Es Mercadal',
+  heroTitle: 'Pladur en Es Mercadal — Instaladores Profesionales en el Centro-Norte de Menorca',
+  heroBadge: 'Es Mercadal · Norte de Menorca',
+  heroDescription: "Instalamos pladur en Es Mercadal y el centro-norte de Menorca: Fornells (puerto gastronómico), Arenal d'en Castell, Son Parc (campo de golf) y Platges de Fornells. Sistemas Placo y Knauf, falsos techos desde 29€/m², tabiques desde 45€/m². Presupuesto gratuito en 24-48h.",
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Es Mercadal',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de nuestros clientes en Es Mercadal y el norte de Menorca.',
+  proyectoTitulo: 'Reforma de villa en Son Parc (Es Mercadal)',
+  ctaTitulo: '¿Tu proyecto está en Es Mercadal o el norte de Menorca?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en toda la costa norte.',
+  schemaName: 'Instalación de Pladur en Es Mercadal',
+  schemaDescription: "Servicio profesional de instalación de pladur en Es Mercadal y el norte de Menorca: falsos techos, tabiques, aislamiento acústico y térmico en Fornells, Arenal d'en Castell y Son Parc.",
+  seoBadge: 'Pladur en el norte de Menorca',
+  seoTitle: 'Pladur en Es Mercadal: del puerto gastronómico de Fornells a Son Parc',
+  seoP1: "Es Mercadal (~5.500 habitantes) ocupa el corazón geográfico de Menorca y se prolonga al norte hasta la costa, donde Fornells —puerto gastronómico de renombre internacional (sede de la caldereta de langosta)—, Arenal d'en Castell, Son Parc (con su campo de golf de 18 hoyos) y Platges de Fornells concentran una importante demanda de reformas con pladur tanto en inmuebles turísticos como residenciales.",
+  seoP2Start: 'Fornells es un caso singular en Menorca: un pequeño puerto pesquero de apenas un millar de residentes que acoge gastronomía de alto nivel y recibe miles de visitantes en verano. Restaurantes, casas de huéspedes y apartamentos requieren actualizaciones constantes para mantener el estándar. El pladur es la herramienta ideal para estas ',
+  seoP2Link: { href: '/reformas-interiores-pladur-menorca', label: 'reformas interiores' },
+  seoP2Mid: ': permite modernizar un restaurante o apartamento en menos de dos semanas, instalando ',
+  seoP2Link2: { href: '/falsos-techos-pladur-menorca', label: 'falsos techos con iluminación LED' },
+  seoP2End: ' empotrada, mejorando el aislamiento acústico entre comedor y cocina y creando distribuciones más funcionales.',
+  seoP3: 'El aislamiento acústico es especialmente crítico en el sector de hostelería de Fornells: el ruido de clientes en restaurantes, la extracción de cocina y los apartamentos colindantes combinados obligan a usar sistemas de pladur con lana mineral de alta densidad y estructura desacoplada que aportan reducciones de 45-55 dB, cumpliendo el CTE DB-HR para uso residencial contiguo a locales de hostelería.',
+  seoP4Start: 'El centro de Es Mercadal, con su arquitectura de pueblo del interior, presenta retos específicos. Muros gruesos de piedra y cal, techos altos de vigas y distribuciones heredadas. Con pladur se pueden montar trasdosados que aportan ',
+  seoP4Link: { href: '/aislamiento-termico-menorca', label: 'aislamiento térmico' },
+  seoP4End: ' contra el frío invernal del interior de Menorca (zona climática B3 según CTE-HE) sin reducir significativamente el espacio útil, instalar falsos techos que ocultan instalaciones modernas y redistribuir estancias al uso contemporáneo.',
+  seoP5: "Son Parc y Arenal d'en Castell se han consolidado como zonas residenciales y turísticas muy valoradas de la costa norte. Sus villas, adosados y apartamentos de gama media-alta piden acabados de calidad superior: falsos techos decorativos con molduras, trasdosados con lana mineral de altas prestaciones y tabiques con refuerzo OSB para soportar televisores grandes o estanterías empotradas.",
+  seoP6: "Trabajamos en todo el norte de Menorca (Es Mercadal, Fornells, Arenal d'en Castell, Son Parc, Platges de Fornells) sin coste de desplazamiento para obras desde 500 €. El equipo domina las particularidades constructivas de cada zona: muros gruesos del centro de Es Mercadal, forjados prefabricados de los bloques turísticos de Arenal d'en Castell, y viviendas expuestas a la tramontana de Platges de Fornells.",
+  experienceTitle: 'El norte de Menorca nos contrata',
+  experienceText: 'Instalamos pladur en Es Mercadal y el norte de Menorca desde 2026 (SL matriz en Mallorca desde 2004). Conocemos los edificios, los materiales (Placo, Knauf, Isover, Rockwool) y la normativa CTE (DB-HR, DB-SI, DB-HE) que aplica a cada tipo de obra.',
+  googleRating: 'Nuevo servicio · recogiendo reseñas locales',
+  servicesInTown: 'Servicios en Es Mercadal',
+  proyecto1: 'Una pareja internacional compró una villa de 140 m² en la urbanización Son Parc (Es Mercadal), frente al campo de golf de 18 hoyos, para convertirla en su residencia mediterránea. La vivienda, de los años 90, conservaba una distribución original con estancias pequeñas, cubierta plana sin aislamiento superior y tabiques que transmitían el ruido entre dormitorios. Los veranos resultaban calurosos y la envolvente no ofrecía un aislamiento térmico real (factura de aire acondicionado estival > 1.600 €).',
+  proyecto2: 'El proyecto abarcó la planta baja completa. Se montaron trasdosados con placa estándar Placo y lana de roca Isover de 60 mm en todas las paredes exteriores (55 m², cumpliendo CTE DB-HE), reduciendo las ganancias térmicas estivales un 65%. Se instaló falso techo continuo a 2,90 m en toda la vivienda (140 m²), creando una cámara que mejora el aislamiento y aloja la nueva instalación eléctrica, los conductos de climatización y la iluminación LED empotrada. Se redistribuyó el espacio con 22 ml de tabique de pladur para crear salón-comedor abierto, dormitorio principal tipo suite, dos dormitorios de invitados y dos baños.',
+  proyecto3: 'Obra completada en 14 días hábiles por 11.900 € (85 €/m² en la partida de pladur). En el primer verano tras la reforma el consumo de aire acondicionado bajó un 45% respecto a una villa vecina equivalente y la casa mantiene temperatura agradable incluso en agosto. La distribución nueva transformó una vivienda compartimentada de los 90 en un hogar luminoso y contemporáneo, listo como residencia habitual desde 2026.',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaName}
+      description={t.schemaDescription}
+      serviceType={lang === 'en' ? 'Drywall installation' : 'Instalación de Pladur'}
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio={t.municipio}
+    zonas={zonas}
+    faqKey="esMercadal"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoBadge}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoTitle}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p>
+              {t.seoP2Start}<a href={t.seoP2Link.href}>{t.seoP2Link.label}</a>{t.seoP2Mid}<a href={t.seoP2Link2.href}>{t.seoP2Link2.label}</a>{t.seoP2End}
+            </p>
+            <p>{t.seoP3}</p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              {t.seoP4Start}<a href={t.seoP4Link.href}>{t.seoP4Link.label}</a>{t.seoP4End}
+            </p>
+            <p>{t.seoP5}</p>
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.experienceTitle}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.experienceText}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-white/60 text-xs">{t.googleRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.servicesInTown}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyecto1}</p>
+      <p>{t.proyecto2}</p>
+      <p>{t.proyecto3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

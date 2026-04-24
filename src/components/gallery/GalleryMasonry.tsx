@@ -226,7 +226,7 @@ export default function GalleryMasonry({ items }: { items: GalleryItem[] }) {
             Galería
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-3 sm:mb-4">
-            Nuestros proyectos en Mallorca
+            Nuestros proyectos en Menorca
           </h2>
           <p className="text-base sm:text-lg text-muted leading-relaxed max-w-2xl mx-auto">
             Cada proyecto refleja nuestro compromiso con la calidad y el detalle.

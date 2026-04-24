@@ -1,18 +1,18 @@
 ---
 export const prerender = true
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
-import WhatsAppButton from '@/components/layout/WhatsAppButton'
-import CookieBanner from '@/components/layout/CookieBanner'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
 import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
-import Hero from '@/components/sections/Hero'
-import CookieSettingsButton from '@/components/ui/CookieSettingsButton'
+import Hero from '@/components/sections/Hero.astro'
+import CookieSettingsButton from '@/components/ui/CookieSettingsButton.astro'
 import { siteConfig } from '@/data/site'
 
 const meta = {
-  title: 'Aviso Legal y Política de Cookies | Pladur Mallorca',
-  description: 'Aviso legal, condiciones de uso y política de cookies de Pladur Mallorca (PLAQUISTAS Y ACABADOS SL). Información conforme a la LSSI-CE y normativa de la AEPD.',
+  title: 'Aviso Legal y Política de Cookies | Pladur Menorca',
+  description: 'Aviso legal, condiciones de uso y política de cookies de Pladur Menorca (PLAQUISTAS Y ACABADOS SL). Información conforme a la LSSI-CE y normativa de la AEPD.',
   canonical: '/aviso-legal',
 }
 
@@ -24,7 +24,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
     <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Aviso Legal', href: '/aviso-legal' }]} />
   </Fragment>
 
-  <Header client:idle slot="header" />
+  <Header slot="header" />
 
   <!-- Hero -->
   <Hero
@@ -67,7 +67,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
               <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
                 <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
               </span>
-              <span class="text-muted"><strong class="text-foreground">Nombre comercial:</strong> PLADUR MALLORCA</span>
+              <span class="text-muted"><strong class="text-foreground">Nombre comercial:</strong> PLADUR MENORCA</span>
             </li>
             <li class="flex items-start gap-3">
               <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
@@ -103,13 +103,13 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
               <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
                 <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
               </span>
-              <span class="text-muted"><strong class="text-foreground">Sitio web:</strong> <a href="https://www.pladurmallorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmallorca.com</a></span>
+              <span class="text-muted"><strong class="text-foreground">Sitio web:</strong> <a href="https://www.pladurmenorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmenorca.com</a></span>
             </li>
             <li class="flex items-start gap-3">
               <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
                 <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
               </span>
-              <span class="text-muted"><strong class="text-foreground">Registro Mercantil:</strong> Inscrita en el Registro Mercantil de Palma de Mallorca</span>
+              <span class="text-muted"><strong class="text-foreground">Registro Mercantil:</strong> Inscrita en el Registro Mercantil de Maó</span>
             </li>
           </ul>
         </div>
@@ -126,11 +126,11 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
         </h2>
         <p class="text-muted leading-relaxed mb-4">
           El presente sitio web, accesible desde la dirección{' '}
-          <a href="https://www.pladurmallorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmallorca.com</a>,
+          <a href="https://www.pladurmenorca.com" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2" rel="noopener">www.pladurmenorca.com</a>,
           tiene como finalidad la presentación y difusión de los servicios profesionales de
           instalación de sistemas de construcción en seco (pladur) que ofrece{' '}
           <strong class="text-foreground">PLAQUISTAS Y ACABADOS SL</strong>, bajo la marca comercial{' '}
-          <strong class="text-foreground">PLADUR MALLORCA</strong>, en el ámbito territorial de la
+          <strong class="text-foreground">PLADUR MENORCA</strong>, en el ámbito territorial de la
           Comunidad Autónoma de las Islas Baleares.
         </p>
         <p class="text-muted leading-relaxed mb-4">
@@ -277,7 +277,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
           española. Para la resolución de cualquier controversia que pudiera derivarse del
           acceso o uso de este sitio web, las partes se someten expresamente a la jurisdicción
           de los Juzgados y Tribunales de{' '}
-          <strong class="text-foreground">Palma de Mallorca</strong>, con renuncia expresa a
+          <strong class="text-foreground">Maó</strong>, con renuncia expresa a
           cualquier otro fuero que pudiera corresponderles, salvo que la normativa aplicable
           imponga imperativamente un fuero distinto.
         </p>
@@ -335,7 +335,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
           2.2. ¿Por qué usamos cookies?
         </h2>
         <p class="text-muted leading-relaxed mb-4">
-          En <strong class="text-foreground">www.pladurmallorca.com</strong> utilizamos cookies
+          En <strong class="text-foreground">www.pladurmenorca.com</strong> utilizamos cookies
           con las siguientes finalidades:
         </p>
         <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-6 lg:p-8 shadow-card">
@@ -399,9 +399,9 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
                 </tr>
               </thead>
               <tbody class="divide-y divide-warm-border/50">
-                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">PHPSESSID</code> / <code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">__session</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Gestión de la sesión del servidor.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
-                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">locale</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Preferencia de idioma y región del usuario.</td><td class="px-4 py-3 text-sm text-muted">1 año</td></tr>
-                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">csrf_token</code></td><td class="px-4 py-3 text-sm text-muted">pladurmallorca.com</td><td class="px-4 py-3 text-sm text-muted">Protección contra ataques CSRF en formularios.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">PHPSESSID</code> / <code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">__session</code></td><td class="px-4 py-3 text-sm text-muted">pladurmenorca.com</td><td class="px-4 py-3 text-sm text-muted">Gestión de la sesión del servidor.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
+                <tr class="bg-white/40"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">locale</code></td><td class="px-4 py-3 text-sm text-muted">pladurmenorca.com</td><td class="px-4 py-3 text-sm text-muted">Preferencia de idioma y región del usuario.</td><td class="px-4 py-3 text-sm text-muted">1 año</td></tr>
+                <tr class="bg-white/70"><td class="px-4 py-3 text-sm text-muted"><code class="bg-warm-200 px-1.5 py-0.5 rounded text-xs font-mono">csrf_token</code></td><td class="px-4 py-3 text-sm text-muted">pladurmenorca.com</td><td class="px-4 py-3 text-sm text-muted">Protección contra ataques CSRF en formularios.</td><td class="px-4 py-3 text-sm text-muted">Sesión</td></tr>
               </tbody>
             </table>
           </div>
@@ -787,7 +787,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
 
   <Footer slot="footer" />
   <Fragment slot="after-footer">
-    <WhatsAppButton client:visible />
-    <CookieBanner client:idle />
+    <WhatsAppButton />
+    <CookieBanner />
   </Fragment>
 </BaseLayout>

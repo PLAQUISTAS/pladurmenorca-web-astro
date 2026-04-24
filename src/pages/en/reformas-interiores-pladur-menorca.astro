@@ -1,0 +1,658 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import { getReformasFaqs } from '@/data/faqs/reformas'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const pageFaqs = getReformasFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Interior Drywall Renovations in Menorca | From €45/m²',
+  description: 'Drywall interior renovations in Menorca since 2004. Layout changes, false ceilings and insulation without heavy works, from €45/m². Ready in 1-2 weeks.',
+  canonical: '/en/reformas-interiores-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/reformas-interiores-pladur-menorca',
+} : {
+  title: 'Reformas Interiores con Pladur en Menorca | Desde 45€/m²',
+  description: 'Transforma tu espacio con reformas de pladur en Menorca. Redistribución, falsos techos y aislamiento sin obra pesada. Desde 45€/m². Listo en 1-2 semanas.',
+  canonical: '/reformas-interiores-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/reformas-interiores-pladur-menorca',
+}
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — interior drywall (pladur) renovations in Menorca. Space redistribution, false ceilings, insulation and finishes. 6,000+ projects completed. Tel: +34 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Interior Renovations',
+  schemaName: 'Interior Drywall Renovations in Menorca',
+  schemaDesc: 'Interior renovation service using drywall (pladur) systems in Menorca: space redistribution, false ceilings, acoustic and thermal insulation without heavy works.',
+  schemaType: 'Interior Drywall Renovations',
+  offers: [
+    { name: 'Standard dividing partition', price: '45', description: 'Drywall partition for space redistribution with insulation included. Price per m².' },
+    { name: 'Full renovation with drywall', price: '45', description: 'Complete room renovation including partitions, false ceiling and wall linings. Price per m².' },
+    { name: 'Continuous false ceiling', price: '29', description: 'Smooth drywall false ceiling to hide services and improve aesthetics. Price per m².' },
+    { name: 'Wall linings', price: '29', description: 'Wall linings to level walls and improve thermal and acoustic insulation. Price per m².' },
+    { name: 'Drywall furniture and shelving', price: '40', description: 'Bespoke built-in shelving, niches and drywall furniture. Price per linear metre.' },
+  ],
+  heroEyebrow: 'Drywall renovations · Menorca',
+  heroH1: 'Interior Drywall Renovations in Menorca — Fast, Clean and Affordable',
+  heroLead: 'We renovate flats, villas, offices and holiday apartments in Menorca with drywall: layout changes, false ceilings and insulation from €45/m², ready in 1-2 weeks. Dry build, no debris, no need to vacate the home. Fixed quote in 24-48h after an on-site visit.',
+  heroCtaPrimary: 'Request a free quote',
+  heroCtaCall: siteConfig.phone,
+  porQueEyebrow: 'Why choose drywall',
+  porQueH2: 'Why is drywall ideal for interior renovations?',
+  porQueP1: 'Drywall is the fastest, cleanest and cheapest system for interior renovations in Menorca: a full renovation of an 80-100 m² flat takes 1-2 weeks from €10,000, compared with 4-8 weeks and €15,000 for traditional brick. Drywall — also called laminated plaster or dry-lining — wins on the three usual concerns (time, dust, cost) by a clear margin.',
+  porQueP2: 'Drywall uses a galvanised steel frame (M48/70/100 studs and Placo/Knauf tracks) onto which 12.5 mm plasterboard is screwed. Installation needs no water and no drying time, so a layout partition that takes 3 days to build and 2 to cure with brick is ready in a single shift with drywall and accepts paint 24 hours later.',
+  porQueP3: 'Menorca has thousands of 1960s-70s flats with outdated layouts and a strong holiday-let market that needs fast refurbishing between seasons. For both audiences drywall is the optimal tool: a full flat layout change with no debris, back on the market in 10-14 days. The Mediterranean climate (summers of 32-34 °C and high summer humidity) adds value to the integrated insulation Placo/Knauf systems offer.',
+  porQueP4: 'Drywall weighs 25 kg/m² vs 120 kg/m² for a double-hollow brick partition: an 80% cut in structural weight. In historic buildings in Maó, Ciutadella or Alaior, or in flats with 1940s-60s timber-and-concrete slabs, brick can require structural calculations and reinforcement. Drywall is compatible with any slab without added reinforcement.',
+  porQueP5: 'The inside of a drywall partition (70 mm cavity) houses electrical wiring, HVAC piping, air ducts, built-in speakers and home-automation cabling. No wall chasing: services are laid between the studs before closing with board. Installations stay protected and accessible through register hatches when needed.',
+  porQueP6Pre: 'For the full technical details of drywall installation, visit our ',
+  porQueP6Link: 'drywall installation in Menorca page',
+  porQueP6LinkHref: '/en/instalacion-pladur-menorca',
+  porQueP6Post: ', where we explain the process step by step and the board types available.',
+  ventajasTitle: 'Key advantages',
+  ventajasClave: [
+    'No heavy works or demolition',
+    'Minimal debris and dust',
+    '3-4× faster install than brick',
+    'Integrated services inside the wall',
+    'Built-in acoustic and thermal insulation',
+    'Compatible with historic buildings',
+    'Perfectly smooth surface for painting',
+    '1-year warranty on labour',
+  ],
+  aniosTitle: 'Renovations in Menorca since 2004',
+  aniosText: 'Since 2004 our SL matriz has completed over 6,000 drywall renovation projects across the Balearic Islands. We know the buildings, the local regulations and the specific challenges of Menorcan construction.',
+  aniosStars: '4.7/5 on Google',
+  tiposEyebrow: 'Complete solutions',
+  tiposH2: 'Types of interior drywall renovations',
+  tiposLead: 'The four drywall solutions most requested in Menorca: layout redistribution with partitions (from €45/m²), false ceilings (from €29/m²), acoustic insulation (from €6/m² in materials) and thermal wall linings (from €7/m²). Here is when to use each.',
+  tiposReformas: [
+    {
+      num: '01',
+      titulo: 'Space redistribution with drywall partitions',
+      parrafos: [
+        'Layout redistribution with drywall partitions from €45/m² is the most common renovation in Menorca, especially in Maó city-centre flats built before 1980 with outdated layouts: oversized lounges, bedrooms without ventilation, corridors that steal 4-6 m² of usable area, or studios that need to become two bedrooms.',
+        'We design and deliver any floorplan redistribution in 3-7 days. The galvanised steel frame is anchored to floor and ceiling without any masonry, and Placo/Knauf plasterboard is screwed onto it for a smooth finish ready to paint 24 hours later. The partition cavity (70 mm) houses electrical wiring, HVAC piping and ducts.',
+        'A standard partition is just 10 cm thick in total (12.5 mm board + M70 stud + 12.5 mm board), recovering 5-8% more usable floor area compared with 15 cm brick. With 45 mm Knauf/Isover mineral wool inside, it reaches 45-50 dB DnT,A of acoustic insulation without any increase in thickness.',
+        'Drywall partitions are also ideal for built-in wardrobes, dry-sided bathrooms, home-office zones and children’s bedrooms. They accept curves, angles and organic shapes with flexible Placo Glasroc F board — geometries that would double the cost in brick.',
+      ],
+      linkTexto: 'See all drywall partition types',
+      linkHref: '/en/tabiques-pladur-menorca',
+    },
+    {
+      num: '02',
+      titulo: 'Drywall false ceilings to modernise any space',
+      parrafos: [
+        'Drywall false ceilings in Menorca start from €29/m² and are one of the most impactful transformations a home can undergo. In Menorcan 20th-century flats with 3-4 m ceilings, a false ceiling drops the height to 2.4-2.7 m, creates warmer ambiences, integrates recessed LED lighting and conceals heating pipes, exposed wiring or deteriorated beams without any chasing or demolition.',
+        'The seamless smooth ceiling (€29-35/m²) is the most common in homes: a flat surface dropped 10-20 cm from the original, with integrated recessed LED downlights (€45-80/unit), HVAC diffusers and speakers. Coffered, stepped or decorative ceilings rise to €45-80/m² and deliver the volume effects highly prized in design renovations.',
+        'In shops, hotels and restaurants in Menorca, false ceilings segment zones, improve acoustics and accept paint, vinyl and any decorative finish. For venues required to meet CTE DB-SI (public-use premises, holiday flats, hotels), we offer <a href="/en/pladur-ignifugo-menorca" class="text-foreground font-semibold underline underline-offset-2">certified EI-60 and EI-120 fire-rated drywall</a> from €52/m².',
+        'A key Menorca detail: we coordinate grille and diffuser placement with the HVAC installer before closing the ceiling, avoiding the typical "bumps" or later patches. In holiday flats with ducted or cassette AC, this coordination saves €300-600 per unit in rework.',
+      ],
+      linkTexto: 'See all drywall false ceiling types',
+      linkHref: '/en/falsos-techos-pladur-menorca',
+    },
+    {
+      num: '03',
+      titulo: 'Acoustic insulation between neighbours with drywall systems',
+      parrafos: [
+        'Acoustic insulation with drywall in Menorca costs from €6/m² (material) and solves one of the biggest issues of flat living. Maó, Ciutadella and other tourist municipalities have dense urban fabrics; the acoustic standards of buildings built between 1960 and 1990 are 10-15 dB below what the CTE DB-HR now requires (DnT,A ≥ 50 dBA between dwellings).',
+        'Drywall soundproofing systems combine three techniques: double BA15 acoustic board on one or both partition faces, high-density mineral wool (60-80 kg/m³) in the cavity, and a decoupled frame with Placo/Knauf anti-vibration bands that block flanking transmission through the building structure.',
+        'A standard drywall partition with mineral wool reaches 45-50 dB DnT,A, meeting the CTE-HR minimum between bedrooms. Premium solutions with double BA15 board and decoupled frame exceed 55 dB, making the room effectively soundproofed. For recording studios, rehearsal rooms and home cinemas we offer box-in-box systems from €150/m² with over 65 dB certified reduction.',
+        'This solution is heavily in demand from holiday-flat owners seeking to improve their Airbnb/Booking scores (a 0.5-point increase in "noise" raises occupancy by 8-12%) and from homes next to hospitality venues affected by night-time noise.',
+      ],
+      linkTexto: 'See acoustic insulation solutions in Menorca',
+      linkHref: '/en/aislamiento-acustico-menorca',
+    },
+    {
+      num: '04',
+      titulo: 'Thermal upgrade with drywall wall linings',
+      parrafos: [
+        'A drywall wall lining from €29/m² improves the thermal performance of facades, party walls and walls in contact with the outside. It adds a second drywall face over the existing wall with a 40-80 mm cavity filled with insulation: Isover mineral wool (€7-12/m²), XPS extruded polystyrene (€10-15/m²) or sprayed polyurethane foam (€12-18/m²).',
+        'In the Mediterranean climate of Menorca (climate zone B3 per CTE-HE, summers of 30-34 °C with high summer humidity), a thermal wall lining cuts AC consumption by 20-35%. In an 80 m² home with a €1,800 annual electric bill, the estimated saving is €360-630/year. Typical payback sits between 5 and 10 years depending on prior consumption and existing envelope.',
+        'A wall lining also improves the energy rating: moving from an E rating to a C raises the property value by 5-15% in the Balearic market, according to studies by the Balearic APIs property agents association. A decisive factor in a market where 60% of foreign buyers require a C-or-above energy certificate.',
+      ],
+      linkTexto: 'See drywall thermal insulation solutions',
+      linkHref: '/en/aislamiento-termico-menorca',
+    },
+  ],
+  compEyebrow: 'Technical comparison',
+  compH2: 'Drywall vs traditional build in interior renovations',
+  compLead: 'An objective comparison of the two systems to help you make the right choice for your project.',
+  compPladur: 'Drywall',
+  compTrad: 'Traditional build',
+  comparativa: [
+    { criterio: 'Build time', pladur: '1-2 weeks for a full flat', obraTradicional: '4-8 weeks including curing and drying' },
+    { criterio: 'Debris generated', pladur: 'Minimal — no wall chasing or demolition', obraTradicional: 'High — debris bags, dust, noise' },
+    { criterio: 'Indicative price', pladur: 'From €45/m² (complete partition)', obraTradicional: 'From €55/m² (hollow brick + plaster)' },
+    { criterio: 'Final result', pladur: 'Perfectly smooth surface, ready to paint', obraTradicional: 'Needs additional plaster and more time' },
+    { criterio: 'Integrated services', pladur: 'Electrical, plumbing and HVAC inside', obraTradicional: 'Requires wall chasing and cutting' },
+    { criterio: 'Structural weight', pladur: 'Very light — no load added to the slab', obraTradicional: 'Adds significant load to the building' },
+    { criterio: 'Impact on occupied home', pladur: 'You can live in the home during the work', obraTradicional: 'Usually requires vacating the home' },
+  ],
+  normQuote: '"The Spanish Technical Building Code requires vertical separation elements between different use units to achieve an airborne sound insulation DnT,A of at least 50 dB in residential use, ensuring protection against noise between dwellings and between dwellings and common areas."',
+  normQuoteCite: '— CTE DB-HR, Basic Document on Protection against Noise, Table 2.1',
+  preciosEyebrow: 'Renovation prices',
+  preciosH2: 'How much does an interior drywall renovation cost in Menorca?',
+  preciosP1: 'An interior drywall renovation in Menorca costs between €10,000 and €20,000 for an 80-100 m² flat (full false ceiling + redistribution + basic insulation). The exact price depends on job type, square metres, complexity and chosen Placo/Knauf materials. These are the indicative 2026 prices by line item:',
+  preciosP2: 'Basic layout partition (BA13 board per side, no insulation): €45-52/m². Partition with mineral wool acoustic insulation: €52-58/m². Seamless BA13 false ceiling: €29-35/m². False ceiling with integrated LED lighting: €35-47/m² depending on the number of points. Thermal wall lining on facade: €35-48/m². All prices exclude VAT.',
+  preciosP3: 'Prices in Menorca run 10-15% above the mainland average due to sea freight of materials from the manufacturers (Placo-Saint-Gobain in Valdemoro, Knauf in Guixers) and Balearic wage pressure. Even so, drywall is 25-40% cheaper than brick once you count labour (3-4× slower), time (4-8 weeks vs 1-2) and debris management (skip vs manual removal).',
+  preciosP4: 'For a full flat renovation (false ceiling + complete redistribution + basic insulation), typical budgets for an 80-100 m² flat in Menorca range from €10,000 to €20,000 depending on finish level. A turn-key renovation for holiday-letting sits around €12,000-15,000, paid back in 1-2 seasons with 70% occupancy.',
+  preciosCta: 'See full pricing table',
+  preciosCtaHref: '/en/precios-pladur-menorca',
+  preciosCards: [
+    { servicio: 'Basic partition', desde: 45, unidad: '€/m²' },
+    { servicio: 'Acoustic partition', desde: 52, unidad: '€/m²' },
+    { servicio: 'Continuous false ceiling', desde: 29, unidad: '€/m²' },
+    { servicio: 'False ceiling with lighting', desde: 35, unidad: '€/m²' },
+    { servicio: 'Thermal wall lining', desde: 35, unidad: '€/m²' },
+    { servicio: 'Full flat renovation', desde: 10000, unidad: '€ approx.' },
+  ],
+  preciosDesde: 'From',
+  preciosNote: 'Indicative 2026 interior drywall renovation prices in Menorca. VAT not included. Exact price set after an on-site visit and fixed itemised quote in 24-48h.',
+  articulos: [
+    { slug: 'reforma-integral-piso-menorca-2026', titulo: 'Full flat renovation in Menorca', descripcion: 'Step-by-step guide to a full drywall renovation in Menorca. Timelines, costs and tips.' },
+    { slug: 'ventajas-reforma-pladur-menorca', titulo: 'Benefits of renovating with drywall', descripcion: 'Why drywall is ideal for interior renovations: speed, cleanliness and cost savings.' },
+    { slug: 'licencia-obra-pladur-menorca', titulo: 'Do you need a building permit for drywall?', descripcion: 'Everything about permits and licences for drywall installation in Menorca.' },
+  ],
+  faqTitle: 'Drywall renovation FAQs',
+  faqSubtitle: 'Answers to the most common questions about interior drywall renovations in Menorca.',
+  ctaFinalTitulo: 'Ready to renovate with drywall?',
+  ctaFinalSubtitulo: 'On-site technical visit across Menorca. Fixed itemised quote in 24-48h. 1-year warranty on labour.',
+  localeBtag: 'en-GB',
+} : {
+  srOnly: 'Pladur Menorca — reformas interiores con pladur en Menorca. Redistribución de espacios, falsos techos, aislamiento y acabados. +6.000 proyectos completados. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Reformas Interiores',
+  schemaName: 'Reformas Interiores con Pladur en Menorca',
+  schemaDesc: 'Servicio de reformas interiores con sistemas de pladur en Menorca: redistribución de espacios, falsos techos, aislamiento acústico y térmico sin obra pesada.',
+  schemaType: 'Reformas Interiores con Pladur',
+  offers: [
+    { name: 'Tabique divisorio estándar', price: '45', description: 'Tabique de pladur para redistribución de espacios con aislante incluido. Precio por m².' },
+    { name: 'Reforma integral con pladur', price: '45', description: 'Reforma completa de estancia incluyendo tabiques, falso techo y trasdosados. Precio por m².' },
+    { name: 'Falso techo continuo', price: '29', description: 'Falso techo de pladur liso para ocultar instalaciones y mejorar la estética. Precio por m².' },
+    { name: 'Trasdosado de paredes', price: '29', description: 'Trasdosado para regularizar paredes, mejorar aislamiento térmico y acústico. Precio por m².' },
+    { name: 'Muebles y estanterías de pladur', price: '40', description: 'Estanterías, hornacinas y muebles empotrados de pladur a medida. Precio por metro lineal.' },
+  ],
+  heroEyebrow: 'Reformas con pladur · Menorca',
+  heroH1: 'Reformas Interiores con Pladur en Menorca — Rápido, Limpio y Económico',
+  heroLead: 'Reformamos pisos, villas, oficinas y apartamentos turísticos en Menorca con pladur: redistribución, falsos techos y aislamiento desde 45€/m², listo en 1-2 semanas. Obra seca, sin escombros, sin desalojar la vivienda. Presupuesto cerrado en 24-48h tras la visita técnica.',
+  heroCtaPrimary: 'Pide presupuesto gratis',
+  heroCtaCall: siteConfig.phone,
+  porQueEyebrow: 'Por qué elegir pladur',
+  porQueH2: '¿Por qué el pladur es ideal para reformas interiores?',
+  porQueP1: 'El pladur es el sistema más rápido, limpio y económico para reformar interiores en Menorca: una reforma completa de piso de 80-100 m² se ejecuta en 1-2 semanas desde 10.000€, frente a los 4-8 semanas y 15.000€ de la obra tradicional de ladrillo. El pladur —también llamado yeso laminado o tabiquería en seco— resuelve los tres miedos habituales (tiempo, polvo y coste) con un margen claro.',
+  porQueP2: 'El pladur consiste en una estructura de acero galvanizado (montantes M48/70/100 y canales Placo/Knauf) sobre la que se atornillan placas de yeso laminado de 12,5 mm. La instalación no requiere agua ni tiempo de secado, por lo que un tabique de distribución que con ladrillo tarda 3 días en levantarse y 2 en curar, con pladur queda listo en una sola jornada y admite pintura 24 horas después.',
+  porQueP3: 'Menorca concentra miles de pisos heredados de los años 60-70 con distribuciones obsoletas y un potente mercado de alquiler vacacional que exige reformas rápidas entre temporadas. Para ambos perfiles el pladur es la herramienta óptima: permite redistribuir un piso completo sin escombros y devolverlo al mercado en 10-14 días. El clima mediterráneo (veranos de 32-34°C y elevada humedad estival) añade valor al aislamiento integrado que ofrecen los sistemas Placo/Knauf.',
+  porQueP4: 'El pladur pesa 25 kg/m² frente a los 120 kg/m² de un tabique de ladrillo hueco doble: una reducción del 80% del peso estructural. En edificios históricos del centro de Maó, Ciutadella o Alaior, o en pisos con forjados de viguetas de los años 40-60, añadir ladrillo puede requerir cálculo estructural y refuerzos. El pladur es compatible con cualquier forjado sin refuerzo adicional.',
+  porQueP5: 'El interior del tabique de pladur (70 mm de cámara) aloja cableado eléctrico, tuberías de climatización, conductos de aire, altavoces empotrados y domótica. No hay que picar paredes ni hacer rozas: se instala directamente entre los montantes antes de cerrar con placa. Las instalaciones quedan protegidas y accesibles mediante trampillas de registro cuando son necesarias.',
+  porQueP6Pre: 'Para conocer todos los detalles técnicos de la instalación de pladur, visita nuestra ',
+  porQueP6Link: 'página de instalación de pladur en Menorca',
+  porQueP6LinkHref: '/instalacion-pladur-menorca',
+  porQueP6Post: ', donde explicamos paso a paso el proceso y los tipos de placa disponibles.',
+  ventajasTitle: 'Ventajas clave',
+  ventajasClave: [
+    'Sin obra pesada ni demolición',
+    'Mínima generación de escombros y polvo',
+    'Instalación 3-4× más rápida que ladrillo',
+    'Instalaciones integradas en el interior',
+    'Aislamiento acústico y térmico incorporado',
+    'Compatible con edificios históricos',
+    'Superficie perfectamente lisa para pintar',
+    'Garantía de 1 año en mano de obra',
+  ],
+  aniosTitle: 'Reformando en Menorca desde 2004',
+  aniosText: 'Desde 2004 nuestra SL matriz ha completado más de 6.000 proyectos de reforma con pladur en Baleares. Conocemos los edificios, las normativas locales y los retos específicos de la construcción menorquina.',
+  aniosStars: '4.7/5 en Google',
+  tiposEyebrow: 'Soluciones completas',
+  tiposH2: 'Tipos de reformas interiores con pladur',
+  tiposLead: 'Las cuatro soluciones de pladur más demandadas en Menorca: redistribución con tabiques (desde 45€/m²), falsos techos (desde 29€/m²), aislamiento acústico (desde 6€/m² en material) y trasdosados térmicos (desde 7€/m²). Explicamos cuándo usar cada una.',
+  tiposReformas: [
+    {
+      num: '01',
+      titulo: 'Redistribución de espacios con tabiques de pladur',
+      parrafos: [
+        'La redistribución de espacios con tabiques de pladur desde 45€/m² es la reforma más habitual en Menorca, especialmente en pisos del centro de Maó construidos antes de 1980 con distribuciones obsoletas: salones sobredimensionados, dormitorios sin ventilación, pasillos que roban 4-6 m² útiles o estudios que deben convertirse en dos dormitorios.',
+        'Diseñamos y ejecutamos cualquier redistribución de planta en 3-7 días. La estructura de acero galvanizado se ancla a suelo y techo sin albañilería, y las placas Placo/Knauf se atornillan dejando un acabado liso listo para pintar 24 horas después. El interior del tabique (70 mm) aloja cableado eléctrico, tuberías de climatización y conductos.',
+        'Un tabique estándar mide solo 10 cm de espesor total (placa 12,5 mm + montante M70 + placa 12,5 mm), lo que recupera un 5-8% de superficie útil frente al ladrillo de 15 cm. Con lana mineral Knauf/Isover de 45 mm en el interior, alcanza 45-50 dB DnT,A de aislamiento acústico sin aumentar el espesor.',
+        'Los tabiques de pladur son ideales también para vestidores empotrados, baños en seco, zonas home-office y habitaciones infantiles. Admiten curvas, ángulos y formas orgánicas con placa flexible Placo Glasroc F, geometrías que en ladrillo duplicarían el coste.',
+      ],
+      linkTexto: 'Ver todos los tipos de tabiques de pladur',
+      linkHref: '/tabiques-pladur-menorca',
+    },
+    {
+      num: '02',
+      titulo: 'Falsos techos de pladur para modernizar cualquier espacio',
+      parrafos: [
+        'Los falsos techos de pladur en Menorca arrancan desde 29€/m² y son una de las transformaciones más impactantes en vivienda. En pisos menorquines del siglo XX con techos de 3-4 m, el falso techo baja la altura a 2,4-2,7 m, crea ambientes más cálidos, integra iluminación LED empotrada y oculta tuberías de calefacción, cableado visto o vigas deterioradas sin picar ni demoler.',
+        'El techo continuo liso (29-35€/m²) es el más habitual en vivienda: una superficie plana bajada 10-20 cm del original, con focos LED empotrados (45-80€/ud), difusores de climatización y altavoces integrados. El falso techo con cofres, escalones o artesonados decorativos sube a 45-80€/m² y permite efectos de volumen muy cotizados en reformas de diseño.',
+        'En locales comerciales, hoteles y restaurantes de Menorca, el falso techo segmenta ambientes, mejora la acústica y admite pintura, vinilo o acabados decorativos. Para establecimientos obligados a cumplir el CTE DB-SI (locales de pública concurrencia, apartamentos turísticos, hoteles), ofrecemos <a href="/pladur-ignifugo-menorca" class="text-foreground font-semibold underline underline-offset-2">pladur ignífugo certificado EI-60 y EI-120</a> desde 52€/m².',
+        'Un detalle clave en Menorca: coordinamos la posición de rejillas y difusores con el instalador de climatización antes de cerrar el techo, evitando las típicas "verrugas" o parches posteriores. En apartamentos turísticos con sistemas de aire acondicionado por conducto o casete, esta coordinación ahorra retrabajos de 300-600€ por unidad.',
+      ],
+      linkTexto: 'Ver todos los tipos de falsos techos de pladur',
+      linkHref: '/falsos-techos-pladur-menorca',
+    },
+    {
+      num: '03',
+      titulo: 'Aislamiento acústico entre vecinos con sistemas de pladur',
+      parrafos: [
+        'El aislamiento acústico con pladur en Menorca cuesta desde 6€/m² (material) y resuelve uno de los mayores problemas de convivencia en pisos. Maó, Ciutadella y otros municipios turísticos concentran tejidos urbanos densos; los estándares de aislamiento de edificios construidos entre 1960 y 1990 están 10-15 dB por debajo del mínimo que exige hoy el CTE DB-HR (DnT,A ≥ 50 dBA entre viviendas).',
+        'Los sistemas de pladur para insonorización combinan tres técnicas: doble placa BA15 acústica en una o ambas caras del tabique, lana mineral de alta densidad (60-80 kg/m³) en la cámara, y estructura desvinculada con bandas antivibratorias Placo/Knauf que bloquean la transmisión por flancos del edificio.',
+        'Un tabique estándar de pladur con lana mineral alcanza 45-50 dB DnT,A, cumpliendo el mínimo CTE-HR entre dormitorios. Soluciones premium con doble placa BA15 y estructura desvinculada superan los 55 dB, convirtiendo la habitación en un espacio casi insonorizado. Para estudios de grabación, salas de ensayo y cines en casa ofrecemos sistemas box-in-box desde 150€/m² con más de 65 dB de reducción certificada.',
+        'Esta solución es muy demandada por propietarios de apartamentos turísticos que buscan mejorar valoraciones en Airbnb/Booking (una subida de 0,5 puntos en la categoría "ruido" aumenta la ocupación un 8-12%) y por viviendas colindantes con locales de hostelería afectadas por ruido nocturno.',
+      ],
+      linkTexto: 'Ver soluciones de aislamiento acústico en Menorca',
+      linkHref: '/aislamiento-acustico-menorca',
+    },
+    {
+      num: '04',
+      titulo: 'Mejora térmica con trasdosados de pladur',
+      parrafos: [
+        'El trasdosado de pladur desde 29€/m² mejora el comportamiento térmico de fachadas, medianeras y paredes en contacto con el exterior. Consiste en adosar una segunda pared de pladur a la existente con una cámara de 40-80 mm rellena de aislante: lana mineral Isover (7-12€/m²), poliestireno extruido XPS (10-15€/m²) o espuma de poliuretano proyectado (12-18€/m²).',
+        'En el clima mediterráneo de Menorca (zona climática B3 según CTE-HE, veranos de 30-34°C y humedad estival elevada), el trasdosado térmico reduce el consumo de aire acondicionado entre un 20 y un 35%. En una vivienda de 80 m² con gasto eléctrico anual de 1.800€, el ahorro estimado es de 360-630€/año. La amortización típica se sitúa entre 5 y 10 años según el consumo previo y el tipo de cerramiento.',
+        'El trasdosado mejora también la calificación energética del inmueble: una subida de letra E a C incrementa el valor de la propiedad entre un 5 y un 15% en el mercado balear, según estudios del Colegio de APIs de Baleares. Factor decisivo en un mercado donde el 60% de los compradores extranjeros exigen certificado energético C o superior.',
+      ],
+      linkTexto: 'Ver soluciones de aislamiento térmico con pladur',
+      linkHref: '/aislamiento-termico-menorca',
+    },
+  ],
+  compEyebrow: 'Comparativa técnica',
+  compH2: 'Pladur vs obra tradicional en reformas interiores',
+  compLead: 'Una comparativa objetiva entre los dos sistemas para ayudarte a tomar la decisión correcta para tu proyecto.',
+  compPladur: 'Pladur',
+  compTrad: 'Obra tradicional',
+  comparativa: [
+    { criterio: 'Tiempo de ejecución', pladur: '1–2 semanas para un piso completo', obraTradicional: '4–8 semanas con curado y secado' },
+    { criterio: 'Generación de escombros', pladur: 'Mínima — sin picar paredes ni demoler', obraTradicional: 'Alta — sacos de escombros, polvo, ruido' },
+    { criterio: 'Precio orientativo', pladur: 'Desde 45€/m² (tabique completo)', obraTradicional: 'Desde 55€/m² (ladrillo hueco + enlucido)' },
+    { criterio: 'Resultado final', pladur: 'Superficie perfectamente lisa, lista para pintar', obraTradicional: 'Requiere enlucido adicional y más tiempo' },
+    { criterio: 'Instalaciones integradas', pladur: 'Electricidad, fontanería y climatización por el interior', obraTradicional: 'Requiere regatas y rozas en la pared' },
+    { criterio: 'Peso estructural', pladur: 'Muy ligero — sin sobrecarga para el forjado', obraTradicional: 'Añade carga significativa al edificio' },
+    { criterio: 'Impacto en la vivienda habitada', pladur: 'Se puede vivir durante la reforma', obraTradicional: 'Normalmente requiere desalojar la vivienda' },
+  ],
+  normQuote: '"El Código Técnico de la Edificación exige que los elementos de separación vertical entre unidades de uso diferentes alcancen un aislamiento acústico a ruido aéreo DnT,A de al menos 50 dB en uso residencial, garantizando la protección frente al ruido entre viviendas y entre viviendas y zonas comunes."',
+  normQuoteCite: '— CTE DB-HR, Documento Básico de Protección frente al Ruido, Tabla 2.1',
+  preciosEyebrow: 'Precios reforma',
+  preciosH2: '¿Cuánto cuesta una reforma interior con pladur en Menorca?',
+  preciosP1: 'Una reforma interior con pladur en Menorca cuesta entre 10.000€ y 20.000€ para un piso de 80-100 m² (falso techo completo + redistribución + aislamiento básico). El precio exacto depende del tipo de trabajo, los m², la complejidad y los materiales Placo/Knauf elegidos. Estos son los precios orientativos 2026 por partida:',
+  preciosP2: 'Tabique de distribución básico (placa BA13 por cara, sin aislamiento): 45-52€/m². Tabique con aislamiento acústico de lana mineral: 52-58€/m². Falso techo continuo BA13: 29-35€/m². Falso techo con iluminación LED integrada: 35-47€/m² según número de puntos. Trasdosado térmico de fachada: desde 7€/m² material, 35-48€/m² instalado. Todos los precios IVA no incluido.',
+  preciosP3: 'En Menorca los precios son un 10-15% superiores a la media peninsular por el transporte marítimo de materiales desde los fabricantes (Placo-Saint-Gobain en Valdemoro, Knauf en Guixers) y la presión salarial balear. Aun así, el pladur es un 25-40% más económico que el ladrillo al computar mano de obra (3-4× más lenta), tiempo (4-8 semanas vs 1-2) y gestión de escombros (contenedor vs retirada manual).',
+  preciosP4: 'Para una reforma integral de piso (falso techo + redistribución completa + aislamiento básico), el presupuesto típico en un piso de 80-100 m² en Menorca oscila entre 10.000 y 20.000€ según el nivel de acabado. Un apartamento turístico "llave en mano" para alquiler vacacional ronda 12.000-15.000€, amortizables en 1-2 temporadas con ocupaciones del 70%.',
+  preciosCta: 'Ver tabla de precios completa',
+  preciosCtaHref: '/precios-pladur-menorca',
+  preciosCards: [
+    { servicio: 'Tabique básico', desde: 45, unidad: '€/m²' },
+    { servicio: 'Tabique acústico', desde: 52, unidad: '€/m²' },
+    { servicio: 'Falso techo continuo', desde: 29, unidad: '€/m²' },
+    { servicio: 'Falso techo con iluminación', desde: 35, unidad: '€/m²' },
+    { servicio: 'Trasdosado térmico', desde: 7, unidad: '€/m²' },
+    { servicio: 'Reforma piso completo', desde: 10000, unidad: '€ aprox.' },
+  ],
+  preciosDesde: 'Desde',
+  preciosNote: 'Precios orientativos reforma interior con pladur 2026 en Menorca. IVA no incluido. Precio exacto tras la visita técnica y presupuesto cerrado en 24-48h.',
+  articulos: [
+    { slug: 'reforma-integral-piso-menorca-2026', titulo: 'Reforma integral de piso en Menorca', descripcion: 'Guía paso a paso para una reforma integral con pladur en Menorca. Plazos, costes y consejos.' },
+    { slug: 'ventajas-reforma-pladur-menorca', titulo: 'Ventajas de reformar con pladur', descripcion: 'Por qué el pladur es ideal para reformas interiores: rapidez, limpieza y ahorro económico.' },
+    { slug: 'licencia-obra-pladur-menorca', titulo: '¿Necesitas licencia de obra para pladur?', descripcion: 'Todo sobre los permisos y licencias necesarios para instalar pladur en Menorca.' },
+  ],
+  faqTitle: 'Preguntas frecuentes sobre reformas con pladur',
+  faqSubtitle: 'Respuestas a las dudas más habituales sobre reformas interiores con sistemas de pladur en Menorca.',
+  ctaFinalTitulo: '¿Listo para reformar con pladur?',
+  ctaFinalSubtitulo: 'Visita técnica en toda Menorca. Presupuesto cerrado desglosado en 24-48h. Garantía de 1 año en mano de obra.',
+  localeBtag: 'es-ES',
+}
+
+const pagePathBase = lang === 'en' ? '/en/reformas-interiores-pladur-menorca' : '/reformas-interiores-pladur-menorca'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbCurrent, href: pagePathBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService name={t.schemaName} description={t.schemaDesc} serviceType={t.schemaType} url={pagePathBase} />
+    <SchemaOffers offers={t.offers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <p class="text-xs font-bold uppercase tracking-widest text-foreground mb-4">
+            {t.heroEyebrow}
+          </p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.heroH1}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            {t.heroLead}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={p('/presupuesto-pladur')}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200"
+            >
+              {t.heroCtaPrimary}
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color,transform] duration-200 active:scale-95"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {t.heroCtaCall}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué el pladur es ideal -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-7">
+          <div class="animate-fade-up">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.porQueEyebrow}</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.porQueH2}</h2>
+          </div>
+          <div class="space-y-7 text-muted leading-relaxed">
+            <p class="text-lg">{t.porQueP1}</p>
+
+            {/* Pladur vs ladrillo — visual comparison */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-foreground text-white rounded-2xl p-5">
+                <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-white/50 mb-3">Pladur</p>
+                <ul class="space-y-2 text-sm text-white/90">
+                  <li class="flex items-start gap-2">
+                    <svg class="size-4 shrink-0 mt-0.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    <span>{lang === 'en' ? '1–2 weeks / 80–100 m²' : '1–2 semanas / 80–100 m²'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <svg class="size-4 shrink-0 mt-0.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    <span>{lang === 'en' ? 'From €10,000' : 'Desde 10.000 €'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <svg class="size-4 shrink-0 mt-0.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    <span>{lang === 'en' ? 'Paint-ready 24 h' : 'Lista para pintar 24 h'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <svg class="size-4 shrink-0 mt-0.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    <span>{lang === 'en' ? 'Minimal dust & debris' : 'Mínimo polvo y escombros'}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-5">
+                <p class="text-[11px] font-bold uppercase tracking-[0.16em] text-muted mb-3">{lang === 'en' ? 'Traditional brick' : 'Obra tradicional'}</p>
+                <ul class="space-y-2 text-sm text-muted">
+                  <li class="flex items-start gap-2">
+                    <span class="size-4 shrink-0 mt-1 rounded-full border border-warm-border"></span>
+                    <span>{lang === 'en' ? '4–8 weeks / 80–100 m²' : '4–8 semanas / 80–100 m²'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="size-4 shrink-0 mt-1 rounded-full border border-warm-border"></span>
+                    <span>{lang === 'en' ? 'From €15,000' : 'Desde 15.000 €'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="size-4 shrink-0 mt-1 rounded-full border border-warm-border"></span>
+                    <span>{lang === 'en' ? '2+ days mortar curing' : '2+ días de secado mortero'}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="size-4 shrink-0 mt-1 rounded-full border border-warm-border"></span>
+                    <span>{lang === 'en' ? 'Heavy dust & skip required' : 'Alto polvo y contenedor'}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <p>{t.porQueP2}</p>
+
+            {/* 3 feature rows — weight/services/menorca */}
+            <ul class="grid grid-cols-1 sm:grid-cols-3 gap-x-8 gap-y-4 pt-2 not-prose list-none pl-0">
+              {[
+                { title: lang === 'en' ? 'Lightweight' : 'Ligero', desc: lang === 'en' ? 'Drywall weighs ~25 kg/m² vs 120 kg/m² for brick — works on any slab.' : 'El pladur pesa ~25 kg/m² frente a 120 kg/m² del ladrillo — apto para cualquier forjado.' },
+                { title: lang === 'en' ? 'Services inside' : 'Instalaciones integradas', desc: lang === 'en' ? 'Electrical, HVAC and plumbing routed inside the cavity. No chasing.' : 'Eléctrica, climatización y fontanería dentro del tabique. Sin rozas.' },
+                { title: lang === 'en' ? 'Menorca-ready' : 'Hecho para Menorca', desc: lang === 'en' ? 'Old slabs in Maó, Ciutadella & holiday rentals benefit from no-water build.' : 'Forjados antiguos de Maó, Ciutadella y turísticos se benefician del montaje en seco.' },
+              ].map((f) => (
+                <li class="border-l-2 border-warm-border pl-4">
+                  <strong class="block font-bold text-foreground text-sm mb-1">{f.title}</strong>
+                  <span class="block text-sm text-muted leading-relaxed">{f.desc}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p>{t.porQueP3}</p>
+
+            <p class="text-sm pt-2">{t.porQueP6Pre}<a href={t.porQueP6LinkHref} class="text-foreground font-semibold underline underline-offset-2 transition-colors">{t.porQueP6Link}</a>{t.porQueP6Post}</p>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="sticky top-28 space-y-5">
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-7">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-4">{t.ventajasTitle}</p>
+              <ul class="space-y-2.5">
+                {t.ventajasClave.map((item) => (
+                  <li class="flex items-start gap-2.5 text-sm text-muted">
+                    <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center mt-0.5">
+                      <svg aria-hidden="true" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                    </div>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="bg-foreground rounded-3xl p-7">
+              <p class="font-bold text-white text-base mb-2">{t.aniosTitle}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.aniosText}</p>
+              {siteConfig.aggregateRating && (
+                <div class="flex items-center gap-2">
+                  <div class="flex">
+                    {Array.from({ length: 5 }).map(() => (
+                      <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    ))}
+                  </div>
+                  <span class="text-white/50 text-xs">{t.aniosStars}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de reformas -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14 max-w-3xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.tiposEyebrow}</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">{t.tiposH2}</h2>
+        <p class="text-lg text-muted leading-relaxed">{t.tiposLead}</p>
+      </div>
+      <div class="space-y-4 stagger-children">
+        {t.tiposReformas.map((reforma) => (
+          <div class="group bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-7 cursor-default">
+            <div class="flex items-start gap-5">
+              <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+                <span class="text-sm font-bold text-foreground group-hover:text-white transition-colors duration-300">{reforma.num}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-lg font-bold text-foreground mb-4">{reforma.titulo}</h3>
+                <div class="space-y-4 text-sm text-muted leading-relaxed">
+                  {reforma.parrafos.map((p) => (<p set:html={p} />))}
+                </div>
+                <div class="mt-5">
+                  <a href={reforma.linkHref} class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors">
+                    {reforma.linkTexto}
+                    <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tabla comparativa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.compEyebrow}</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">{t.compH2}</h2>
+        <p class="text-lg text-muted leading-relaxed">{t.compLead}</p>
+      </div>
+      <div class="space-y-3">
+        {t.comparativa.map((fila) => (
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-5 cursor-default">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-3">{fila.criterio}</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="flex items-start gap-2.5 bg-surface rounded-xl p-3 border border-nav-border">
+                <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center mt-0.5">
+                  <svg aria-hidden="true" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </div>
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-foreground mb-0.5">{t.compPladur}</p>
+                  <p class="text-sm text-foreground font-medium">{fila.pladur}</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-2.5 p-3">
+                <div>
+                  <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-0.5">{t.compTrad}</p>
+                  <p class="text-sm text-muted">{fila.obraTradicional}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cita normativa -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <blockquote class="border-l-4 border-foreground-dark/20 pl-6 my-8 italic text-muted">
+        <p>{t.normQuote}</p>
+        <cite class="block mt-2 not-italic text-sm font-medium text-foreground-dark">{t.normQuoteCite}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Precios orientativos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-7">
+          <div class="animate-fade-up">
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.preciosEyebrow}</span>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.preciosH2}</h2>
+          </div>
+          <div class="space-y-4 text-muted leading-relaxed">
+            <p>{t.preciosP1}</p>
+            <p>{t.preciosP2}</p>
+            <p>{t.preciosP3}</p>
+            <p>{t.preciosP4}</p>
+          </div>
+          <div class="mt-8">
+            <a href={t.preciosCtaHref} class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200">
+              {t.preciosCta}
+              <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-5">
+          <div class="sticky top-28 space-y-3">
+            {t.preciosCards.map((item) => (
+              <div class="flex items-center justify-between px-5 py-3.5 bg-white/70 border border-warm-border/50 rounded-2xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+                <span class="text-sm font-medium text-foreground">{item.servicio}</span>
+                <span class="text-sm font-bold text-foreground tabular-nums">
+                  {t.preciosDesde} {item.desde.toLocaleString(t.localeBtag)}{item.unidad}
+                </span>
+              </div>
+            ))}
+            <p class="text-xs text-muted mt-2 px-1">{t.preciosNote}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales de reformas interiores -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — interior renovations' : 'Nuestras cifras — reformas interiores'}
+    title={lang === 'en' ? '1 in 5 of our projects is a full drywall renovation' : '1 de cada 5 obras es una reforma integral con pladur'}
+    intro={lang === 'en'
+      ? 'Full interior renovations — partitions, ceilings and insulation combined — are a core line. Real volumes delivered in 2025 by the Mallorca parent company.'
+      : 'La reforma integral con pladur —tabiques, techos y aislamiento combinados— es una de nuestras líneas principales. Volúmenes reales ejecutados en 2025 por la SL matriz.'}
+    metrics={lang === 'en' ? [
+      { value: '~102', label: 'full renovations in 2025', context: '20% of the 508 projects delivered' },
+      { value: '1-2', label: 'weeks for an 80-100 m² flat', context: 'Dry build — owner stays at home' },
+      { value: '80%', label: 'less waste vs brick', context: 'RD 105/2008 waste targets met' },
+      { value: '22', label: 'years of full renovations', context: 'Coordination with architects and trades' },
+    ] : [
+      { value: '~102', label: 'reformas integrales en 2025', context: '20% de los 508 proyectos ejecutados' },
+      { value: '1-2', label: 'semanas para piso de 80-100 m²', context: 'Montaje en seco — el propietario sigue en casa' },
+      { value: '80%', label: 'menos residuos que el ladrillo', context: 'Cumplimos objetivos del RD 105/2008' },
+      { value: '22', label: 'años en reformas integrales', context: 'Coordinación con arquitectos y otros gremios' },
+    ]}
+  />
+
+  <ZonasServicio lang={lang} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitle}
+    subtitulo={t.faqSubtitle}
+  />
+
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaFinalTitulo}
+    subtitulo={t.ctaFinalSubtitulo}
+  />
+
+  <ServiciosRelacionados currentPath={pagePathBase} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

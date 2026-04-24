@@ -1,0 +1,243 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getEsCastellFaqs } from '@/data/faqs/es-castell'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getEsCastellFaqs(lang)
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Es Castell since 2004. False ceilings, partitions, acoustic and thermal insulation. Bilingual ES/EN service. Free quote. Phone: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbPage: 'Drywall in Es Castell',
+  schemaServiceName: 'Drywall installation in Es Castell',
+  schemaServiceDesc: 'Drywall installation in Es Castell, Menorca: false ceilings from €29/m², partitions from €45/m², Placo and Knauf systems in Cala Sant Esteve, Sol del Este and Cala Corb, next to the Port of Maó.',
+  heroTitle: 'Drywall in Es Castell — Premium Renovations by the Port of Maó',
+  heroBadge: 'Es Castell · By the Port of Maó',
+  heroDescription: 'We install drywall in the 7,800-resident municipality of Es Castell, next to the Port of Maó: Cala Sant Esteve, Sol del Este and Cala Corb. Placo and Knauf systems, false ceilings from €29/m², partitions from €45/m². Bilingual ES/EN service. Free quote within 24 hours.',
+  faqTitulo: 'Frequently asked questions about drywall in Es Castell',
+  faqSubtitulo: 'Answers to the most common questions from our clients in Es Castell and the Port of Maó area.',
+  proyectoTitulo: 'Premium villa renovation in Cala Sant Esteve',
+  ctaTitulo: 'Is your project in Es Castell or by the Port of Maó?',
+  ctaSubtitulo: 'Get in touch and receive your free quote in less than 24 hours, no obligation. Bilingual ES/EN service.',
+  seoEyebrow: 'British-colonial specialists',
+  seoH2: 'Drywall in Es Castell: premium finishes for a British-colonial Menorca',
+  seoP1: 'Es Castell, a 7,800-resident municipality next to the Port of Maó, is home to the only British-colonial architecture in the Balearic Islands. Founded as Georgetown by the British in 1771 and laid out in a military grid, the village keeps its whitewashed colonial barracks, the Cales Fonts harbour of fishing taverns turned restaurants, and residential estates like Cala Sant Esteve and Sol del Este where British and German owners predominate. That heritage drives drywall work that has to respect listed façades and original structures.',
+  seoP2: 'The Cales Fonts harbour and the villa belt facing the entrance to the Port of Maó command some of the highest property values in Menorca. Villas and colonial houses here demand finishes to match: drywall with <a href="/en/falsos-techos-pladur-menorca">Knauf Diamant reinforced board</a> delivers perfectly flat surfaces for Venetian-plaster paint, lets us integrate designer lighting in tiered false ceilings, and achieves <a href="/en/aislamiento-acustico-menorca">acoustic insulation</a> of 52–58 dB between rooms — compliant with CTE DB-HR. On these projects, material quality and installation precision matter as much as design.',
+  seoP3: 'We run every stage in Spanish or English. Sant Lluís and Es Castell have the largest expat community in Menorca, and owners living in Surrey, Munich or Brussels manage their renovation with weekly WhatsApp photo updates and video-call handovers. Our technicians are trained by Placo and Knauf in high-precision execution: invisible taped joints with Q3/Q4 finish, perfect corner beads and surfaces that need only one coat of filler before painting.',
+  seoP4: 'Sol del Este has a different profile: 1970s-80s detached villas and single-family homes that need updates to improve energy efficiency. Menorca is in CTE-HE climate zone B3 and many of these houses face the morning sun, driving up air-conditioning consumption. A drywall lining with high-performance <a href="/en/aislamiento-termico-menorca">thermal insulation</a> (60 mm rock wool, Lafarge Isover) can cut interior temperature by up to 8 °C without air conditioning, with energy savings of 25–35 % on the electricity bill and improved CTE DB-HE compliance.',
+  seoP5: 'The village centre of Es Castell, with its British grid plan around Plaça Esplanada, keeps a fabric of whitewashed colonial houses, many inherited and now being renovated. Drywall modernises these homes without touching the load-bearing structure: false ceilings hide old pipework and integrate LED lighting, partitions redistribute spaces for a modern family, and linings seal the salt humidity that seeps through centuries-old walls less than 300 m from the harbour.',
+  seoP6: 'We cover the whole municipality of Es Castell — village, Cales Fonts, Cala Sant Esteve, Sol del Este and Cala Corb — with a fixed, transparent quote. From exclusive villas overlooking the entrance to the Port of Maó to the whitewashed colonial houses of the grid, we match the level of finish each project requires — always with bilingual ES/EN communication.',
+  seoTrust: 'The expat community trusts us',
+  seoTrustText: 'Drywall installers in Es Castell since 2004. Experience in high-end villas in Cala Sant Esteve, Sol del Este and Cala Corb, and in colonial houses across the village — all with bilingual ES/EN service.',
+  seoServicesLabel: 'Services in Es Castell',
+  seoRating: '4.7/5 on Google',
+  proyectoP1: 'A 220 m² villa in Cala Sant Esteve overlooking the entrance to the Port of Maó needed an integral interior renovation coordinated by a Maó-based interior-design studio. Built in 2005 and owned by a British couple based in London, its finishes had dated and the new owners wanted to transform the main-floor layout completely. Standards were at the highest level: perfectly flat surfaces for a Venetian-plaster finish, designer false ceilings with complex geometries, full soundproofing between the living area and the bedrooms, and all communications in English.',
+  proyectoP2: 'The drywall scope covered the main floor and the bedroom floor. In the living room (55 m²) we built a three-tier stepped false ceiling with perimeter cove for indirect LED lighting and niches for ambient-audio speakers. In the four bedrooms, continuous double-board ceilings (120 m² total, Placo BA13) were installed with 60 mm Isover mineral-wool acoustic insulation between board and slab. The partitions between day zone and bedrooms were reinforced with a Knauf double independent frame, double boards and high-density rock wool, achieving a 56 dB acoustic reduction (well above CTE DB-HR). We also built two walk-in wardrobes with drywall framing (16 lm of partitions) and a kitchen office, all with Placo H hydrofuge board in the bathrooms against salt humidity.',
+  proyectoP3: 'The work was completed in 18 working days with a dedicated three-technician team. The drywall package cost €19,800. Coordination with the interior designer was constant; weekly WhatsApp photo updates and three video calls with the owners verified levels, flatness and technical-element positions before each phase. The result: a perfect base for the painter to apply Venetian plaster without corrections, and acoustic performance allowing music in the living room without any sound reaching the bedrooms.',
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Es Castell desde 2004. Falsos techos, tabiques, aislamiento acústico y térmico. Servicio bilingüe ES/EN. Presupuesto gratis. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbPage: 'Pladur en Es Castell',
+  schemaServiceName: 'Instalación de Pladur en Es Castell',
+  schemaServiceDesc: 'Instalación de pladur en Es Castell, Menorca: falsos techos desde 29€/m², tabiques desde 45€/m², sistemas Placo y Knauf en Cala Sant Esteve, Sol del Este y Cala Corb, junto al Puerto de Maó.',
+  heroTitle: 'Pladur en Es Castell — Reformas Premium junto al Puerto de Maó',
+  heroBadge: 'Es Castell · Junto al Puerto de Maó',
+  heroDescription: 'Instalamos pladur en Es Castell —7.800 habitantes, junto al Puerto de Maó—: Cala Sant Esteve, Sol del Este y Cala Corb. Sistemas Placo y Knauf, falsos techos desde 29€/m², tabiques desde 45€/m². Servicio bilingüe ES/EN. Presupuesto gratuito en 24 horas.',
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Es Castell',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de nuestros clientes en Es Castell y el entorno del Puerto de Maó.',
+  proyectoTitulo: 'Reforma premium de villa en Cala Sant Esteve',
+  ctaTitulo: '¿Tu proyecto está en Es Castell o junto al Puerto de Maó?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Servicio bilingüe ES/EN. Sin desplazamiento en toda la zona.',
+  seoEyebrow: 'Especialistas en arquitectura colonial británica',
+  seoH2: 'Pladur en Es Castell: acabados premium para la Menorca colonial británica',
+  seoP1: 'Es Castell, municipio de 7.800 habitantes junto al Puerto de Maó, alberga la única arquitectura colonial británica de Baleares. Fundado como Georgetown por los británicos en 1771 y trazado en cuadrícula militar, el pueblo conserva sus cuarteles coloniales blancos, el puerto de Cales Fonts con sus tabernas de pescadores convertidas en restaurantes, y urbanizaciones residenciales como Cala Sant Esteve y Sol del Este donde predominan propietarios británicos y alemanes. Este patrimonio exige un pladur que respete fachadas catalogadas y estructuras originales.',
+  seoP2: 'El puerto de Cales Fonts y la franja de villas frente a la bocana del Puerto de Maó concentran algunas de las propiedades de mayor valor de Menorca. Las villas y casas coloniales de esta zona exigen acabados a la altura: el pladur con <a href="/falsos-techos-pladur-menorca">placa Knauf Diamant reforzada</a> permite superficies perfectamente lisas para pinturas tipo estuco veneciano, integrar iluminación de diseño en falsos techos escalonados y conseguir un <a href="/aislamiento-acustico-menorca">aislamiento acústico</a> de 52-58 dB entre estancias, conforme al CTE DB-HR. Aquí, la calidad del material y la precisión de la instalación son tan importantes como el diseño.',
+  seoP3: 'Gestionamos cada fase en español o inglés. Sant Lluís y Es Castell concentran la mayor comunidad expat de Menorca, y propietarios residentes en Surrey, Múnich o Bruselas gestionan su reforma con actualizaciones fotográficas semanales por WhatsApp y videollamadas de entrega. Nuestros técnicos están formados por Placo y Knauf en ejecución de alta precisión: juntas invisibles con acabado Q3/Q4, cantoneras perfectas y superficies que no necesitan más de una mano de masilla antes de pintar.',
+  seoP4: 'Sol del Este presenta un perfil diferente: chalets y viviendas unifamiliares de los años 70-80 que necesitan actualizarse para mejorar la eficiencia energética. Menorca está en zona climática B3 según CTE-HE y muchas de estas casas están expuestas al sol de mañana, disparando el consumo de aire acondicionado. Un trasdosado de pladur con <a href="/aislamiento-termico-menorca">aislamiento térmico</a> de alta prestación (lana de roca de 60 mm, Lafarge Isover) reduce la temperatura interior hasta 8 °C sin aire acondicionado, con un ahorro del 25-35 % en la factura eléctrica y mejora del cumplimiento CTE DB-HE.',
+  seoP5: 'El núcleo urbano de Es Castell, con su trazado británico en cuadrícula en torno a la Plaça Esplanada, conserva un tejido de casas coloniales blancas, muchas heredadas y ahora en reforma. El pladur moderniza estas viviendas sin tocar la estructura portante: falsos techos que ocultan instalaciones antiguas e integran iluminación LED, tabiques que redistribuyen espacios para una familia actual, y trasdosados que sellan la humedad salina que filtran los muros centenarios a menos de 300 m del puerto.',
+  seoP6: 'Cubrimos todo el municipio de Es Castell —pueblo, Cales Fonts, Cala Sant Esteve, Sol del Este y Cala Corb— sin coste de desplazamiento para obras superiores a 500€. Desde villas exclusivas con vistas a la bocana del Puerto de Maó hasta casas coloniales blancas de la cuadrícula, adaptamos el acabado al nivel que cada proyecto requiere, siempre con comunicación bilingüe ES/EN.',
+  seoTrust: 'La comunidad expat confía en nosotros',
+  seoTrustText: 'Instaladores de pladur en Es Castell desde 2004. Experiencia en villas de alta gama en Cala Sant Esteve, Sol del Este y Cala Corb, y en casas coloniales de todo el pueblo, siempre con servicio bilingüe ES/EN.',
+  seoServicesLabel: 'Servicios en Es Castell',
+  seoRating: '4.7/5 en Google',
+  proyectoP1: 'Una villa de 220 m² en Cala Sant Esteve con vistas a la bocana del Puerto de Maó necesitaba una reforma interior integral coordinada por un estudio de interiorismo de Maó. Construida en 2005 y propiedad de un matrimonio británico residente en Londres, sus acabados se habían desfasado y los propietarios querían transformar la planta principal por completo. Nivel de exigencia máximo: superficies perfectamente planas para estuco veneciano, falsos techos de diseño con geometrías complejas, insonorización total entre zona de día y dormitorios, y comunicación íntegramente en inglés.',
+  proyectoP2: 'El alcance de pladur cubrió planta principal y planta de dormitorios. En el salón (55 m²) se ejecutó un falso techo escalonado a tres niveles con cofre perimetral para LED indirecto y nichos para altavoces de sonido ambiente. En los cuatro dormitorios se instalaron techos continuos con doble placa (120 m² totales, Placo BA13) y aislamiento acústico Isover de lana mineral de 60 mm entre placa y forjado. Los tabiques entre zona de día y dormitorios se reforzaron con sistema Knauf de doble estructura independiente, doble placa y lana de roca de alta densidad, alcanzando reducción acústica de 56 dB (muy por encima del CTE DB-HR). Se crearon además dos vestidores con estructura de pladur (16 ml de tabiques) y un office junto a la cocina, todo con Placa H hidrófuga en baños contra humedad salina.',
+  proyectoP3: 'El trabajo se completó en 18 días hábiles con un equipo de tres técnicos dedicados en exclusiva. El coste de la partida de pladur fue de 19.800€. La coordinación con el interiorista fue constante; actualizaciones fotográficas semanales por WhatsApp y tres videollamadas con los propietarios verificaron niveles, planeidad y posiciones exactas de elementos técnicos antes de cada fase. Resultado: base perfecta para que el pintor aplicara estuco veneciano sin correcciones y aislamiento acústico que permite escuchar música en el salón sin que llegue sonido alguno a los dormitorios.',
+}
+
+const zonas = lang === 'en' ? [
+  { nombre: 'Es Castell village', descripcion: 'Historic centre (7,800 residents) in a British military grid plan around Plaça Esplanada. Whitewashed colonial houses and village flats. Renovations to modernise homes: false ceilings from €29/m², thermal linings, redistribution and acoustic upgrades compliant with CTE DB-HR.' },
+  { nombre: 'Cales Fonts', descripcion: 'The former fishing harbour, now a restaurant and hospitality hub. Restaurants in former fishermen\'s cellars, boutique guesthouses and seafront flats. Drywall reaching CTE DB-HR 55 dB between premises and dwellings above, plus Placo H hydrofuge linings against harbour salt humidity.' },
+  { nombre: 'Cala Sant Esteve', descripcion: 'Residential inlet at the mouth of the Port of Maó. Luxury villas and sea-view apartments with many British and German owners. Knauf Diamant reinforced board, Placo systems, Isover high-performance insulation and coordination with architects and interior designers for Q3/Q4 finishes.' },
+  { nombre: 'Sol del Este', descripcion: 'Coastal development with detached villas. 1970s-80s properties needing updates to improve energy efficiency. 60 mm rock-wool thermal linings (saving 25–35 % on electricity) and interior finish updates. Bilingual ES/EN service for expat owners.' },
+  { nombre: 'Cala Corb', descripcion: 'Small cove within Es Castell with traditional houses and modern apartments. Rehabilitation projects combining drywall with original elements: Placo linings over stone walls, new ceilings, hydrofuge bathrooms and functional redistribution.' },
+] : [
+  { nombre: 'Es Castell pueblo', descripcion: 'Centro histórico (7.800 habitantes) en trazado militar británico en torno a la Plaça Esplanada. Casas coloniales blancas y pisos del núcleo urbano. Reformas para modernizar viviendas: falsos techos desde 29€/m², trasdosados térmicos, redistribución y mejoras acústicas conforme al CTE DB-HR.' },
+  { nombre: 'Cales Fonts', descripcion: 'El antiguo puerto de pescadores, hoy polo gastronómico y hostelero. Restaurantes en antiguas bodegas, pequeños hoteles boutique y pisos frente al mar. Pladur que alcanza CTE DB-HR de 55 dB entre local y vivienda superior, más trasdosados Placa H contra humedad salina del puerto.' },
+  { nombre: 'Cala Sant Esteve', descripcion: 'Cala residencial en la bocana del Puerto de Maó. Villas de lujo y apartamentos con vistas al mar, con muchos propietarios británicos y alemanes. Placa Knauf Diamant reforzada, sistemas Placo, aislamiento Isover de altas prestaciones y coordinación con arquitectos e interioristas para acabados Q3/Q4.' },
+  { nombre: 'Sol del Este', descripcion: 'Urbanización costera con chalets. Propiedades de los 70-80 que necesitan actualizarse para mejorar la eficiencia energética. Trasdosados térmicos con lana de roca de 60 mm (ahorro 25-35 % en electricidad) y modernización de acabados. Servicio bilingüe ES/EN para propietarios expats.' },
+  { nombre: 'Cala Corb', descripcion: 'Pequeña cala dentro de Es Castell con casas tradicionales y apartamentos modernos. Proyectos de rehabilitación que combinan pladur con elementos originales: trasdosados Placo sobre muros de piedra, techos nuevos, baños hidrófugos y redistribución funcional.' },
+]
+
+const breadcrumbs = [
+  { label: t.breadcrumbHome, href: lang === 'en' ? '/en' : '/' },
+  { label: t.breadcrumbPage, href: lang === 'en' ? '/en/pladur-es-castell' : '/pladur-es-castell' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Floor area', valor: '220 m²' },
+  { label: 'Location', valor: 'Cala Sant Esteve, Es Castell' },
+  { label: 'Works', valor: 'Designer ceilings + Insulation + Partitions' },
+  { label: 'Duration', valor: '18 working days' },
+  { label: 'Level', valor: 'High-end — bilingual ES/EN' },
+] : [
+  { label: 'Superficie', valor: '220 m²' },
+  { label: 'Ubicación', valor: 'Cala Sant Esteve, Es Castell' },
+  { label: 'Trabajos', valor: 'Techos de diseño + Aislamiento + Tabiques' },
+  { label: 'Duración', valor: '18 días hábiles' },
+  { label: 'Nivel', valor: 'Alta gama — bilingüe ES/EN' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'False ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Drywall partitions', href: '/en/tabiques-pladur-menorca' },
+  { label: 'Acoustic insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const meta = lang === 'en' ? {
+  title: 'Drywall in Es Castell | Premium Villas by the Port of Maó',
+  description: 'Drywall installers in Es Castell since 2004. Villas in Cala Sant Esteve, Sol del Este, Cala Corb. Bilingual ES/EN. False ceilings €29/m². Free quote in 24h.',
+  canonical: '/en/pladur-es-castell',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-es-castell',
+} : {
+  title: 'Pladur en Es Castell | Villas Premium junto al Puerto de Maó',
+  description: 'Instaladores de pladur en Es Castell desde 2004. Villas en Cala Sant Esteve, Sol del Este, Cala Corb. Servicio bilingüe ES/EN. Falsos techos 29€/m². Presupuesto en 24h.',
+  canonical: '/pladur-es-castell',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-es-castell',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType={lang === 'en' ? 'Drywall installation' : 'Instalación de Pladur'}
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio="Es Castell"
+    zonas={zonas}
+    faqKey="esCastell"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoEyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoH2}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p set:html={t.seoP2} />
+            <p>{t.seoP3}</p>
+          </div>
+          <div class="space-y-5">
+            <p set:html={t.seoP4} />
+            <p>{t.seoP5}</p>
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.seoTrust}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.seoTrustText}</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">{t.seoRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.seoServicesLabel}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyectoP1}</p>
+      <p>{t.proyectoP2}</p>
+      <p>{t.proyectoP3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

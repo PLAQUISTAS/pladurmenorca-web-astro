@@ -1,0 +1,109 @@
+---
+/**
+ * NuestrosDatos.astro — Bloque de cifras propias verificables (non-commodity).
+ *
+ * Señala datos que solo tiene esta empresa (benchmarks de la SL matriz),
+ * no parafraseando de catálogo. Clave para E-E-A-T / Helpful Content 2026.
+ *
+ * Estilo visual alineado con las stat-strips de tabiques/aislamiento-termico
+ * (grid-cols-2 sm:grid-cols-4, bg-white/80, separadores por border).
+ */
+
+interface Metric {
+  value: string
+  label: string
+  context?: string
+}
+
+interface Props {
+  lang?: 'es' | 'en'
+  metrics?: Metric[]
+  variant?: 'full' | 'compact'
+  eyebrow?: string
+  title?: string
+  intro?: string
+}
+
+const {
+  lang = 'es',
+  metrics: metricsProp,
+  variant = 'full',
+  eyebrow: eyebrowProp,
+  title: titleProp,
+  intro: introProp,
+} = Astro.props
+
+const defaultMetricsEs: Metric[] = [
+  { value: '508', label: 'proyectos en 2025', context: 'De pisos a hoteles de 120 habitaciones' },
+  { value: '+6.000', label: 'obras desde 2004', context: 'Acumulado de la SL matriz' },
+  { value: '22', label: 'años especialistas en pladur', context: 'Exclusivamente — ni obra general ni albañilería' },
+  { value: '<24h', label: 'para entregar presupuesto', context: 'Tras visita técnica, por escrito y desglosado' },
+]
+
+const defaultMetricsEn: Metric[] = [
+  { value: '508', label: 'projects in 2025', context: 'From flats to 120-room hotels' },
+  { value: '6,000+', label: 'works since 2004', context: 'Cumulative from parent company' },
+  { value: '22', label: 'years of drywall specialists', context: 'Exclusively — no general contracting' },
+  { value: '<24h', label: 'to deliver a quote', context: 'After site visit, itemised in writing' },
+]
+
+const metrics = metricsProp ?? (lang === 'en' ? defaultMetricsEn : defaultMetricsEs)
+
+const copy = lang === 'en' ? {
+  eyebrow: 'Our numbers',
+  title: 'Real figures, not marketing claims',
+  intro: 'These are the figures we actually work with — cumulative from the Mallorca parent company (Plaquistas y Acabados SL, 2004-2026) that backs every Menorca project.',
+  source: 'Source: internal figures of Plaquistas y Acabados SL (2004-2026).',
+} : {
+  eyebrow: 'Nuestras cifras',
+  title: 'Datos reales, no eslóganes',
+  intro: 'Estas son las cifras con las que trabajamos realmente — acumuladas por la SL matriz (Plaquistas y Acabados SL, 2004-2026) que respalda cada proyecto en Menorca.',
+  source: 'Fuente: cifras internas de Plaquistas y Acabados SL (2004-2026).',
+}
+
+const eyebrow = eyebrowProp ?? copy.eyebrow
+const title = titleProp ?? copy.title
+const intro = introProp ?? copy.intro
+---
+
+<section class={variant === 'full' ? 'py-20 lg:py-28' : 'py-10'}>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {variant === 'full' && (
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {eyebrow}
+        </span>
+        <h2 aria-label={title} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {intro}
+        </p>
+      </div>
+    )}
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-warm-border/50 rounded-3xl overflow-hidden border border-warm-border/50 animate-fade-up">
+      {metrics.map((m) => (
+        <div class="bg-white/80 px-4 py-6 sm:px-5 sm:py-7 text-center">
+          <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-muted/80 mb-2">
+            {m.label}
+          </p>
+          <p class="text-2xl sm:text-3xl font-bold text-foreground leading-tight tabular-nums break-words mb-2">
+            {m.value}
+          </p>
+          {m.context && (
+            <p class="text-[11px] text-muted leading-snug mt-2">
+              {m.context}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+
+    {variant === 'full' && (
+      <p class="text-xs text-muted/70 mt-4 italic">
+        {copy.source}
+      </p>
+    )}
+  </div>
+</section>

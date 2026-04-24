@@ -2,6 +2,7 @@
 
 import { useState, useRef, useCallback, type FormEvent, type ChangeEvent } from 'react'
 import { siteConfig } from '@/data/site'
+import { validateNombre, validateEmail, validateTelefono, makeValidateMensaje, validatePrivacidad, type Validator } from '@/lib/form-validators'
 
 const ACCEPTED_EXTENSIONS_LIST = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'zip', 'xls', 'xlsx']
 const ACCEPTED_EXTENSIONS_INPUT = '.pdf,.doc,.docx,.jpg,.jpeg,.png,.zip,.xls,.xlsx'
@@ -32,34 +33,12 @@ interface FieldErrors {
   privacidad?: string
 }
 
-const validators: Record<keyof FormData, (v: unknown) => string | undefined> = {
-  nombre: (v) => {
-    const s = String(v ?? '')
-    if (!s || s.trim().length < 2) return 'Por favor, introduce un nombre válido (mín. 2 caracteres)'
-    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(s)) return 'Por favor, introduce un nombre válido (solo letras)'
-    return undefined
-  },
-  telefono: (v) => {
-    const s = String(v ?? '')
-    if (!s || !/^\+?[0-9\s\-]{7,15}$/.test(s)) return 'Introduce un teléfono válido (7-15 dígitos, puede incluir prefijo +)'
-    if (s.replace(/[\s\-+]/g, '').length < 7) return 'El teléfono debe tener al menos 7 dígitos'
-    return undefined
-  },
-  email: (v) => {
-    const s = String(v ?? '')
-    if (!s || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)) return 'Introduce un email válido (ejemplo@dominio.com)'
-    return undefined
-  },
-  descripcion: (v) => {
-    const s = String(v ?? '')
-    if (!s || s.trim().length < 10) return 'Por favor, describe brevemente tu proyecto (mín. 10 caracteres)'
-    if (s.length > 2000) return 'Máximo 2000 caracteres'
-    return undefined
-  },
-  privacidad: (v) => {
-    if (!v) return 'Es necesario aceptar la política de privacidad para enviar tu solicitud'
-    return undefined
-  },
+const validators: Record<keyof FormData, Validator> = {
+  nombre: validateNombre,
+  telefono: validateTelefono,
+  email: validateEmail,
+  descripcion: makeValidateMensaje(2000),
+  privacidad: validatePrivacidad,
 }
 
 function formatFileSize(bytes: number): string {
@@ -104,7 +83,8 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
   const [touched, setTouched] = useState<Record<string, boolean>>({})
 
   const handleChange = useCallback((field: keyof FormData) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const val = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value
+    const target = e.currentTarget
+    const val = target.type === 'checkbox' ? (target as HTMLInputElement).checked : target.value
     setValues(prev => ({ ...prev, [field]: val }))
     if (touched[field]) {
       setErrors(prev => ({ ...prev, [field]: validators[field](val) }))
@@ -153,21 +133,22 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
     setFileError(null)
   }, [])
 
-  const handleDragOver = useCallback((e: React.DragEvent) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDragging(true)
   }, [])
 
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
+  const handleDragLeave = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDragging(false)
   }, [])
 
-  const handleDrop = useCallback((e: React.DragEvent) => {
+  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setDragging(false)
-    if (e.dataTransfer.files.length > 0) {
-      validateAndAddFiles(e.dataTransfer.files)
+    const dt = e.dataTransfer
+    if (dt && dt.files.length > 0) {
+      validateAndAddFiles(dt.files)
     }
   }, [validateAndAddFiles])
 
@@ -268,7 +249,7 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
         </div>
         <h3 className="text-2xl font-bold text-green-700 mb-2">Solicitud enviada!</h3>
         <p className="text-green-600 mb-1">Hemos recibido tu solicitud de presupuesto.</p>
-        <p className="text-green-600">Te contactaremos en menos de 24 horas para coordinar la visita tecnica gratuita.</p>
+        <p className="text-green-600">Te contactaremos en menos de 24 horas para coordinar la visita tecnica.</p>
         <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
           <a href={`tel:${siteConfig.phoneRaw}`} className="inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-accent/20 hover:bg-accent-600 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow]">
             <svg className="size-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
@@ -313,7 +294,7 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
           <div className="sm:col-span-2" data-field-error={!!errors.email || undefined}>
             <label htmlFor="pres-email" className={labelClass}>Email *</label>
             <div className="relative">
-              <input id="pres-email" value={values.email} onChange={handleChange('email')} onBlur={handleBlur('email')} placeholder="tu@email.com" type="email" autoComplete="email" spellCheck={false} className={inputClass('email')} />
+              <input id="pres-email" value={values.email} onChange={handleChange('email')} onBlur={handleBlur('email')} placeholder="tu@email.com" type="email" autoComplete="email" spellcheck={false} className={inputClass('email')} />
               <StatusIcon field="email" />
             </div>
             {errors.email && <p className={errorMsgClass}>{errors.email}</p>}
@@ -363,8 +344,9 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
               multiple
               className="hidden"
               onChange={(e) => {
-                if (e.target.files) validateAndAddFiles(e.target.files)
-                e.target.value = ''
+                const input = e.currentTarget
+                if (input.files) validateAndAddFiles(input.files)
+                input.value = ''
               }}
             />
             <svg className="size-8 text-muted mx-auto mb-3" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" aria-hidden="true">
@@ -444,7 +426,7 @@ export default function FormPresupuesto({ className = '' }: FormPresupuestoProps
           </>
         )}
       </button>
-      <p className="text-center text-xs text-gray-500">Sin compromiso · Visita tecnica gratuita · Respuesta en menos de 24h</p>
+      <p className="text-center text-xs text-gray-500">Sin compromiso · Presupuesto gratis · Respuesta en menos de 24h</p>
     </form>
   )
 }

@@ -1,0 +1,485 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Hero from '@/components/sections/Hero.astro'
+import Container from '@/components/ui/Container.astro'
+import { getEscayolaFaqs } from '@/data/faqs/escayola'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('escayola-menorca')!
+const pageFaqs = getEscayolaFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Plastering (Escayola) in Menorca since 2004 | Pladur Menorca',
+  description: 'Plasterwork (escayola) in Menorca since 2004. Seamless ceilings from €22/m², mouldings from €12/lm, heritage restoration. Free quote in 24-48h.',
+  canonical: '/en/escayola-menorca',
+  ogImage: '/og/home.jpg',
+} : {
+  title: 'Escayola en Menorca desde 2004 | Pladur Menorca',
+  description: 'Escayola en Menorca desde 2004. Techos continuos desde 22€/m², molduras desde 12€/ml, restauración de edificios históricos. Presupuesto gratis en 24-48h.',
+  canonical: '/escayola-menorca',
+  ogImage: '/og/home.jpg',
+}
+
+const alternateEs = '/escayola-menorca'
+const alternateEn = '/en/escayola-menorca'
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — hand-applied drywall and escayola plasterwork in Menorca since 2004. Plaster ceilings from €25/m², mouldings and cornices from €12/linear metre, sprayed escayola, historic restoration in Maó, Ciutadella, Alaior and across the island. 6,000+ projects since 2004. Tel: +34 627 829 723.',
+  heroTitle: 'Plastering (Escayola) in Menorca — Drywall and Escayola Since 2004',
+  heroSubtitle: 'Ceilings, mouldings, cornices and restoration',
+  heroDescription: 'Hand-applied escayola plasterwork in Menorca since 2004: seamless ceilings from €25/m², mouldings and cornices from €12 per linear metre, and restoration of historic llocs and cases senyorials in Maó, Ciutadella and Alaior. 6,000+ projects delivered. Free quote in 24 h.',
+  heroBadges: ['Drywall and escayola', '+6,000 projects', 'All of Menorca'],
+  ctaPrimario: 'Request a free quote',
+  ctaLlamar: 'Call',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Plastering (Escayola) in Menorca',
+  howToName: 'How we install plasterwork (escayola) in Menorca',
+  howToDescription: 'Complete process for installing plasterwork (escayola): from the on-site visit to delivery with a flawless finish.',
+  howToSteps: [
+    { name: 'Site visit', text: 'A specialist visits your home to measure, photograph the space and advise on the most suitable type of escayola: smooth, decorative, sprayed or restoration.' },
+    { name: 'Detailed 24h quote', text: 'Fixed quote with a breakdown of materials, labour and delivery time. No obligation.' },
+    { name: 'Substrate preparation', text: 'We clean and prepare the surface. On restorations, we make moulds of the original pieces to reproduce them faithfully.' },
+    { name: 'Installation and finish', text: 'We apply the escayola, treat the joints and deliver the final finish. Ready to paint in 24-48 hours.' },
+  ],
+  offers: [
+    { name: 'Smooth plaster ceiling', price: '25', description: 'Seamless plaster ceiling with a perfectly smooth finish. Price per m².' },
+    { name: 'Mouldings and cornices', price: '12', description: 'Installation of decorative plaster mouldings and cornices. Price per linear metre.' },
+    { name: 'Sprayed escayola', price: '18', description: 'Mechanised application of escayola for large surfaces. Price per m².' },
+    { name: 'Escayola restoration', price: '35', description: 'Restoration and reproduction of ornamental details in historic buildings. Price per m².' },
+  ],
+  intBadge: 'Drywall and escayola',
+  intH2: 'Drywall and hand-applied escayola in Menorca since 2004',
+  intP1: 'Escayola is a high-purity gypsum plaster (calcium sulphate hemihydrate, CaSO₄·½H₂O) used since Antiquity for ceilings, mouldings and interior ornamentation. It is hand-applied in successive coats over reed lath, mesh or plasterboard and dries in 24-48 hours, producing seamless continuous surfaces. Common grades: E-30 for plain ceilings and E-35 for ornamental pieces.',
+  intP2: 'At Pladur Menorca we have worked with both materials since 2004, with 6,000+ projects delivered. We use Knauf or Placo plasterboard for partitions, false ceilings and hidden services; hand-applied escayola for seamless ceilings, mouldings, cornices, ceiling roses and restoration; and we combine both when a project demands structural speed and a noble finish at the same time.',
+  intSeeAlso: 'See also',
+  intLink1: 'drywall installation',
+  intLink1Href: '/en/instalacion-pladur-menorca',
+  intLink2: 'false ceilings',
+  intLink2Href: '/en/falsos-techos-pladur-menorca',
+  intLink3: 'prices',
+  intLink3Href: '/en/precios-pladur-menorca',
+  sidebarBadge: 'Free quote',
+  sidebarTitle: 'Need drywall or escayola in Menorca?',
+  sidebarText: 'No-obligation site visit and a fixed quote within 24h, itemising materials and labour.',
+  sidebarCta: 'Request an online quote',
+  datosTitle: 'Reference figures:',
+  datosEscayola: [
+    { label: 'Finish', valor: 'No visible joints' },
+    { label: 'Drying', valor: '24-48 hours' },
+    { label: 'Board thickness', valor: '12.5 - 15 mm' },
+    { label: 'Acoustic insulation', valor: '+5 dB vs brick' },
+    { label: 'Durability', valor: 'Lifetime of the building' },
+  ],
+  tiposBadge: 'Our escayola services',
+  tiposH2: 'Types of escayola plasterwork we install in Menorca',
+  tiposLead: 'From a smooth ceiling in a modern flat in Port de Maó to restoring 18th-century Georgian mouldings in Maó’s old town, these are the jobs we take on in Menorca:',
+  tiposEscayola: [
+    {
+      titulo: 'Plaster ceilings',
+      desc: 'Seamless continuous ceilings with a trowelled or burnished finish, perfectly flat and with no visible joints. From €25/m², ready to paint in 24-48 hours. White escayola E-30 for standard ceilings and high-hardness E-45 for holiday-let flats and commercial premises with heavier use.',
+      iconPath: 'M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25',
+    },
+    {
+      titulo: 'Decorative escayola — Mouldings and cornices',
+      desc: 'Mouldings, cornices, ceiling roses, rosettes and arches cast from traditional moulds from €12 per linear metre. Catalogue of 50+ designs, from plain 3 cm profiles to classical 15 cm cornices with egg-and-dart and dentils. Ideal for villas in Sant Lluís and Cala en Bosc or stately flats in the Georgian centre of Maó.',
+      iconPath: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42',
+    },
+    {
+      titulo: 'Sprayed escayola',
+      desc: 'Mechanised spray application covering 100-200 m² per day versus 30-50 m² for hand application. From €18/m² with an even trowelled finish. A fit for new-build ceilings, refurbished industrial units in Alaior or Es Mercadal and large commercial premises.',
+      iconPath: 'M11.42 15.17l-5.384-3.065A1.5 1.5 0 005.25 13.5v5.25a1.5 1.5 0 001.786 1.47l5.384-1.436a1.5 1.5 0 001.08-1.442V15.17zm0 0l5.384-3.065A1.5 1.5 0 0018.75 10.5V5.25a1.5 1.5 0 00-1.786-1.47l-5.384 1.436a1.5 1.5 0 00-1.08 1.442v8.512z',
+    },
+    {
+      titulo: 'Restoration of historic escayola',
+      desc: 'Reproduction of cornices, brackets, ceiling roses, rosettes and columns in 17th–19th-century buildings across Maó, Ciutadella, Alaior and Es Migjorn Gran. We cast silicone or plaster moulds from the surviving pieces and follow traditional technique: fibre-reinforced escayola, successive coats and hand polishing.',
+      iconPath: 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z',
+    },
+    {
+      titulo: 'Drywall with escayola finish',
+      desc: 'Hybrid system: a Knauf or Placo drywall structure 12.5-15 mm thick for partitions, false ceilings and services, topped with a 3-5 mm coat of hand-applied trowelled escayola. Combines drywall speed and insulation with seamless continuous surfaces and the warmth of traditional plaster. Ideal for quality renovations.',
+      iconPath: 'M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5',
+    },
+    {
+      titulo: 'Escayola for bathrooms and wet areas',
+      desc: 'Water-repellent H1 escayola and impregnated plasterboard (Knauf type H or Placo Glasroc H), certified for 75-90% relative humidity and suitable for bathroom, shower and kitchen ceilings. We pair it with waterproofing primers to guarantee durability in the most demanding areas of the home.',
+      iconPath: 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z',
+    },
+  ],
+  restBadge: 'Restoration',
+  restH2: 'Restoration of plasterwork in Menorca’s historic buildings',
+  restP1: 'Maó and Ciutadella hold one of the most distinctive heritage districts in the western Mediterranean: palaces, Georgian townhouses and stately Balearic homes from the 17th, 18th and 19th centuries with decorated plaster ceilings. Maó preserves a unique set of Georgian interiors dating from the British occupation (18th century), while Ciutadella keeps traditional Balearic palaces with classical Catalan escayola work. After decades — or centuries — of deterioration we see broken cornices, cracked mouldings and partially lost ceiling roses that call for specialist restoration.',
+  restP2: 'We reproduce any original ornament with silicone or plaster moulds taken from the surviving pieces. We follow traditional technique: escayola reinforced with sisal or hemp fibre, 3-5 successive coats, hand polishing with fine-grit abrasive, and Venetian-stucco or burnished finishes when the project calls for it.',
+  restP3: 'We also work on llocs (traditional Menorcan rural farmsteads) and cases senyorials across the island: Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Castell and Es Migjorn Gran, as well as heritage villages such as Alaior and Es Migjorn Gran where the intervention must respect original materials and techniques. Projects inside BIC-listed buildings are coordinated with the Colegio de Aparejadores de Baleares.',
+  restProcesoBadge: 'Restoration process',
+  restPasos: [
+    { num: '01', titulo: 'Study of original pieces', desc: 'We document the condition of surviving pieces, identify the original escayola type and take measurements for reproduction.' },
+    { num: '02', titulo: 'Mould making', desc: 'We make silicone or plaster moulds from the surviving pieces to faithfully reproduce damaged or missing ornamental elements.' },
+    { num: '03', titulo: 'Substrate preparation', desc: 'We clean, consolidate and prepare the surface where the new pieces will sit, removing any deteriorated escayola.' },
+    { num: '04', titulo: 'Install and finish', desc: 'We fix the reproduced pieces, seal the joints and apply the final finish so integration with the originals is seamless.' },
+  ],
+  ctaIntTitulo: 'Need a plaster ceiling or to restore mouldings?',
+  ctaIntSubtitulo: 'Free advice on the most suitable material for your project.',
+  compBadge: 'Comparison',
+  compH2: 'When to choose drywall, escayola or a combination of both?',
+  compLead: 'Each material has its strengths. This table shows when drywall, hand-applied escayola or a combination of both is the best choice.',
+  compRecomendado: 'Recommended',
+  compVentaja: 'Key advantage',
+  compDesc: 'Description',
+  comparativa: [
+    { material: 'Drywall (laminated plasterboard)', ventaja: 'Versatility and speed', desc: 'Knauf or Placo 12.5-15 mm boards on galvanised-steel framing. Ideal for partitions, false ceilings with hidden services and acoustic/thermal insulation. Integrates LED, AC ducts and smart-home systems. Dry installation in 1-3 days.', destacar: false },
+    { material: 'Escayola', ventaja: 'Noble, traditional finish', desc: 'High-purity gypsum hand-applied in 3-5 coats over reed lath, mesh or plasterboard. Seamless continuous surface, optimal for ceilings, mouldings, cornices and ceiling roses. Reserved for restoring historic buildings and renovations with high aesthetic standards.', destacar: false },
+    { material: 'Drywall + escayola finish', ventaja: 'Best of both worlds', desc: 'Knauf or Placo framing keeps all technical advantages (insulation, services, speed) and is finished with a 3-5 mm trowelled coat of hand-applied escayola. Delivers a seamless continuous surface with traditional warmth. Our standard recommendation for full renovations in Menorca.', destacar: true },
+  ],
+  gallery: [
+    { src: '/images/proyectos/reforma-integral-piso.webp', alt: 'Smooth plaster ceiling in a renovated flat in the Balearics' },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina.webp', alt: 'Plaster mouldings in a renovated kitchen in the Balearics' },
+    { src: '/images/proyectos/salon-falso-techo-villa.webp', alt: 'Decorative plaster ceiling in a Balearic villa' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral.webp', alt: 'Plasterwork in a new-build villa in the Balearics' },
+  ],
+  faqTitle: 'Escayola plasterwork FAQs',
+  faqSubtitle: 'Answers to the most common questions about our drywall and escayola services.',
+  ctaFinalTitulo: 'Does your project need drywall or escayola?',
+  ctaFinalSubtitulo: 'Free quote in 24 hours. No-obligation advice.',
+} : {
+  srOnly: 'Pladur Menorca — empresa de pladur y escayola artesanal en Menorca desde 2004. Techos de escayola desde 25€/m², molduras y cornisas desde 12€/ml, escayola proyectada, restauración histórica en Maó, Ciutadella, Alaior y toda la isla. +6.000 proyectos desde 2004. Tel: 627 829 723.',
+  heroTitle: 'Escayola en Menorca — Pladur y Escayola Desde 2004',
+  heroSubtitle: 'Techos, molduras, cornisas y restauración',
+  heroDescription: 'Escayola artesanal en Menorca desde 2004: techos continuos desde 25€/m², molduras y cornisas desde 12€/ml y restauración de llocs y cases senyorials históricas en Maó, Ciutadella y Alaior. +6.000 proyectos completados. Presupuesto en 24h.',
+  heroBadges: ['Pladur y escayola', '+6.000 proyectos', 'Toda Menorca'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaLlamar: 'Llamar',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Escayola en Menorca',
+  howToName: 'Cómo instalamos escayola en Menorca',
+  howToDescription: 'Proceso completo de instalación de escayola: desde la visita técnica hasta la entrega con acabado perfecto.',
+  howToSteps: [
+    { name: 'Visita técnica', text: 'Un técnico se desplaza a tu domicilio para medir, fotografiar el espacio y asesorarte sobre el tipo de escayola más adecuado: lisa, decorativa, proyectada o restauración.' },
+    { name: 'Presupuesto detallado en 24h', text: 'Presupuesto cerrado con desglose de materiales, mano de obra y plazo de ejecución. Sin compromiso.' },
+    { name: 'Preparación del soporte', text: 'Limpiamos y preparamos la superficie. En restauraciones, fabricamos moldes de las piezas originales para reproducirlas fielmente.' },
+    { name: 'Instalación y acabado', text: 'Aplicamos la escayola, tratamos las uniones y realizamos el acabado final. Listo para pintar en 24-48 horas.' },
+  ],
+  offers: [
+    { name: 'Techo de escayola lisa', price: '25', description: 'Techo continuo de escayola con acabado perfectamente liso. Precio por m².' },
+    { name: 'Molduras y cornisas', price: '12', description: 'Instalación de molduras y cornisas decorativas de escayola. Precio por metro lineal.' },
+    { name: 'Escayola proyectada', price: '18', description: 'Aplicación mecanizada de escayola para grandes superficies. Precio por m².' },
+    { name: 'Restauración de escayola', price: '35', description: 'Restauración y reproducción de elementos ornamentales en edificios históricos. Precio por m².' },
+  ],
+  intBadge: 'Pladur y escayola',
+  intH2: 'Pladur y escayola artesanal en Menorca desde 2004',
+  intP1: 'La escayola es un yeso de alta pureza (sulfato de calcio semihidratado, CaSO₄·½H₂O) utilizado desde la Antigüedad para techos, molduras y ornamentación interior. Se aplica a mano en capas sucesivas sobre un soporte de caña, malla o pladur, y seca en 24-48 horas generando superficies continuas sin juntas visibles. Referencias habituales: escayola E-30 para techos planos y E-35 para piezas ornamentales.',
+  intP2: 'En Pladur Menorca trabajamos con ambos materiales desde 2004, con +6.000 proyectos ejecutados. Usamos pladur Knauf o Placo para tabiques, falsos techos e instalaciones ocultas; escayola artesanal para techos continuos, molduras, cornisas, rosetones y restauración; y combinamos ambos cuando un proyecto pide rapidez estructural y acabado noble a la vez.',
+  intSeeAlso: 'Ver también:',
+  intLink1: 'instalación de pladur',
+  intLink1Href: '/instalacion-pladur-menorca',
+  intLink2: 'falsos techos',
+  intLink2Href: '/falsos-techos-pladur-menorca',
+  intLink3: 'precios',
+  intLink3Href: '/precios-pladur-menorca',
+  sidebarBadge: 'Presupuesto gratis',
+  sidebarTitle: '¿Necesitas pladur o escayola en Menorca?',
+  sidebarText: 'Visita técnica sin compromiso y presupuesto cerrado en 24h con desglose de materiales y mano de obra.',
+  sidebarCta: 'Pedir presupuesto online',
+  datosTitle: 'Datos de referencia:',
+  datosEscayola: [
+    { label: 'Acabado', valor: 'Sin juntas visibles' },
+    { label: 'Secado', valor: '24-48 horas' },
+    { label: 'Espesor placa', valor: '12,5 - 15 mm' },
+    { label: 'Aislamiento acústico', valor: '+5 dB vs ladrillo' },
+    { label: 'Durabilidad', valor: 'Vida del edificio' },
+  ],
+  tiposBadge: 'Nuestros servicios de escayola',
+  tiposH2: 'Tipos de escayola que instalamos en Menorca',
+  tiposLead: 'Desde un techo liso en un piso moderno del Port de Maó hasta la restauración de molduras georgianas del siglo XVIII en el casco antiguo de Maó, estos son los trabajos que realizamos en Menorca:',
+  tiposEscayola: [
+    {
+      titulo: 'Techos de escayola',
+      desc: 'Techos continuos con acabado fratasado o bruñido y superficie perfectamente plana sin juntas visibles. Desde 25€/m², listos para pintar en 24-48 horas. Disponibles en escayola blanca E-30 para techos estándar y escayola de alta dureza E-45 para pisos de alquiler turístico o locales con más uso.',
+      iconPath: 'M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25',
+    },
+    {
+      titulo: 'Escayola decorativa — Molduras y cornisas',
+      desc: 'Molduras, cornisas, rosetones, florones y arcos fabricados con moldes tradicionales desde 12€/metro lineal. Catálogo de +50 modelos, desde perfiles lisos de 3 cm hasta cornisas clásicas de 15 cm con ovas y dentículos. Ideales para villas en Sant Lluís y Cala en Bosc o pisos señoriales del centro georgiano de Maó.',
+      iconPath: 'M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42',
+    },
+    {
+      titulo: 'Escayola proyectada',
+      desc: 'Aplicación mecanizada con máquina de proyección que cubre 100-200 m² diarios frente a los 30-50 m² del aplicado manual. Desde 18€/m² con acabado fratasado uniforme. Idónea para techos de obra nueva, naves industriales reformadas en Alaior o Es Mercadal y locales comerciales de gran superficie.',
+      iconPath: 'M11.42 15.17l-5.384-3.065A1.5 1.5 0 005.25 13.5v5.25a1.5 1.5 0 001.786 1.47l5.384-1.436a1.5 1.5 0 001.08-1.442V15.17zm0 0l5.384-3.065A1.5 1.5 0 0018.75 10.5V5.25a1.5 1.5 0 00-1.786-1.47l-5.384 1.436a1.5 1.5 0 00-1.08 1.442v8.512z',
+    },
+    {
+      titulo: 'Restauración de escayola histórica',
+      desc: 'Reproducción de cornisas, ménsulas, rosetones, florones y columnas en edificios de los siglos XVII-XIX de Maó, Ciutadella, Alaior y Es Migjorn Gran. Fabricamos moldes de silicona o yeso a partir de las piezas conservadas y respetamos la técnica tradicional: escayola con fibra, capas sucesivas y pulido a mano.',
+      iconPath: 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z',
+    },
+    {
+      titulo: 'Pladur con acabado de escayola',
+      desc: 'Sistema mixto: estructura de pladur Knauf o Placo de 12,5-15 mm para tabique, falso techo e instalaciones, rematado con una capa de 3-5 mm de escayola artesanal fratasada. Une la rapidez y el aislamiento del pladur con el acabado sin juntas y la calidez de la escayola tradicional. Ideal para reformas de calidad.',
+      iconPath: 'M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5',
+    },
+    {
+      titulo: 'Escayola para baños y zonas húmedas',
+      desc: 'Escayola hidrófuga H1 y placa de pladur impregnada (tipo H Knauf o Placo Glasroc H) resistente a humedad relativa del 75-90%, adecuada para techos de baños, duchas y cocinas. La combinamos con imprimaciones impermeabilizantes para garantizar durabilidad en las zonas más exigentes de la vivienda.',
+      iconPath: 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z',
+    },
+  ],
+  restBadge: 'Restauración',
+  restH2: 'Restauración de escayola en edificios históricos de Menorca',
+  restP1: 'Los cascos antiguos de Maó y Ciutadella concentran uno de los conjuntos patrimoniales más singulares del Mediterráneo occidental: palacios, casas georgianas y cases senyorials de los siglos XVII, XVIII y XIX con techos de escayola decorada. Maó conserva un repertorio único de interiores georgianos fruto de la ocupación británica del siglo XVIII; Ciutadella mantiene los palacios señoriales tradicionales con escayolerías de tradición catalana. Tras décadas —o siglos— de deterioro aparecen cornisas rotas, molduras agrietadas y rosetones parcialmente perdidos que requieren restauración especializada.',
+  restP2: 'Reproducimos cualquier ornamento original mediante moldes de silicona o yeso sacados de las piezas conservadas. Aplicamos técnicas tradicionales: escayola enriquecida con fibra de sisal o cáñamo, aplicación en 3-5 capas sucesivas, pulido a mano con lija de grano fino y acabado con estuco veneciano o bruñido cuando el proyecto lo pide.',
+  restP3: 'Trabajamos también en llocs (fincas rústicas tradicionales menorquinas) y cases senyorials del resto de la isla: Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Castell y Es Migjorn Gran, así como en los núcleos patrimoniales de Alaior y Es Migjorn Gran, que exigen intervención respetuosa con los materiales y técnicas originales. Los proyectos en edificios BIC se coordinan con el Colegio de Aparejadores de Baleares.',
+  restProcesoBadge: 'Proceso de restauración',
+  restPasos: [
+    { num: '01', titulo: 'Estudio de las piezas originales', desc: 'Documentamos el estado de conservación de las piezas existentes, identificamos el tipo de escayola original y tomamos medidas para la reproducción.' },
+    { num: '02', titulo: 'Fabricación de moldes', desc: 'Creamos moldes de silicona o yeso a partir de las piezas conservadas para reproducir fielmente los elementos ornamentales dañados o desaparecidos.' },
+    { num: '03', titulo: 'Preparación del soporte', desc: 'Limpiamos, consolidamos y preparamos la superficie donde se instalarán las nuevas piezas, eliminando restos de escayola deteriorada.' },
+    { num: '04', titulo: 'Instalación y acabado', desc: 'Fijamos las piezas reproducidas, sellamos las uniones y realizamos el acabado final para que la integración con los elementos originales sea perfecta.' },
+  ],
+  ctaIntTitulo: '¿Necesitas un techo de escayola o restaurar molduras?',
+  ctaIntSubtitulo: 'Te asesoramos gratis sobre el material más adecuado para tu proyecto.',
+  compBadge: 'Comparativa',
+  compH2: '¿Cuándo elegir pladur, escayola o la combinación de ambos?',
+  compLead: 'Cada material tiene ventajas distintas. Esta tabla resume cuándo conviene pladur, escayola artesanal o la combinación de ambos.',
+  compRecomendado: 'Recomendado',
+  compVentaja: 'Ventaja principal',
+  compDesc: 'Descripción',
+  comparativa: [
+    { material: 'Pladur (placa de yeso laminado)', ventaja: 'Versatilidad y rapidez', desc: 'Placa Knauf o Placo de 12,5-15 mm sobre perfilería de acero galvanizado. Ideal para tabiques, falsos techos con instalaciones ocultas, aislamiento acústico y térmico. Integra LED, conductos de AC y domótica. Montaje seco en 1-3 días.', destacar: false },
+    { material: 'Escayola', ventaja: 'Acabado noble y tradicional', desc: 'Yeso de alta pureza aplicado a mano en 3-5 capas sobre caña, malla o pladur. Superficie continua sin juntas visibles, óptima para techos, molduras, cornisas y rosetones. Reservada a restauración de edificios históricos y reformas con exigencia estética.', destacar: false },
+    { material: 'Pladur + acabado de escayola', ventaja: 'Lo mejor de ambos mundos', desc: 'Estructura Knauf o Placo con sus ventajas técnicas (aislamiento, instalaciones, rapidez) rematada con 3-5 mm de escayola artesanal fratasada. Entrega acabado continuo sin juntas y calidez tradicional. La recomendación estándar para reformas integrales en Menorca.', destacar: true },
+  ],
+  gallery: [
+    { src: '/images/proyectos/reforma-integral-piso.webp', alt: 'Techo de escayola lisa en reforma de piso en Baleares' },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina.webp', alt: 'Molduras de escayola en cocina reformada en Baleares' },
+    { src: '/images/proyectos/salon-falso-techo-villa.webp', alt: 'Techo de escayola decorativa en villa de Baleares' },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral.webp', alt: 'Escayola en obra nueva de villa en Baleares' },
+  ],
+  faqTitle: 'Preguntas frecuentes sobre escayola en Menorca',
+  faqSubtitle: 'Resolvemos las dudas más habituales sobre nuestros servicios de pladur y escayola.',
+  ctaFinalTitulo: '¿Tu proyecto necesita pladur o escayola?',
+  ctaFinalSubtitulo: 'Presupuesto gratis en 24 horas. Te asesoramos sin compromiso.',
+}
+
+const pagePathBase = lang === 'en' ? '/en/escayola-menorca' : '/escayola-menorca'
+const breadcrumbs = [
+  { label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' },
+  { label: t.breadcrumbCurrent, href: pagePathBase },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url={pagePathBase}
+    />
+    <SchemaHowTo
+      name={t.howToName}
+      description={t.howToDescription}
+      totalTime="PT48H"
+      steps={t.howToSteps}
+    />
+    <SchemaOffers offers={t.offers} />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? alternateEs : alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <Hero
+    title={t.heroTitle}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaLlamar}: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- Qué es la escayola -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.intBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.intH2}</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.intP1}</p>
+            <p>{t.intP2}</p>
+            <p class="text-sm">
+              {t.intSeeAlso}
+              <a href={t.intLink1Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.intLink1}</a>
+              &middot;
+              <a href={t.intLink2Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.intLink2}</a>
+              &middot;
+              <a href={t.intLink3Href} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark transition-colors">{t.intLink3}</a>
+            </p>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <ContactoRapidoCard lang={lang} />
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+              <p class="font-bold text-foreground text-sm mb-3">{t.datosTitle}</p>
+              <div class="space-y-2">
+                {t.datosEscayola.map((d) => (
+                  <div class="flex justify-between items-center py-1.5 border-b border-warm-border/50 last:border-0">
+                    <span class="text-xs text-muted">{d.label}</span>
+                    <span class="text-xs font-bold text-foreground">{d.valor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de escayola -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.tiposBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">{t.tiposH2}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">{t.tiposLead}</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        {t.tiposEscayola.map((tipo) => (
+          <div class="bg-white/70 p-8 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-elevated hover:-translate-y-1 transition-[transform,box-shadow] duration-300 group h-full flex flex-col">
+            <div class="size-12 bg-surface border border-nav-border rounded-2xl group-hover:bg-foreground-dark group-hover:border-foreground-dark flex items-center justify-center mb-6 transition-[transform,box-shadow,background-color,border-color] duration-300">
+              <svg class="size-5 text-foreground group-hover:text-white transition-colors" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d={tipo.iconPath} />
+              </svg>
+            </div>
+            <h3 class="font-bold text-foreground text-lg mb-3">{tipo.titulo}</h3>
+            <div class="text-muted text-sm leading-relaxed">
+              <p>{tipo.desc}</p>
+            </div>
+            <div class="mt-auto pt-6">
+              <div class="h-0.5 bg-warm-border rounded-full overflow-hidden">
+                <div class="h-full w-0 bg-foreground-dark group-hover:w-full transition-[width] duration-500"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Restauración -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.restBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.restH2}</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.restP1}</p>
+            <p>{t.restP2}</p>
+            <p>{t.restP3}</p>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-2 inline-flex items-center px-3 py-1 rounded-lg">{t.restProcesoBadge}</p>
+          {t.restPasos.map((paso) => (
+            <div class="bg-white/70 border border-warm-border/50 p-5 flex gap-4 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+              <div class="shrink-0 size-10 bg-foreground-dark flex items-center justify-center rounded-xl">
+                <span class="text-white font-bold text-xs">{paso.num}</span>
+              </div>
+              <div>
+                <p class="font-bold text-foreground text-sm mb-1">{paso.titulo}</p>
+                <p class="text-xs text-muted leading-relaxed">{paso.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner lang={lang} titulo={t.ctaIntTitulo} subtitulo={t.ctaIntSubtitulo} showForm={false} />
+
+  <!-- Pladur vs escayola -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.compBadge}</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">{t.compH2}</h2>
+        <p class="text-muted leading-relaxed mb-12 max-w-2xl">{t.compLead}</p>
+      </div>
+      <div class="space-y-3">
+        {t.comparativa.map((item) => (
+          <div class={`flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 bg-white/70 rounded-2xl border ${item.destacar ? 'border-foreground-dark' : 'border-warm-border/50'} shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default`}>
+            <div class="sm:w-52 shrink-0 flex items-center gap-3">
+              <h3 class="text-sm font-bold text-foreground">{item.material}</h3>
+              {item.destacar && (<span class="inline-flex items-center px-2 py-0.5 rounded-md bg-foreground-dark text-white text-[9px] font-bold uppercase tracking-wider">{t.compRecomendado}</span>)}
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compVentaja}</p><p class="text-sm font-bold text-foreground">{item.ventaja}</p></div>
+              <div class="sm:ml-auto"><p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.compDesc}</p><p class="text-sm text-foreground">{item.desc}</p></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Precios -->
+  <PreciosTable lang={lang} variant="resumen" />
+
+  <!-- Zonas -->
+  <ZonasServicio lang={lang} />
+
+  <!-- Galería -->
+  <GaleriaTrabajos imagenes={t.gallery} />
+
+  <!-- FAQ -->
+  <FaqAccordion client:visible lang={lang} faqs={pageFaqs} titulo={t.faqTitle} subtitulo={t.faqSubtitle} />
+
+  <!-- CTA final -->
+  <CtaBanner lang={lang} titulo={t.ctaFinalTitulo} subtitulo={t.ctaFinalSubtitulo} showForm={true} />
+
+  <ServiciosRelacionados currentPath={pagePathBase} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

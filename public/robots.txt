@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://www.pladurmallorca.com/sitemap-index.xml
+Sitemap: https://www.pladurmenorca.com/sitemap-index.xml
 
-# AI: https://www.pladurmallorca.com/llms.txt
-# AI: https://www.pladurmallorca.com/llms-full.txt
+# AI: https://www.pladurmenorca.com/llms.txt
+# AI: https://www.pladurmenorca.com/llms-full.txt

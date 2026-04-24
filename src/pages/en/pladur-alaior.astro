@@ -1,0 +1,291 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getAlaiorFaqs } from '@/data/faqs/alaior'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getAlaiorFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall in Alaior | Inland Menorca | Free Quote 24h',
+  description: "Drywall installers in Alaior, Menorca. Village houses, Son Bou and Torre Solí coastal resorts, UIB campus. False ceilings from 29€/m². Free quote. ☎ 627 829 723",
+  canonical: '/en/pladur-alaior',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-alaior',
+} : {
+  title: 'Pladur en Alaior | Casas de Pueblo, Son Bou y Torre Solí',
+  description: 'Instaladores de pladur en Alaior, Menorca. Casas de pueblo, urbanizaciones Son Bou y Torre Solí, campus UIB. Presupuesto gratis. ☎ 627 829 723',
+  canonical: '/pladur-alaior',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-alaior',
+}
+
+const zonas = lang === 'en' ? [
+  {
+    nombre: 'Alaior centre',
+    descripcion: 'Inland market town (~9,700 residents) with traditional village architecture, thick walls and low ceilings. Knauf false ceilings to modernise without removing character, drywall partitions to redistribute old layouts and thermal linings for winter comfort.',
+  },
+  {
+    nombre: 'Son Bou',
+    descripcion: "Menorca's largest beach and main tourist hub of Alaior. Holiday apartments and villas requiring quick between-season refurbishments: Placo false ceilings with LED, acoustic insulation between units (45-55 dB) and moisture-resistant H-type board in bathrooms.",
+  },
+  {
+    nombre: 'Torre Solí',
+    descripcion: "Residential and tourist development on the south coast. Apartment blocks and semi-detached villas that demand acoustic insulation between neighbouring units, compliant with CTE DB-HR, and decorative false ceilings for short-term rentals.",
+  },
+  {
+    nombre: "Cala en Porter",
+    descripcion: "Iconic southern cala (home to the Cova d'en Xoroi). Second homes and holiday apartments benefit from drywall to update ceilings, improve insulation against sea humidity and refresh layouts without heavy demolition.",
+  },
+  {
+    nombre: 'Sa Plana',
+    descripcion: 'Residential area near the UIB campus (Can Salord). Student flats and family homes where drywall partitions create extra bedrooms or study zones, and false ceilings integrate modern lighting and HVAC.',
+  },
+  {
+    nombre: 'UIB campus area (Can Salord)',
+    descripcion: 'University environment generating demand for office refurbishments, student-oriented housing and quick commercial fit-outs. Drywall solutions with fast delivery and 47 dB acoustic separation between spaces.',
+  },
+] : [
+  {
+    nombre: 'Alaior centro',
+    descripcion: 'Pueblo de interior (~9.700 habitantes) con arquitectura tradicional, muros gruesos y techos bajos. Falsos techos Knauf para modernizar sin perder carácter, tabiques de pladur para redistribuir distribuciones antiguas y trasdosados térmicos para mejorar el confort invernal.',
+  },
+  {
+    nombre: 'Son Bou',
+    descripcion: 'La playa más larga de Menorca y principal polo turístico de Alaior. Apartamentos vacacionales y chalets que requieren reformas ágiles entre temporadas: falsos techos Placo con LED, aislamiento acústico entre viviendas (45-55 dB) y placa hidrófuga H en baños.',
+  },
+  {
+    nombre: 'Torre Solí',
+    descripcion: 'Urbanización residencial y turística de la costa sur. Bloques de apartamentos y adosados que exigen aislamiento acústico entre viviendas colindantes, conforme al CTE DB-HR, y falsos techos decorativos para alquiler vacacional.',
+  },
+  {
+    nombre: "Cala en Porter",
+    descripcion: "Cala icónica del sur (sede de la Cova d'en Xoroi). Segundas residencias y apartamentos turísticos que se benefician del pladur para actualizar techos, mejorar el aislamiento contra la humedad salina y renovar distribuciones sin obra pesada.",
+  },
+  {
+    nombre: 'Sa Plana',
+    descripcion: 'Zona residencial próxima al campus UIB (Can Salord). Pisos de estudiantes y viviendas familiares donde los tabiques de pladur permiten crear dormitorios extra o zonas de estudio, y los falsos techos integran iluminación moderna y climatización.',
+  },
+  {
+    nombre: 'Zona UIB (Can Salord)',
+    descripcion: 'Entorno universitario que genera demanda de reformas de oficinas, vivienda para estudiantes y locales con fit-out rápido. Soluciones de pladur con plazos ajustados y separación acústica de 47 dB entre espacios.',
+  },
+]
+
+const breadcrumbs = lang === 'en' ? [
+  { label: 'Home', href: '/en' },
+  { label: 'Drywall in Alaior', href: '/en/pladur-alaior' },
+] : [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Alaior', href: '/pladur-alaior' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Surface', valor: '110 m²' },
+  { label: 'Location', valor: 'Son Bou, Alaior' },
+  { label: 'Works', valor: 'Ceiling + Acoustic insulation + H-board' },
+  { label: 'Duration', valor: '9 working days' },
+  { label: 'Outcome', valor: 'Coastal apartment ready for peak season' },
+] : [
+  { label: 'Superficie', valor: '110 m²' },
+  { label: 'Ubicación', valor: 'Son Bou, Alaior' },
+  { label: 'Trabajos', valor: 'Techo + Aislamiento acústico + Placa H' },
+  { label: 'Duración', valor: '9 días hábiles' },
+  { label: 'Resultado', valor: 'Apartamento costero listo para temporada alta' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'False Ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+  { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal Insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Alaior since 2026 (parent SL Mallorca since 2004). False ceilings, partitions, acoustic and thermal insulation. Free quote. Phone: +34 627 829 723.',
+  municipio: 'Alaior',
+  heroTitle: 'Drywall in Alaior — Installation and Renovations in Inland Menorca',
+  heroBadge: 'Alaior · Inland Menorca',
+  heroDescription: 'Drywall installers in Alaior (~9,700 residents), inland market town and academic hub of Menorca with the UIB campus at Can Salord. We also cover the southern coast: Son Bou, Torre Solí, Cala en Porter and Sa Plana. Placo and Knauf systems, false ceilings from 29€/m², partitions from 45€/m². Free quote within 24 h.',
+  faqTitulo: 'Frequently asked questions about drywall in Alaior',
+  faqSubtitulo: 'Answers to the most common questions from our customers in Alaior and the south coast.',
+  proyectoTitulo: 'Coastal apartment refurbishment in Son Bou (Alaior)',
+  ctaTitulo: 'Is your project in Alaior or the south of Menorca?',
+  ctaSubtitulo: 'Contact us now and get your free quote in under 24 hours, no obligation.',
+  schemaName: 'Drywall installation in Alaior',
+  schemaDescription: 'Drywall installation in Alaior and its southern coast: false ceilings from 29€/m², partitions from 45€/m², Placo and Knauf systems in Son Bou, Torre Solí, Cala en Porter and Sa Plana.',
+  seoBadge: 'Specialists in inland Menorca',
+  seoTitle: 'Drywall renovations in Alaior: village tradition meets coastal tourism',
+  seoP1: "Alaior (~9,700 residents) is one of the three historic inland towns of Menorca and the island's academic hub thanks to the UIB campus at Can Salord. Its territory reaches the southern coast, where Son Bou (Menorca's longest beach), Torre Solí, Cala en Porter (home of the legendary Cova d'en Xoroi) and Sa Plana concentrate holiday apartments and villas. This mix of traditional village centre, academic activity and active tourism makes drywall demand steady year-round.",
+  seoP2: "The historic centre of Alaior is home to village houses with thick stone and lime walls, low wooden-beam ceilings and inherited layouts. Homes now being rehabilitated as primary residences or bought as investment benefit hugely from drywall: Knauf linings with 60 mm Isover rock wool improve the ",
+  seoP2MidLink: { href: '/en/aislamiento-termico-menorca', label: 'thermal insulation' },
+  seoP2Mid: ' of thick walls and fight winter condensation (Menorca is climate zone B3 per CTE-HE), Placo ',
+  seoP2MidLink2: { href: '/en/falsos-techos-pladur-menorca', label: 'false ceilings' },
+  seoP2End: ' from 29€/m² modernise old spaces and integrate recessed LED lighting, and drywall partitions create functional layouts without touching load-bearing walls.',
+  seoP3Start: "The southern coast of Alaior — Son Bou, Torre Solí, Cala en Porter — is a major tourist engine with thousands of holiday apartments. Properties built from the 1970s to the 1990s need regular updates to stay competitive on Airbnb, Booking and Vrbo. Drywall is the perfect tool: fast ",
+  seoP3Link: { href: '/en/tabiques-pladur-menorca', label: 'distribution partitions' },
+  seoP3End: ' from 45€/m², between-season refurbishments that preserve neighbouring units, and acoustic insulation with 47 dB reduction (CTE DB-HR) to eliminate noise complaints between apartments.',
+  seoP4: 'The UIB campus at Can Salord generates demand from student housing, offices and shared workspaces. Drywall allows quick fit-outs: a 100 m² office can have new false ceilings, distribution partitions and acoustic insulation in under a week, minimising business downtime and letting premises open fast.',
+  seoP5: "Son Bou and Cala en Porter, with their direct exposure to the south wind and sea humidity, demand moisture-resistant H-type boards in bathrooms and kitchens, and rock wool insulation to control summer heat. In villages like Sa Plana and the Alaior centre, the priority is winter thermal comfort and discreet modernisation.",
+  seoP6: 'We work across the whole municipality of Alaior with a fixed, transparent quote. Our team knows the traditional Menorcan construction (thick walls, lime mortars, chestnut beams), the quirks of coastal resorts and the planning rules of the municipality.',
+  experienceTitle: 'Experience across Menorca',
+  experienceText: 'Drywall installers in Alaior since 2026 (parent company in Mallorca since 2004). We know village houses, coastal resorts and the challenges of traditional Menorcan construction.',
+  googleRating: 'New service · building local reviews',
+  servicesInTown: 'Services in Alaior',
+  proyecto1: "A 110 m² holiday apartment on the first line of Son Bou (Alaior), 50 metres from the beach, combined salt humidity and acoustic problems. The original plaster ceiling showed recurring damp marks each winter and the party walls transmitted noise from neighbouring units, generating regular complaints in peak season. The owner, with three apartments on short-term rental, needed a fast between-season refurbishment.",
+  proyecto2: 'A full false ceiling was installed with moisture-resistant H-type board across the whole apartment (110 m²), with recessed LED lighting in the living room and bedrooms. Both party walls were fitted with a Knauf drywall lining (15 mm board) and 48 mm high-density Isover mineral wool plus a perimeter acoustic band (35 m² of treated surface), giving a measured reduction of 48 dB between units. In the bathroom and kitchen, H-type board was also used on the linings to withstand the ambient humidity typical of the first line of coast.',
+  proyecto3: "The work was completed in 9 working days in November at an approximate cost of 7,600€. Humidity has not returned in the two seasons since, and the acoustic reduction eliminated noise complaints. The apartment's Airbnb rating rose from 4.1 to 4.6 stars, which let the owner raise the nightly rate by 12% and improve occupancy in mid season.",
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Alaior desde 2026 (SL matriz en Mallorca desde 2004). Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.',
+  municipio: 'Alaior',
+  heroTitle: 'Pladur en Alaior — Instalación y Reformas en el Interior de Menorca',
+  heroBadge: 'Alaior · Interior de Menorca',
+  heroDescription: 'Instaladores de pladur en Alaior (~9.700 habitantes), pueblo de interior y polo académico de Menorca con el campus UIB de Can Salord. Cubrimos también la costa sur: Son Bou, Torre Solí, Cala en Porter y Sa Plana. Sistemas Placo y Knauf, falsos techos desde 29€/m², tabiques desde 45€/m². Presupuesto gratuito en 24 horas.',
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Alaior',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de nuestros clientes en Alaior y la costa sur.',
+  proyectoTitulo: 'Reforma de apartamento costero en Son Bou (Alaior)',
+  ctaTitulo: '¿Tu proyecto está en Alaior o el sur de Menorca?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en todo el municipio.',
+  schemaName: 'Instalación de Pladur en Alaior',
+  schemaDescription: 'Instalación de pladur en Alaior y su costa sur: falsos techos desde 29€/m², tabiques desde 45€/m², sistemas Placo y Knauf en Son Bou, Torre Solí, Cala en Porter y Sa Plana.',
+  seoBadge: 'Especialistas en el interior de Menorca',
+  seoTitle: 'Reformas con pladur en Alaior: tradición de pueblo y turismo costero',
+  seoP1: 'Alaior (~9.700 habitantes) es uno de los tres pueblos históricos del interior de Menorca y polo académico de la isla gracias al campus UIB de Can Salord. Su término llega hasta la costa sur, donde Son Bou (la playa más larga de Menorca), Torre Solí, Cala en Porter (sede de la legendaria Cova d\'en Xoroi) y Sa Plana concentran apartamentos turísticos y villas. Esta mezcla de casco tradicional, actividad académica y turismo activo hace que la demanda de pladur sea constante todo el año.',
+  seoP2: 'El centro histórico de Alaior alberga casas de pueblo con muros gruesos de piedra y cal, techos bajos de vigas de madera y distribuciones heredadas. Viviendas que hoy se rehabilitan como residencia habitual o como inversión se benefician enormemente del pladur: los trasdosados Knauf con lana de roca Isover de 60 mm mejoran el ',
+  seoP2MidLink: { href: '/aislamiento-termico-menorca', label: 'aislamiento térmico' },
+  seoP2Mid: ' de muros gruesos y combaten la condensación invernal (Menorca es zona climática B3 según CTE-HE), los ',
+  seoP2MidLink2: { href: '/falsos-techos-pladur-menorca', label: 'falsos techos' },
+  seoP2End: ' Placo desde 29€/m² modernizan estancias antiguas e integran iluminación LED empotrada, y los tabiques de pladur crean distribuciones funcionales sin tocar muros portantes.',
+  seoP3Start: 'La costa sur de Alaior —Son Bou, Torre Solí, Cala en Porter— es un motor turístico importante con miles de apartamentos vacacionales. Edificios de 1970-1990 necesitan actualizaciones cada 6-8 años para mantener la competitividad en Airbnb, Booking y Vrbo. El pladur es la herramienta perfecta: ',
+  seoP3Link: { href: '/tabiques-pladur-menorca', label: 'tabiques de distribución' },
+  seoP3End: ' Knauf desde 45€/m², reformas entre temporadas que preservan las viviendas colindantes y aislamiento acústico con reducción de 47 dB (CTE DB-HR) para eliminar las quejas por ruido entre apartamentos.',
+  seoP4: 'El campus UIB de Can Salord genera demanda desde el alquiler estudiantil, las oficinas y los espacios de trabajo compartido. El pladur permite fit-outs rápidos: un local de 100 m² puede tener falso techo nuevo, tabiques de distribución y aislamiento acústico en menos de una semana, minimizando el cierre del negocio y facilitando la apertura rápida del local.',
+  seoP5: 'Son Bou y Cala en Porter, con su exposición directa al viento del sur y a la humedad marina, exigen placa hidrófuga H en baños y cocinas, y lana de roca para controlar el calor estival. En núcleos como Sa Plana y el centro de Alaior la prioridad es el confort térmico invernal y la modernización discreta.',
+  seoP6: 'Trabajamos en todo el municipio de Alaior sin coste de desplazamiento para obras superiores a 500€. Nuestro equipo conoce la construcción tradicional menorquina (muros gruesos, morteros de cal, vigas de castaño), las particularidades de las urbanizaciones costeras y la normativa urbanística del municipio.',
+  experienceTitle: 'Experiencia en Menorca',
+  experienceText: 'Instaladores de pladur en Alaior desde 2026 (SL matriz en Mallorca desde 2004). Conocemos las casas de pueblo, las urbanizaciones costeras y los retos de la construcción tradicional menorquina.',
+  googleRating: 'Nuevo servicio · recogiendo reseñas locales',
+  servicesInTown: 'Servicios en Alaior',
+  proyecto1: 'Un apartamento turístico de 110 m² en primera línea de Son Bou (Alaior), a 50 m de la playa, combinaba problemas de humedad salina y acústica. El techo original de escayola mostraba manchas recurrentes de humedad cada invierno y las medianeras transmitían el ruido de las viviendas contiguas, generando quejas periódicas en temporada alta. El propietario, con tres apartamentos en alquiler vacacional, necesitaba una reforma rápida entre temporadas.',
+  proyecto2: 'Se instaló falso techo completo con placa hidrófuga Knauf H en toda la vivienda (110 m²) e iluminación LED empotrada en salón y dormitorios. En las dos medianeras se montó trasdosado Knauf con placa de 15 mm, lana mineral Isover de alta densidad de 48 mm y banda acústica perimetral (35 m² tratados), obteniendo una reducción medida de 48 dB entre viviendas. En baño y cocina se utilizó también placa H en los trasdosados para resistir la humedad ambiental típica de primera línea.',
+  proyecto3: 'Obra ejecutada en 9 días hábiles en noviembre por un total de 7.600 €. La humedad no ha reaparecido tras dos temporadas y la reducción acústica eliminó las quejas por ruido. La valoración en Airbnb subió de 4,1 a 4,6 estrellas, lo que permitió al propietario subir la tarifa nocturna un 12% y mejorar la ocupación en temporada media.',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaName}
+      description={t.schemaDescription}
+      serviceType={lang === 'en' ? 'Drywall installation' : 'Instalación de Pladur'}
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio={t.municipio}
+    zonas={zonas}
+    faqKey="alaior"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoBadge}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoTitle}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p>
+              {t.seoP2}<a href={t.seoP2MidLink.href}>{t.seoP2MidLink.label}</a>{t.seoP2Mid}<a href={t.seoP2MidLink2.href}>{t.seoP2MidLink2.label}</a>{t.seoP2End}
+            </p>
+            <p>
+              {t.seoP3Start}<a href={t.seoP3Link.href}>{t.seoP3Link.label}</a>{t.seoP3End}
+            </p>
+          </div>
+          <div class="space-y-5">
+            <p>{t.seoP4}</p>
+            <p>{t.seoP5}</p>
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.experienceTitle}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.experienceText}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-white/60 text-xs">{t.googleRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.servicesInTown}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyecto1}</p>
+      <p>{t.proyecto2}</p>
+      <p>{t.proyecto3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

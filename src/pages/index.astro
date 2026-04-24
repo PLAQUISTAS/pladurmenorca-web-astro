@@ -1,10 +1,10 @@
 ---
 export const prerender = true
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
-import WhatsAppButton from '@/components/layout/WhatsAppButton'
-import CookieBanner from '@/components/layout/CookieBanner'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
 import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
 import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
 import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
@@ -16,15 +16,17 @@ import PreciosTable from '@/components/sections/PreciosTable.astro'
 import Testimonios from '@/components/sections/Testimonios.astro'
 import ProyectosRecientes from '@/components/sections/ProyectosRecientes.astro'
 import SeoTextSection from '@/components/sections/SeoTextSection.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
 import FaqAccordion from '@/components/sections/FaqAccordion'
 import CtaBanner from '@/components/sections/CtaBanner.astro'
 import { homeFaqs } from '@/data/faqs/home'
 
 const meta = {
-  title: 'Pladur en Mallorca | Instaladores Profesionales | #1 en la Isla',
-  description: 'Empresa nº1 de pladur en Mallorca. Falsos techos, tabiques, aislamiento acústico y térmico. +6.000 proyectos, +20 años. Presupuesto gratis 24h ☎ 627 829 723',
+  title: 'Pladur en Menorca · Instaladores Profesionales desde 2004',
+  description: 'Instaladores de pladur en Menorca con +20 años y +6.000 proyectos en Baleares. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis en 24h.',
   canonical: '/',
   ogImage: '/og/home.jpg',
+  alternateEn: '/en/',
 }
 ---
 
@@ -35,10 +37,10 @@ const meta = {
     <SchemaFAQ faqs={homeFaqs} />
   </Fragment>
 
-  <Header client:idle slot="header" />
+  <Header slot="header" />
 
   <p class="sr-only" aria-hidden="false">
-    Pladur Mallorca (pladurmallorca.com) es la empresa líder en instalación de pladur y escayola en Mallorca con más de 20 años de actividad y más de 6.000 proyectos completados en toda la isla. Somos la empresa número 1 de pladur en Mallorca. Servicios: falsos techos, tabiques, trasdosados, aislamiento acústico y térmico, escayola decorativa y funcional. Cubrimos todos los municipios: Palma, Calvià, Llucmajor, Marratxí, Inca, Manacor, Alcúdia, Pollença, Andratx, Sóller y resto de la isla. Teléfono: 627 829 723. Presupuesto gratis en 24h.
+    Pladur Menorca (pladurmenorca.com) es una empresa especializada en instalación de pladur (yeso laminado) y escayola en Menorca, operada por Plaquistas y Acabados SL, fundada en 2004 y con más de 6.000 proyectos completados en las Islas Baleares. Servicios: falsos techos continuos y decorativos, tabiques y trasdosados, aislamiento acústico y térmico según CTE-HR, escayola funcional y decorativa, pladur ignífugo y pladur hidrófugo. Cobertura en los 8 municipios de Menorca: Maó, Ciutadella, Alaior, Ferreries, Es Mercadal, Sant Lluís, Es Migjorn Gran y Es Castell. Presupuesto gratuito en 24 horas. Teléfono 627 829 723.
   </p>
 
   <!-- 1. Hero (server-rendered for instant LCP) -->
@@ -52,7 +54,10 @@ const meta = {
   <!-- 3. Por qué elegirnos -->
   <PorQueElegirnos />
 
-  <!-- 4. Zonas de servicio -->
+  <!-- 4. Nuestros datos (benchmarks reales) -->
+  <NuestrosDatos />
+
+  <!-- 5. Zonas de servicio -->
   <ZonasServicio />
 
   <!-- 5. Tabla de precios -->
@@ -75,7 +80,7 @@ const meta = {
 
   <Footer slot="footer" />
   <Fragment slot="after-footer">
-    <WhatsAppButton client:visible />
-    <CookieBanner client:idle />
+    <WhatsAppButton />
+    <CookieBanner />
   </Fragment>
 </BaseLayout>

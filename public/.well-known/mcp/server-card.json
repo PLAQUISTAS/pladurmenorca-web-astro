@@ -1,0 +1,82 @@
+{
+  "serverInfo": {
+    "name": "pladur-menorca",
+    "version": "1.0.0",
+    "title": "Pladur Menorca",
+    "description": "Servidor MCP de Pladur Menorca, instaladores de pladur en Menorca desde 2004. Permite a agentes solicitar presupuestos de forma programática, consultar catálogo de servicios, precios orientativos y zonas de cobertura."
+  },
+  "protocolVersion": "2024-11-05",
+  "transport": {
+    "type": "streamable-http",
+    "url": "https://www.pladurmenorca.com/api/mcp"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "listChanged": false,
+      "subscribe": false
+    }
+  },
+  "tools": [
+    {
+      "name": "submit_quote_request",
+      "title": "Solicitar presupuesto",
+      "description": "Envía una solicitud real a Pladur Menorca. Llega al email del negocio. Rate limit: 20/día por IP."
+    },
+    {
+      "name": "get_service_status",
+      "title": "Estado del servicio"
+    },
+    {
+      "name": "get_business_info",
+      "title": "Información del negocio"
+    },
+    {
+      "name": "get_services_catalog",
+      "title": "Catálogo de servicios y precios"
+    },
+    {
+      "name": "get_coverage_areas",
+      "title": "Zonas de cobertura"
+    }
+  ],
+  "resources": [
+    {
+      "uri": "https://www.pladurmenorca.com/llms-full.txt",
+      "name": "services-description",
+      "mimeType": "text/plain"
+    },
+    {
+      "uri": "https://www.pladurmenorca.com/llms.txt",
+      "name": "services-summary",
+      "mimeType": "text/plain"
+    },
+    {
+      "uri": "https://www.pladurmenorca.com/api/openapi.json",
+      "name": "openapi-spec",
+      "mimeType": "application/json"
+    }
+  ],
+  "authentication": {
+    "required": false,
+    "type": "none"
+  },
+  "rateLimits": {
+    "submit_quote_request": {
+      "perIpDaily": 20,
+      "perIpBurst": "1 req/s, burst 3"
+    }
+  },
+  "documentation": {
+    "openapi": "https://www.pladurmenorca.com/api/openapi.json",
+    "llmsTxt": "https://www.pladurmenorca.com/llms.txt",
+    "llmsFullTxt": "https://www.pladurmenorca.com/llms-full.txt"
+  },
+  "contact": {
+    "name": "Pladur Menorca",
+    "email": "info@plaquistas.com",
+    "url": "https://www.pladurmenorca.com"
+  }
+}

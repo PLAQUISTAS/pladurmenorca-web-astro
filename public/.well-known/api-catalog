@@ -1,0 +1,28 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://www.pladurmenorca.com/api/",
+      "service-desc": [
+        {
+          "href": "https://www.pladurmenorca.com/api/openapi.json",
+          "type": "application/openapi+json",
+          "title": "OpenAPI 3.1 specification"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://www.pladurmenorca.com/api/status",
+          "type": "application/json",
+          "title": "Service health check"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://www.pladurmenorca.com/llms-full.txt",
+          "type": "text/plain",
+          "title": "Service description for AI agents"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pladur Menorca — Public API",
+    "version": "1.0.0",
+    "description": "API pública de Pladur Menorca. Permite a agentes e integraciones enviar solicitudes de presupuesto y comprobar el estado del servicio. Empresa de instalación de pladur en Menorca (SL matriz Mallorca desde 2004; servicio Menorca desde 2026).",
+    "contact": {
+      "name": "Pladur Menorca",
+      "url": "https://www.pladurmenorca.com/contacto",
+      "email": "info@plaquistas.com"
+    },
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://www.pladurmenorca.com",
+      "description": "Production"
+    }
+  ],
+  "security": [],
+  "paths": {
+    "/api/contacto": {
+      "post": {
+        "summary": "Enviar solicitud de presupuesto o contacto",
+        "description": "Envía una solicitud a Pladur Menorca. Se procesa en menos de 24 horas en horario laboral (L-V 8:00-18:00, S 8:00-14:00).\n\n**Rate limiting (2 capas):**\n- **Nginx (burst)**: 1 req/s sostenido por IP, burst de 3.\n- **Aplicación (quota dura)**: máximo 20 solicitudes por IP cada 24 horas. Al exceder: HTTP 429.\n\nPara agentes que necesiten mayor cuota, contactar por email: info@plaquistas.com.",
+        "operationId": "sendContactRequest",
+        "tags": ["Contact"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ContactRequest" },
+              "examples": {
+                "presupuesto": {
+                  "summary": "Solicitud de presupuesto típica",
+                  "value": {
+                    "nombre": "Juan García",
+                    "telefono": "612345678",
+                    "email": "juan@example.com",
+                    "descripcion": "Necesito presupuesto para falso techo en salón de 25m² con iluminación LED integrada. Zona Palma.",
+                    "tipo": "presupuesto",
+                    "privacidad": true
+                  }
+                },
+                "contactoRapido": {
+                  "summary": "Contacto rápido sin descripción extensa",
+                  "value": {
+                    "nombre": "María López",
+                    "telefono": "+34 612 345 678",
+                    "mensaje": "Llamadme para un presupuesto, por favor.",
+                    "tipo": "rapido"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Solicitud recibida correctamente",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ContactResponse" }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos (validación Zod fallida)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit excedido",
+            "headers": {
+              "X-RateLimit-Remaining": {
+                "schema": { "type": "integer" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/status": {
+      "get": {
+        "summary": "Health check del servicio",
+        "description": "Endpoint de status para verificar que la API está operativa.",
+        "operationId": "getStatus",
+        "tags": ["Meta"],
+        "responses": {
+          "200": {
+            "description": "Servicio operativo",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/StatusResponse" },
+                "example": {
+                  "status": "ok",
+                  "service": "Pladur Menorca",
+                  "timestamp": "2026-04-18T10:00:00.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ContactRequest": {
+        "type": "object",
+        "required": ["nombre", "telefono"],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100,
+            "description": "Nombre completo del solicitante",
+            "example": "Juan García"
+          },
+          "telefono": {
+            "type": "string",
+            "minLength": 7,
+            "maxLength": 20,
+            "pattern": "^[+\\d\\s\\-().]{7,20}$",
+            "description": "Teléfono de contacto. Acepta dígitos, espacios, guiones, paréntesis y prefijo internacional.",
+            "example": "612345678"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 200,
+            "description": "Email opcional. Recomendado para recibir el presupuesto detallado por escrito.",
+            "example": "juan@example.com"
+          },
+          "descripcion": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Descripción detallada del proyecto (superficie, tipo de obra, ubicación, plazo…)"
+          },
+          "mensaje": {
+            "type": "string",
+            "maxLength": 2000,
+            "description": "Mensaje corto (alternativa a descripcion para formularios rápidos)"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": ["presupuesto", "contacto", "rapido"],
+            "description": "Tipo de solicitud. 'presupuesto' = petición formal con visita técnica; 'contacto' = info general; 'rapido' = contacto rápido."
+          },
+          "privacidad": {
+            "type": "boolean",
+            "description": "Aceptación de la política de privacidad (RGPD). Debe ser true para solicitudes de presupuesto formales.",
+            "example": true
+          },
+          "paginaOrigen": {
+            "type": "string",
+            "maxLength": 200,
+            "description": "URL de la página desde la que se envió la solicitud (tracking).",
+            "example": "/presupuesto-pladur"
+          }
+        }
+      },
+      "ContactResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Solicitud recibida."
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Mensaje de error legible (en español)"
+          }
+        }
+      },
+      "StatusResponse": {
+        "type": "object",
+        "required": ["status", "service", "timestamp"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["ok"]
+          },
+          "service": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}

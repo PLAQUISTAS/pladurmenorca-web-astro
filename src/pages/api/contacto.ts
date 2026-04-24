@@ -16,7 +16,7 @@ const MAX_FILE_SIZE = 25 * 1024 * 1024 // 25MB
 const MAX_FILES = 5
 const MIN_SUBMIT_TIME_MS = 3000 // 3 seconds minimum
 
-const SENDER_NAME = 'Pladur Mallorca'
+const SENDER_NAME = 'Pladur Menorca'
 const INTERNAL_RECIPIENT = 'info@plaquistas.com'
 
 function getFileExtension(filename: string): string {
@@ -192,7 +192,7 @@ export const POST: APIRoute = async ({ request }) => {
     to: INTERNAL_RECIPIENT,
     from: fromAddress,
     replyTo: data.email || undefined,
-    subject: `PLADUR MALLORCA : ${data.nombre} — ${data.tipo === 'presupuesto' ? 'Presupuesto' : 'Contacto'}`,
+    subject: `PLADUR MENORCA : ${data.nombre} — ${data.tipo === 'presupuesto' ? 'Presupuesto' : 'Contacto'}`,
     html: buildInternalNotificationHtml(contactData, {
       hasAttachments: parsed.files.length > 0,
       attachmentNames,
@@ -223,7 +223,7 @@ export const POST: APIRoute = async ({ request }) => {
       await sendEmail({
         to: data.email,
         from: fromAddress,
-        subject: 'Hemos recibido tu solicitud — Pladur Mallorca',
+        subject: 'Hemos recibido tu solicitud — Pladur Menorca',
         html: buildClientConfirmationHtml(contactData),
         text: buildClientConfirmationText(contactData),
       }, gmailCredentials)

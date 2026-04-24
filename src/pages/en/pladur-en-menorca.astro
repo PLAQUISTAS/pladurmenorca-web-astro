@@ -1,0 +1,342 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import Button from '@/components/ui/Button.astro'
+import { getMenorcaFaqs } from '@/data/faqs/menorca'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const pageFaqs = getMenorcaFaqs(lang)
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall specialists covering all 8 municipalities of Menorca. Placo, Knauf and Lafarge. Fixed quote with crew travel and materials transport transparently included. Phone: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbPage: 'Drywall in Menorca',
+  heroBadge: 'Whole island · 8 dedicated municipality pages',
+  heroTitle: 'Drywall in Menorca — Installers Across the Whole Island',
+  heroDescription: 'We cover all 8 municipalities of Menorca with a fixed, transparent quote: crew travel and materials logistics from our Mallorca base are reflected upfront, so the price you see is the price you pay. Dedicated pages for Maó, Ciutadella, Alaior, Es Mercadal, Ferreries, Sant Lluís, Es Migjorn Gran and Es Castell. Quote in 24-48h with no obligation.',
+  ctaPrimary: 'Free quote in 24h',
+  h2Municipios: 'Municipalities where we are specialists',
+  badgeMunicipios: 'Our specialist areas',
+  pMunicipios: "We know the construction quirks of each area. Click your municipality to see specific solutions, covered neighbourhoods and local FAQs.",
+  zonasLabel: 'areas',
+  h2Seo: 'Drywall in Menorca: island-wide coverage with a transparent fixed quote',
+  badgeSeo: 'Island-wide coverage',
+  seoP1: 'We work across all 8 municipalities of Menorca with the same team and the same standard: <a href="/en/pladur-mao" class="text-foreground font-semibold hover:underline">Maó</a>, <a href="/en/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Ciutadella</a>, <a href="/en/pladur-alaior" class="text-foreground font-semibold hover:underline">Alaior</a>, <a href="/en/pladur-es-mercadal" class="text-foreground font-semibold hover:underline">Es Mercadal</a>, <a href="/en/pladur-ferreries" class="text-foreground font-semibold hover:underline">Ferreries</a>, <a href="/en/pladur-sant-lluis" class="text-foreground font-semibold hover:underline">Sant Lluís</a>, <a href="/en/pladur-es-migjorn-gran" class="text-foreground font-semibold hover:underline">Es Migjorn Gran</a> and <a href="/en/pladur-es-castell" class="text-foreground font-semibold hover:underline">Es Castell</a>. From the historic apartments of Maó to the luxury villas of Ciutadella, holiday apartments in Sant Lluís and rural properties across the island.',
+  h3Particular: 'Menorcan construction quirks',
+  seoP2: 'Menorca has a distinctive housing stock. The historic centres of <a href="/en/pladur-mao" class="text-foreground font-semibold hover:underline">Maó</a> and <a href="/en/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Ciutadella</a> have thick marès-stone walls, narrow staircases and centuries-old timber-beam ceilings that demand specialist knowledge. Coastal tourist areas — from <a href="/en/pladur-sant-lluis" class="text-foreground font-semibold hover:underline">Punta Prima and Binibeca</a> to <a href="/en/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Cala en Bosc and Son Xoriguer</a> — need fast between-season refurbishments (November–April) with deadlines locked in by contract.',
+  seoP3: 'Villages and rural properties in <a href="/en/pladur-alaior" class="text-foreground font-semibold hover:underline">Alaior</a>, <a href="/en/pladur-es-mercadal" class="text-foreground font-semibold hover:underline">Es Mercadal</a> (Fornells), <a href="/en/pladur-ferreries" class="text-foreground font-semibold hover:underline">Ferreries</a> and <a href="/en/pladur-es-migjorn-gran" class="text-foreground font-semibold hover:underline">Es Migjorn Gran</a> have their own challenges: irregular walls, humidity, difficult access and the need to respect heritage elements. We know every one of these scenarios — always to CTE DB-HE (thermal) and DB-HR (acoustic) specifications.',
+  h3Desplaz: 'Travel transparently included in the fixed quote',
+  seoP4: 'Our parent company is based in Mallorca, so crews travel to Menorca per project. Rather than adding a surprise charge at the end, we reflect the logistics (crew travel and materials transport) transparently inside the fixed quote — the price you see is the price you pay. Average travel time from Maó to any point on the island: 20-45 minutes. Consistent €/m² rate — the same work rate in Maó as in Ciutadella.',
+  seoP5: 'Materials logistics on an island has its quirks: everything arrives by ship, adding 3-8% over mainland pricing. We offset this with direct relationships with the main Menorca distributors and volume buying from the three market-leading brands: Placo (Saint-Gobain), Knauf and Lafarge.',
+  h3Servicios: 'Our services available across the island',
+  seoP6: 'In any Menorca municipality we offer the full drywall range: <a href="/en/falsos-techos-pladur-menorca" class="text-foreground font-semibold hover:underline">false ceilings</a> — continuous and access-panel — with integrated LED lighting (from 30 €/m²), <a href="/en/tabiques-pladur-menorca" class="text-foreground font-semibold hover:underline">partition walls</a> to redistribute spaces without heavy works (from 46 €/m²), <a href="/en/aislamiento-acustico-menorca" class="text-foreground font-semibold hover:underline">acoustic insulation</a> with decoupled systems that cut noise by 45–55 dB (CTE DB-HR), and <a href="/en/aislamiento-termico-menorca" class="text-foreground font-semibold hover:underline">thermal insulation</a> with wall linings that lift home energy efficiency (CTE DB-HE).',
+  seoP7: 'We also specialise in <a href="/pladur-apartamentos-turisticos-menorca" class="text-foreground font-semibold hover:underline">holiday-rental refurbishments</a>, one of the highest-demand sectors in Menorca. Deadlines guaranteed by contract and delivery of the apartment ready to operate — within the 24–48 h window for quotes and a scheduled between-season execution.',
+  seoP8: 'All our work comes with a 1-year workmanship warranty. Materials carry the manufacturer warranty. Check our <a href="/precios-pladur-menorca" class="text-foreground font-semibold hover:underline">indicative prices</a> and request your tailored quote: it is free, fixed and delivered within 24–48 h of the site visit.',
+  sidebarTitle: 'All Menorca trusts us',
+  sidebarText: 'Drywall specialists for the whole island — 8 dedicated municipality pages. Backed by the SL matriz (founded 2004, 6,000 projects across the Balearic Islands).',
+  sidebarRating: '4.7/5 on Google',
+  sidebarKey: 'Key figures',
+  datos: [
+    { label: 'Municipalities', valor: '8' },
+    { label: 'Years of experience', valor: '+20' },
+    { label: 'Projects completed', valor: '+6,000' },
+    { label: 'Warranty', valor: '1 year' },
+    { label: 'Quote', valor: 'Free' },
+  ],
+  faqTitulo: 'Frequently asked questions about drywall in Menorca',
+  faqSubtitulo: 'Answers to the most common questions about our service across the island.',
+  ctaTitulo: 'Is your project anywhere in Menorca?',
+  ctaSubtitulo: 'Tell us where you are and we arrange a quote within 24 hours, no obligation.',
+} : {
+  srOnly: 'Pladur Menorca — especialistas en pladur con cobertura en los 8 municipios de la isla. Placo, Knauf y Lafarge. Presupuesto cerrado con desplazamiento del equipo y transporte de materiales incluidos de forma transparente. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbPage: 'Pladur en Menorca',
+  heroBadge: 'Toda la isla · 8 páginas dedicadas de municipio',
+  heroTitle: 'Pladur en Menorca — Instaladores en Toda la Isla',
+  heroDescription: 'Cubrimos los 8 municipios de Menorca con presupuesto cerrado y transparente: el desplazamiento del equipo y la logística de materiales desde nuestra SL matriz en Mallorca quedan reflejados desde el primer momento, para que el precio que ves sea el precio que pagas. Páginas dedicadas para Maó, Ciutadella, Alaior, Es Mercadal, Ferreries, Sant Lluís, Es Migjorn Gran y Es Castell. Presupuesto en 24-48h sin compromiso.',
+  ctaPrimary: 'Presupuesto gratis en 24h',
+  h2Municipios: 'Municipios donde somos especialistas',
+  badgeMunicipios: 'Nuestras zonas de especialización',
+  pMunicipios: 'Conocemos las particularidades constructivas de cada zona. Haz clic en tu municipio para ver soluciones específicas, barrios cubiertos y preguntas frecuentes locales.',
+  zonasLabel: 'zonas',
+  h2Seo: 'Pladur en Menorca: cobertura en toda la isla con presupuesto cerrado y transparente',
+  badgeSeo: 'Cobertura en toda la isla',
+  seoP1: 'Trabajamos en los 8 municipios de Menorca con el mismo equipo y el mismo estándar: <a href="/pladur-mao" class="text-foreground font-semibold hover:underline">Maó</a>, <a href="/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Ciutadella</a>, <a href="/pladur-alaior" class="text-foreground font-semibold hover:underline">Alaior</a>, <a href="/pladur-es-mercadal" class="text-foreground font-semibold hover:underline">Es Mercadal</a>, <a href="/pladur-ferreries" class="text-foreground font-semibold hover:underline">Ferreries</a>, <a href="/pladur-sant-lluis" class="text-foreground font-semibold hover:underline">Sant Lluís</a>, <a href="/pladur-es-migjorn-gran" class="text-foreground font-semibold hover:underline">Es Migjorn Gran</a> y <a href="/pladur-es-castell" class="text-foreground font-semibold hover:underline">Es Castell</a>. De los pisos históricos del casco antiguo de Maó a las villas de lujo de Ciutadella, apartamentos turísticos en Sant Lluís y casas de campo de toda la isla.',
+  h3Particular: 'Particularidades de la construcción menorquina',
+  seoP2: 'Menorca tiene un parque inmobiliario con identidad propia. Los cascos históricos de <a href="/pladur-mao" class="text-foreground font-semibold hover:underline">Maó</a> y <a href="/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Ciutadella</a> tienen muros de marès gruesos, escaleras estrechas y techos de vigas de madera centenarias que exigen conocimiento especializado. Las zonas turísticas costeras —desde <a href="/pladur-sant-lluis" class="text-foreground font-semibold hover:underline">Punta Prima y Binibeca</a> hasta <a href="/pladur-ciutadella" class="text-foreground font-semibold hover:underline">Cala en Bosc y Son Xoriguer</a>— necesitan reformas rápidas entre temporadas (noviembre-abril) con plazos pactados por contrato.',
+  seoP3: 'Los pueblos y casas rústicas de <a href="/pladur-alaior" class="text-foreground font-semibold hover:underline">Alaior</a>, <a href="/pladur-es-mercadal" class="text-foreground font-semibold hover:underline">Es Mercadal</a> (Fornells), <a href="/pladur-ferreries" class="text-foreground font-semibold hover:underline">Ferreries</a> y <a href="/pladur-es-migjorn-gran" class="text-foreground font-semibold hover:underline">Es Migjorn Gran</a> presentan retos específicos: muros irregulares, humedad, accesos complicados y la necesidad de respetar elementos patrimoniales. Llevamos resolviendo cada escenario con cumplimiento del CTE DB-HE (térmico) y DB-HR (acústico).',
+  h3Desplaz: 'Desplazamiento incluido de forma transparente en el presupuesto',
+  seoP4: 'Nuestra SL matriz está en Mallorca, así que los equipos se desplazan a Menorca según proyecto. En lugar de aplicar un cargo sorpresa al final de la obra, reflejamos la logística (desplazamiento del equipo y transporte de materiales) de forma transparente dentro del presupuesto cerrado: el precio que ves es el precio que pagas. Tiempo medio desde Maó a cualquier punto: 20-45 minutos. Tarifa €/m² consistente —el mismo precio de trabajo en Maó que en Ciutadella—.',
+  seoP5: 'La logística de materiales en una isla tiene particularidades: todo llega por barco, lo que implica un sobrecoste del 3-8 % respecto a precios peninsulares. Compensamos esa realidad con relaciones directas con los principales distribuidores de Menorca y compra en volumen a las tres marcas líderes: Placo (Saint-Gobain), Knauf y Lafarge.',
+  h3Servicios: 'Nuestros servicios disponibles en toda la isla',
+  seoP6: 'En cualquier municipio de Menorca ofrecemos la gama completa de pladur: <a href="/falsos-techos-pladur-menorca" class="text-foreground font-semibold hover:underline">falsos techos</a> continuos y registrables con LED integrado (desde 30 €/m²), <a href="/tabiques-pladur-menorca" class="text-foreground font-semibold hover:underline">tabiques de distribución</a> para redistribuir sin obra pesada (desde 46 €/m²), <a href="/aislamiento-acustico-menorca" class="text-foreground font-semibold hover:underline">aislamiento acústico</a> con sistemas desacoplados que reducen 45-55 dB (CTE DB-HR), y <a href="/aislamiento-termico-menorca" class="text-foreground font-semibold hover:underline">aislamiento térmico</a> con trasdosados que mejoran la eficiencia energética (CTE DB-HE).',
+  seoP7: 'También somos especialistas en <a href="/pladur-apartamentos-turisticos-menorca" class="text-foreground font-semibold hover:underline">reformas de apartamentos turísticos</a>, uno de los sectores con mayor demanda en Menorca. Plazos garantizados por contrato y entrega del apartamento listo para operar —dentro de la ventana de 24-48 h para presupuestos y ejecución programada entre temporadas—.',
+  seoP8: 'Todos nuestros trabajos incluyen garantía de 1 año en mano de obra. Los materiales tienen garantía del fabricante. Consulta nuestros <a href="/precios-pladur-menorca" class="text-foreground font-semibold hover:underline">precios orientativos</a> y solicita tu presupuesto personalizado: es gratuito, cerrado y lo recibirás en 24-48 h tras la visita técnica.',
+  sidebarTitle: 'Toda Menorca confía en nosotros',
+  sidebarText: 'Especialistas en pladur en los 8 municipios de la isla. Respaldados por la SL matriz (fundada en 2004, +6.000 proyectos en Baleares).',
+  sidebarRating: '4.7/5 en Google',
+  sidebarKey: 'Datos clave',
+  datos: [
+    { label: 'Municipios', valor: '8' },
+    { label: 'Años de experiencia', valor: '+20' },
+    { label: 'Proyectos completados', valor: '+6.000' },
+    { label: 'Garantía', valor: '1 año' },
+    { label: 'Presupuesto', valor: 'Gratis' },
+  ],
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Menorca',
+  faqSubtitulo: 'Respuestas a las dudas más habituales sobre nuestro servicio en toda la isla.',
+  ctaTitulo: '¿Tu proyecto está en cualquier punto de Menorca?',
+  ctaSubtitulo: 'Dinos dónde estás y te enviamos el presupuesto en 24 horas, sin compromiso.',
+}
+
+const municipiosConPagina = lang === 'en' ? [
+  { nombre: 'Maó', href: '/en/pladur-mao', comarca: 'Capital · Old Town, Port, Sant Climent', zonas: 5 },
+  { nombre: 'Ciutadella', href: '/en/pladur-ciutadella', comarca: 'West · Historic & south coast', zonas: 5 },
+  { nombre: 'Alaior', href: '/en/pladur-alaior', comarca: 'Inland · UIB campus · Son Bou', zonas: 3 },
+  { nombre: 'Es Mercadal', href: '/en/pladur-es-mercadal', comarca: 'Centre · Fornells · North coast', zonas: 3 },
+  { nombre: 'Ferreries', href: '/en/pladur-ferreries', comarca: 'Inland · Santa Galdana', zonas: 3 },
+  { nombre: 'Sant Lluís', href: '/en/pladur-sant-lluis', comarca: 'South · Binibeca · Expat area', zonas: 3 },
+  { nombre: 'Es Migjorn Gran', href: '/en/pladur-es-migjorn-gran', comarca: 'Small village · Sant Tomàs', zonas: 2 },
+  { nombre: 'Es Castell', href: '/en/pladur-es-castell', comarca: 'Historic · Cala Sant Esteve', zonas: 2 },
+] : [
+  { nombre: 'Maó', href: '/pladur-mao', comarca: 'Capital · Centro Histórico, Puerto, Sant Climent', zonas: 5 },
+  { nombre: 'Ciutadella', href: '/pladur-ciutadella', comarca: 'Oeste · Casco antiguo y costa sur', zonas: 5 },
+  { nombre: 'Alaior', href: '/pladur-alaior', comarca: 'Interior · Campus UIB · Son Bou', zonas: 3 },
+  { nombre: 'Es Mercadal', href: '/pladur-es-mercadal', comarca: 'Centro · Fornells · Costa norte', zonas: 3 },
+  { nombre: 'Ferreries', href: '/pladur-ferreries', comarca: 'Interior · Santa Galdana', zonas: 3 },
+  { nombre: 'Sant Lluís', href: '/pladur-sant-lluis', comarca: 'Sur · Binibeca · Zona expat', zonas: 3 },
+  { nombre: 'Es Migjorn Gran', href: '/pladur-es-migjorn-gran', comarca: 'Pueblo pequeño · Sant Tomàs', zonas: 2 },
+  { nombre: 'Es Castell', href: '/pladur-es-castell', comarca: 'Histórico · Cala Sant Esteve', zonas: 2 },
+]
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: lang === 'en' ? 'Drywall installers in Menorca by municipality' : 'Instaladores de Pladur en Menorca por Municipio',
+  description: lang === 'en' ? 'List of Menorca municipalities where we offer specialist drywall installation.' : 'Listado de municipios de Menorca donde ofrecemos servicio especializado de instalación de pladur.',
+  numberOfItems: municipiosConPagina.length,
+  itemListElement: municipiosConPagina.map((m, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: lang === 'en' ? `Drywall in ${m.nombre}` : `Pladur en ${m.nombre}`,
+    url: `${siteConfig.url}${m.href}`,
+  })),
+}
+
+const breadcrumbs = [
+  { label: t.breadcrumbHome, href: lang === 'en' ? '/en' : '/' },
+  { label: t.breadcrumbPage, href: lang === 'en' ? '/en/pladur-en-menorca' : '/pladur-en-menorca' },
+]
+
+const meta = lang === 'en' ? {
+  title: 'Drywall in Menorca | 8 Municipalities | Free 24h Quote',
+  description: 'Drywall installation across Menorca: Maó, Ciutadella, Alaior, Es Mercadal, Ferreries, Sant Lluís, Es Migjorn Gran, Es Castell. Transparent fixed quote with logistics included. Free quote in 24h.',
+  canonical: '/en/pladur-en-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-en-menorca',
+} : {
+  title: 'Pladur en Menorca | 8 Municipios | Presupuesto 24h',
+  description: 'Pladur en toda Menorca: Maó, Ciutadella, Alaior, Es Mercadal, Ferreries, Sant Lluís, Es Migjorn Gran y Es Castell. Presupuesto cerrado con desplazamiento incluido de forma transparente. Respuesta en 24 h.',
+  canonical: '/pladur-en-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-en-menorca',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={lang === 'en' ? 'Drywall installation across Menorca' : 'Instalación de Pladur en toda Menorca'}
+      description={lang === 'en' ? 'Island-wide drywall installation service in Menorca: false ceilings from €30/m², partitions from €46/m², acoustic and thermal insulation. Coverage across 8 municipalities with a transparent fixed quote — crew travel and materials logistics already included.' : 'Servicio de instalación de pladur en toda la isla de Menorca: falsos techos desde 30€/m², tabiques desde 46€/m², aislamiento acústico y térmico. Cobertura en 8 municipios con presupuesto cerrado: desplazamiento y logística incluidos de forma transparente.'}
+      serviceType={lang === 'en' ? 'Drywall installation' : 'Instalación de Pladur'}
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+    <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? '/pladur-en-menorca' : '/en/pladur-en-menorca'} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <!-- 1. Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            {t.heroBadge}
+          </span>
+          <h1 aria-label={t.heroTitle} class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.heroTitle}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            {t.heroDescription}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button href={p('/presupuesto-pladur')} variant="primary" size="lg" withArrow ariaLabel={t.ctaPrimary}>
+              {t.ctaPrimary}
+            </Button>
+            <Button href={`tel:${siteConfig.phoneRaw}`} variant="secondary" size="lg" ariaLabel={`Teléfono ${siteConfig.phone}`}>
+              <svg class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Municipios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-14 max-w-3xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.badgeMunicipios}
+        </span>
+        <h2 aria-label={t.h2Municipios} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.h2Municipios}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.pMunicipios}
+        </p>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5 stagger-children">
+        {municipiosConPagina.map((m) => (
+          <div>
+            <a
+              href={m.href}
+              aria-label={m.nombre}
+              class="group block bg-white/70 rounded-3xl border border-warm-border/50 p-6 shadow-soft hover:shadow-soft-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <p class="font-bold text-foreground text-lg mb-1 flex items-center justify-between">
+                {m.nombre}
+                <svg class="size-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,transform] duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </p>
+              <p class="text-xs text-muted mb-3">{m.comarca}</p>
+              <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-surface text-foreground text-[11px] font-semibold">
+                {m.zonas} {t.zonasLabel}
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Texto SEO -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-8">
+          <div>
+            <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+              {t.badgeSeo}
+            </span>
+            <h2 aria-label={t.h2Seo} class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.h2Seo}
+            </h2>
+          </div>
+          <div class="max-w-none text-muted space-y-5">
+            <p set:html={t.seoP1} />
+
+            <h3 class="text-xl font-bold text-foreground pt-2">{t.h3Particular}</h3>
+            <p set:html={t.seoP2} />
+            <p set:html={t.seoP3} />
+
+            <h3 class="text-xl font-bold text-foreground pt-2">{t.h3Desplaz}</h3>
+            <p set:html={t.seoP4} />
+            <p>{t.seoP5}</p>
+
+            <h3 class="text-xl font-bold text-foreground pt-2">{t.h3Servicios}</h3>
+            <p set:html={t.seoP6} />
+            <p set:html={t.seoP7} />
+            <p set:html={t.seoP8} />
+          </div>
+        </div>
+        <div class="lg:col-span-4">
+          <div class="sticky top-28 space-y-6">
+            <div class="bg-foreground rounded-3xl p-8 text-white">
+              <p class="font-bold text-lg mb-2">{t.sidebarTitle}</p>
+              <p class="text-white/70 text-sm leading-relaxed">
+                {t.sidebarText}
+              </p>
+              <div class="mt-4 flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/70 text-xs">{t.sidebarRating}</span>
+              </div>
+            </div>
+            <div class="bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-soft">
+              <p class="font-bold text-foreground text-sm mb-4 uppercase tracking-wider">{t.sidebarKey}</p>
+              <div class="space-y-0">
+                {t.datos.map((item) => (
+                  <div class="flex justify-between items-center py-3 border-b border-warm-border/60 last:border-0">
+                    <span class="text-muted text-sm">{item.label}</span>
+                    <span class="text-foreground font-bold text-sm">{item.valor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. PreciosTable resumen -->
+  <PreciosTable lang={lang} variant="resumen" />
+
+  <!-- 5. FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitulo}
+    subtitulo={t.faqSubtitulo}
+  />
+
+  <!-- 6. CtaBanner -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitulo}
+    subtitulo={t.ctaSubtitulo}
+  />
+
+  <ServiciosRelacionados currentPath="/pladur-en-menorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

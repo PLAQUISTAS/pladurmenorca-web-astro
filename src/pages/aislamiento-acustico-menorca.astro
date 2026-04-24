@@ -1,0 +1,764 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import Container from '@/components/ui/Container.astro'
+import { getAislamientoAcusticoFaqs } from '@/data/faqs/aislamiento-acustico'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('aislamiento-acustico-menorca')!
+const pageFaqs = getAislamientoAcusticoFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Acoustic Insulation in Menorca | Drywall | From €6/m²',
+  description: 'Drywall acoustic insulation in Menorca: Rw 40–55 dB, CTE-HR compliant. Wall linings from €6/m², full partitions from €52/m². Free quote in 24h.',
+  canonical: '/en/aislamiento-acustico-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/aislamiento-acustico-menorca',
+} : {
+  title: 'Aislamiento Acústico en Menorca | Pladur | Desde 6€/m²',
+  description: 'Aislamiento acústico con pladur en Menorca: Rw 40-55 dB, cumplimiento CTE-HR. Trasdosados desde 6€/m², tabiques completos desde 52€/m². Presupuesto en 24h.',
+  canonical: '/aislamiento-acustico-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/aislamiento-acustico-menorca',
+}
+
+const alternateHref = lang === 'en' ? '/aislamiento-acustico-menorca' : '/en/aislamiento-acustico-menorca'
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — acoustic insulation across Menorca. Rw 40–55 dB reduction in walls, ceilings and floors with Placo, Knauf, Isover and Rockwool systems. Backed by the SL matriz (Mallorca, 2004) with 6,000+ projects across the Balearic Islands. Prices from €6/m² (wall lining) to €52/m² (full acoustic partition). CTE-HR certified. Phone: 627 829 723.',
+  heroSubtitle: 'We cut noise by 40 to 55 dB with certified systems',
+  heroDescription: 'Drywall acoustic insulation in Menorca for hotels, homes, offices and bars: decoupled partitions (Rw 50–55 dB), anti-vibration false ceilings and floating floors with Rockwool and Isover. Full CTE-HR (DB-HR) compliance. Wall linings from €6/m², full partitions from €52/m².',
+  heroBadges: ['40–55 dB reduction', 'CTE-HR', 'All Menorca'],
+  ctaPrimario: 'Request a free quote',
+  ctaCallPrefix: 'Call:',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Acoustic Insulation',
+  schemaHowToName: 'How to soundproof a wall with drywall',
+  schemaHowToDescription: 'Wall soundproofing process with drywall wall lining in six steps: from acoustic diagnosis to final verification.',
+  schemaSteps: [
+    { name: 'Acoustic diagnosis', text: 'The noise source, transmission type (airborne or impact) and sound level are assessed to determine the optimal solution.' },
+    { name: 'Solution design', text: 'The appropriate wall-lining system is selected: type of board (standard, high-density or double), insulation (mineral wool, rockwool) and required thickness.' },
+    { name: 'Installation of independent structure', text: 'The metal framework is built with resilient bands and acoustic dampers, decoupled from the existing wall to break transmission.' },
+    { name: 'Placement of absorbent material', text: 'Mineral wool or rockwool is fitted into the cavities, ensuring full coverage with no gaps that would compromise insulation.' },
+    { name: 'Installation of acoustic boards', text: 'High-density laminated plasterboards are screwed on, sealing joints and meetings with flexible acoustic mastic.' },
+    { name: 'Verification and finish', text: 'It is checked that no acoustic bridges remain, joints are treated and the surface is left ready to paint.' },
+  ],
+  schemaOffers: [
+    { name: 'Basic acoustic wall lining', description: 'Acoustic wall lining with standard board and 40 mm mineral wool. Reduction of up to 10 dB. Price per m².' },
+    { name: 'Premium acoustic wall lining', description: 'Wall lining with double high-density board and 60 mm rockwool. Reduction of up to 20 dB. Price per m².' },
+    { name: 'Ceiling acoustic insulation', description: 'Acoustic false ceiling with anti-vibration system and mineral wool. Price per m².' },
+    { name: 'Complete acoustic partition', description: 'Dividing partition with double board per face and internal insulation for maximum soundproofing. Price per m².' },
+  ],
+  sectionIntroEyebrow: 'Key concepts',
+  sectionIntroTitle: 'Acoustic insulation vs soundproofing: what is the difference?',
+  intro1Prefix: 'These two terms are often used as synonyms but describe technically distinct concepts.',
+  intro1Bold: 'Acoustic insulation',
+  intro1Tail: 'measures how much airborne or impact sound a construction element (wall, ceiling, slab) blocks between two rooms, expressed in Rw or DnT,A decibels under UNE-EN ISO 717-1. It is what every drywall system we build targets: double-board partitions (Rw 50–55 dB), ceilings with anti-vibration suspension (+8–15 dB impact) and wall linings with 40–80 mm Isover or Rockwool mineral wool.',
+  citaTexto: '"Airborne sound insulation between protected rooms (homes) and any other room in the building shall not be less than 50 dBA"',
+  citaFuente: '— CTE-HR, Table 2.1, Airborne sound insulation values',
+  intro2Prefix: 'By contrast,',
+  intro2Bold: 'soundproofing',
+  intro2Tail: ', in the strict sense, means making a space effectively impermeable to outgoing sound — Rw above 60 dB. Typical of recording studios, engine test rigs or translation booths, it requires box-in-box systems with full-room flotation on Sylomer or Regupol mounts, and costs from €150 to €300/m² installed.',
+  intro3: 'For 95% of projects in Menorca — flats with noisy neighbours in Maó, hotels next to Cova d’en Xoroi or Cales Fonts, holiday apartments in Son Bou or Arenal d’en Castell, offices adjoining workshops in the Maó industrial area — drywall acoustic insulation hits Rw 40–55 dB, clears the CTE-HR DB-HR minimums (50 dB between dwellings, 50 dB between hotel rooms) and costs 5–10× less than a full box-in-box system.',
+  verTambien: 'See also:',
+  linkInstalacion: 'drywall installation services in Menorca',
+  linkTabiques: 'acoustic drywall partitions',
+  linkFalsosTechos: 'acoustic false ceilings',
+  sidebarBadge: 'Free quote',
+  sidebarTitle: 'Let’s put an end to your neighbours’ noise',
+  sidebarDesc: 'On-site acoustic assessment in Menorca within 24–48h. We specify the system (Rw, materials, cost) and send the quote within 24h.',
+  sidebarOnlineCta: 'Request a quote online',
+  sidebarReduccionTitulo: 'Reduction we achieve:',
+  sidebarReduccion: [
+    { label: 'Basic partition with wool', valor: '40–45 dB' },
+    { label: 'Double-board partition', valor: '50–55 dB' },
+    { label: 'Anti-vibration ceiling', valor: '+8–15 dB' },
+    { label: 'Box-in-box system', valor: '55–65 dB' },
+  ],
+  tiposRuidoEyebrow: 'Problem analysis',
+  tiposRuidoTitle: 'Types of noise: airborne vs impact',
+  ruidoAereoTitle: 'Airborne noise',
+  ruidoAereoDesc1: 'Travels through air and excites walls, ceilings and floors into vibrating. Typical sources: voices (55–75 dB), TV and music systems (70–95 dB), live music from bars (90–105 dB) and nightlife traffic.',
+  ruidoAereoDesc2: 'In Menorca, airborne noise peaks in tourist-driven zones (Cova d’en Xoroi and Cala en Porter in Alaior, Cales Fonts in Es Castell, Son Bou and Arenal d’en Castell), in the historic centres of Maó and Ciutadella (bars, restaurants, live music) and in multi-family blocks with shift-working neighbours. A decoupled drywall partition with four BA13 boards, 60–80 mm Rockwool and a resilient perimeter band reaches Rw 50–55 dB — the most cost-efficient solution for airborne sources.',
+  ruidoAereoSolucion: 'Solution: decoupled partitions + double board',
+  ruidoImpactoTitle: 'Impact noise',
+  ruidoImpactoDesc1: 'Generated when an object hits or walks on the slab, transmitting vibration directly through the building structure. Typical sources: footsteps (up to L\'nT,w 70 dB in old floors), falling objects, chairs dragged on tile floors, washing machines and heat pumps.',
+  ruidoImpactoDesc2: 'Impact noise is the hardest to fight because it runs through the concrete slab itself. The effective solutions are a floating floor in the source flat (−15 to −25 dB impact) or a false ceiling with anti-vibration hangers (Isomax, Vibrafix) in the receiving flat (+8–15 dB). In rented flats in Maó, Ciutadella or Alaior, only the receiving side is available, which makes the anti-vibration suspended ceiling the standard retrofit.',
+  ruidoImpactoSolucion: 'Solution: false ceiling with anti-vibration suspension',
+  fuentesTitulo: 'Common sources of noise in Menorca',
+  fuentesDesc: 'Menorca has a noise profile driven by tourism. Cova d’en Xoroi (Cala en Porter), Cales Fonts in Es Castell, the Fornells gastronomy hub, Son Bou, Arenal d’en Castell, Cala Galdana and the historic centre of Ciutadella record night-time sound levels of 75–95 dBA during the May-to-October high season, well above the 45 dBA nighttime limit in the Balearic noise ordinance. Hotels and holiday apartments in these areas are our main acoustic clients, both to shield guests from outside noise (Rw ≥ 50 dB on facades) and to insulate adjoining rooms. Acoustic refurbishment works concentrate from October to March, outside the tourist season.',
+  solucionesEyebrow: 'Our solutions',
+  solucionesTitle: 'Drywall soundproofing solutions',
+  solucionesIntro: 'Three drywall systems covering the full noise spectrum: decoupled partitions (airborne), anti-vibration suspended ceilings (impact and airborne) and floating floors (impact). Prices from €6/m² to €52/m² installed.',
+  solucionesCountLabel: '3 specialised systems',
+  sistemasMini: [
+    { label: 'Decoupled partitions', valor: '50–55 dB' },
+    { label: 'Anti-vibration ceilings', valor: '+8–15 dB' },
+    { label: 'Floating floors', valor: '15–25 dB' },
+  ],
+  sistemasMiniNota: 'All systems comply with Spain’s CTE-HR regulations in force.',
+  soluciones: [
+    {
+      titulo: 'Decoupled partitions for airborne noise between spaces',
+      desc: 'The most effective system for reducing airborne noise between rooms, dwellings or adjoining premises on the horizontal. A drywall partition is built mechanically decoupled from the structure by resilient bands along floor, ceiling and side walls. The 70–100 mm air cavity is filled with high-density mineral wool (≥ 40 kg/m³, Isover Arena or Rockwool Confortpan), and two boards of different thickness (BA13 + BA15) are fitted on each face to break mass coincidence. Certified Rw 50–55 dB, 3–8 dB above the CTE-HR minimum (50 dB between dwellings, 50 dB between hotel rooms).',
+      reduccion: '50–55 dB',
+      precio: 'From €52/m²',
+      ideal: 'Separation between dwellings, hotels, offices',
+      materiales: ['Studs with resilient band', '60–80 mm mineral wool', 'Double BA13/BA15 board', 'Full perimeter sealing'],
+    },
+    {
+      titulo: 'Suspended false ceilings with anti-vibration system',
+      desc: 'For impact noise from the floor above (footsteps, drops, dragged furniture) and for airborne noise travelling through the slab. Uses anti-vibration hangers (Isomax, Vibrafix or Placo Stil F 530) that mechanically decouple the new ceiling from the original slab, blocking structure-borne transmission. With 60 mm Rockwool in the air cavity and a double BA15 board, the system cuts impact noise by 8–15 dB (L\'nT,w) and airborne noise by 10–18 dB versus the bare slab. Standard spec in hotel and holiday-apartment refurbishments across Menorca.',
+      reduccion: '+8–15 dB impact / +10–18 dB airborne',
+      precio: 'From €35/m²',
+      ideal: 'Flats with noisy upstairs neighbours, hotels',
+      materiales: ['Anti-vibration hangers', '60 mm mineral wool', 'Double BA15 board', 'Anti-vibration hanger profile'],
+    },
+    {
+      titulo: 'Floating floors for impact noise',
+      desc: 'The most effective solution for impact noise, at the cost of 4–8 cm of headroom. A 20–40 mm layer of damping material — compact Rockwool Floorrock, high-density expanded polyethylene or specialised Regupol or Sylomer sheet — is laid on top of the original slab, then a reinforced cement screed and the finished floor are built on top. Because the screed “floats” on the damping layer, impacts do not reach the slab: L\'nT,w drops by 15–25 dB. Usually combined with an anti-vibration false ceiling in the flat below for the best results.',
+      reduccion: '15–25 dB impact',
+      precio: 'From €10/m²',
+      ideal: 'When renewing the floor, new flat',
+      materiales: ['Compact rockwool', 'Damping underlay', 'Separator layer', 'Custom floor'],
+    },
+  ],
+  statReduccion: 'Reduction',
+  statPrecio: 'From',
+  statIdeal: 'Ideal for',
+  guiaEyebrow: 'Quick guide',
+  guiaTitle: 'Which solution do you need?',
+  guiaIntro: 'Identify your noise issue and find the most appropriate technical solution for your case.',
+  guiaRapida: [
+    { problema: 'Neighbours’ voices through the wall', solucion: 'Decoupled double-board partition', reduccion: '50–55 dB', precio: '€52/m²' },
+    { problema: 'Footstep noise from the flat above', solucion: 'Anti-vibration false ceiling', reduccion: '+8–15 dB', precio: '€35/m²' },
+    { problema: 'Music/party noise from above', solucion: 'Anti-vibration ceiling + mineral wool', reduccion: '+10–18 dB', precio: '€35/m²' },
+    { problema: 'Street noise in the bedroom', solucion: 'Facade wall lining + double board', reduccion: '40–50 dB', precio: '€6/m²' },
+    { problema: 'Rehearsal room / studio', solucion: 'Full box-in-box system', reduccion: '55–65 dB', precio: '€150–300/m²' },
+    { problema: 'Hotel next to a nightlife area', solucion: 'Combined partition + ceiling', reduccion: '55–60 dB', precio: 'Custom project' },
+  ],
+  guiaSolucionLabel: 'Solution',
+  ctaMidTitulo: 'Noise problems in your home or business in Menorca?',
+  ctaMidSubtitulo: 'We assess your case for free and propose the most efficient solution.',
+  normativaEyebrow: 'Legal framework',
+  normativaTitle: 'CTE-HR regulation: what does the law require?',
+  normativa1: 'The Spanish Building Code, in its Basic Document on Noise Protection (CTE DB-HR, Royal Decree 1371/2007 and later amendments), fixes the minimum acoustic insulation that every new-build and major refurbishment in Spain must meet, including all of Menorca and the Balearic Islands.',
+  normativa2: 'The key CTE-HR values that most affect refurbishment projects in Menorca are:',
+  requisitosLey: [
+    'Walls between dwellings: DnT,A ≥ 50 dBA (airborne noise)',
+    'Walls between dwellings and common areas: DnT,A ≥ 50 dBA',
+    "Impact noise between floors: L'nT,w ≤ 65 dB",
+    'Walls between hotel rooms: DnT,A ≥ 50 dBA',
+    'Commercial premises below dwellings: DnT,A ≥ 55 dBA',
+  ],
+  normativa3: 'Our drywall systems with double BA13/BA15 board and 45–80 mm mineral wool are certified under UNE-EN ISO 10140 to meet or exceed these values in the common configurations. For projects where CTE-HR is mandatory (new-build, premises legalisation, change of use) we supply the technical documentation of the installed system — ficha técnica from Placo, Knauf or Isover plus installation records, validated by the Colegio de Aparejadores de Baleares when required.',
+  materialesEyebrow: 'Materials',
+  materialesTitle: 'Insulating materials we use',
+  materiales: [
+    {
+      nombre: 'Mineral wool (glass wool)',
+      desc: 'Reference material for acoustic insulation in drywall systems (Isover Arena, Ursa Terra). High sound absorption across 125–4000 Hz, density of 26–70 kg/m³ depending on the application. Also delivers a thermal lambda of 0.032–0.040 W/m·K, improving the U-value of the wall or ceiling at the same time.',
+      propiedades: ['Multi-frequency absorption', 'Non-combustible', 'High density available'],
+    },
+    {
+      nombre: 'Rockwool',
+      desc: 'Denser than glass wool (Rockwool Confortpan, Alpharock), which makes it more efficient at low frequencies (bass from music systems, machinery, heat pumps). Density of 45–100 kg/m³, melting point above 1,000 °C. Reaction-to-fire class A1 under EN 13501-1.',
+      propiedades: ['Optimal at low frequencies', 'A1 fire behaviour', 'High density'],
+    },
+    {
+      nombre: 'Resilient bands and profiles',
+      desc: 'EPDM rubber or expanded polyethylene elements (Placo Placotherm, Knauf Acustik, Isolgomma Flex) that mechanically decouple the partition or ceiling frame from the slab. They are the critical piece that breaks the structural acoustic bridge between the drywall system and the existing building, adding 3–8 dB of effective Rw.',
+      propiedades: ['Structural decoupling', 'High-density EPDM rubber', 'Essential in acoustic systems'],
+    },
+  ],
+  galeriaAlts: [
+    'Acoustic insulation in a holiday apartment in the Balearics',
+    'Detail of framing and acoustic insulation with drywall',
+    'Bedroom with acoustic insulation and false ceiling in the Balearics',
+    'Bedroom with acoustic insulation and built-in drywall wardrobe in the Balearics',
+  ],
+  articulos: [
+    { slug: 'aislamiento-acustico-piso-menorca', titulo: 'Acoustic insulation in Menorca flats', descripcion: 'Complete guide to soundproof your flat in Menorca. Effective solutions to reduce noise between neighbours.' },
+    { slug: 'precio-insonorizar-piso-menorca', titulo: 'Cost of soundproofing a flat in Menorca', descripcion: 'Find out how much it costs to soundproof a flat in Menorca. Updated prices and influencing factors.' },
+    { slug: 'normativa-cte-hr-baleares', titulo: 'CTE-HR regulations in the Balearic Islands', descripcion: 'Everything about the CTE DB-HR noise protection regulations applied in the Balearic Islands.' },
+  ],
+  faqTitulo: 'Frequently asked questions about acoustic insulation',
+  faqSubtitulo: 'We answer the most common questions about drywall acoustic insulation in Menorca.',
+  banner: 'Need acoustic insulation between hotel bedrooms? Check our',
+  bannerBold: 'specialised hotel service',
+  bannerTail: 'with guaranteed CTE-HR compliance.',
+  bannerCta: 'See drywall for hotels',
+  ctaFinalTitulo: 'We put an end to noise in your home or business',
+  ctaFinalSubtitulo: 'Free quote in 24h. On-site acoustic survey anywhere in Menorca. Backed by the SL matriz (Mallorca, 2004).',
+} : {
+  srOnly: 'Pladur Menorca — aislamiento acústico en toda Menorca. Reducción Rw de 40 a 55 dB en paredes, techos y suelos con sistemas Placo, Knauf, Isover y Rockwool. Respaldo de la SL matriz (Mallorca, 2004) con más de 6.000 proyectos en Baleares. Precios desde 6€/m² (trasdosado) hasta 52€/m² (tabique acústico completo). CTE-HR certificado. Tel: 627 829 723.',
+  heroSubtitle: 'Reducimos el ruido entre 40 y 55 dB con sistemas certificados',
+  heroDescription: 'Aislamiento acústico con pladur en Menorca para hoteles, viviendas, locales y oficinas: tabiques desvinculados (Rw 50-55 dB), falsos techos antivibración y suelos flotantes con Rockwool e Isover. Cumplimiento total del CTE-HR (DB-HR). Trasdosados desde 6€/m², tabiques completos desde 52€/m².',
+  heroBadges: ['40-55 dB de reducción', 'CTE-HR', 'Toda Menorca'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaCallPrefix: 'Llamar:',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Aislamiento Acústico',
+  schemaHowToName: 'Cómo insonorizar una pared con pladur',
+  schemaHowToDescription: 'Proceso de insonorización de paredes con trasdosado de pladur en 6 pasos: desde el diagnóstico acústico hasta la verificación final del aislamiento.',
+  schemaSteps: [
+    { name: 'Diagnóstico acústico', text: 'Se evalúa el origen del ruido, tipo de transmisión (aérea o por impacto) y se mide el nivel sonoro para determinar la solución óptima.' },
+    { name: 'Diseño de la solución', text: 'Se selecciona el sistema de trasdosado adecuado: tipo de placa (estándar, alta densidad o doble), aislante (lana mineral, lana de roca) y espesor necesario.' },
+    { name: 'Instalación de estructura independiente', text: 'Se monta la perfilería metálica con bandas resilientes y amortiguadores acústicos, desacoplada de la pared existente para cortar la transmisión.' },
+    { name: 'Colocación de material absorbente', text: 'Se instala la lana mineral o de roca en las cavidades, asegurando cobertura total sin huecos que comprometan el aislamiento.' },
+    { name: 'Montaje de placas acústicas', text: 'Se atornillan las placas de yeso laminado de alta densidad, sellando juntas y encuentros con masilla acústica flexible.' },
+    { name: 'Verificación y acabado', text: 'Se comprueba que no existen puentes acústicos, se tratan las juntas y se deja la superficie lista para pintar.' },
+  ],
+  schemaOffers: [
+    { name: 'Trasdosado acústico básico', description: 'Trasdosado acústico con placa estándar y lana mineral de 40mm. Reducción de hasta 10dB. Precio por m².' },
+    { name: 'Trasdosado acústico premium', description: 'Trasdosado con doble placa de alta densidad y lana de roca de 60mm. Reducción de hasta 20dB. Precio por m².' },
+    { name: 'Aislamiento acústico de techo', description: 'Falso techo acústico con sistema antivibratorio y lana mineral. Precio por m².' },
+    { name: 'Tabique acústico completo', description: 'Tabique divisorio con doble placa por cara y aislante interior para máxima insonorización. Precio por m².' },
+  ],
+  sectionIntroEyebrow: 'Conceptos clave',
+  sectionIntroTitle: 'Aislamiento acústico vs insonorización: ¿qué diferencia hay?',
+  intro1Prefix: 'Estos dos términos se usan con frecuencia como sinónimos pero describen conceptos técnicamente distintos. El',
+  intro1Bold: 'aislamiento acústico',
+  intro1Tail: 'mide cuánto ruido aéreo o de impacto bloquea un elemento constructivo (pared, techo, forjado) entre dos recintos, expresado en decibelios Rw o DnT,A según UNE-EN ISO 717-1. Es lo que persiguen los sistemas de pladur que instalamos: tabiques de doble placa (Rw 50-55 dB), techos con suspensión antivibratoria (+8-15 dB impacto) y trasdosados con 40-80 mm de lana mineral Isover o Rockwool.',
+  citaTexto: '"El aislamiento acústico a ruido aéreo entre recintos protegidos (viviendas) y cualquier otro recinto del edificio no será menor que 50 dBA"',
+  citaFuente: '— CTE-HR, Tabla 2.1, Valores de aislamiento acústico a ruido aéreo',
+  intro2Prefix: 'La',
+  intro2Bold: 'insonorización',
+  intro2Tail: ', en sentido estricto, implica que un espacio sea prácticamente impermeable al sonido saliente, con Rw por encima de 60 dB. Es el caso de los estudios de grabación, salas de pruebas de motores o cabinas de traducción. Requiere sistemas box-in-box con flotación total de la sala sobre apoyos Sylomer o Regupol y costes de 150 a 300€/m² instalados.',
+  intro3: 'Para el 95% de los proyectos en Menorca —pisos con vecinos ruidosos en Maó, hoteles junto a Cova d’en Xoroi o Cales Fonts, apartamentos turísticos en Son Bou o Arenal d’en Castell, oficinas contiguas a talleres en el polígono de Maó—, el aislamiento acústico con pladur alcanza Rw de 40-55 dB, supera los mínimos del CTE-HR DB-HR (50 dB entre viviendas, 50 dB entre habitaciones de hotel) y cuesta entre 5 y 10 veces menos que un sistema box-in-box completo.',
+  verTambien: 'Ver también:',
+  linkInstalacion: 'servicios de instalación de pladur en Menorca',
+  linkTabiques: 'tabiques de pladur acústico',
+  linkFalsosTechos: 'falsos techos acústicos',
+  sidebarBadge: 'Presupuesto gratis',
+  sidebarTitle: 'Acabemos con el ruido de tus vecinos',
+  sidebarDesc: 'Evaluación acústica en obra en 24-48h en toda Menorca. Especificamos el sistema (Rw, materiales, precio) y enviamos presupuesto en 24h.',
+  sidebarOnlineCta: 'Pedir presupuesto online',
+  sidebarReduccionTitulo: 'Reducción que conseguimos:',
+  sidebarReduccion: [
+    { label: 'Tabique básico con lana', valor: '40-45 dB' },
+    { label: 'Tabique doble placa', valor: '50-55 dB' },
+    { label: 'Techo antivibración', valor: '+8-15 dB' },
+    { label: 'Sistema box-in-box', valor: '55-65 dB' },
+  ],
+  tiposRuidoEyebrow: 'Análisis del problema',
+  tiposRuidoTitle: 'Tipos de ruido: aéreo vs impacto',
+  ruidoAereoTitle: 'Ruido aéreo',
+  ruidoAereoDesc1: 'Se propaga por el aire y hace vibrar paredes, techos y suelos. Fuentes habituales: voces (55-75 dB), televisión y equipos de sonido (70-95 dB), música en directo de bares (90-105 dB) y tráfico de zonas de ocio.',
+  ruidoAereoDesc2: 'En Menorca el ruido aéreo se dispara en zonas de turismo intenso (Cova d’en Xoroi y Cala en Porter en Alaior, Cales Fonts en Es Castell, Son Bou y Arenal d’en Castell), en el casco histórico de Maó y Ciutadella (bares, restaurantes, música en directo) y en edificios plurifamiliares con vecinos a turnos. Un tabique de pladur desvinculado con cuatro placas BA13, lana de roca Rockwool de 60-80 mm y banda perimetral resiliente alcanza Rw 50-55 dB: la solución más rentable frente a fuentes aéreas.',
+  ruidoAereoSolucion: 'Solución: tabiques desvinculados + doble placa',
+  ruidoImpactoTitle: 'Ruido de impacto',
+  ruidoImpactoDesc1: 'Se genera cuando un objeto golpea o camina sobre el forjado y la vibración viaja directamente por la estructura del edificio. Fuentes típicas: pasos (hasta L\'nT,w 70 dB en forjados antiguos), caída de objetos, sillas arrastradas sobre baldosa, lavadoras y bombas de calor.',
+  ruidoImpactoDesc2: 'El ruido de impacto es el más difícil de combatir porque viaja por el propio forjado de hormigón. Las soluciones efectivas son el suelo flotante en el piso de origen (−15 a −25 dB de impacto) o el falso techo con suspensores antivibratorios (Isomax, Vibrafix) en el piso receptor (+8-15 dB). En pisos alquilados de Maó, Ciutadella o Alaior solo suele poder intervenirse desde el piso receptor, por lo que el falso techo antivibración es la reforma estándar.',
+  ruidoImpactoSolucion: 'Solución: falso techo con suspensión antivibratoria',
+  fuentesTitulo: 'Fuentes habituales de ruido en Menorca',
+  fuentesDesc: 'Menorca tiene una casuística de ruido específica derivada del turismo. Cova d’en Xoroi (Cala en Porter), Cales Fonts en Es Castell, el polo gastronómico de Fornells, Son Bou, Arenal d’en Castell, Cala Galdana y el casco histórico de Ciutadella registran niveles nocturnos de 75-95 dBA entre mayo y octubre, muy por encima del límite nocturno de 45 dBA de la ordenanza balear del ruido. Los hoteles y apartamentos turísticos de estas zonas son nuestros principales clientes acústicos, tanto para proteger al huésped del ruido exterior (Rw ≥ 50 dB en fachada) como para aislar habitaciones contiguas. Los trabajos de rehabilitación acústica se concentran de octubre a marzo, fuera de temporada.',
+  solucionesEyebrow: 'Nuestras soluciones',
+  solucionesTitle: 'Soluciones de aislamiento acústico con pladur',
+  solucionesIntro: 'Tres sistemas de pladur que cubren todo el espectro del ruido: tabiques desvinculados (aéreo), falsos techos antivibración (impacto y aéreo) y suelos flotantes (impacto). Precios instalados de 6 a 52€/m².',
+  solucionesCountLabel: '3 sistemas especializados',
+  sistemasMini: [
+    { label: 'Tabiques desvinculados', valor: '50-55 dB' },
+    { label: 'Techos antivibración', valor: '+8-15 dB' },
+    { label: 'Suelos flotantes', valor: '15-25 dB' },
+  ],
+  sistemasMiniNota: 'Todos los sistemas cumplen la normativa CTE-HR vigente para edificación en España.',
+  soluciones: [
+    {
+      titulo: 'Tabiques desvinculados para ruido aéreo entre espacios',
+      desc: 'El sistema más eficaz para reducir el ruido aéreo entre habitaciones, viviendas o locales colindantes en horizontal. Se construye un tabique de pladur desvinculado mecánicamente de la estructura mediante bandas resilientes en suelo, techo y paredes laterales. La cámara de 70-100 mm se rellena con lana mineral de alta densidad (≥ 40 kg/m³, Isover Arena o Rockwool Confortpan) y se atornillan dos placas de distinto espesor (BA13 + BA15) en cada cara para romper la coincidencia de masa. Certificado Rw 50-55 dB, 3-8 dB por encima del mínimo del CTE-HR (50 dB entre viviendas, 50 dB entre habitaciones de hotel).',
+      reduccion: '50-55 dB',
+      precio: 'Desde 52€/m²',
+      ideal: 'Separación entre viviendas, hoteles, oficinas',
+      materiales: ['Montantes con banda resiliente', 'Lana mineral 60-80mm', 'Doble placa BA13/BA15', 'Sellado perimetral total'],
+    },
+    {
+      titulo: 'Falsos techos suspendidos con sistema antivibración',
+      desc: 'Para el ruido de impacto del piso superior (pasos, caídas, arrastre de muebles) y para el ruido aéreo que viaja por el forjado. Utiliza suspensores antivibratorios (Isomax, Vibrafix o Placo Stil F 530) que desacoplan mecánicamente el nuevo techo del forjado original y cortan la transmisión estructural. Con 60 mm de lana Rockwool en cámara y doble placa BA15, el sistema reduce el ruido de impacto entre 8 y 15 dB (L\'nT,w) y el aéreo en 10-18 dB frente al forjado desnudo. Es la solución estándar en la rehabilitación de hoteles y apartamentos turísticos en Menorca.',
+      reduccion: '+8-15 dB impacto / +10-18 dB aéreo',
+      precio: 'Desde 35€/m²',
+      ideal: 'Pisos con vecinos de arriba ruidosos, hoteles',
+      materiales: ['Suspensores antivibratorios', 'Lana mineral 60mm', 'Doble placa BA15', 'Perfil cuelgue antivibración'],
+    },
+    {
+      titulo: 'Suelos flotantes para ruido de impacto',
+      desc: 'La solución más efectiva contra el ruido de impacto, a cambio de 4-8 cm de altura libre. Sobre el forjado original se coloca una lámina amortiguadora de 20-40 mm —lana de roca compacta Rockwool Floorrock, polietileno expandido de alta densidad o sistemas específicos Regupol o Sylomer— y sobre ella se ejecuta un mortero armado y el pavimento acabado. Al «flotar» el mortero sobre el aislante, el impacto no llega al forjado: L\'nT,w baja entre 15 y 25 dB. Se combina habitualmente con un falso techo antivibración en el piso inferior para obtener el mejor resultado.',
+      reduccion: '15-25 dB impacto',
+      precio: 'Desde 10€/m²',
+      ideal: 'Cuando se renueva el suelo, piso nuevo',
+      materiales: ['Lana de roca compacta', 'Lámina amortiguadora', 'Capa separadora', 'Suelo a medida'],
+    },
+  ],
+  statReduccion: 'Reducción',
+  statPrecio: 'Precio',
+  statIdeal: 'Ideal para',
+  guiaEyebrow: 'Guía rápida',
+  guiaTitle: '¿Qué solución necesitas?',
+  guiaIntro: 'Identifica tu problema de ruido y descubre la solución técnica más adecuada para tu caso.',
+  guiaRapida: [
+    { problema: 'Voces de vecinos a través de la pared', solucion: 'Tabique desvinculado doble placa', reduccion: '50-55 dB', precio: '52€/m²' },
+    { problema: 'Ruido de pasos del piso de arriba', solucion: 'Falso techo antivibración', reduccion: '+8-15 dB', precio: '35€/m²' },
+    { problema: 'Ruido de música/fiesta de arriba', solucion: 'Techo antivibración + lana mineral', reduccion: '+10-18 dB', precio: '35€/m²' },
+    { problema: 'Ruido de calle en habitación', solucion: 'Trasdosado fachada + doble placa', reduccion: '40-50 dB', precio: '6€/m²' },
+    { problema: 'Sala de ensayos / estudio', solucion: 'Sistema box-in-box completo', reduccion: '55-65 dB', precio: '150-300€/m²' },
+    { problema: 'Hotel junto a zona de ocio', solucion: 'Tabique + techo combinados', reduccion: '55-60 dB', precio: 'Proyecto a medida' },
+  ],
+  guiaSolucionLabel: 'Solución',
+  ctaMidTitulo: '¿Problemas de ruido en tu vivienda o negocio en Menorca?',
+  ctaMidSubtitulo: 'Evaluamos tu caso gratis y te proponemos la solución más eficiente.',
+  normativaEyebrow: 'Marco legal',
+  normativaTitle: 'Normativa CTE-HR: ¿qué exige la ley?',
+  normativa1: 'El Código Técnico de la Edificación, en su Documento Básico de Protección frente al Ruido (CTE DB-HR, Real Decreto 1371/2007 y modificaciones posteriores), fija los requisitos mínimos de aislamiento acústico que deben cumplir todos los edificios de nueva construcción y las grandes rehabilitaciones en España, incluidas Menorca y el resto de Baleares.',
+  normativa2: 'Los valores clave del CTE-HR que más afectan a los proyectos de reforma en Menorca son:',
+  requisitosLey: [
+    'Paredes entre viviendas: DnT,A ≥ 50 dBA (ruido aéreo)',
+    'Paredes entre viviendas y zonas comunes: DnT,A ≥ 50 dBA',
+    "Ruido de impacto entre plantas: L'nT,w ≤ 65 dB",
+    'Paredes entre habitaciones de hotel: DnT,A ≥ 50 dBA',
+    'Locales comerciales bajo viviendas: DnT,A ≥ 55 dBA',
+  ],
+  normativa3: 'Nuestros sistemas de pladur con doble placa BA13/BA15 y 45-80 mm de lana mineral están certificados bajo UNE-EN ISO 10140 para cumplir y superar estos valores en las configuraciones habituales. En proyectos donde el CTE-HR es obligatorio (obra nueva, legalización de locales, cambio de uso) aportamos la documentación técnica del sistema instalado: ficha técnica de Placo, Knauf o Isover y registros de montaje, validados por el Colegio de Aparejadores de Baleares cuando es requerido.',
+  materialesEyebrow: 'Materiales',
+  materialesTitle: 'Materiales aislantes que utilizamos',
+  materiales: [
+    {
+      nombre: 'Lana mineral (lana de vidrio)',
+      desc: 'Material de referencia en sistemas de pladur acústico (Isover Arena, Ursa Terra). Alta absorción del sonido entre 125 y 4.000 Hz y densidades de 26 a 70 kg/m³ según aplicación. Además, aporta una conductividad térmica lambda de 0,032-0,040 W/m·K, mejorando a la vez el valor U de la pared o el techo.',
+      propiedades: ['Absorción multi-frecuencia', 'No combustible', 'Alta densidad disponible'],
+    },
+    {
+      nombre: 'Lana de roca (Rockwool)',
+      desc: 'Mayor densidad que la lana de vidrio (Rockwool Confortpan, Alpharock), lo que la hace más eficiente frente a las bajas frecuencias (graves de equipos de música, maquinaria, bombas de calor). Densidad de 45-100 kg/m³ y punto de fusión por encima de 1.000 °C. Reacción al fuego A1 según EN 13501-1.',
+      propiedades: ['Óptima en bajas frecuencias', 'Comportamiento ante fuego A1', 'Alta densidad'],
+    },
+    {
+      nombre: 'Bandas y perfiles resilientes',
+      desc: 'Elementos de caucho EPDM o polietileno expandido (Placo Placotherm, Knauf Acustik, Isolgomma Flex) que desvinculan mecánicamente la estructura del tabique o techo del forjado. Son la pieza clave para romper el puente acústico estructural entre el sistema de pladur y el edificio existente y aportan entre 3 y 8 dB adicionales al Rw efectivo.',
+      propiedades: ['Desvinculación estructural', 'Caucho EPDM de alta densidad', 'Imprescindibles en sistemas acústicos'],
+    },
+  ],
+  galeriaAlts: [
+    'Aislamiento acústico en apartamento turístico en Baleares',
+    'Detalle de perfilería y aislamiento acústico con pladur',
+    'Dormitorio con aislamiento acústico y falso techo en Baleares',
+    'Habitación con aislamiento acústico y armario empotrado de pladur en Baleares',
+  ],
+  articulos: [
+    { slug: 'aislamiento-acustico-piso-menorca', titulo: 'Aislamiento acústico en pisos de Menorca', descripcion: 'Guía completa para insonorizar tu piso en Menorca. Soluciones efectivas para reducir ruido entre vecinos.' },
+    { slug: 'precio-insonorizar-piso-menorca', titulo: 'Precio de insonorizar un piso en Menorca', descripcion: 'Descubre cuánto cuesta insonorizar un piso en Menorca. Precios actualizados y factores que influyen.' },
+    { slug: 'normativa-cte-hr-baleares', titulo: 'Normativa CTE-HR en Baleares', descripcion: 'Todo sobre la normativa de protección frente al ruido CTE DB-HR aplicada en las Islas Baleares.' },
+  ],
+  faqTitulo: 'Preguntas frecuentes sobre aislamiento acústico',
+  faqSubtitulo: 'Resolvemos las dudas más comunes sobre el aislamiento acústico con pladur en Menorca.',
+  banner: '¿Necesitas aislamiento acústico entre habitaciones de hotel? Consulta nuestro',
+  bannerBold: 'servicio especializado para hoteles',
+  bannerTail: 'con cumplimiento CTE-HR garantizado.',
+  bannerCta: 'Ver pladur para hoteles',
+  ctaFinalTitulo: 'Ponemos fin al ruido en tu hogar o negocio',
+  ctaFinalSubtitulo: 'Presupuesto gratis en 24h. Visita técnica acústica en toda Menorca. Respaldo de la SL matriz (Mallorca, 2004).',
+}
+
+const schemaOffersPrices = ['6', '10', '10', '52']
+const schemaOffers = t.schemaOffers.map((o, i) => ({ ...o, price: schemaOffersPrices[i] }))
+
+const pageBase = lang === 'en' ? '/en/aislamiento-acustico-menorca' : '/aislamiento-acustico-menorca'
+const homeHref = lang === 'en' ? '/en' : '/'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: homeHref }, { label: t.breadcrumbCurrent, href: pageBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url={`https://www.pladurmenorca.com${pageBase}`}
+      image="https://www.pladurmenorca.com/images/proyectos/aislamiento-acustico-apartamento-turistico.webp"
+
+    />
+    <SchemaHowTo
+      name={t.schemaHowToName}
+      description={t.schemaHowToDescription}
+      totalTime="PT3D"
+      steps={t.schemaSteps}
+    />
+    <SchemaOffers offers={schemaOffers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={alternateHref} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <!-- Hero -->
+  <Hero
+    title={servicio.h1}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaCallPrefix} ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- Aislamiento vs insonorización -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+              {t.sectionIntroEyebrow}
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.sectionIntroTitle}
+            </h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>
+              {t.intro1Prefix} <strong class="text-foreground">{t.intro1Bold}</strong> {t.intro1Tail}
+            </p>
+            <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+              <p>{t.citaTexto}</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">{t.citaFuente}</cite>
+            </blockquote>
+            <p>
+              {t.intro2Prefix} <strong class="text-foreground">{t.intro2Bold}</strong>{t.intro2Tail}
+            </p>
+            <p>{t.intro3}</p>
+            <p>
+              {t.verTambien}
+              <a href={p('/instalacion-pladur-menorca')} class="text-foreground font-semibold underline underline-offset-2">
+                {t.linkInstalacion}
+              </a>
+              &middot;
+              <a href={p('/tabiques-pladur-menorca')} class="text-foreground font-semibold underline underline-offset-2">
+                {t.linkTabiques}
+              </a>
+              &middot;
+              <a href={p('/falsos-techos-pladur-menorca')} class="text-foreground font-semibold underline underline-offset-2">
+                {t.linkFalsosTechos}
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <div class="p-6 bg-foreground rounded-3xl text-white">
+              <p class="text-xs font-bold uppercase tracking-widest text-nav-border/60 mb-3">{t.sidebarBadge}</p>
+              <p class="font-bold text-lg mb-2">{t.sidebarTitle}</p>
+              <p class="text-gray-300 text-sm mb-5 leading-relaxed">{t.sidebarDesc}</p>
+              <a href={`tel:${siteConfig.phoneRaw}`} class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide transition-colors">{siteConfig.phone}</a>
+              <a href={p('/presupuesto-pladur')} class="flex items-center justify-center gap-2 w-full py-3 mt-3 rounded-xl border border-white/30 hover:border-white text-white font-bold text-sm tracking-wide transition-colors">{t.sidebarOnlineCta}</a>
+            </div>
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl">
+              <p class="font-bold text-foreground text-sm mb-2">{t.sidebarReduccionTitulo}</p>
+              <div class="space-y-2 mt-3">
+                {t.sidebarReduccion.map((r) => (
+                  <div class="flex items-center justify-between gap-2 py-1.5 border-b border-warm-border/50 last:border-0">
+                    <span class="text-xs text-muted">{r.label}</span>
+                    <span class="text-xs font-bold text-muted">{r.valor}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de ruido -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">{t.tiposRuidoEyebrow}</p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6 max-w-2xl">{t.tiposRuidoTitle}</h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-12 stagger-children">
+        <div class="bg-white/70 p-8 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-12 bg-surface border border-nav-border rounded-xl flex items-center justify-center mb-5">
+            <svg aria-hidden="true" class="size-6 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-foreground mb-3">{t.ruidoAereoTitle}</h3>
+          <p class="text-muted leading-relaxed mb-4">{t.ruidoAereoDesc1}</p>
+          <p class="text-muted leading-relaxed">{t.ruidoAereoDesc2}</p>
+          <div class="mt-5 p-3 bg-white/70 rounded-xl">
+            <p class="text-sm font-semibold text-foreground">{t.ruidoAereoSolucion}</p>
+          </div>
+        </div>
+
+        <div class="bg-white/70 p-8 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+          <div class="size-12 bg-surface border border-nav-border rounded-xl flex items-center justify-center mb-5">
+            <svg aria-hidden="true" class="size-6 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-foreground mb-3">{t.ruidoImpactoTitle}</h3>
+          <p class="text-muted leading-relaxed mb-4">{t.ruidoImpactoDesc1}</p>
+          <p class="text-muted leading-relaxed">{t.ruidoImpactoDesc2}</p>
+          <div class="mt-5 p-3 bg-white/70 rounded-xl">
+            <p class="text-sm font-semibold text-foreground">{t.ruidoImpactoSolucion}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white/70 p-6 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+        <p class="font-semibold text-foreground mb-2">{t.fuentesTitulo}</p>
+        <p class="text-sm text-muted leading-relaxed">{t.fuentesDesc}</p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Soluciones con pladur -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: sticky header -->
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28">
+            <div>
+              <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.solucionesEyebrow}</span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.solucionesTitle}</h2>
+              <p class="text-muted leading-relaxed mb-8">{t.solucionesIntro}</p>
+            </div>
+            <div class="bg-foreground rounded-3xl p-7">
+              <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-5">{t.solucionesCountLabel}</p>
+              <div class="space-y-3">
+                {t.sistemasMini.map((s) => (
+                  <div class="flex items-center justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                      <div class="shrink-0 w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                      </div>
+                      <p class="text-white/70 text-sm">{s.label}</p>
+                    </div>
+                    <span class="text-xs font-bold text-white bg-white/10 px-2.5 py-1 rounded-lg shrink-0">{s.valor}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="mt-6 pt-5 border-t border-white/10">
+                <p class="text-white/50 text-xs leading-relaxed">{t.sistemasMiniNota}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Solution cards -->
+        <div class="lg:col-span-7 space-y-6">
+          {t.soluciones.map((sol) => (
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 overflow-hidden">
+              <div class="p-7 lg:p-8">
+                <h3 class="text-lg font-bold text-foreground mb-4">{sol.titulo}</h3>
+                <p class="text-sm text-muted leading-relaxed mb-6">{sol.desc}</p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+                  {[
+                    { label: t.statReduccion, value: sol.reduccion },
+                    { label: t.statPrecio, value: sol.precio },
+                    { label: t.statIdeal, value: sol.ideal },
+                  ].map((stat) => (
+                    <div class="bg-surface rounded-2xl p-4 border border-nav-border">
+                      <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-1.5">{stat.label}</p>
+                      <p class="text-sm font-semibold text-foreground leading-snug">{stat.value}</p>
+                    </div>
+                  ))}
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                  {sol.materiales.map((m) => (
+                    <span class="text-xs px-2.5 py-1 bg-surface text-foreground rounded-lg font-medium">{m}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Guía rápida: problema - solución -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">{t.guiaEyebrow}</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-4 max-w-2xl">{t.guiaTitle}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">{t.guiaIntro}</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {t.guiaRapida.map((item) => (
+          <div class="group bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 h-full flex flex-col">
+            <div class="flex items-start gap-3 mb-5">
+              <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300">
+                <svg class="size-4 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+                </svg>
+              </div>
+              <p class="text-sm font-semibold text-foreground leading-snug">{item.problema}</p>
+            </div>
+            <div class="bg-surface rounded-2xl p-4 border border-nav-border mb-5 flex-1">
+              <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-1.5">{t.guiaSolucionLabel}</p>
+              <p class="text-sm font-medium text-foreground">{item.solucion}</p>
+            </div>
+            <div class="flex items-center justify-between gap-3 pt-4 border-t border-warm-border/50">
+              <div class="flex items-center gap-2">
+                <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center">
+                  <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                </div>
+                <span class="text-xs font-bold text-foreground">{item.reduccion}</span>
+              </div>
+              <span class="text-xs font-medium text-muted">{item.precio}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner lang={lang} titulo={t.ctaMidTitulo} subtitulo={t.ctaMidSubtitulo} showForm={false} />
+
+  <!-- Normativa CTE-HR -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+        <div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">{t.normativaEyebrow}</p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">{t.normativaTitle}</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.normativa1}</p>
+            <p>{t.normativa2}</p>
+            <ul class="space-y-2 pl-0">
+              {t.requisitosLey.map((req) => (
+                <li class="flex items-start gap-3">
+                  <span class="mt-1 shrink-0 size-5 bg-foreground-dark rounded-full flex items-center justify-center">
+                    <svg aria-hidden="true" class="size-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  </span>
+                  <span class="text-sm">{req}</span>
+                </li>
+              ))}
+            </ul>
+            <p>{t.normativa3}</p>
+          </div>
+        </div>
+
+        <!-- Materiales utilizados -->
+        <div>
+          <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">{t.materialesEyebrow}</p>
+          <h3 class="text-2xl font-bold text-foreground leading-tight text-balance mb-6">{t.materialesTitle}</h3>
+          <div class="space-y-4">
+            {t.materiales.map((mat) => (
+              <div class="p-6 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+                <h4 class="font-bold text-foreground text-base mb-2">{mat.nombre}</h4>
+                <p class="text-sm text-muted leading-relaxed mb-3">{mat.desc}</p>
+                <div class="flex flex-wrap gap-1.5">
+                  {mat.propiedades.map((pr) => (
+                    <span class="text-xs px-2 py-0.5 bg-surface text-foreground rounded-lg font-medium">{pr}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales de aislamiento acústico -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — acoustic insulation' : 'Nuestras cifras — aislamiento acústico'}
+    title={lang === 'en' ? '1 in 2 of our projects includes acoustic treatment' : '1 de cada 2 proyectos que hacemos incluye aislamiento acústico'}
+    intro={lang === 'en'
+      ? 'Acoustic insulation is a core service for us. These are the figures from the Mallorca parent company that backs every Menorca project — not marketing numbers.'
+      : 'El aislamiento acústico es uno de nuestros servicios principales. Estas son las cifras de la SL matriz que respalda cada proyecto en Menorca — no cifras de catálogo.'}
+    metrics={lang === 'en' ? [
+      { value: '~254', label: 'acoustic jobs in 2025', context: '50% of the 508 projects delivered' },
+      { value: '45-55 dB', label: 'typical Rw reduction', context: 'With decoupled wall lining + 48 mm rock wool' },
+      { value: 'CTE-HR', label: 'every project certified', context: 'Min. 47 dB between dwellings, met' },
+      { value: '22', label: 'years of acoustic systems', context: 'Specialists in Placo Phonique and Knauf Diamant' },
+    ] : [
+      { value: '~254', label: 'obras acústicas en 2025', context: '50% de los 508 proyectos ejecutados' },
+      { value: '45-55 dB', label: 'reducción Rw típica', context: 'Con trasdosado desacoplado + lana de roca 48 mm' },
+      { value: 'CTE-HR', label: 'cada obra certificada', context: 'Mínimo 47 dB entre viviendas, superado' },
+      { value: '22', label: 'años en sistemas acústicos', context: 'Especialistas en Placo Phonique y Knauf Diamant' },
+    ]}
+  />
+
+  <!-- PreciosTable -->
+  <PreciosTable lang={lang} variant="Aislamiento Acústico" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/aislamiento-acustico-apartamento-turistico.webp', alt: t.galeriaAlts[0] },
+    { src: '/images/proyectos/detalle-perfileria-aislamiento-pladur.webp', alt: t.galeriaAlts[1] },
+    { src: '/images/proyectos/dormitorio-vistas-mar-falso-techo.webp', alt: t.galeriaAlts[2] },
+    { src: '/images/proyectos/habitacion-armario-empotrado.webp', alt: t.galeriaAlts[3] },
+  ]} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion client:visible faqs={pageFaqs} lang={lang} titulo={t.faqTitulo} subtitulo={t.faqSubtitulo} />
+
+  <!-- Enlace a hoteles -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">{t.banner} <strong class="text-white">{t.bannerBold}</strong> {t.bannerTail}</p>
+        <a href={p('/pladur-hoteles-menorca')} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.bannerCta}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner final -->
+  <CtaBanner lang={lang} titulo={t.ctaFinalTitulo} subtitulo={t.ctaFinalSubtitulo} showForm={true} />
+
+  <ServiciosRelacionados currentPath="/aislamiento-acustico-menorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

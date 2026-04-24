@@ -1,0 +1,700 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import ServiciosGrid from '@/components/sections/ServiciosGrid.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Container from '@/components/ui/Container.astro'
+import { getInstalacionFaqs } from '@/data/faqs/instalacion'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('instalacion-pladur-menorca')!
+const pageFaqs = getInstalacionFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall Installation in Menorca | Since 2004, 6,000+ Works',
+  description: 'Drywall (pladur) installers in Menorca since 2004. 6,000+ works delivered. False ceilings from €29/m², partitions, CTE-HR insulation. Placo, Knauf, Lafarge.',
+  canonical: '/en/instalacion-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/instalacion-pladur-menorca',
+} : {
+  title: 'Instalación de Pladur en Menorca | Desde 2004, +6.000 Obras',
+  description: 'Instaladores de pladur en Menorca desde 2004. Más de 6.000 obras ejecutadas. Falsos techos desde 29€/m², tabiques, aislamiento CTE-HR. Placo, Knauf y Lafarge.',
+  canonical: '/instalacion-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/instalacion-pladur-menorca',
+}
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — professional drywall installation in Menorca since 2004, 6,000+ projects delivered. Placo, Knauf and Lafarge materials. Free quote in 24 hours. Phone: 627 829 723.',
+  heroSubtitle: 'Laminated plasterboard installers across Menorca since 2004',
+  heroDescription: 'Drywall installation in Menorca since 2004, with 6,000+ projects delivered: false ceilings from €29/m², partitions, wall linings and 50 dB+ acoustic insulation using Placo BA13/BA15, Knauf and Lafarge systems. Fixed quote in 24 h.',
+  heroBadges: ['20+ years', 'All Menorca', 'Free quote'],
+  ctaPrimario: 'Request a free quote',
+  ctaCallPrefix: 'Call:',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Drywall Installation',
+  schemaHowToName: 'How to install drywall in Menorca',
+  schemaHowToDescription: 'Full drywall installation process: from the on-site survey to delivery with a perfect finish ready to paint.',
+  schemaSteps: [
+    { name: 'On-site survey', text: 'A technician visits the property to assess the project, take measurements and answer technical questions. Available Monday to Friday across Menorca.' },
+    { name: 'Detailed quote within 24h', text: 'Fixed quote with a breakdown of materials, labour and delivery timeline. No obligation.' },
+    { name: 'Clean, professional installation', text: 'The team respects the space, protecting floors, furniture and adjacent areas throughout the installation.' },
+    { name: 'Delivery with a perfect finish', text: 'Work ready to paint, with joints treated, surfaces sanded and end-of-job cleaning included.' },
+  ],
+  schemaOffers: [
+    { name: 'False ceiling installation', description: 'Installation of seamless drywall false ceiling with metal framework. Price per m².' },
+    { name: 'Partition installation', description: 'Installation of drywall partitions with internal insulation. Price per m².' },
+    { name: 'Wall lining installation', description: 'Self-supporting wall lining with thermal and acoustic insulation included. Price per m².' },
+    { name: 'Moisture-resistant drywall installation', description: 'Installation of moisture-resistant drywall systems for bathrooms, kitchens and wet areas. Price per m².' },
+  ],
+  sectionIntroEyebrow: 'Introduction',
+  sectionIntroTitle: 'What is drywall (pladur) and how does it work?',
+  intro1: 'Drywall is a laminated plasterboard (PYL) used as a dry construction system for interiors and regulated by the UNE-EN 520 standard. “Pladur” is a registered trademark of Saint-Gobain Placo that has become the generic term in Spain, alongside gypsum board or cartón-yeso.',
+  intro2: 'Each board has a high-purity gypsum core encased between two treated cardboard liners. Gypsum provides rigidity, insulation and fire resistance; cardboard adds tensile strength and supports the final finish. Weight ranges from 8 to 12 kg/m² depending on thickness (10, 12.5 or 15 mm).',
+  intro3: 'Installation fixes galvanised steel tracks and studs to the existing floor, ceiling and walls. Boards are screwed to the framework every 25 cm, joints are taped and filled, and the surface is sanded flat ready to paint or tile. No wet work, no debris, average execution of 5–10 days per 50 m² refurbishment.',
+  marcasTitulo: 'Reference brands: Placo, Knauf and Lafarge',
+  marcasIntro: 'In the Spanish market there are three major manufacturers of laminated plasterboard systems:',
+  marcaPlaco: 'Saint-Gobain Placo (Pladur®):',
+  marcaPlacoDesc: 'Spanish manufacturer with the broadest technical range. Its BA13 (12.5 mm) and BA15 (15 mm) boards are the most widely used in residential false ceilings and partitions, certified to UNE-EN 520.',
+  marcaKnauf: 'Knauf:',
+  marcaKnaufDesc: 'German manufacturer with W11 and D112 systems certified for acoustic insulation above 50 dB and fire resistance up to EI-120 with double fire-rated board.',
+  marcaLafarge: 'Lafarge:',
+  marcaLafargeDesc: 'Holcim group brand with Prégy boards and systems used in new-build and refurbishment projects in Spain, certified to UNE-EN 520 and CTE-DB-SI.',
+  tiposTitulo: 'Board types by application',
+  tiposIntro: 'The versatility of the drywall system is largely due to the variety of boards available. Each type has specific additives that give it different properties:',
+  placaTipos: [
+    {
+      tipo: 'Standard Board (A / BA)',
+      tag: 'General use',
+      desc: 'General use in partitions and interior ceilings in dry areas. It is the most affordable and the most widely used. Available in 10, 12.5 and 15 mm thicknesses.',
+    },
+    {
+      tipo: 'Moisture-Resistant Board (H / Green)',
+      tag: 'Wet areas',
+      desc: 'Treated with moisture-resistant additives to cope with humidity and water vapour. Mandatory in bathrooms, kitchens and any wet area. Recognisable by its green colour.',
+    },
+    {
+      tipo: 'Fire-Resistant Board (F / DF / Pink)',
+      tag: 'Fire resistance',
+      desc: 'Contains glass fibres in the gypsum core to resist fire. Enables partitions classified as EI-30, EI-60, EI-90 or EI-120 depending on the number of layers and thickness.',
+    },
+    {
+      tipo: 'Acoustic Board (AC)',
+      tag: 'Acoustic insulation',
+      desc: 'Higher density for improved airborne sound insulation. Used together with mineral wool to achieve acoustic reduction figures above 50 dB.',
+    },
+  ],
+  sidebarBadge: 'Quick contact',
+  sidebarTitle: 'Need drywall installers in Menorca?',
+  sidebarDesc: 'Free quote, no obligation. Reply in under 24 hours.',
+  sidebarOnlineCta: 'Request a quote online',
+  sidebarRelatedTitle: 'Related services',
+  serviciosRelacionados: [
+    { label: 'Drywall False Ceilings', href: '/en/falsos-techos-pladur-menorca' },
+    { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+    { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+    { label: 'Thermal Insulation', href: '/en/aislamiento-termico-menorca' },
+    { label: 'Drywall Prices', href: '/en/precios-pladur-menorca' },
+  ],
+  ventajasEyebrow: 'Advantages',
+  ventajasTitle: 'Why choose drywall over traditional masonry?',
+  ventajas1: 'Drywall outperforms traditional brick or concrete-block work on four measurable factors: execution time, waste generation, impact on daily life and total project cost. Any objective comparison points the same way.',
+  ventajas2: 'In Menorca the difference is critical: most projects run in occupied flats, holiday-let apartments between seasons or commercial premises. A refurbishment with traditional work takes 3–6 weeks; the same job with drywall is delivered in 5–10 days.',
+  ventajas3: 'Weight is decisive: the old slabs in central Maó were not sized for new masonry loads. A brick partition weighs 120–180 kg/m² against just 25–40 kg/m² for an equivalent drywall partition. That difference allows space redistribution in buildings where masonry is off the table.',
+  ventajas4: 'Drywall finishes beat rendering and plastering on flatness. A well-installed and treated board delivers a surface with no waves, accepting any paint, wallpaper or coating with no added prep. Flatness tolerance below 2 mm per UNE-EN 520.',
+  tablaCriterio: 'Criterion',
+  tablaPladur: 'Drywall',
+  tablaLadrillo: 'Brick',
+  tablaComparativa: [
+    ['Speed', '3–5 days / 50 m²', '3–6 weeks / 50 m²'],
+    ['Debris', 'Minimal', 'Tonnes'],
+    ['Weight', '25–40 kg/m²', '120–180 kg/m²'],
+    ['On-site cleanliness', 'Very clean', 'Dust and mud'],
+    ['Finish', 'Perfectly flat', 'Requires more coats'],
+    ['Future changes', 'Very easy', 'New building work'],
+    ['Total cost', 'Lower', 'Higher'],
+  ],
+  citaTexto: '"Laminated plasterboard must comply with the UNE-EN 520 standard, which sets out the requirements for mechanical strength, fire behaviour and dimensional tolerances. Complete partition and wall-lining systems must be tested according to the applicable UNE-EN standards to certify their acoustic, thermal and fire resistance performance."',
+  citaFuente: '— UNE-EN 520:2005+A1:2010 standard, Laminated plasterboard. Definitions, specifications and test methods',
+  procesoEyebrow: 'Methodology',
+  procesoTitle: 'Our step-by-step process',
+  procesoIntro: 'From the on-site survey to final handover, a clear process with no surprises.',
+  pasos: [
+    {
+      num: '01',
+      titulo: 'On-site survey',
+      desc: 'A technician visits your home or premises in Menorca, assesses the project, takes laser measurements and answers technical questions on boards (BA13, moisture-resistant, fire-rated) and insulation.',
+      detalle: 'Available Monday to Friday across the island',
+      iconPath: 'M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z',
+    },
+    {
+      num: '02',
+      titulo: 'Detailed quote within 24h',
+      desc: 'Fixed quote in €/m² with a breakdown of boards (Placo, Knauf or Lafarge), metal framing, insulation and labour. Closed timeline from day one. The final price does not change.',
+      detalle: 'Fixed price from day one',
+      iconPath: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z',
+    },
+    {
+      num: '03',
+      titulo: 'Clean, professional installation',
+      desc: 'The team protects floors, furniture and adjacent areas with sheets and plastic. No wet work, debris is kept to a minimum and dust is vacuumed at the point of board cutting.',
+      detalle: 'Full protection of the work area',
+      iconPath: 'M11.42 15.17l-5.384 3.079A2.25 2.25 0 013 16.19V7.81a2.25 2.25 0 013.036-2.059l5.384 3.079m0 0L17.25 12m-5.83-3.17L17.25 12m0 0l-5.83 3.17M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+    {
+      num: '04',
+      titulo: 'Delivery with a perfect finish',
+      desc: 'Ready to paint: joints treated with compound and fibre tape, surfaces sanded to 120 grit and corners reinforced with metal corner beads. End-of-job cleaning included.',
+      detalle: 'Ready to paint or tile',
+      iconPath: 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+  ],
+  garantia: '1-year warranty.',
+  garantiaDesc: 'All works include a 1-year workmanship warranty: any issue that arises during that period is resolved at no extra cost. Materials keep the factory warranty of Placo, Knauf or Lafarge (typically 10 years on board).',
+  hotelTexto: 'Running a hotel in Menorca? Learn how we apply fire-rated drywall and acoustic insulation in',
+  hotelTextoBold: 'hotel refurbishments with guaranteed timelines',
+  hotelCta: 'Drywall for hotels',
+  hotelHref: '/en/pladur-hoteles-menorca',
+  galeriaAlts: [
+    'Full drywall refurbishment in a flat in a Balearic historic centre',
+    'Drywall finishes and installation in a Balearic kitchen',
+    'Drywall installation in a Balearic villa living room',
+    'Drywall installation in an open-space office in the Balearics',
+  ],
+  faqTitulo: 'Frequently asked questions about drywall installation',
+  faqSubtitulo: 'Everything you need to know before starting your drywall project in Menorca.',
+  ctaTitulo: 'Ready for your drywall project in Menorca?',
+  ctaSubtitulo: 'Free quote in 24 hours. Fixed price. No surprises.',
+} : {
+  srOnly: 'Pladur Menorca — instalación profesional de pladur en Menorca desde 2004, +6.000 proyectos realizados. Materiales Placo, Knauf y Lafarge. Presupuesto gratuito en 24h. Tel: 627 829 723.',
+  heroSubtitle: 'Instaladores de yeso laminado en toda Menorca desde 2004',
+  heroDescription: 'Instalación de pladur en Menorca con 6.000 obras completadas desde 2004. Falsos techos desde 29€/m², tabiques de distribución, trasdosados y aislamiento acústico >50 dB. Sistemas Placo BA13/BA15, Knauf y Lafarge. Presupuesto cerrado en 24h.',
+  heroBadges: ['+20 años', 'Toda Menorca', 'Presupuesto gratis'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaCallPrefix: 'Llamar:',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Instalación de Pladur',
+  schemaHowToName: 'Cómo instalar pladur en Menorca',
+  schemaHowToDescription: 'Proceso completo de instalación de pladur: desde la visita técnica hasta la entrega con acabado perfecto listo para pintar.',
+  schemaSteps: [
+    { name: 'Visita técnica', text: 'Un técnico se desplaza a la propiedad para evaluar el proyecto, tomar medidas y resolver dudas técnicas. Disponible de lunes a viernes en toda la isla de Menorca.' },
+    { name: 'Presupuesto detallado en 24h', text: 'Presupuesto cerrado con desglose de materiales, mano de obra y plazo de ejecución. Sin compromiso.' },
+    { name: 'Instalación limpia y profesional', text: 'El equipo trabaja con respeto al espacio, protegiendo suelos, muebles y zonas adyacentes durante toda la instalación.' },
+    { name: 'Entrega con acabado perfecto', text: 'Trabajo listo para pintar con juntas tratadas, superficies lijadas y limpieza final incluida.' },
+  ],
+  schemaOffers: [
+    { name: 'Instalación de falso techo', description: 'Instalación de falso techo de pladur continuo con estructura metálica. Precio por m².' },
+    { name: 'Instalación de tabiques', description: 'Instalación de tabiques divisorios de pladur con aislante interior. Precio por m².' },
+    { name: 'Instalación de trasdosados', description: 'Trasdosado autoportante con aislamiento térmico y acústico incluido. Precio por m².' },
+    { name: 'Instalación de pladur hidrófugo', description: 'Instalación de sistemas de pladur hidrófugo para baños, cocinas y zonas húmedas. Precio por m².' },
+  ],
+  sectionIntroEyebrow: 'Introducción',
+  sectionIntroTitle: '¿Qué es el pladur y cómo funciona?',
+  intro1: 'El pladur es una placa de yeso laminado (PYL) empleada como sistema constructivo en seco para interiores y regulada por la norma UNE-EN 520. «Pladur» es una marca registrada de Saint-Gobain Placo convertida en nombre genérico en España, junto a los términos cartón-yeso o yeso laminado.',
+  intro2: 'Cada placa está formada por un núcleo de yeso de alta pureza encapsulado entre dos láminas de cartón tratado. El yeso aporta rigidez, aislamiento y resistencia al fuego; el cartón aporta resistencia a la tracción y soporte para el acabado. El peso oscila entre 8 y 12 kg/m² según espesor (10, 12,5 o 15 mm).',
+  intro3: 'La instalación fija perfiles guía y montantes de acero galvanizado al suelo, techo y paredes. Las placas se atornillan a la estructura cada 25 cm, las juntas se tratan con cinta y pasta, y se lija hasta lograr una superficie plana lista para pintar o alicatar. Sin obra húmeda, sin escombros, ejecución media de 5-10 días por reforma de 50 m².',
+  marcasTitulo: 'Marcas de referencia: Placo, Knauf y Lafarge',
+  marcasIntro: 'En el mercado español existen tres grandes fabricantes de sistemas de yeso laminado:',
+  marcaPlaco: 'Saint-Gobain Placo (Pladur®):',
+  marcaPlacoDesc: 'fabricante español con la gama técnica más amplia. Sus placas BA13 (12,5 mm) y BA15 (15 mm) son las más utilizadas en falsos techos y tabiques residenciales, con certificación UNE-EN 520.',
+  marcaKnauf: 'Knauf:',
+  marcaKnaufDesc: 'fabricante alemán con sistemas W11 y D112 certificados para aislamiento acústico >50 dB y resistencia al fuego hasta EI-120 con doble placa cortafuegos.',
+  marcaLafarge: 'Lafarge:',
+  marcaLafargeDesc: 'marca del grupo Holcim con placas Prégy y sistemas usados en obra nueva y rehabilitación en España, certificados según UNE-EN 520 y CTE-DB-SI.',
+  tiposTitulo: 'Tipos de placa según la aplicación',
+  tiposIntro: 'La versatilidad del sistema pladur se debe en gran parte a la variedad de placas disponibles. Cada tipo tiene aditivos específicos que le confieren propiedades diferenciadas:',
+  placaTipos: [
+    {
+      tipo: 'Placa Estándar (A / BA)',
+      tag: 'Uso general',
+      desc: 'Uso general en tabiques y techos interiores en zonas secas. Es la más económica y la más utilizada. Disponible en espesores de 10, 12,5 y 15 mm.',
+    },
+    {
+      tipo: 'Placa Hidrófuga (H / Verde)',
+      tag: 'Zonas húmedas',
+      desc: 'Tratada con aditivos hidrófugos para resistir la humedad y el vapor de agua. Obligatoria en baños, cocinas y cualquier zona húmeda. Distinguible por su color verde.',
+    },
+    {
+      tipo: 'Placa Cortafuego (F / DF / Rosa)',
+      tag: 'Resistencia al fuego',
+      desc: 'Con fibras de vidrio en el núcleo de yeso para resistir el fuego. Permite construir tabiques con clasificación EI-30, EI-60, EI-90 o EI-120 según el número de capas y el espesor.',
+    },
+    {
+      tipo: 'Placa Acústica (AC)',
+      tag: 'Aislamiento acústico',
+      desc: 'Mayor densidad para mejorar el aislamiento a ruido aéreo. Se usa en combinación con lana mineral para conseguir índices de reducción acústica superiores a 50 dB.',
+    },
+  ],
+  sidebarBadge: 'Contacto rápido',
+  sidebarTitle: '¿Necesitas instaladores de pladur en Menorca?',
+  sidebarDesc: 'Presupuesto gratuito y sin compromiso. Respuesta en menos de 24 horas.',
+  sidebarOnlineCta: 'Pedir presupuesto online',
+  sidebarRelatedTitle: 'Servicios relacionados',
+  serviciosRelacionados: [
+    { label: 'Falsos Techos de Pladur', href: '/falsos-techos-pladur-menorca' },
+    { label: 'Tabiques de Pladur', href: '/tabiques-pladur-menorca' },
+    { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+    { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+    { label: 'Precios del Pladur', href: '/precios-pladur-menorca' },
+  ],
+  ventajasEyebrow: 'Ventajas',
+  ventajasTitle: '¿Por qué elegir pladur frente a la obra tradicional?',
+  ventajas1: 'Frente a la obra tradicional de ladrillo o bloque de hormigón, el pladur gana en cuatro factores medibles: tiempo de ejecución, generación de residuos, impacto en la vida diaria y coste total. Una comparativa objetiva siempre arroja el mismo resultado.',
+  ventajas2: 'En Menorca la diferencia es crítica: la mayoría de obras se ejecutan en pisos habitados, apartamentos turísticos con plazos entre temporadas o locales comerciales. Una reforma con obra tradicional dura 3-6 semanas; la misma con pladur se entrega en 5-10 días.',
+  ventajas3: 'El peso es decisivo: los forjados antiguos del centro de Maó no están dimensionados para nuevas cargas de albañilería. Un tabique de ladrillo pesa 120-180 kg/m² frente a los 25-40 kg/m² de un tabique de pladur equivalente. Esta diferencia permite redistribuir espacios en edificios donde la obra tradicional queda descartada.',
+  ventajas4: 'El acabado del pladur supera al enfoscado y yesado en planimetría. Una placa bien instalada y tratada ofrece una superficie sin ondulaciones, apta para cualquier pintura, papel o revestimiento sin preparación adicional. Tolerancia de planeidad <2 mm según UNE-EN 520.',
+  tablaCriterio: 'Criterio',
+  tablaPladur: 'Pladur',
+  tablaLadrillo: 'Ladrillo',
+  tablaComparativa: [
+    ['Velocidad', '3-5 días/50m²', '3-6 semanas/50m²'],
+    ['Escombros', 'Mínimos', 'Toneladas'],
+    ['Peso', '25-40 kg/m²', '120-180 kg/m²'],
+    ['Limpieza de obra', 'Muy limpia', 'Polvo y barro'],
+    ['Acabado', 'Perfectamente plano', 'Requiere más capas'],
+    ['Modificaciones futuras', 'Muy sencillas', 'Obra nueva'],
+    ['Coste total', 'Inferior', 'Superior'],
+  ],
+  citaTexto: '"Las placas de yeso laminado deben cumplir la norma UNE-EN 520, que establece los requisitos de resistencia mecánica, comportamiento frente al fuego y tolerancias dimensionales. Los sistemas completos de tabiquería y trasdosados deben ensayarse según las normas UNE-EN correspondientes para acreditar sus prestaciones acústicas, térmicas y de resistencia al fuego."',
+  citaFuente: '— Norma UNE-EN 520:2005+A1:2010, Placas de yeso laminado. Definiciones, especificaciones y métodos de ensayo',
+  procesoEyebrow: 'Metodología',
+  procesoTitle: 'Nuestro proceso de trabajo paso a paso',
+  procesoIntro: 'Desde la visita técnica hasta la entrega final, un proceso claro y sin sorpresas.',
+  pasos: [
+    {
+      num: '01',
+      titulo: 'Visita técnica',
+      desc: 'Un técnico acude a tu domicilio o local en Menorca, evalúa el proyecto, toma medidas con láser y resuelve dudas técnicas sobre placas (BA13, hidrófuga, cortafuegos) y aislamientos.',
+      detalle: 'Disponible de lunes a viernes en toda la isla',
+      iconPath: 'M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z',
+    },
+    {
+      num: '02',
+      titulo: 'Presupuesto detallado en 24h',
+      desc: 'Presupuesto cerrado en €/m² con desglose de placas (Placo, Knauf o Lafarge), perfilería, aislamiento y mano de obra. Plazo cerrado desde el primer día. El precio final no cambia.',
+      detalle: 'Precio cerrado desde el primer día',
+      iconPath: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z',
+    },
+    {
+      num: '03',
+      titulo: 'Instalación limpia y profesional',
+      desc: 'El equipo protege suelos, muebles y zonas adyacentes con lonas y plásticos. No hay obra húmeda, los escombros se reducen al mínimo y el polvo se aspira durante el corte de placas.',
+      detalle: 'Protección completa del espacio de trabajo',
+      iconPath: 'M11.42 15.17l-5.384 3.079A2.25 2.25 0 013 16.19V7.81a2.25 2.25 0 013.036-2.059l5.384 3.079m0 0L17.25 12m-5.83-3.17L17.25 12m0 0l-5.83 3.17M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+    {
+      num: '04',
+      titulo: 'Entrega con acabado perfecto',
+      desc: 'Entrega lista para pintar: juntas tratadas con pasta y cinta de fibra, superficies lijadas a grano 120 y esquinas reforzadas con guardavivos metálicos. Limpieza final incluida.',
+      detalle: 'Listo para pintar o revestir',
+      iconPath: 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
+    },
+  ],
+  garantia: 'Garantía de 1 año.',
+  garantiaDesc: 'Todos los trabajos incluyen 1 año de garantía en mano de obra: incidencias resueltas sin coste adicional durante ese período. Los materiales mantienen la garantía de fábrica de Placo, Knauf o Lafarge (normalmente 10 años en placa).',
+  hotelTexto: '¿Gestionas un hotel en Menorca? Descubre cómo aplicamos pladur ignífugo y aislamiento acústico en',
+  hotelTextoBold: 'reformas hoteleras con plazos garantizados',
+  hotelCta: 'Pladur para hoteles',
+  hotelHref: '/pladur-hoteles-menorca',
+  galeriaAlts: [
+    'Reforma integral con instalación de pladur en casco histórico de Baleares',
+    'Acabados de pladur e instalación en cocina de Baleares',
+    'Instalación de pladur en salón de villa en Baleares',
+    'Instalación de pladur en oficina open space en Baleares',
+  ],
+  faqTitulo: 'Preguntas frecuentes sobre instalación de pladur',
+  faqSubtitulo: 'Todo lo que necesitas saber antes de comenzar tu proyecto de pladur en Menorca.',
+  ctaTitulo: '¿Listo para tu proyecto de pladur en Menorca?',
+  ctaSubtitulo: 'Presupuesto gratuito en 24 horas. Precio cerrado. Sin sorpresas.',
+}
+
+const schemaOffersPrices = ['29', '45', '29', '45']
+const schemaOffers = t.schemaOffers.map((o, i) => ({ ...o, price: schemaOffersPrices[i] }))
+
+const pageBase = lang === 'en' ? '/en/instalacion-pladur-menorca' : '/instalacion-pladur-menorca'
+const homeHref = lang === 'en' ? '/en/' : '/'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: homeHref }, { label: t.breadcrumbCurrent, href: pageBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url={`https://www.pladurmenorca.com${pageBase}`}
+      image="https://www.pladurmenorca.com/images/proyectos/villa-obra-nueva-pladur-integral.webp"
+
+    />
+    <SchemaHowTo
+      name={t.schemaHowToName}
+      description={t.schemaHowToDescription}
+      totalTime="PT72H"
+      steps={t.schemaSteps}
+    />
+    <SchemaOffers offers={schemaOffers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <!-- 1. Hero -->
+  <Hero
+    title={servicio.h1}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaCallPrefix} ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- 3. ¿Qué es el pladur? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+              {t.sectionIntroEyebrow}
+            </p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.sectionIntroTitle}
+            </h2>
+          </div>
+          <div class="space-y-8 text-muted leading-relaxed">
+            {/* Intro — paragraphs tightened */}
+            <p class="text-lg">{t.intro1}</p>
+
+            {/* Key specs strip — replaces intro2 + intro3 walls */}
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-warm-border/50 rounded-3xl overflow-hidden border border-warm-border/50">
+              {[
+                { k: lang === 'en' ? 'Core' : 'Núcleo', v: lang === 'en' ? 'High-purity gypsum' : 'Yeso alta pureza' },
+                { k: lang === 'en' ? 'Thickness' : 'Espesor', v: '10 · 12,5 · 15 mm' },
+                { k: lang === 'en' ? 'Weight' : 'Peso', v: '8–12 kg/m²' },
+                { k: lang === 'en' ? 'Execution' : 'Ejecución', v: lang === 'en' ? '5–10 days / 50 m²' : '5–10 días / 50 m²' },
+              ].map((s) => (
+                <div class="bg-white/80 px-4 py-5 text-center">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-muted/80 mb-1">{s.k}</p>
+                  <p class="text-sm font-bold text-foreground">{s.v}</p>
+                </div>
+              ))}
+            </div>
+
+            <p>{t.intro2}</p>
+            <p>{t.intro3}</p>
+
+            {/* Marcas — chip row clean */}
+            <div class="pt-6 border-t border-warm-border/50">
+              <h3 class="text-xl font-bold text-foreground mb-2">{t.marcasTitulo}</h3>
+              <p class="mb-5">{t.marcasIntro}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { name: t.marcaPlaco, desc: t.marcaPlacoDesc },
+                  { name: t.marcaKnauf, desc: t.marcaKnaufDesc },
+                  { name: t.marcaLafarge, desc: t.marcaLafargeDesc },
+                ].map((brand) => (
+                  <div class="bg-white/70 border border-warm-border/50 rounded-2xl p-5">
+                    <p class="font-bold text-foreground text-sm mb-2">{brand.name.replace(/:$/, '')}</p>
+                    <p class="text-xs text-muted leading-relaxed">{brand.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tipos de placa — preserved as it was visual */}
+            <div class="pt-6 border-t border-warm-border/50">
+              <h3 class="text-xl font-bold text-foreground mb-2">{t.tiposTitulo}</h3>
+              <p class="mb-5">{t.tiposIntro}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {t.placaTipos.map((p) => (
+                  <div class="bg-white/70 rounded-3xl border border-warm-border/50 p-5">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                      <p class="font-bold text-foreground text-sm">{p.tipo}</p>
+                      <span class="text-[10px] font-semibold uppercase tracking-wide text-foreground bg-surface px-2 py-0.5 rounded-md shrink-0">
+                        {p.tag}
+                      </span>
+                    </div>
+                    <p class="text-sm text-muted leading-relaxed">{p.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <ContactoRapidoCard lang={lang} />
+
+            <div class="p-6 bg-white/70 border border-warm-border/50 rounded-3xl">
+              <p class="font-bold text-foreground text-sm mb-4 uppercase tracking-wider">
+                {t.sidebarRelatedTitle}
+              </p>
+              <ul class="space-y-2">
+                {t.serviciosRelacionados.map((s) => (
+                  <li>
+                    <a
+                      href={s.href}
+                      class="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors py-1"
+                    >
+                      <svg aria-hidden="true" class="size-3.5 text-foreground shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- 4. ServiciosGrid -->
+  <ServiciosGrid lang={lang} />
+
+  <!-- 5. ¿Por qué elegir pladur? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+          {t.ventajasEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6 max-w-3xl">
+          {t.ventajasTitle}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        <div class="space-y-5 text-muted leading-relaxed">
+          <p>{t.ventajas1}</p>
+          <p>{t.ventajas2}</p>
+          <p>{t.ventajas3}</p>
+          <p>{t.ventajas4}</p>
+        </div>
+
+        <!-- Tabla comparativa — desktop -->
+        <div class="hidden sm:block">
+          <div class="rounded-3xl overflow-hidden border border-warm-border shadow-card">
+            <table class="min-w-full">
+              <thead>
+                <tr class="bg-foreground">
+                  <th class="px-5 py-4 text-left text-xs font-bold text-white/70 uppercase tracking-wider w-[35%]">{t.tablaCriterio}</th>
+                  <th class="px-5 py-4 text-left text-xs font-bold text-white uppercase tracking-wider w-[35%]">
+                    <span class="flex items-center gap-1.5">
+                      <svg aria-hidden="true" class="size-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                      {t.tablaPladur}
+                    </span>
+                  </th>
+                  <th class="px-5 py-4 text-left text-xs font-bold text-white/50 uppercase tracking-wider w-[30%]">{t.tablaLadrillo}</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-warm-border/50">
+                {t.tablaComparativa.map(([criterio, pladur, ladrillo], i) => (
+                  <tr class={`${i % 2 === 0 ? 'bg-white/70' : 'bg-white/40'} hover:bg-surface/60 transition-colors duration-200`}>
+                    <td class="px-5 py-3.5 text-sm font-semibold text-foreground">{criterio}</td>
+                    <td class="px-5 py-3.5 text-sm text-foreground font-bold">
+                      <span class="flex items-center gap-1.5">
+                        <svg aria-hidden="true" class="size-3.5 text-foreground shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                        {pladur}
+                      </span>
+                    </td>
+                    <td class="px-5 py-3.5 text-sm text-muted/70">{ladrillo}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tabla comparativa — mobile (card layout) -->
+        <div class="sm:hidden space-y-3 -mx-4 px-4">
+          {t.tablaComparativa.map(([criterio, pladur, ladrillo]) => (
+            <div class="bg-white/70 rounded-2xl border border-warm-border/50 p-4">
+              <p class="text-xs font-semibold uppercase tracking-wide text-muted mb-3">{criterio}</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-foreground mb-1">{t.tablaPladur}</p>
+                  <p class="text-sm font-bold text-foreground flex items-center gap-1.5">
+                    <svg aria-hidden="true" class="size-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    {pladur}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-[10px] font-semibold uppercase tracking-wide text-muted mb-1">{t.tablaLadrillo}</p>
+                  <p class="text-sm text-muted/70">{ladrillo}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Cita normativa -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <blockquote class="border-l-4 border-foreground-dark/20 pl-6 my-8 italic text-muted">
+        <p>{t.citaTexto}</p>
+        <cite class="block mt-2 not-italic text-sm font-medium text-foreground-dark">{t.citaFuente}</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- 6. Proceso de trabajo -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">
+          {t.procesoEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-2xl">
+          {t.procesoTitle}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-2xl">
+          {t.procesoIntro}
+        </p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="relative">
+        <!-- Vertical line -->
+        <div class="absolute left-5 sm:left-7 top-0 bottom-0 w-px bg-warm-border" aria-hidden="true"></div>
+
+        <div class="space-y-0">
+          {t.pasos.map((paso, i) => (
+            <div class="relative flex gap-6 sm:gap-8">
+              <!-- Node -->
+              <div class="relative z-10 flex flex-col items-center shrink-0">
+                <div class="size-10 sm:w-14 sm:h-14 rounded-full bg-foreground flex items-center justify-center text-white text-xs sm:text-sm font-bold shadow-lg shadow-foreground/20">
+                  {paso.num}
+                </div>
+                {i < t.pasos.length - 1 && (
+                  <div class="flex-1"></div>
+                )}
+              </div>
+
+              <!-- Content -->
+              <div class={`flex-1 ${i < t.pasos.length - 1 ? 'pb-10 sm:pb-12' : 'pb-0'}`}>
+                <div class="bg-white/70 rounded-3xl border border-warm-border/50 p-6 sm:p-7 shadow-card hover:shadow-card-hover transition-shadow duration-300">
+                  <div class="flex items-start justify-between gap-4 mb-3">
+                    <h3 class="font-bold text-foreground text-base sm:text-lg">{paso.titulo}</h3>
+                    <div class="w-9 h-9 bg-surface border border-nav-border rounded-xl flex items-center justify-center shrink-0">
+                      <svg aria-hidden="true" class="w-4.5 h-4.5 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d={paso.iconPath} />
+                      </svg>
+                    </div>
+                  </div>
+                  <p class="text-sm text-muted leading-relaxed mb-4">{paso.desc}</p>
+                  <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground bg-surface px-3 py-1 rounded-lg">
+                    <svg aria-hidden="true" class="size-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    {paso.detalle}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-10 p-6 bg-white/70 border border-warm-border/50 rounded-3xl">
+        <p class="text-sm text-muted leading-relaxed">
+          <strong class="text-foreground">{t.garantia}</strong> {t.garantiaDesc}
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- 7. NuestrosDatos — benchmarks generales de instalación -->
+  <NuestrosDatos lang={lang} />
+
+  <!-- 8. PreciosTable -->
+  <PreciosTable variant="resumen" lang={lang} />
+
+  <!-- 8. ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- 9. GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/reforma-integral-piso.webp', alt: t.galeriaAlts[0] },
+    { src: '/images/proyectos/acabados-pladur-madera-cocina.webp', alt: t.galeriaAlts[1] },
+    { src: '/images/proyectos/salon-falso-techo-villa.webp', alt: t.galeriaAlts[2] },
+    { src: '/images/proyectos/oficina-open-space-tabiques.webp', alt: t.galeriaAlts[3] },
+  ]} />
+
+  <!-- 10. FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    faqs={pageFaqs}
+    lang={lang}
+    titulo={t.faqTitulo}
+    subtitulo={t.faqSubtitulo}
+  />
+
+  <!-- Enlace a hoteles -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">{t.hotelTexto} <strong class="text-white">{t.hotelTextoBold}</strong>.</p>
+        <a href={t.hotelHref} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.hotelCta}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. CtaBanner -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitulo}
+    subtitulo={t.ctaSubtitulo}
+    showForm={true}
+  />
+
+  <ServiciosRelacionados currentPath="/instalacion-pladur-menorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

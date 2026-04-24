@@ -1,0 +1,236 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getFerreriesFaqs } from '@/data/faqs/ferreries'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getFerreriesFaqs(lang)
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Ferreries. False ceilings, partitions, acoustic and thermal insulation. Free quote. Phone: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbPage: 'Drywall in Ferreries',
+  schemaServiceName: 'Drywall installation in Ferreries',
+  schemaServiceDesc: 'Drywall installation in Ferreries and its southern coastal calas: false ceilings from 29€/m², partitions from 45€/m², Placo and Knauf systems in Santa Galdana, Cala Mitjana and Son Morell.',
+  heroTitle: 'Drywall in Ferreries — Installers for Inland Menorca and its Southern Calas',
+  heroBadge: 'Ferreries · Inland Menorca',
+  heroDescription: 'Drywall in Ferreries (~4,800 residents), the youngest inland town of Menorca in its current location, and its gateway to the southern calas: Santa Galdana, Cala Mitjana and Son Morell. Placo and Knauf systems for traditional village houses and coastal villas. Free quote within 24 hours.',
+  faqTitulo: 'Frequently asked questions about drywall in Ferreries',
+  faqSubtitulo: 'Answers to the most common questions from our clients in Ferreries and the southern calas.',
+  proyectoTitulo: 'Village house converted into a boutique guest house in Ferreries',
+  ctaTitulo: 'Is your project in Ferreries or the southern calas?',
+  ctaSubtitulo: 'Get in touch and receive your free quote in less than 24 hours, no obligation.',
+  seoEyebrow: 'Inland-Menorca specialists',
+  seoH2: 'Drywall renovations in Ferreries: village heritage and coastal comfort',
+  seoP1: "Ferreries, an inland town of ~4,800 residents, is the youngest of the three inland towns of Menorca in its current location and a natural gateway to the southern calas — Santa Galdana (main beach resort), Cala Mitjana (protected natural beach) and Cala Trebalúger. This setting combines traditional village architecture with stone walls and beam ceilings, second homes along the coast and a steady flow of tourism between April and October that feeds constant demand for fast, respectful renovations.",
+  seoP2: 'Drywall modernises these properties without compromising their architectural character. Interior linings fix <a href="/aislamiento-termico-menorca">thermal insulation</a> (60 mm Isover rock wool, Knauf systems) directly onto the stone wall, drastically improving comfort in winter — Menorca is climate zone B3 per CTE-HE — without touching the exterior façade. <a href="/falsos-techos-pladur-menorca">False ceilings</a> from 29€/m² conceal HVAC and electrical services under a smooth, uniform surface while preserving clear height.',
+  seoP3: 'Santa Galdana is the main beach resort of Ferreries, with apartment blocks, hotels and villas. These projects demand flawless finishes and <a href="/aislamiento-acustico-menorca">acoustic insulation</a> between units to guarantee guest privacy. Our Placo drywall systems with Isover mineral wool and decoupled framing deliver 45-55 dB reductions, well above the CTE DB-HR threshold and critical for 4.5+ star ratings on Airbnb and Booking.',
+  seoP4: 'Cala Mitjana (protected natural beach without buildings on the shoreline) and Son Morell represent the most exclusive end of the municipality. Villas and second homes in these areas — many owned by international residents seeking authenticity combined with modern European comfort — are projects where detail makes the difference. We work with architects and interior designers to integrate drywall seamlessly with original stone, wood and wrought-iron elements.',
+  seoP5: 'Thermal and humidity control is especially valuable on the south coast of Ferreries. Sea-facing façades, the humid salt breeze and winter temperatures that can drop below 5°C mean a drywall lining with rock wool pays for itself in heating and dehumidification savings. In summer, that same insulation keeps rooms cool and cuts air-conditioning consumption, meeting CTE DB-HE performance targets.',
+  seoP6: 'We work across the whole municipality of Ferreries — centre, Santa Galdana, Cala Mitjana, Son Morell — with a fixed, transparent quote. We plan materials logistics in advance, adapting to narrow roads down to the calas and the tight accesses of the historic centre.',
+  seoTrust: 'Inland Menorca trusts us',
+  seoTrustText: 'Drywall installers in Ferreries since 2026 (parent SL Mallorca since 2004). We know the stone village houses, the Ferreries centre, their construction quirks and the challenges of a south-coast climate.',
+  seoServicesLabel: 'Services in Ferreries',
+  seoRating: 'New service · building local reviews',
+  proyectoP1: "An 85 m² village house in the centre of Ferreries, a few minutes from the famous Sant Bartomeu Sunday market, was to be converted into a small boutique guest house with three independent en-suite rooms. The building, from the early 20th century, had the traditional Menorcan façade, 55 cm stone walls, wooden-beam ceilings at 4 metres and an original layout of a large living room, formal dining room and four small interconnected bedrooms.",
+  proyectoP2: "The drywall scope covered three interventions. First, linings with Placo standard board and 60 mm Isover mineral wool were installed on every exterior wall and party wall (62 m²), resolving winter condensation and improving thermal performance (λ = 0.032 W/mK). Second, a continuous false ceiling at 3.10 m across the full floor (85 m²) created a technical cavity housing HVAC ducting, new wiring and LED downlights. Third, the space was fully redistributed with 28 lm of double-board Knauf drywall partitions with high-density rock wool to create three rooms with private bathrooms, each fully soundproofed from the others (52 dB reduction, well above CTE DB-HR).",
+  proyectoP3: 'Logistics added a challenge: access was via a narrow street in the historic centre, forcing us to ship boards in reduced format and schedule deliveries early in the morning. The work was completed in 12 working days at a drywall cost of 10,200€. The guest house opened in time for the summer season, with three rooms combining the charm of traditional Menorcan village architecture with the thermal and acoustic comfort demanded by quality tourism.',
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Ferreries. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbPage: 'Pladur en Ferreries',
+  schemaServiceName: 'Instalación de Pladur en Ferreries',
+  schemaServiceDesc: 'Instalación de pladur en Ferreries y sus calas del sur: falsos techos desde 29€/m², tabiques desde 45€/m², sistemas Placo y Knauf en Santa Galdana, Cala Mitjana y Son Morell.',
+  heroTitle: 'Pladur en Ferreries — Instaladores en el Interior de Menorca y sus Calas del Sur',
+  heroBadge: 'Ferreries · Interior de Menorca',
+  heroDescription: 'Pladur en Ferreries (~4.800 habitantes), el pueblo de interior más joven de Menorca en su emplazamiento actual, y su puerta de entrada a las calas del sur: Santa Galdana, Cala Mitjana y Son Morell. Sistemas Placo y Knauf para casas de pueblo tradicionales y villas de costa. Presupuesto gratuito en 24 horas.',
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Ferreries',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de nuestros clientes en Ferreries y las calas del sur.',
+  proyectoTitulo: 'Conversión de casa de pueblo en guesthouse boutique en Ferreries',
+  ctaTitulo: '¿Tu proyecto está en Ferreries o las calas del sur?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en todo el municipio.',
+  seoEyebrow: 'Especialistas en el interior de Menorca',
+  seoH2: 'Reformas con pladur en Ferreries: patrimonio de pueblo y confort de costa',
+  seoP1: 'Ferreries, pueblo de interior de ~4.800 habitantes, es el más joven de los tres pueblos del interior de Menorca en su emplazamiento actual y puerta natural a las calas del sur: Santa Galdana (principal núcleo de playa), Cala Mitjana (playa natural protegida) y Cala Trebalúger. Este entorno combina arquitectura de pueblo tradicional con muros de piedra y techos de vigas, segundas residencias en la costa y un flujo turístico constante entre abril y octubre que alimenta una demanda continua de reformas rápidas y respetuosas.',
+  seoP2: 'El pladur moderniza estas viviendas sin comprometer su carácter arquitectónico. Los trasdosados interiores incorporan <a href="/aislamiento-termico-menorca">aislamiento térmico</a> (lana de roca Isover de 60 mm, sistemas Knauf) directamente sobre el muro de piedra, mejorando el confort invernal —Menorca es zona climática B3 según CTE-HE— sin tocar la fachada. Los <a href="/falsos-techos-pladur-menorca">falsos techos</a> desde 29€/m² ocultan instalaciones eléctricas y de climatización bajo una superficie lisa y uniforme, manteniendo la altura libre.',
+  seoP3: 'Santa Galdana es el principal núcleo de playa de Ferreries, con bloques de apartamentos, hoteles y villas. Estos proyectos exigen acabados impecables y <a href="/aislamiento-acustico-menorca">aislamiento acústico</a> entre unidades para garantizar la privacidad del huésped. Nuestros sistemas Placo con lana mineral Isover y estructura desacoplada ofrecen reducciones de 45-55 dB, muy por encima del CTE DB-HR y críticas para mantener valoraciones 4,5+ en Airbnb y Booking.',
+  seoP4: 'Cala Mitjana (playa natural protegida sin construcciones en la línea de costa) y Son Morell representan el segmento más exclusivo del municipio. Las villas y segundas residencias en estas zonas, muchas propiedad de residentes internacionales que buscan autenticidad combinada con confort europeo contemporáneo, son proyectos donde el detalle marca la diferencia. Trabajamos con arquitectos e interioristas para integrar el pladur con los elementos originales de piedra, madera y hierro forjado.',
+  seoP5: 'El control térmico y de humedad es especialmente valioso en la costa sur de Ferreries. La orientación de muchas fachadas hacia el mar, la brisa salina húmeda y las temperaturas invernales que pueden bajar de 5°C hacen que un trasdosado de pladur con lana de roca se amortice en ahorro de calefacción y deshumidificación. En verano, ese mismo aislamiento mantiene frescas las estancias y reduce el consumo de aire acondicionado, cumpliendo los objetivos CTE DB-HE.',
+  seoP6: 'Trabajamos en todo el municipio de Ferreries —centro, Santa Galdana, Cala Mitjana, Son Morell— sin coste de desplazamiento para obras superiores a 500€. Planificamos la logística del transporte con antelación, adaptándonos a las carreteras estrechas que bajan a las calas y a los accesos del casco histórico.',
+  seoTrust: 'El interior de Menorca confía en nosotros',
+  seoTrustText: 'Instaladores de pladur en Ferreries desde 2026 (SL matriz en Mallorca desde 2004). Conocemos las casas de pueblo de piedra, el centro de Ferreries, sus particularidades constructivas y los retos del clima de la costa sur.',
+  seoServicesLabel: 'Servicios en Ferreries',
+  seoRating: 'Nuevo servicio · recogiendo reseñas locales',
+  proyectoP1: 'Una casa de pueblo de 85 m² en el centro de Ferreries, a pocos minutos del famoso mercado dominical de Sant Bartomeu, iba a convertirse en una pequeña guesthouse boutique con tres habitaciones en suite. El edificio, de principios del siglo XX, presentaba la fachada tradicional menorquina, muros de piedra de 55 cm, techos de vigas de madera a 4 m y una distribución original de gran salón, comedor formal y cuatro dormitorios pequeños comunicados.',
+  proyectoP2: 'El alcance de pladur cubrió tres intervenciones. Primero, trasdosados con placa estándar Placo y lana mineral Isover de 60 mm en todas las paredes exteriores y medianeras (62 m²), resolviendo la condensación invernal y mejorando el aislamiento térmico (λ = 0,032 W/mK). Segundo, falso techo continuo a 3,10 m en toda la planta (85 m²), creando una cámara técnica para conductos de climatización, cableado nuevo y downlights LED. Tercero, redistribución completa con 28 ml de tabiques Knauf de doble placa con lana de roca de alta densidad para crear tres habitaciones con baño privado, cada una insonorizada respecto a las demás (reducción de 52 dB, muy por encima del CTE DB-HR).',
+  proyectoP3: 'La logística sumó un reto: el acceso por una calle estrecha del casco histórico obligó a transportar placas en formato reducido y a programar entregas de madrugada. El trabajo se completó en 12 días hábiles con un coste de pladur de 10.200€. La guesthouse abrió a tiempo para la temporada de verano, con tres habitaciones que combinan el encanto de la arquitectura de pueblo menorquina con el confort térmico y acústico que exige el turismo de calidad.',
+}
+
+const zonas = lang === 'en' ? [
+  { nombre: 'Ferreries centre', descripcion: 'Traditional village (~4,800 residents) with stone architecture and the lively Sant Bartomeu market. Renovations respecting heritage: Placo thermal linings, false ceilings from 29€/m² and Knauf redistribution.' },
+  { nombre: 'Santa Galdana', descripcion: 'Main beach resort of Ferreries (south coast) with apartment blocks, hotels and villas. Refurbishments of flats, boutique hotels and sea-view homes: Isover acoustic insulation (45-55 dB), CTE DB-HR compliant, modernisation and quality finishes.' },
+  { nombre: 'Cala Mitjana', descripcion: 'Protected natural beach with no shoreline construction. Second homes and small villas needing comfort upgrades without altering the protected surroundings: interior Placo linings with 60 mm rock wool and discreet false ceilings.' },
+  { nombre: 'Son Morell', descripcion: 'Residential area with high-value stone homes. Premium renovations balancing tradition and modern comfort: Knauf thermal insulation, redistribution and Q3/Q4 finishes.' },
+  { nombre: 'Cala Trebalúger', descripcion: 'Small protected cala accessed on foot, with isolated traditional homes. Drywall renovations for country houses and second homes: thermal insulation, moisture-resistant boards and LED false ceilings.' },
+] : [
+  { nombre: 'Ferreries centro', descripcion: 'Pueblo tradicional (~4.800 habitantes) con arquitectura de piedra y el animado mercado de Sant Bartomeu. Reformas respetuosas con el patrimonio: trasdosados térmicos Placo, falsos techos desde 29€/m² y redistribución Knauf.' },
+  { nombre: 'Santa Galdana', descripcion: 'Principal núcleo de playa de Ferreries (costa sur) con bloques de apartamentos, hoteles y villas. Reformas de apartamentos, hoteles boutique y casas con vistas al mar: aislamiento acústico Isover (45-55 dB), conforme al CTE DB-HR, modernización y acabados de calidad.' },
+  { nombre: 'Cala Mitjana', descripcion: 'Playa natural protegida sin construcciones en la línea de costa. Segundas residencias y pequeñas villas que necesitan mejoras de confort sin alterar el entorno protegido: trasdosados interiores Placo con lana de roca de 60 mm y falsos techos discretos.' },
+  { nombre: 'Son Morell', descripcion: 'Zona residencial con viviendas de piedra de gran valor. Reformas premium que combinan tradición y confort moderno: aislamiento térmico Knauf, redistribución y acabados Q3/Q4.' },
+  { nombre: 'Cala Trebalúger', descripcion: 'Pequeña cala protegida a la que se accede a pie, con viviendas tradicionales aisladas. Reformas con pladur para casas de campo y segundas residencias: aislamiento térmico, placas hidrófugas y falsos techos con LED.' },
+]
+
+const breadcrumbs = [
+  { label: t.breadcrumbHome, href: lang === 'en' ? '/en' : '/' },
+  { label: t.breadcrumbPage, href: lang === 'en' ? '/en/pladur-ferreries' : '/pladur-ferreries' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Floor area', valor: '85 m²' },
+  { label: 'Location', valor: 'Ferreries centre' },
+  { label: 'Works', valor: 'Wall lining + Ceiling + Layout' },
+  { label: 'Duration', valor: '12 working days' },
+  { label: 'Result', valor: 'Village house turned guest house (3 rooms)' },
+] : [
+  { label: 'Superficie', valor: '85 m²' },
+  { label: 'Ubicación', valor: 'Centro de Ferreries' },
+  { label: 'Trabajos', valor: 'Trasdosado + Techo + Redistribución' },
+  { label: 'Duración', valor: '12 días hábiles' },
+  { label: 'Resultado', valor: 'Casa de pueblo convertida en guesthouse (3 habitaciones)' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'False ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Drywall partitions', href: '/en/tabiques-pladur-menorca' },
+  { label: 'Acoustic insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const meta = lang === 'en' ? {
+  title: 'Drywall in Ferreries | Villages & Southern Calas',
+  description: 'Drywall installers in Ferreries. Village houses and villas in Santa Galdana, Cala Mitjana, Son Morell. False ceilings 29€/m², partitions 45€/m². Free quote 24h.',
+  canonical: '/en/pladur-ferreries',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-ferreries',
+} : {
+  title: 'Pladur en Ferreries y Calas del Sur | Desde 29€/m²',
+  description: 'Instaladores de pladur en Ferreries. Casas de pueblo y villas en Santa Galdana, Cala Mitjana, Son Morell. Falsos techos 29€/m², tabiques 45€/m². 24h.',
+  canonical: '/pladur-ferreries',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-ferreries',
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType="Instalación de Pladur"
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio="Ferreries"
+    zonas={zonas}
+    faqKey="ferreries"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoEyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoH2}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p set:html={t.seoP2} />
+            <p set:html={t.seoP3} />
+          </div>
+          <div class="space-y-5">
+            <p>{t.seoP4}</p>
+            <p>{t.seoP5}</p>
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.seoTrust}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.seoTrustText}</p>
+              <div class="flex items-center gap-2">
+                <span class="text-white/60 text-xs">{t.seoRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.seoServicesLabel}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyectoP1}</p>
+      <p>{t.proyectoP2}</p>
+      <p>{t.proyectoP3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

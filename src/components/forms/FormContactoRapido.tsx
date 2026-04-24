@@ -2,6 +2,7 @@
 
 import { useState, useCallback, type FormEvent, type ChangeEvent } from 'react'
 import { siteConfig } from '@/data/site'
+import { validateNombre, validateEmail, validateTelefono, makeValidateMensaje, type Validator } from '@/lib/form-validators'
 
 interface FormData {
   nombre: string
@@ -17,26 +18,11 @@ interface FieldErrors {
   mensaje?: string
 }
 
-const validators: Record<keyof FormData, (v: string) => string | undefined> = {
-  nombre: (v) => {
-    if (!v || v.trim().length < 2) return 'Por favor, introduce un nombre válido (mín. 2 caracteres)'
-    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/.test(v)) return 'Por favor, introduce un nombre válido (solo letras)'
-    return undefined
-  },
-  email: (v) => {
-    if (!v || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Introduce un email válido (ejemplo@dominio.com)'
-    return undefined
-  },
-  telefono: (v) => {
-    if (!v || !/^\+?[0-9\s\-]{7,15}$/.test(v)) return 'Introduce un teléfono válido (7-15 dígitos, puede incluir prefijo +)'
-    if (v.replace(/[\s\-+]/g, '').length < 7) return 'El teléfono debe tener al menos 7 dígitos'
-    return undefined
-  },
-  mensaje: (v) => {
-    if (!v || v.trim().length < 10) return 'Por favor, describe brevemente tu proyecto (mín. 10 caracteres)'
-    if (v.length > 500) return 'Máximo 500 caracteres'
-    return undefined
-  },
+const validators: Record<keyof FormData, Validator> = {
+  nombre: validateNombre,
+  email: validateEmail,
+  telefono: validateTelefono,
+  mensaje: makeValidateMensaje(500),
 }
 
 function CheckIcon() {
@@ -72,7 +58,7 @@ export default function FormContactoRapido({ className = '', dark = false }: For
   const pathname = typeof window !== 'undefined' ? window.location.pathname : '/'
 
   const handleChange = useCallback((field: keyof FormData) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const val = e.target.value
+    const val = e.currentTarget.value
     setValues(prev => ({ ...prev, [field]: val }))
     if (touched[field]) {
       setErrors(prev => ({ ...prev, [field]: validators[field](val) }))
@@ -211,7 +197,7 @@ export default function FormContactoRapido({ className = '', dark = false }: For
       <div data-field-error={!!errors.email || undefined}>
         <label htmlFor="rapido-email" className={labelClass}>Email *</label>
         <div className="relative">
-          <input id="rapido-email" value={values.email} onChange={handleChange('email')} onBlur={handleBlur('email')} placeholder="tu@email.com" type="email" autoComplete="email" spellCheck={false} className={inputClass('email')} />
+          <input id="rapido-email" value={values.email} onChange={handleChange('email')} onBlur={handleBlur('email')} placeholder="tu@email.com" type="email" autoComplete="email" spellcheck={false} className={inputClass('email')} />
           <StatusIcon field="email" />
         </div>
         {errors.email && <p className={errorMsgClass}>{errors.email}</p>}

@@ -1,17 +1,17 @@
 ---
 export const prerender = true
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
-import WhatsAppButton from '@/components/layout/WhatsAppButton'
-import CookieBanner from '@/components/layout/CookieBanner'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
 import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
-import Hero from '@/components/sections/Hero'
+import Hero from '@/components/sections/Hero.astro'
 import { siteConfig } from '@/data/site'
 
 const meta = {
-  title: 'Política de Privacidad | Pladur Mallorca',
-  description: 'Política de privacidad de Pladur Mallorca (PLAQUISTAS Y ACABADOS SL). Información sobre el tratamiento de tus datos personales conforme al RGPD y la LOPDGDD.',
+  title: 'Política de Privacidad | Pladur Menorca',
+  description: 'Política de privacidad de Pladur Menorca (PLAQUISTAS Y ACABADOS SL). Información sobre el tratamiento de tus datos personales conforme al RGPD y la LOPDGDD.',
   canonical: '/politica-de-privacidad',
 }
 ---
@@ -21,7 +21,7 @@ const meta = {
     <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Política de Privacidad', href: '/politica-de-privacidad' }]} />
   </Fragment>
 
-  <Header client:idle slot="header" />
+  <Header slot="header" />
 
   <Hero
     client:visible
@@ -51,7 +51,7 @@ const meta = {
                 <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
                   <svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
                 </span>
-                <span class="text-muted"><strong class="text-foreground">Responsable:</strong> PLAQUISTAS Y ACABADOS SL (en adelante, <strong class="text-foreground">PLADUR MALLORCA</strong>)</span>
+                <span class="text-muted"><strong class="text-foreground">Responsable:</strong> PLAQUISTAS Y ACABADOS SL (en adelante, <strong class="text-foreground">PLADUR MENORCA</strong>)</span>
               </li>
               <li class="flex items-start gap-3">
                 <span class="size-6 flex items-center justify-center bg-surface text-foreground rounded-lg border border-nav-border shrink-0 mt-0.5">
@@ -98,7 +98,7 @@ const meta = {
             Datos que recabamos y finalidad del tratamiento
           </h2>
           <p class="text-muted leading-relaxed mb-6">
-            PLADUR MALLORCA recaba y trata datos personales a través de los siguientes canales, siempre con las finalidades que se indican a continuación:
+            PLADUR MENORCA recaba y trata datos personales a través de los siguientes canales, siempre con las finalidades que se indican a continuación:
           </p>
 
           <div class="space-y-4">
@@ -268,7 +268,7 @@ const meta = {
           </div>
 
           <p class="text-muted leading-relaxed mt-6">
-            PLADUR MALLORCA no vende, alquila ni cede datos personales a terceros con fines comerciales propios. Los datos únicamente se comunicarán a los encargados del tratamiento mencionados anteriormente y, en su caso, a las Administraciones Públicas competentes en cumplimiento de las obligaciones legales aplicables.
+            PLADUR MENORCA no vende, alquila ni cede datos personales a terceros con fines comerciales propios. Los datos únicamente se comunicarán a los encargados del tratamiento mencionados anteriormente y, en su caso, a las Administraciones Públicas competentes en cumplimiento de las obligaciones legales aplicables.
           </p>
         </div>
       </div>
@@ -483,7 +483,7 @@ const meta = {
             Uso de cookies
           </h2>
           <p class="text-muted leading-relaxed mb-4">
-            El sitio web de PLADUR MALLORCA utiliza cookies propias y de terceros con distintas finalidades: técnicas (necesarias para el correcto funcionamiento del sitio), analíticas (para medir el tráfico y el comportamiento de los usuarios) y de marketing (para personalizar la publicidad y medir la eficacia de las campañas).
+            El sitio web de PLADUR MENORCA utiliza cookies propias y de terceros con distintas finalidades: técnicas (necesarias para el correcto funcionamiento del sitio), analíticas (para medir el tráfico y el comportamiento de los usuarios) y de marketing (para personalizar la publicidad y medir la eficacia de las campañas).
           </p>
           <p class="text-muted leading-relaxed mb-4">
             El usuario puede configurar, aceptar o rechazar el uso de cookies a través del banner de cookies que se muestra en su primera visita al sitio web, así como modificar sus preferencias en cualquier momento desde los ajustes de su navegador.
@@ -508,7 +508,7 @@ const meta = {
             Cambios en la política de privacidad
           </h2>
           <p class="text-muted leading-relaxed mb-4">
-            PLADUR MALLORCA se reserva el derecho a modificar la presente política de privacidad en cualquier momento, con el fin de adaptarla a novedades legislativas, criterios jurisprudenciales, prácticas del sector o cambios en los servicios ofrecidos a través del sitio web.
+            PLADUR MENORCA se reserva el derecho a modificar la presente política de privacidad en cualquier momento, con el fin de adaptarla a novedades legislativas, criterios jurisprudenciales, prácticas del sector o cambios en los servicios ofrecidos a través del sitio web.
           </p>
           <p class="text-muted leading-relaxed mb-4">
             Cualquier modificación sustancial será comunicada al usuario de forma visible en el sitio web. Se recomienda al usuario revisar periódicamente esta página para mantenerse informado sobre cómo protegemos sus datos personales.
@@ -582,7 +582,7 @@ const meta = {
 
   <Footer slot="footer" />
   <Fragment slot="after-footer">
-    <WhatsAppButton client:visible />
-    <CookieBanner client:idle />
+    <WhatsAppButton />
+    <CookieBanner />
   </Fragment>
 </BaseLayout>

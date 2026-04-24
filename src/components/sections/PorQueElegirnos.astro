@@ -1,4 +1,7 @@
 ---
+import Button from '@/components/ui/Button.astro'
+import { localizedHref } from '@/i18n'
+
 interface Diferenciador {
   titulo: string
   descripcion: string
@@ -6,44 +9,50 @@ interface Diferenciador {
 }
 
 interface Props {
+  lang?: 'es' | 'en'
   items?: Diferenciador[]
 }
 
-const defaultItems: Diferenciador[] = [
-  {
-    titulo: '+20 años de experiencia',
-    descripcion: 'En Mallorca desde 2004. Conocemos cada tipología de edificio de la isla, desde pisos históricos en el centro de Palma hasta villas de lujo en Calvià.',
-    icon: 'experiencia',
-  },
-  {
-    titulo: 'Presupuesto en 24h',
-    descripcion: 'Visita técnica gratuita y sin compromiso. Medimos in situ y enviamos el presupuesto detallado en menos de 24 horas.',
-    icon: 'reloj',
-  },
-  {
-    titulo: 'Precio cerrado',
-    descripcion: 'Sin sorpresas en la factura final. El precio acordado es el precio que pagas. Cualquier cambio se acuerda por escrito antes de ejecutarse.',
-    icon: 'precio',
-  },
-  {
-    titulo: 'Materiales premium',
-    descripcion: 'Trabajamos exclusivamente con Placo, Knauf y Lafarge. Marcas líderes con garantía del fabricante en todos los materiales instalados.',
-    icon: 'materiales',
-  },
-  {
-    titulo: 'Obra limpia',
-    descripcion: 'Sin escombros, mínima molestia para ti y tus vecinos. El pladur es un sistema en seco que genera un 80% menos de residuos que la obra tradicional.',
-    icon: 'limpieza',
-  },
-  {
-    titulo: 'Garantía 2 años',
-    descripcion: 'En toda la mano de obra. Si surge cualquier incidencia durante ese período, la resolvemos sin coste adicional. Tu tranquilidad es nuestra prioridad.',
-    icon: 'garantia',
-  },
+const { lang = 'es', items: itemsProp } = Astro.props
+
+const defaultItemsEs: Diferenciador[] = [
+  { titulo: '+20 años de experiencia', descripcion: 'En Menorca desde 2004. Conocemos cada tipología de edificio de la isla, desde pisos históricos en el centro de Maó hasta villas de lujo en Ciutadella.', icon: 'experiencia' },
+  { titulo: 'Presupuesto en 24h', descripcion: 'Visita técnica sin compromiso. Medimos in situ y enviamos el presupuesto detallado en menos de 24 horas.', icon: 'reloj' },
+  { titulo: 'Precio cerrado', descripcion: 'Sin sorpresas en la factura final. El precio acordado es el precio que pagas. Cualquier cambio se acuerda por escrito antes de ejecutarse.', icon: 'precio' },
+  { titulo: 'Materiales premium', descripcion: 'Trabajamos exclusivamente con Placo, Knauf y Lafarge. Marcas líderes con garantía del fabricante en todos los materiales instalados.', icon: 'materiales' },
+  { titulo: 'Obra limpia', descripcion: 'Sin escombros, mínima molestia para ti y tus vecinos. El pladur es un sistema en seco que genera un 80% menos de residuos que la obra tradicional.', icon: 'limpieza' },
+  { titulo: 'Garantía 1 año', descripcion: 'En toda la mano de obra. Si surge cualquier incidencia durante ese período, la resolvemos sin coste adicional. Tu tranquilidad es nuestra prioridad.', icon: 'garantia' },
 ]
 
-const { items: itemsProp } = Astro.props
-const items = itemsProp ?? defaultItems
+const defaultItemsEn: Diferenciador[] = [
+  { titulo: '20+ years of experience', descripcion: 'Operating in Menorca since 2004. We know every building type on the island, from historic apartments in central Maó to luxury villas in Ciutadella.', icon: 'experiencia' },
+  { titulo: 'Quote within 24 hours', descripcion: 'On-site technical visit with no obligation. We measure in person and send a detailed quote in under 24 hours.', icon: 'reloj' },
+  { titulo: 'Fixed-price contracts', descripcion: 'No surprises on the final invoice. The agreed price is the price you pay. Any change is approved in writing before execution.', icon: 'precio' },
+  { titulo: 'Premium materials', descripcion: 'We work exclusively with Placo, Knauf and Lafarge. Leading brands with manufacturer warranty on every material installed.', icon: 'materiales' },
+  { titulo: 'Clean job site', descripcion: 'No rubble, minimal disruption for you and your neighbours. Drywall is a dry-build system that generates 80% less waste than traditional works.', icon: 'limpieza' },
+  { titulo: '1-year warranty', descripcion: 'Full workmanship warranty. Any incident during the warranty period is fixed at no additional cost. Your peace of mind is our priority.', icon: 'garantia' },
+]
+
+const t = lang === 'en' ? {
+  eyebrow: 'What makes us different',
+  title: 'Why choose us?',
+  intro: 'Not a generic renovation company. Drywall specialists exclusively — with more than two decades installing across the Balearic Islands.',
+  statsProjects: 'projects delivered',
+  statsYears: 'years in Menorca',
+  statsRating: 'average rating',
+  ctaLabel: 'Request a free quote',
+} : {
+  eyebrow: 'Nuestra diferencia',
+  title: '¿Por qué elegirnos?',
+  intro: 'No somos una empresa genérica de reformas. Somos especialistas exclusivamente en sistemas de pladur, con más de dos décadas instalando en Menorca.',
+  statsProjects: 'proyectos completados',
+  statsYears: 'años en Menorca',
+  statsRating: 'valoración media',
+  ctaLabel: 'Solicitar presupuesto gratis',
+}
+
+const items = itemsProp ?? (lang === 'en' ? defaultItemsEn : defaultItemsEs)
+const ctaHref = localizedHref('/presupuesto-pladur', lang)
 
 const iconCls = 'size-5'
 ---
@@ -54,13 +63,13 @@ const iconCls = 'size-5'
     {/* Section header */}
     <div class="mb-14 lg:mb-16 max-w-2xl animate-fade-up">
       <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
-        Nuestra diferencia
+        {t.eyebrow}
       </span>
-      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
-        ¿Por qué elegirnos?
+      <h2 aria-label={t.title} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+        {t.title}
       </h2>
       <p class="text-lg text-muted leading-relaxed">
-        No somos una empresa genérica de reformas. Somos especialistas exclusivamente en sistemas de pladur, con más de dos décadas instalando en Mallorca.
+        {t.intro}
       </p>
     </div>
 
@@ -127,31 +136,25 @@ const iconCls = 'size-5'
           {/* Stats grid */}
           <div class="grid grid-cols-3 gap-6 lg:gap-10 flex-1 w-full lg:w-auto">
             <div class="text-center">
-              <div class="text-3xl lg:text-4xl font-bold text-foreground-dark tabular-nums">+6.000</div>
-              <div class="text-sm text-muted mt-1">proyectos completados</div>
+              <div class="text-3xl lg:text-4xl font-bold text-foreground-dark tabular-nums">{lang === 'en' ? '+6,000' : '+6.000'}</div>
+              <div class="text-sm text-muted mt-1">{t.statsProjects}</div>
             </div>
             <div class="text-center relative">
               <div class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-12 bg-warm-border" />
               <div class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-12 bg-warm-border" />
               <div class="text-3xl lg:text-4xl font-bold text-foreground-dark tabular-nums">+20</div>
-              <div class="text-sm text-muted mt-1">años en Mallorca</div>
+              <div class="text-sm text-muted mt-1">{t.statsYears}</div>
             </div>
             <div class="text-center">
               <div class="text-3xl lg:text-4xl font-bold text-foreground-dark tabular-nums">4.7<span class="text-muted text-2xl">/5</span></div>
-              <div class="text-sm text-muted mt-1">valoración media</div>
+              <div class="text-sm text-muted mt-1">{t.statsRating}</div>
             </div>
           </div>
 
           {/* CTA */}
-          <a
-            href="/presupuesto-pladur"
-            class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide transition-[background-color,box-shadow] duration-200 active:scale-95 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 shrink-0 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-          >
-            Solicitar presupuesto gratis
-            <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
+          <Button href={ctaHref} variant="primary" size="lg" withArrow class="shrink-0">
+            {t.ctaLabel}
+          </Button>
         </div>
       </div>
     </div>

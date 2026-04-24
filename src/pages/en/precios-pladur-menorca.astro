@@ -1,0 +1,672 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import SchemaAggregateOffer from '@/components/seo/SchemaAggregateOffer.astro'
+import { siteConfig } from '@/data/site'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Container from '@/components/ui/Container.astro'
+import { getPreciosFaqs } from '@/data/faqs/precios'
+import { getServicioBySlug } from '@/data/servicios'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('precios-pladur-menorca')!
+const pageFaqs = getPreciosFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall Prices Menorca 2026 | Table from €29/m² Since 2004',
+  description: 'Compare drywall (pladur) prices in Menorca 2026. False ceilings from €29/m², partitions from €45/m², insulation from €6/m². Full table. Free quote.',
+  canonical: '/en/precios-pladur-menorca',
+  ogImage: '/og/home.jpg',
+} : {
+  title: 'Precios Pladur Menorca 2026 | Tabla desde 29€/m²',
+  description: 'Compara precios del pladur en Menorca 2026. Falsos techos desde 29€/m², tabiques desde 45€/m², aislamiento desde 6€/m². Tabla completa. Presupuesto gratis.',
+  canonical: '/precios-pladur-menorca',
+  ogImage: '/og/home.jpg',
+}
+
+const alternateHref = lang === 'en' ? '/precios-pladur-menorca' : '/en/precios-pladur-menorca'
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — up-to-date drywall prices in Menorca 2026. False ceilings from €29/m², partitions from €45/m², acoustic insulation from €6/m², thermal insulation from €7/m². Fixed itemised quote in 24-48h. Tel: +34 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Drywall Prices',
+  heroTitle: 'Drywall Prices in Menorca 2026 — Complete Guide',
+  heroSubtitle: 'Updated table by service type. No small print.',
+  heroDescription: '2026 drywall pricing table for Menorca: false ceilings from €29/m², partitions from €45/m², acoustic insulation from €6/m², thermal insulation from €7/m². Indicative prices, VAT not included. On-site visit and fixed itemised quote in 24-48h.',
+  heroBadges: ['From €29/m²', 'VAT itemised', 'Updated 2026'],
+  ctaPrimario: 'Request a free quote',
+  ctaLlamar: 'Call',
+  aggName: 'Drywall services in Menorca',
+  aggDesc: 'Updated prices for drywall installation, false ceilings, partitions and insulation in Menorca',
+  offers: [
+    { name: 'Standard seamless false ceiling', price: '29', description: 'False ceiling with standard BA13 board on a metal frame. Materials and labour included.' },
+    { name: 'Simple layout partition', price: '45', description: 'Drywall partition with 48mm frame and BA13 board on each side. Joint treatment included.' },
+    { name: 'Reinforced acoustic partition', price: '52', description: 'Drywall partition with double board and high-density mineral wool for acoustic insulation.' },
+    { name: 'Acoustic insulation with drywall', price: '6', description: 'Decoupled wall-lining system with acoustic board and mineral wool for maximum sound reduction.' },
+    { name: 'Thermal drywall wall lining', price: '35', description: 'Drywall wall lining with integrated thermal insulation to improve energy efficiency.' },
+  ],
+  introBadge: 'Pricing guide 2026',
+  introH2: 'Why do drywall prices vary?',
+  introP1: 'Drywall prices in Menorca range from €29/m² (basic false ceiling) to €300/m² (box-in-box soundproof booth). The gap of up to 300% is driven by six factors: type of system, Placo/Knauf board grade, total surface, property accessibility, services to integrate and space geometry.',
+  introP2: 'Prices in Menorca are 12-20% above the mainland Spanish average due to sea freight from the manufacturers (Placo-Saint-Gobain in Valdemoro, Knauf in Guixers) and Balearic wage pressure. Even so, drywall remains 20-40% cheaper than brick construction once materials, labour, debris removal and build time are added up.',
+  introFactoresTitle: 'Factors that shape the final price',
+  factores: [
+    { factor: 'Type of system', desc: 'A basic false ceiling costs €29/m² while an acoustic one with double board costs €35-50/m². The system is the single biggest price driver.' },
+    { factor: 'Type of board', desc: 'Standard BA13 board €5-7/m²; BA15 acoustic €8-12/m²; DF90 fire-rated €15-18/m². A premium board can double the material cost.' },
+    { factor: 'Total surface', desc: 'Projects above 100 m² drop the unit price by up to 40% vs 20 m² jobs, because travel and set-up are spread over more metres.' },
+    { factor: 'Accessibility', desc: 'Buildings with no lift, Maó old town or villas in the north coast add 5-15% for manual material carry and access time.' },
+    { factor: 'Services to integrate', desc: 'Each recessed LED downlight adds €45-80. Integrating HVAC (diffusers, ducts) or plumbing adds 10-25% over the base price.' },
+    { factor: 'Shape and geometry', desc: 'Rectangular: base price. Curves, coffers, stepped ceilings and columns add 20-50% to labour for board cutting and fitting.' },
+  ],
+  importantTitle: 'Indicative 2026 prices · VAT not included',
+  importantText1: 'Prices on this page are indicative for 2026 and exclude VAT. For a fixed price we carry out an on-site visit across Menorca, take measurements and send an itemised quote in 24-48 hours, no obligation. ',
+  importantLink: 'Request your quote now.',
+  sidebarBadge: 'Exact quote',
+  sidebarTitle: 'Fixed price for your project',
+  sidebarText: 'Coverage across Menorca. Itemised quote in 24-48h. VAT not included, no obligation.',
+  sidebarCta: 'Online quote',
+  sidebarCall: 'Call',
+  sidebarPreciosTitle: 'Prices from',
+  sidebarPrecios: [
+    { servicio: 'Standard false ceiling', precio: '€29/m²' },
+    { servicio: 'Acoustic false ceiling', precio: '€35/m²' },
+    { servicio: 'Layout partition', precio: '€45/m²' },
+    { servicio: 'Acoustic partition', precio: '€52/m²' },
+    { servicio: 'Acoustic insulation', precio: '€6/m²' },
+    { servicio: 'Thermal insulation', precio: '€7/m²' },
+  ],
+  sidebarLinksTitle: 'Pricing services:',
+  sidebarLinks: [
+    { label: 'False Ceilings', href: '/en/falsos-techos-pladur-menorca' },
+    { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+    { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+    { label: 'Drywall Installation', href: '/en/instalacion-pladur-menorca' },
+  ],
+  ctaBanner1Titulo: 'Want the exact price for your project?',
+  ctaBanner1Subtitulo: 'Free quote in 24h. Fixed price, no surprises.',
+  falsosBadge: 'Breakdown by service',
+  falsosH2: 'False ceiling drywall prices in Menorca 2026',
+  falsosLead: 'Drywall false ceilings in Menorca range from €29/m² (basic seamless BA13) to €80/m² (decorative with mouldings and coffers). The system (seamless, accessible, acoustic, decorative or LED) and HVAC integration are the decisive factors. Minimum quoted surface: 15 m².',
+  falsosLink: 'See full false ceilings page',
+  tabiquesBadge: 'Breakdown by service',
+  tabiquesH2: 'Drywall partition prices in Menorca 2026',
+  tabiquesLead: 'Drywall partitions in Menorca start at €45/m² of finished wall (both faces) with Placo/Knauf BA13 board. Price rises to €52/m² with mineral wool for acoustic insulation and €52-75/m² for EI-60 fire-rated partitions certified to CTE DB-SI. Self-supporting wall linings from €29/m².',
+  tabiquesLink: 'See full partitions page',
+  tabiquesNote1: 'For moisture-resistant board pricing (bathrooms and kitchens), see our ',
+  tabiquesNote2: 'moisture-resistant drywall in Menorca',
+  tabiquesNote3: ' page.',
+  tabiquesNoteHref: '/en/pladur-hidrofugo-menorca',
+  aislamientoBadge: 'Breakdown by service',
+  aislamientoH2: 'Acoustic drywall insulation prices in Menorca 2026',
+  aislamientoLead: 'Acoustic insulation with drywall in Menorca starts at €6/m² (insulation material on party walls) and reaches €300/m² (box-in-box booths for studios). Meets CTE DB-HR (50 dB DnT,A between dwellings) with decoupled frames, high-density mineral wool and Placo/Knauf anti-vibration systems.',
+  aislamientoLink: 'See full acoustic insulation page',
+  ctaBanner2Titulo: 'The exact price is in your personalised quote',
+  ctaBanner2Subtitulo: 'Free, no obligation. Reply in under 24 hours.',
+  factoresBadge: 'Advanced guide',
+  factoresH2: 'Factors that shape the final drywall price',
+  factorSec1Title: '1. Total project size',
+  factorSec1: 'Surface is the biggest driver of unit price. A 20 m² false ceiling costs 25-40% more per m² than a 100 m² job, because fixed costs (travel from Maó, scaffold set-up, compound mixing, final clean-up) spread over fewer metres. Over 100 m² we apply economies of scale.',
+  factorSec2Title: '2. Type of board and system',
+  factorSec2: 'Placo/Knauf BA13 standard board costs €5-7/m²; BA15 acoustic €8-12/m²; DF90 fire-rated €15-18/m²; moisture-resistant (H1) €9-13/m². Add ancillary materials (galvanised steel studs, joint compound, tape, Isover mineral wool), which also vary with the chosen Placo/Knauf system.',
+  factorSec3Title: '3. Complexity and geometry',
+  factorSec3: 'A rectangular ceiling with smooth surfaces is the cheapest scenario (€29-35/m²). Curves, stepped ceilings, columns to work around, decorative coffers or multi-angle geometries increase install time by 20-50%, pushing the labour cost up to €45-80/m².',
+  factorSec4Title: '4. Access and site conditions',
+  factorSec4: 'Working in Maó old town, Ciutadella historic centre or villas on the north coast can mean narrow staircases, no lift and materials carried by hand, adding 5-15% for extra hours. Very uneven ceilings or out-of-plumb walls (typical in Menorcan stone houses) need more levelling work with Placo Maestra profiles.',
+  factorSec5Title: '5. Services to integrate',
+  factorSec5: 'Integrating electrical fittings (recessed LED downlights, dimmers, switches), HVAC (diffusers, grilles, air ducts) or telecoms (data points, antennas) adds a surcharge proportional to the number of points. Typical 2026 unit rates: recessed LED downlight €45-80; HVAC diffuser €120-180; return grille €60-90. All installed and commissioned.',
+  compH2: 'Drywall vs traditional build: total cost comparison',
+  compLead: 'Comparing the total cost of a drywall project vs the same solution in brick, drywall comes out 25-40% cheaper once all real costs are computed. Build time (1-5 days vs 1-4 weeks) is the most visible saving:',
+  compHeaders: { coste: 'Cost', pladur: 'Drywall', ladrillo: 'Brick' },
+  tablaComparativaCostes: [
+    ['Materials', 'Medium', 'Low-medium'],
+    ['Labour', 'Low (3-4× faster)', 'High'],
+    ['Debris removal', 'Minimal', 'High (skip)'],
+    ['Space protection', 'Basic', 'Extensive'],
+    ['Build time', '1-5 days', '1-4 weeks'],
+    ['Approx. total/m²', '€25-60', '€40-80'],
+  ],
+  compFootnote: 'Total drywall savings can reach 25-40% vs traditional build when calculating full project cost.',
+  ejBadge: 'Real cases',
+  ejH2: 'Practical examples: how much does my project cost?',
+  ejLead: 'Three common scenarios in Menorca with estimated 2026 price ranges. All include Placo/Knauf materials, labour, joint treatment and debris removal. VAT not included.',
+  ejTotal: 'ESTIMATED TOTAL',
+  ejPlazo: 'Lead time:',
+  ejNoEncaja: 'Your project doesn’t match these examples?',
+  ejNoEncajaText: 'Every project is unique. The only way to get the exact price is an on-site visit where we measure, assess and produce a fixed itemised quote. ',
+  ejNoEncajaLink: 'Request your visit now.',
+  ejemplos: [
+    {
+      titulo: 'Flat of 80 m² with false ceiling throughout',
+      desc: 'Maó flat of 80 m² with no existing false ceiling. We install a basic seamless BA13 false ceiling across the whole home (lounge, bedrooms, bathrooms, kitchen) and integrate 8 recessed LED downlights in lounge and bedrooms. Dry build, no debris, in 3-5 working days.',
+      desglose: [
+        { concepto: '80 m² false ceiling (standard)', precio: '€2,320-2,800' },
+        { concepto: '8 recessed LED downlights', precio: '€400-640' },
+        { concepto: 'Joint treatment and finish', precio: 'included' },
+      ],
+      total: '€2,720-3,440',
+      plazo: '3-5 days',
+      iva: 'Excl. VAT',
+    },
+    {
+      titulo: 'New room with acoustic partition (15 m² partition)',
+      desc: 'Splitting a large bedroom into two with a 15 m² acoustic drywall partition: double BA13 board and 45 mm mineral wool. Includes internal door with frame and electrical run-through. The resulting 12 m² room is ready to paint in 1-2 days.',
+      desglose: [
+        { concepto: 'Acoustic partition 15 m²', precio: '€780-870' },
+        { concepto: 'Internal door + frame', precio: '€200-400' },
+        { concepto: 'Electrical run-through', precio: '€80-150' },
+      ],
+      total: '€1,060-1,420',
+      plazo: '1-2 days',
+      iva: 'Excl. VAT',
+    },
+    {
+      titulo: 'Soundproofed lounge (ceiling + walls)',
+      desc: 'Full acoustic upgrade of a 25 m² lounge with noisy neighbours upstairs and next door. We install an anti-vibration false ceiling with elastic hangers, 80 mm mineral wool and double BA15 board, plus decoupled wall linings on two party walls. Achieves over 50 dB DnT,A acoustic reduction.',
+      desglose: [
+        { concepto: 'Acoustic false ceiling 25 m²', precio: '€875-1,250' },
+        { concepto: '2 wall linings, 30 m²', precio: '€870-1,440' },
+        { concepto: 'Anti-vibration materials', precio: 'included' },
+      ],
+      total: '€1,745-2,690',
+      plazo: '4-7 days',
+      iva: 'Excl. VAT',
+    },
+  ],
+  ctaBanner3Titulo: 'Your exact quote, free, in 24 hours',
+  ctaBanner3Subtitulo: 'Fixed price. No surprises. 1-year warranty. Coverage across Menorca.',
+  articulos: [
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Drywall price in Menorca 2026', descripcion: 'Complete 2026 drywall pricing guide for Menorca. Rates by job type.' },
+    { slug: 'precio-insonorizar-piso-menorca', titulo: 'Cost of soundproofing a flat', descripcion: 'How much it costs to soundproof a flat in Menorca. Detailed prices by acoustic solution.' },
+    { slug: 'subvenciones-aislamiento-baleares-2026', titulo: 'Insulation grants in the Balearic Islands', descripcion: 'Aid and grants available in 2026 to improve home insulation in the Balearic Islands.' },
+  ],
+  faqTitle: 'Drywall pricing FAQs',
+  faqSubtitle: 'Everything you need to know about how our prices are calculated and what they include.',
+} : {
+  srOnly: 'Pladur Menorca — precios de pladur actualizados en Menorca 2026. Falsos techos desde 29€/m², tabiques desde 45€/m², aislamiento acústico desde 6€/m², aislamiento térmico desde 7€/m². Presupuesto cerrado en 24-48h. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Precios Pladur',
+  heroTitle: 'Precio del Pladur en Menorca 2026 — Guía Completa',
+  heroSubtitle: 'Tabla actualizada por tipo de servicio. Sin letra pequeña.',
+  heroDescription: 'Tabla de precios 2026 del pladur en Menorca: falsos techos desde 29€/m², tabiques desde 45€/m², aislamiento acústico desde 6€/m² y térmico desde 7€/m². Precios orientativos con IVA no incluido. Visita técnica y presupuesto cerrado en 24-48h.',
+  heroBadges: ['Desde 29€/m²', 'IVA desglosado', 'Actualizado 2026'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaLlamar: 'Llamar',
+  aggName: 'Servicios de Pladur en Menorca',
+  aggDesc: 'Precios actualizados de instalación de pladur, falsos techos, tabiques y aislamiento en Menorca',
+  offers: [
+    { name: 'Falso techo continuo básico', price: '29', description: 'Falso techo de placa estándar BA13 sobre estructura metálica. Incluye material y mano de obra.' },
+    { name: 'Tabique de distribución simple', price: '45', description: 'Tabique de pladur con estructura de 48mm y placa BA13 a cada lado. Incluye tratamiento de juntas.' },
+    { name: 'Tabique acústico reforzado', price: '52', description: 'Tabique de pladur con doble placa y lana mineral de alta densidad para aislamiento acústico.' },
+    { name: 'Aislamiento acústico con pladur', price: '6', description: 'Sistema de trasdosado desvinculado con placa acústica y lana mineral para máxima reducción de ruido.' },
+    { name: 'Trasdosado térmico con pladur', price: '7', description: 'Trasdosado de pladur con aislamiento térmico integrado para mejorar la eficiencia energética.' },
+  ],
+  introBadge: 'Guía de precios 2026',
+  introH2: '¿Por qué varían los precios del pladur?',
+  introP1: 'El precio del pladur en Menorca oscila entre 29€/m² (falso techo básico) y 300€/m² (cabina insonorizada box-in-box). La diferencia de hasta 300% se explica por seis factores: tipo de sistema, tipo de placa Placo/Knauf elegida, superficie total, accesibilidad del inmueble, instalaciones a integrar y geometría del espacio.',
+  introP2: 'Los precios en Menorca son un 12-20% superiores a la media peninsular por el transporte marítimo de materiales desde los fabricantes (Placo-Saint-Gobain en Valdemoro, Knauf en Guixers) y la presión salarial del mercado balear. Aun así, el pladur sigue siendo un 20-40% más económico que la obra tradicional de ladrillo al computar materiales, mano de obra, retirada de escombros y tiempo de ejecución.',
+  introFactoresTitle: 'Factores que determinan el precio final',
+  factores: [
+    { factor: 'Tipo de sistema', desc: 'Un falso techo básico cuesta 29€/m² y uno acústico con doble placa 35-50€/m². El sistema es el factor de mayor impacto en el precio.' },
+    { factor: 'Tipo de placa', desc: 'Placa BA13 estándar 5-7€/m²; BA15 acústica 8-12€/m²; DF90 cortafuego 15-18€/m². Una placa premium puede duplicar el coste del material.' },
+    { factor: 'Superficie total', desc: 'Proyectos de más de 100 m² bajan hasta un 40% el precio unitario frente a obras de 20 m², al diluir desplazamientos y montajes.' },
+    { factor: 'Accesibilidad', desc: 'Edificios sin ascensor, centro histórico de Maó o villas de la costa norte añaden 5-15% por subida manual de material y tiempo de acceso.' },
+    { factor: 'Instalaciones a integrar', desc: 'Cada foco LED empotrado añade 45-80€. Integrar climatización (difusores, conductos) o fontanería suma 10-25% sobre el precio base.' },
+    { factor: 'Forma y geometría', desc: 'Rectangulares: precio base. Curvas, artesonados, desniveles y columnas aumentan 20-50% la mano de obra por corte y ajuste de placa.' },
+  ],
+  importantTitle: 'Precios orientativos 2026 · IVA no incluido',
+  importantText1: 'Los precios de esta página son orientativos para 2026 y no incluyen IVA. Para cerrar el precio exacto realizamos visita técnica en toda Menorca, tomamos medidas y enviamos presupuesto desglosado en 24-48 horas, sin compromiso. ',
+  importantLink: 'Solicita tu presupuesto ahora.',
+  sidebarBadge: 'Presupuesto exacto',
+  sidebarTitle: 'Precio cerrado para tu proyecto',
+  sidebarText: 'Cobertura en toda Menorca. Presupuesto desglosado en 24-48h. IVA no incluido, sin compromiso.',
+  sidebarCta: 'Presupuesto online',
+  sidebarCall: 'Llamar',
+  sidebarPreciosTitle: 'Precios desde',
+  sidebarPrecios: [
+    { servicio: 'Falso techo básico', precio: '29€/m²' },
+    { servicio: 'Falso techo acústico', precio: '35€/m²' },
+    { servicio: 'Tabique distribución', precio: '45€/m²' },
+    { servicio: 'Tabique acústico', precio: '52€/m²' },
+    { servicio: 'Aislamiento acústico', precio: '6€/m²' },
+    { servicio: 'Aislamiento térmico', precio: '7€/m²' },
+  ],
+  sidebarLinksTitle: 'Servicios de precio:',
+  sidebarLinks: [
+    { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+    { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+    { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+    { label: 'Instalación Pladur', href: '/instalacion-pladur-menorca' },
+  ],
+  ctaBanner1Titulo: '¿Quieres saber el precio exacto de tu proyecto?',
+  ctaBanner1Subtitulo: 'Presupuesto gratis en 24h. Precio cerrado sin sorpresas.',
+  falsosBadge: 'Desglose por servicio',
+  falsosH2: 'Precio falsos techos pladur en Menorca 2026',
+  falsosLead: 'Los falsos techos de pladur en Menorca van de 29€/m² (continuo básico BA13) a 80€/m² (decorativo con molduras y artesonados). El tipo de sistema (continuo, registrable, acústico, decorativo o LED) y la integración de climatización son los factores decisivos. Superficie mínima presupuestada: 15 m².',
+  falsosLink: 'Ver página completa de falsos techos',
+  tabiquesBadge: 'Desglose por servicio',
+  tabiquesH2: 'Precio tabiques pladur en Menorca 2026',
+  tabiquesLead: 'Los tabiques de pladur en Menorca arrancan en 45€/m² de pared terminada (ambas caras) con placa Placo/Knauf BA13. El precio sube a 52€/m² con aislamiento acústico de lana mineral y a 52-75€/m² en tabique cortafuego EI-60 certificado CTE DB-SI. Trasdosados autoportantes desde 29€/m².',
+  tabiquesLink: 'Ver página completa de tabiques',
+  tabiquesNote1: 'Para precios de placa hidrófuga (baños y cocinas), consulta nuestra página de ',
+  tabiquesNote2: 'pladur hidrófugo en Menorca',
+  tabiquesNote3: '.',
+  tabiquesNoteHref: '/pladur-hidrofugo-menorca',
+  aislamientoBadge: 'Desglose por servicio',
+  aislamientoH2: 'Precio aislamiento acústico pladur en Menorca 2026',
+  aislamientoLead: 'El aislamiento acústico con pladur en Menorca parte de 6€/m² (material aislante en medianeras) y llega a 300€/m² (cabina box-in-box para estudios). Cumple CTE DB-HR (50 dB DnT,A entre viviendas) gracias a estructuras desvinculadas, lana mineral de alta densidad y sistemas antivibratorios Placo/Knauf.',
+  aislamientoLink: 'Ver página completa de aislamiento acústico',
+  ctaBanner2Titulo: 'Los precios exactos están en tu presupuesto personalizado',
+  ctaBanner2Subtitulo: 'Gratuito, sin compromiso. Respuesta en menos de 24 horas.',
+  factoresBadge: 'Guía avanzada',
+  factoresH2: 'Factores que afectan al precio final del pladur',
+  factorSec1Title: '1. Superficie total del proyecto',
+  factorSec1: 'La superficie es el factor de mayor peso en el precio unitario. Un falso techo de 20 m² cuesta un 25-40% más por m² que uno de 100 m², porque los costes fijos (desplazamiento desde Maó, montaje de andamios, mezcla de pasta, limpieza final) se reparten entre menos metros. A partir de 100 m² aplicamos economías de escala.',
+  factorSec2Title: '2. Tipo de placa y sistema',
+  factorSec2: 'La placa Placo/Knauf BA13 estándar cuesta 5-7€/m²; la BA15 acústica 8-12€/m²; la DF90 cortafuego llega a 15-18€/m²; la hidrófuga (H1) a 9-13€/m². A esto se suman los materiales auxiliares (montantes de acero galvanizado, pasta de juntas, cinta, lana mineral Isover), que varían según el sistema Placo/Knauf elegido.',
+  factorSec3Title: '3. Complejidad y geometría',
+  factorSec3: 'Un techo rectangular de superficies lisas es el escenario más económico (29-35€/m²). Las formas curvas, los techos con desniveles, las columnas que hay que esquivar, los artesonados decorativos o las geometrías con muchos ángulos aumentan el tiempo de instalación entre un 20 y un 50%, elevando el precio de mano de obra hasta 45-80€/m².',
+  factorSec4Title: '4. Accesibilidad y condiciones de obra',
+  factorSec4: 'Trabajar en el centro histórico de Maó, Ciutadella o villas de la costa norte puede implicar escaleras estrechas, falta de ascensor y material subido a mano, añadiendo un 5-15% por horas adicionales. Techos muy irregulares o paredes fuera de plomo (típicos de casas menorquinas de piedra) requieren más trabajo de nivelación con perfiles Placo Maestra.',
+  factorSec5Title: '5. Instalaciones a integrar',
+  factorSec5: 'Integrar instalaciones eléctricas (focos LED empotrados, dimmers, interruptores), climatización (difusores, rejillas, conductos de aire) o telecomunicaciones (puntos de datos, antenas) añade un sobrecoste proporcional. Tarifas unitarias típicas 2026: foco LED empotrado 45-80€; difusor de climatización 120-180€; rejilla de retorno 60-90€. Todo instalado y en funcionamiento.',
+  compH2: 'Pladur vs obra tradicional: comparativa de coste total',
+  compLead: 'Comparando coste total de un proyecto de pladur frente a la misma solución con ladrillo, el pladur resulta 25-40% más económico al computar todos los costes reales. El tiempo de ejecución (1-5 días vs 1-4 semanas) es el ahorro más visible:',
+  compHeaders: { coste: 'Coste', pladur: 'Pladur', ladrillo: 'Ladrillo' },
+  tablaComparativaCostes: [
+    ['Materiales', 'Medio', 'Bajo-Medio'],
+    ['Mano de obra', 'Bajo (3-4x más rápido)', 'Alto'],
+    ['Retirada escombros', 'Mínima', 'Alta (contenedor)'],
+    ['Protección espacio', 'Básica', 'Extensiva'],
+    ['Tiempo de obra', '1-5 días', '1-4 semanas'],
+    ['Total aproximado/m²', '25-60€', '40-80€'],
+  ],
+  compFootnote: 'El ahorro total con pladur puede ser del 25-40% respecto a la obra tradicional cuando se calcula el coste completo del proyecto.',
+  ejBadge: 'Casos reales',
+  ejH2: 'Ejemplos prácticos: ¿cuánto cuesta mi proyecto?',
+  ejLead: 'Tres escenarios habituales en Menorca con rangos de precio estimados para 2026. Todos incluyen materiales Placo/Knauf, mano de obra, tratamiento de juntas y retirada de escombros. IVA no incluido.',
+  ejTotal: 'TOTAL ESTIMADO',
+  ejPlazo: 'Plazo:',
+  ejNoEncaja: '¿Tu proyecto no encaja en estos ejemplos?',
+  ejNoEncajaText: 'Cada proyecto es único. La única manera de obtener el precio exacto es mediante una visita técnica donde medimos, evaluamos y elaboramos un presupuesto cerrado y desglosado. ',
+  ejNoEncajaLink: 'Solicita tu visita ahora.',
+  ejemplos: [
+    {
+      titulo: 'Piso de 80 m² con falso techo en toda la vivienda',
+      desc: 'Piso en Maó de 80 m² sin falso techo previo. Instalamos falso techo continuo básico BA13 en toda la vivienda (salón, dormitorios, baños, cocina) e integramos 8 focos LED empotrados en salón y dormitorios. Obra seca, sin escombros, en 3-5 días trabajables.',
+      desglose: [
+        { concepto: 'Falso techo 80 m² (básico)', precio: '2.320-2.800€' },
+        { concepto: '8 focos LED empotrados', precio: '400-640€' },
+        { concepto: 'Tratamiento de juntas y acabado', precio: 'incluido' },
+      ],
+      total: '2.720-3.440€',
+      plazo: '3-5 días',
+      iva: 'Sin IVA',
+    },
+    {
+      titulo: 'Habitación nueva con tabique acústico (15 m² de tabique)',
+      desc: 'División de un dormitorio grande en dos habitaciones mediante tabique acústico de pladur de 15 m²: doble placa BA13 y lana mineral de 45 mm. Incluye puerta interior con marco y paso de instalación eléctrica. La habitación resultante de 12 m² queda lista para pintar en 1-2 días.',
+      desglose: [
+        { concepto: 'Tabique acústico 15 m²', precio: '780-870€' },
+        { concepto: 'Puerta interior + marco', precio: '200-400€' },
+        { concepto: 'Paso instalación eléctrica', precio: '80-150€' },
+      ],
+      total: '1.060-1.420€',
+      plazo: '1-2 días',
+      iva: 'Sin IVA',
+    },
+    {
+      titulo: 'Salón insonorizado (techo + paredes)',
+      desc: 'Mejora acústica integral de un salón de 25 m² con vecino ruidoso arriba y al lado. Instalamos falso techo antivibración con suspensión elástica, lana mineral de 80 mm y doble placa BA15, más trasdosado desvinculado en dos medianeras. Reducción acústica superior a 50 dB DnT,A.',
+      desglose: [
+        { concepto: 'Falso techo acústico 25 m²', precio: '875-1.250€' },
+        { concepto: 'Trasdosado 2 paredes 30 m²', precio: '870-1.440€' },
+        { concepto: 'Materiales antivibratorios', precio: 'incluido' },
+      ],
+      total: '1.745-2.690€',
+      plazo: '4-7 días',
+      iva: 'Sin IVA',
+    },
+  ],
+  ctaBanner3Titulo: 'Tu presupuesto exacto, gratis y en 24 horas',
+  ctaBanner3Subtitulo: 'Precio cerrado. Sin sorpresas. Garantía de 1 año. Cobertura en toda Menorca.',
+  articulos: [
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Precio del pladur en Menorca 2026', descripcion: 'Guía completa de precios del pladur en Menorca actualizada a 2026. Tarifas por tipo de trabajo.' },
+    { slug: 'precio-insonorizar-piso-menorca', titulo: 'Precio de insonorizar un piso', descripcion: 'Cuánto cuesta insonorizar un piso en Menorca. Precios detallados por tipo de solución acústica.' },
+    { slug: 'subvenciones-aislamiento-baleares-2026', titulo: 'Subvenciones para aislamiento en Baleares', descripcion: 'Ayudas y subvenciones disponibles en 2026 para mejorar el aislamiento de tu vivienda en Baleares.' },
+  ],
+  faqTitle: 'Preguntas frecuentes sobre precios del pladur',
+  faqSubtitle: 'Todo lo que necesitas saber sobre cómo se calculan y qué incluyen nuestros precios.',
+}
+
+const pagePathBase = lang === 'en' ? '/en/precios-pladur-menorca' : '/precios-pladur-menorca'
+const urlBase = `https://www.pladurmenorca.com${pagePathBase}`
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbCurrent, href: pagePathBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService name={servicio.schema.name} description={servicio.schema.description} serviceType={servicio.schema.serviceType} url={urlBase} image="https://www.pladurmenorca.com/images/proyectos/reforma-integral-piso.webp" />
+    <SchemaAggregateOffer
+      name={t.aggName}
+      description={t.aggDesc}
+      lowPrice="6"
+      highPrice="300"
+      offerCount={14}
+    />
+    <SchemaOffers offers={t.offers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={alternateHref} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <Hero
+    title={t.heroTitle}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaLlamar}: ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- Introducción -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.introBadge}</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">{t.introH2}</h2>
+          </div>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.introP1}</p>
+            <p>{t.introP2}</p>
+
+            <h3 class="text-xl font-bold text-foreground mt-8 mb-3">{t.introFactoresTitle}</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger-children">
+              {t.factores.map((f) => (
+                <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card">
+                  <p class="font-bold text-foreground text-sm mb-1">{f.factor}</p>
+                  <p class="text-xs text-muted leading-relaxed">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-6 p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+              <p class="font-bold text-foreground text-sm mb-1">{t.importantTitle}</p>
+              <p class="text-sm text-muted leading-relaxed">
+                {t.importantText1}
+                <a href={p('/presupuesto-pladur')} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">{t.importantLink}</a>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <ContactoRapidoCard lang={lang} />
+
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default">
+              <p class="font-bold text-foreground text-sm mb-4 uppercase tracking-wider">{t.sidebarPreciosTitle}</p>
+              {t.sidebarPrecios.map((p) => (
+                <div class="flex justify-between items-center py-2 border-b border-warm-border/50 last:border-0">
+                  <span class="text-xs text-muted">{p.servicio}</span>
+                  <span class="text-sm font-bold text-foreground-dark">{p.precio}</span>
+                </div>
+              ))}
+            </div>
+
+            <div class="p-4 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card cursor-default text-sm text-muted">
+              <p class="font-semibold text-foreground mb-1">{t.sidebarLinksTitle}</p>
+              <ul class="space-y-1.5">
+                {t.sidebarLinks.map((s) => (
+                  <li>
+                    <a href={s.href} class="flex items-center gap-2 text-muted hover:text-foreground transition-colors">
+                      <svg aria-hidden="true" class="size-3 text-muted shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- NuestrosDatos — cifras reales que respaldan nuestras tarifas -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Why our prices are believable' : 'Por qué nuestras tarifas son creíbles'}
+    title={lang === 'en' ? 'Real figures behind the rates' : 'Cifras reales detrás de las tarifas'}
+    intro={lang === 'en'
+      ? 'Prices on the web are not marketing bait — they reflect the real volumes at which the Mallorca parent company purchases and builds. Concrete 2025 numbers below.'
+      : 'Las tarifas que ves no son un reclamo — reflejan los volúmenes reales a los que compra y ejecuta la SL matriz. Cifras concretas de 2025 abajo.'}
+    metrics={lang === 'en' ? [
+      { value: '508', label: 'projects closed in 2025', context: 'Each one at a fixed price, no surprises' },
+      { value: '<24h', label: 'to deliver the itemised quote', context: 'After the on-site visit' },
+      { value: 'Placo · Knauf · Lafarge', label: 'brands we buy at volume', context: 'Volume pricing reflected in our rates' },
+      { value: '1 year', label: 'workmanship warranty', context: 'LOE Art. 17 — plus manufacturer warranty' },
+    ] : [
+      { value: '508', label: 'proyectos cerrados en 2025', context: 'Cada uno a precio cerrado, sin sorpresas' },
+      { value: '<24h', label: 'para entregar el presupuesto', context: 'Después de la visita técnica' },
+      { value: 'Placo · Knauf · Lafarge', label: 'marcas que compramos en volumen', context: 'El volumen se refleja en nuestras tarifas' },
+      { value: '1 año', label: 'garantía de mano de obra', context: 'LOE Art. 17 — más garantía de fabricante' },
+    ]}
+  />
+
+  <!-- Tabla resumen general -->
+  <PreciosTable lang={lang} variant="resumen" />
+
+  <!-- CtaBanner 1 -->
+  <CtaBanner lang={lang} titulo={t.ctaBanner1Titulo} subtitulo={t.ctaBanner1Subtitulo} showForm={false} />
+
+  <!-- Falsos Techos -->
+  <section class="py-20 lg:py-28" id="falsos-techos">
+    <Container size="xl">
+      <div class="mb-10 animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-3 inline-flex items-center px-3 py-1 rounded-lg">{t.falsosBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">{t.falsosH2}</h2>
+        <p class="text-lg text-muted leading-relaxed max-w-3xl">{t.falsosLead}</p>
+        <a href={lang === 'en' ? '/en/falsos-techos-pladur-menorca' : '/falsos-techos-pladur-menorca'} class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-foreground hover:text-foreground-dark transition-colors">
+          {t.falsosLink}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </Container>
+    <PreciosTable lang={lang} variant="Falsos Techos" hideHeader />
+  </section>
+
+  <!-- Tabiques -->
+  <section class="py-20 lg:py-28" id="tabiques">
+    <Container size="xl">
+      <div class="mb-10 animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-3 inline-flex items-center px-3 py-1 rounded-lg">{t.tabiquesBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">{t.tabiquesH2}</h2>
+        <p class="text-lg text-muted leading-relaxed max-w-3xl">{t.tabiquesLead}</p>
+        <a href={lang === 'en' ? '/en/tabiques-pladur-menorca' : '/tabiques-pladur-menorca'} class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-foreground hover:text-foreground-dark transition-colors">
+          {t.tabiquesLink}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </Container>
+    <PreciosTable lang={lang} variant="Tabiques y Particiones" hideHeader />
+    <Container size="xl">
+      <p class="mt-6 text-sm text-muted leading-relaxed">{t.tabiquesNote1}<a href={t.tabiquesNoteHref} class="text-foreground font-semibold underline underline-offset-2">{t.tabiquesNote2}</a>{t.tabiquesNote3}</p>
+    </Container>
+  </section>
+
+  <!-- Aislamiento -->
+  <section class="py-20 lg:py-28" id="aislamiento">
+    <Container size="xl">
+      <div class="mb-10 animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-3 inline-flex items-center px-3 py-1 rounded-lg">{t.aislamientoBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">{t.aislamientoH2}</h2>
+        <p class="text-lg text-muted leading-relaxed max-w-3xl">{t.aislamientoLead}</p>
+        <a href={lang === 'en' ? '/en/aislamiento-acustico-menorca' : '/aislamiento-acustico-menorca'} class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-foreground hover:text-foreground-dark transition-colors">
+          {t.aislamientoLink}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </Container>
+    <PreciosTable lang={lang} variant="Aislamiento Acústico" hideHeader />
+  </section>
+
+  <!-- CtaBanner 2 -->
+  <CtaBanner lang={lang} titulo={t.ctaBanner2Titulo} subtitulo={t.ctaBanner2Subtitulo} showForm={false} />
+
+  <!-- Factores -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.factoresBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6 max-w-2xl">{t.factoresH2}</h2>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+        <div class="space-y-6 text-muted leading-relaxed">
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{t.factorSec1Title}</h3>
+            <p>{t.factorSec1}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{t.factorSec2Title}</h3>
+            <p>{t.factorSec2}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{t.factorSec3Title}</h3>
+            <p>{t.factorSec3}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{t.factorSec4Title}</h3>
+            <p>{t.factorSec4}</p>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-foreground mb-2">{t.factorSec5Title}</h3>
+            <p>{t.factorSec5}</p>
+          </div>
+        </div>
+
+        <div class="space-y-6 text-muted leading-relaxed">
+          <h2 class="text-2xl font-bold text-foreground leading-tight text-balance mb-6">{t.compH2}</h2>
+          <p>{t.compLead}</p>
+          <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div class="rounded-3xl overflow-hidden border border-warm-border shadow-card min-w-[420px]">
+              <table class="min-w-full">
+                <thead>
+                  <tr class="bg-foreground">
+                    <th class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">{t.compHeaders.coste}</th>
+                    <th class="px-4 py-3 text-left text-xs font-bold text-white uppercase tracking-wider">{t.compHeaders.pladur}</th>
+                    <th class="px-4 py-3 text-left text-xs font-bold text-white/70 uppercase tracking-wider">{t.compHeaders.ladrillo}</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-warm-border">
+                  {t.tablaComparativaCostes.map(([coste, pladur, ladrillo], i) => (
+                    <tr class={`${i % 2 === 0 ? 'bg-white/70' : 'bg-white/40'} hover:bg-surface/50 transition-colors`}>
+                      <td class="px-4 py-3.5 text-sm font-semibold text-foreground">{coste}</td>
+                      <td class="px-4 py-3.5 text-sm text-foreground font-bold">{pladur}</td>
+                      <td class="px-4 py-3.5 text-sm text-muted">{ladrillo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="text-sm text-muted">{t.compFootnote}</p>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Ejemplos -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-semibold uppercase tracking-wide bg-surface text-foreground mb-4 inline-flex items-center px-3 py-1 rounded-lg">{t.ejBadge}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4 max-w-2xl">{t.ejH2}</h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">{t.ejLead}</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 stagger-children">
+        {t.ejemplos.map((ejemplo) => (
+          <div class="bg-white/70 border border-warm-border/50 overflow-hidden rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="bg-foreground p-5">
+              <h3 class="font-bold text-white text-base leading-snug">{ejemplo.titulo}</h3>
+            </div>
+            <div class="p-6">
+              <p class="text-sm text-muted leading-relaxed mb-5">{ejemplo.desc}</p>
+              <div class="space-y-2 mb-5">
+                {ejemplo.desglose.map((d) => (
+                  <div class="flex justify-between items-center text-sm py-1.5 border-b border-warm-border/50 last:border-0">
+                    <span class="text-muted">{d.concepto}</span>
+                    <span class="font-semibold text-foreground">{d.precio}</span>
+                  </div>
+                ))}
+              </div>
+              <div class="p-4 bg-white/70 border border-warm-border/50 rounded-3xl">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="font-bold text-foreground text-sm">{t.ejTotal}</span>
+                  <span class="font-bold text-foreground-dark text-lg">{ejemplo.total}</span>
+                </div>
+                <div class="flex justify-between items-center text-xs text-muted">
+                  <span>{t.ejPlazo} {ejemplo.plazo}</span>
+                  <span>{ejemplo.iva}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-10 p-6 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card">
+        <p class="font-bold text-foreground mb-1">{t.ejNoEncaja}</p>
+        <p class="text-sm text-muted leading-relaxed">
+          {t.ejNoEncajaText}
+          <a href={p('/presupuesto-pladur')} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">{t.ejNoEncajaLink}</a>
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- CtaBanner 3 -->
+  <CtaBanner lang={lang} titulo={t.ctaBanner3Titulo} subtitulo={t.ctaBanner3Subtitulo} showForm={true} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion client:visible lang={lang} faqs={pageFaqs} titulo={t.faqTitle} subtitulo={t.faqSubtitle} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

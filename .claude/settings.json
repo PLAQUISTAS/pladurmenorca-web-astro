@@ -1,0 +1,50 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xargs cat *)",
+      "Bash(curl -sS -I http://localhost:3000/)",
+      "Bash(curl -sS -o /dev/null -w '%{http_code}' http://localhost:3000__TRACKED_VAR__)",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/politica-cookies\" \"/sitemap\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" \"http://localhost:3000$path\"\\); echo \"$code  $path\"; done')",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/pladur-alaior\" \"/pladur-es-mercadal\" \"/pladur-ferreries\" \"/pladur-sant-lluis\" \"/pladur-es-migjorn-gran\" \"/pladur-es-castell\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/tabiques-pladur-menorca\" \"/aislamiento-acustico-menorca\" \"/aislamiento-termico-menorca\" \"/escayola-menorca\" \"/pladur-hidrofugo-menorca\" \"/pladur-ignifugo-menorca\" \"/pladur-hoteles-menorca\" \"/pladur-apartamentos-turisticos-menorca\" \"/reformas-interiores-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/en/false-ceilings\" \"/politica-cookies\" \"/sitemap\" \"/proyectos\" \"/sobre-nosotros\" \"/contacto\" \"/blog\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 10 \"http://localhost:3000$path\"\\); echo \"$code  $path\"; done 2>&1 | head -50')",
+      "Bash(pkill -f \"bun run dev\")",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\" http://localhost:3001/)",
+      "Bash(curl -sS -o /dev/null -w \"presupuesto %{http_code}\\\\n\" http://localhost:3001/presupuesto-pladur)",
+      "Bash(curl -sS -o /dev/null -w \"contacto %{http_code}\\\\n\" http://localhost:3001/contacto)",
+      "Bash(npx -y shadcn@latest add card badge input textarea select checkbox label form dialog sheet dropdown-menu navigation-menu tooltip accordion separator avatar table popover alert --yes --overwrite)",
+      "Bash(npx -y shadcn@latest add form --yes)",
+      "Bash(npx -y shadcn@latest add @radix-ui/form --yes)",
+      "Bash(npx -y shadcn@latest add button --yes --overwrite)",
+      "Bash(bun --bun x astro check)",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/tabiques-pladur-menorca\" \"/aislamiento-acustico-menorca\" \"/aislamiento-termico-menorca\" \"/escayola-menorca\" \"/pladur-hidrofugo-menorca\" \"/pladur-ignifugo-menorca\" \"/pladur-hoteles-menorca\" \"/pladur-apartamentos-turisticos-menorca\" \"/reformas-interiores-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/en/false-ceilings\" \"/politica-cookies\" \"/sitemap\" \"/proyectos\" \"/sobre-nosotros\" \"/contacto\" \"/blog\" \"/pladur-alaior\" \"/pladur-es-mercadal\" \"/pladur-ferreries\" \"/pladur-sant-lluis\" \"/pladur-es-migjorn-gran\" \"/pladur-es-castell\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(curl -sS http://localhost:3001/)",
+      "Bash(grep -v \"\\\\.astro$\")",
+      "Bash(grep -v \"^api$\\\\|^blog$\\\\|^en$\")",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/tabiques-pladur-menorca\" \"/aislamiento-acustico-menorca\" \"/aislamiento-termico-menorca\" \"/escayola-menorca\" \"/pladur-hidrofugo-menorca\" \"/pladur-ignifugo-menorca\" \"/pladur-hoteles-menorca\" \"/pladur-apartamentos-turisticos-menorca\" \"/reformas-interiores-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/en/false-ceilings\" \"/politica-cookies\" \"/sitemap\" \"/proyectos\" \"/sobre-nosotros\" \"/contacto\" \"/blog\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done 2>&1 | head -30')",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/pladur-alaior\" \"/pladur-es-mercadal\" \"/pladur-ferreries\" \"/pladur-sant-lluis\" \"/pladur-es-migjorn-gran\" \"/pladur-es-castell\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/tabiques-pladur-menorca\" \"/aislamiento-acustico-menorca\" \"/aislamiento-termico-menorca\" \"/escayola-menorca\" \"/pladur-hidrofugo-menorca\" \"/pladur-ignifugo-menorca\" \"/pladur-hoteles-menorca\" \"/pladur-apartamentos-turisticos-menorca\" \"/reformas-interiores-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/en/false-ceilings\" \"/politica-cookies\" \"/sitemap\" \"/proyectos\" \"/sobre-nosotros\" \"/contacto\" \"/blog\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(cp -R /Users/pjgr__/pladurmallorca-web-astro/src/components src/)",
+      "Bash(cp -R /Users/pjgr__/pladurmallorca-web-astro/src/styles src/)",
+      "Bash(cp -R /Users/pjgr__/pladurmallorca-web-astro/src/lib src/)",
+      "Bash(cp -R /Users/pjgr__/pladurmallorca-web-astro/src/pages src/)",
+      "Bash(sed -i '' 's|siteConfig.aggregateRating.ratingValue|siteConfig.aggregateRating?.ratingValue ?? siteConfig.parentCompany.rating|g' /Users/pjgr__/pladurmenorca-web-astro/src/components/sections/HeroHome.astro '/Users/pjgr__/pladurmenorca-web-astro/src/pages/blog/[slug].astro' /Users/pjgr__/pladurmenorca-web-astro/src/pages/presupuesto-pladur.astro /Users/pjgr__/pladurmenorca-web-astro/src/components/ui/GoogleRatingBadge.astro)",
+      "Bash(sed -i '' 's|siteConfig.aggregateRating.reviewCount|siteConfig.aggregateRating?.reviewCount ?? String\\(siteConfig.parentCompany.reviews\\)|g' /Users/pjgr__/pladurmenorca-web-astro/src/components/ui/GoogleRatingBadge.astro)",
+      "Bash(sed -i '' 's|\\\\[testimonios\\\\[0\\\\], testimonios\\\\[3\\\\], testimonios\\\\[4\\\\]\\\\]|testimonios.slice\\(0, 3\\)|g' /Users/pjgr__/pladurmenorca-web-astro/src/pages/presupuesto-pladur.astro /Users/pjgr__/pladurmenorca-web-astro/src/pages/contacto.astro)",
+      "Bash(bash -c 'for path in \"/\" \"/pladur-mao\" \"/pladur-ciutadella\" \"/pladur-alaior\" \"/pladur-es-mercadal\" \"/pladur-ferreries\" \"/pladur-sant-lluis\" \"/pladur-es-migjorn-gran\" \"/pladur-es-castell\" \"/instalacion-pladur-menorca\" \"/falsos-techos-pladur-menorca\" \"/tabiques-pladur-menorca\" \"/aislamiento-acustico-menorca\" \"/aislamiento-termico-menorca\" \"/escayola-menorca\" \"/pladur-hidrofugo-menorca\" \"/pladur-ignifugo-menorca\" \"/pladur-hoteles-menorca\" \"/pladur-apartamentos-turisticos-menorca\" \"/reformas-interiores-pladur-menorca\" \"/precios-pladur-menorca\" \"/presupuesto-pladur\" \"/pladur-obra-nueva-menorca\" \"/en\" \"/en/drywall-installation\" \"/en/false-ceilings\" \"/politica-cookies\" \"/sitemap\" \"/proyectos\" \"/sobre-nosotros\" \"/contacto\" \"/blog\"; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done 2>&1 | head -35')",
+      "Bash(curl -sS -o /dev/null -w '%{http_code}' --max-time 15 http://localhost:3001__TRACKED_VAR__)",
+      "Bash(bash -c 'for path in / /contacto /presupuesto-pladur; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(grep -E \"\\\\.\\(md|json\\)$\")",
+      "Bash(rm -rf /Users/pjgr__/pladurmenorca-web-astro/src/pages/node_modules)",
+      "Bash(bash -c 'for path in / /pladur-mao /instalacion-pladur-menorca /precios-pladur-menorca /presupuesto-pladur /contacto /sobre-nosotros /proyectos /pladur-obra-nueva-menorca /en; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(bash -c 'for path in / /pladur-mao /instalacion-pladur-menorca /precios-pladur-menorca /presupuesto-pladur /contacto /sobre-nosotros; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(xargs sed *)",
+      "Bash(bash -c 'for path in / /pladur-mao /pladur-ciutadella /instalacion-pladur-menorca /falsos-techos-pladur-menorca /precios-pladur-menorca /presupuesto-pladur /contacto /sobre-nosotros /proyectos /pladur-obra-nueva-menorca /en /politica-cookies /sitemap /blog; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(bash -c 'for path in / /pladur-mao /pladur-ciutadella /pladur-alaior /pladur-es-mercadal /pladur-ferreries /pladur-sant-lluis /pladur-es-migjorn-gran /pladur-es-castell /instalacion-pladur-menorca /falsos-techos-pladur-menorca /tabiques-pladur-menorca /aislamiento-acustico-menorca /aislamiento-termico-menorca /escayola-menorca /pladur-hidrofugo-menorca /pladur-ignifugo-menorca /pladur-hoteles-menorca /pladur-apartamentos-turisticos-menorca /reformas-interiores-pladur-menorca /precios-pladur-menorca /presupuesto-pladur /pladur-obra-nueva-menorca /en /en/drywall-installation /en/false-ceilings /politica-cookies /sitemap /proyectos /sobre-nosotros /contacto /blog; do code=$\\(curl -sS -o /dev/null -w \"%{http_code}\" --max-time 15 \"http://localhost:3001$path\"\\); echo \"$code $path\"; done')",
+      "Bash(pkill -9 -f \"astro dev\")",
+      "Bash(pkill -9 -f \"astro-dev\")",
+      "Bash(pkill -9 -f \"vite\")",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\\\\n\" --max-time 10 http://localhost:3001/)"
+    ],
+    "additionalDirectories": [
+      "/Users/pjgr__/pladurmenorca-web-astro/src/pages/blog"
+    ]
+  }
+}

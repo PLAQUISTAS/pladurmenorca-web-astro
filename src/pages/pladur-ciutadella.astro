@@ -1,0 +1,317 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import PaginaGeografica from '@/components/templates/PaginaGeografica.astro'
+import { getCiutadellaFaqs } from '@/data/faqs/ciutadella'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getCiutadellaFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall in Ciutadella | Historic Core & South Coast',
+  description: 'Drywall in Ciutadella de Menorca. False ceilings and partitions in Cala en Bosc, Son Xoriguer, Cala Santandria. Historic core and holiday flats. From €29/m².',
+  canonical: '/en/pladur-ciutadella',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-ciutadella',
+} : {
+  title: 'Pladur en Ciutadella | Villas, Casco Histórico y Costa Sur',
+  description: 'Instala pladur en Ciutadella de Menorca. Falsos techos y tabiques en Cala en Bosc, Son Xoriguer, Cala Santandria. Casco histórico y apartamentos turísticos. Desde 29€/m².',
+  canonical: '/pladur-ciutadella',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-ciutadella',
+}
+
+const zonas = lang === 'en' ? [
+  {
+    nombre: 'Casco Histórico',
+    descripcion: 'Postcode 07760, the former capital\'s historic core with its cathedral, noble palaces (Can Salort, Can Saura) and seigneurial houses. Drywall interventions compatible with heritage protection: plaster ceiling reinstatement, interior linings that respect listed façades and new drywall layouts without aggression to the original structure.',
+  },
+  {
+    nombre: 'Cala en Bosc',
+    descripcion: 'Postcode 07769, one of the most touristic urbanisations of the south coast, by the marina. Dense holiday apartments and villas from the 1980s-2000s. Quick between-season refurbishments: false ceilings with LED, decoupled partitions at 52-55 dB and Placo H linings against salt humidity.',
+  },
+  {
+    nombre: 'Son Xoriguer',
+    descripcion: 'Tourist development next to Cala en Bosc on the south coast. High concentration of holiday apartments and villas managed via Booking and Airbnb. Renovations with drywall: new ceilings, layout changes to add extra bedrooms and acoustic insulation that directly lifts guest ratings.',
+  },
+  {
+    nombre: 'Cala Santandria',
+    descripcion: 'Residential cove 3 km south of Ciutadella. Villas and single-family homes with direct views to the sea. Q4 finishes, coffered ceilings with 2700 K LED coves, Rockwool-insulated thermal linings and hydrofuge bathrooms.',
+  },
+  {
+    nombre: 'Son Oleo',
+    descripcion: 'Residential urbanisation on the coast, 2 km from the historic centre. Detached houses from the 1990s-2000s and upmarket flats. Reconfigurations with 78 mm partitions, modern false ceilings and thermal linings on west-facing façades against the afternoon sun.',
+  },
+  {
+    nombre: 'Cala Blanca',
+    descripcion: 'Tourist development on the south coast, 6 km from Ciutadella. 1980s-90s apartment blocks and holiday villas. High demand for updates: false ceilings, partitions to create extra bedrooms, and acoustic insulation between apartments.',
+  },
+  {
+    nombre: 'Sa Caleta',
+    descripcion: 'Residential cove 1 km south of the port of Ciutadella. Seafront flats and villas with British and German owners. Placo H hydrofuge linings, decorative false ceilings with recessed LED downlights and bilingual ES/EN service for expat owners.',
+  },
+] : [
+  {
+    nombre: 'Casco Histórico',
+    descripcion: 'CP 07760, núcleo histórico de la antigua capital con su catedral, palacios nobles (Can Salort, Can Saura) y casas señoriales. Intervenciones de pladur compatibles con la protección patrimonial: reposición de techos de escayola, trasdosados interiores que respetan fachadas catalogadas y nuevas distribuciones con pladur sin agresión a la estructura original.',
+  },
+  {
+    nombre: 'Cala en Bosc',
+    descripcion: 'CP 07769, una de las urbanizaciones más turísticas de la costa sur, junto al puerto deportivo. Alta densidad de apartamentos turísticos y villas de los 80-2000. Reformas rápidas entre temporadas: falsos techos con LED, tabiques desacoplados a 52-55 dB y trasdosados Placa H contra humedad salina.',
+  },
+  {
+    nombre: 'Son Xoriguer',
+    descripcion: 'Urbanización turística junto a Cala en Bosc en la costa sur. Alta concentración de apartamentos turísticos y villas gestionadas por Booking y Airbnb. Reformas con pladur: techos nuevos, redistribución para añadir dormitorios adicionales y aislamiento acústico que sube las valoraciones de huéspedes directamente.',
+  },
+  {
+    nombre: 'Cala Santandria',
+    descripcion: 'Cala residencial a 3 km al sur de Ciutadella. Villas y viviendas unifamiliares con vistas directas al mar. Acabados Q4, techos con cofres y cornisa LED 2700 K, trasdosados térmicos con Rockwool y baños hidrófugos.',
+  },
+  {
+    nombre: 'Son Oleo',
+    descripcion: 'Urbanización residencial en la costa, a 2 km del centro histórico. Casas unifamiliares de los 90-2000 y pisos de gama alta. Redistribuciones con tabique 78 mm, falsos techos modernos y trasdosados térmicos en fachadas orientadas al oeste contra el sol de tarde.',
+  },
+  {
+    nombre: 'Cala Blanca',
+    descripcion: 'Urbanización turística en la costa sur, a 6 km de Ciutadella. Bloques de apartamentos de los 80-90 y villas de temporada. Alta demanda de actualización: falsos techos, tabiques para crear dormitorios adicionales y aislamiento acústico entre apartamentos.',
+  },
+  {
+    nombre: 'Sa Caleta',
+    descripcion: 'Cala residencial a 1 km al sur del puerto de Ciutadella. Pisos frente al mar y villas con propietarios británicos y alemanes. Trasdosados Placa H hidrófugos, falsos techos decorativos con downlights LED empotrados y servicio bilingüe ES/EN para propietarios expats.',
+  },
+]
+
+const breadcrumbs = lang === 'en' ? [
+  { label: 'Home', href: '/en' },
+  { label: 'Drywall in Ciutadella', href: '/en/pladur-ciutadella' },
+] : [
+  { label: 'Inicio', href: '/' },
+  { label: 'Pladur en Ciutadella', href: '/pladur-ciutadella' },
+]
+
+const proyectoFicha = lang === 'en' ? [
+  { label: 'Surface', valor: '120 m²' },
+  { label: 'Location', valor: 'Cala en Bosc, Ciutadella' },
+  { label: 'Works', valor: 'Ceiling + Partitions + Acoustic insulation' },
+  { label: 'Duration', valor: '9 working days' },
+  { label: 'Outcome', valor: '4 apartments renovated' },
+] : [
+  { label: 'Superficie', valor: '120 m²' },
+  { label: 'Ubicación', valor: 'Cala en Bosc, Ciutadella' },
+  { label: 'Trabajos', valor: 'Techo + Tabiques + Aislamiento acústico' },
+  { label: 'Duración', valor: '9 días hábiles' },
+  { label: 'Resultado', valor: '4 apartamentos renovados' },
+]
+
+const serviciosLinks = lang === 'en' ? [
+  { label: 'False Ceilings', href: '/en/falsos-techos-pladur-menorca' },
+  { label: 'Drywall Partitions', href: '/en/tabiques-pladur-menorca' },
+  { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+  { label: 'Thermal Insulation', href: '/en/aislamiento-termico-menorca' },
+  { label: 'Prices', href: '/en/precios-pladur-menorca' },
+] : [
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Precios', href: '/precios-pladur-menorca' },
+]
+
+const falsosTechosHref = lang === 'en' ? '/en/falsos-techos-pladur-menorca' : '/falsos-techos-pladur-menorca'
+const tabiquesHref = lang === 'en' ? '/en/tabiques-pladur-menorca' : '/tabiques-pladur-menorca'
+const aislamientoAcusticoHref = lang === 'en' ? '/en/aislamiento-acustico-menorca' : '/aislamiento-acustico-menorca'
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall installers in Ciutadella. False ceilings, partitions, acoustic and thermal insulation. Free quote. Phone: +34 627 829 723.',
+  municipio: 'Ciutadella',
+  heroTitle: 'Drywall in Ciutadella — Professional Installers for Menorca\'s Historic Second City',
+  heroBadge: 'Ciutadella · Menorca\'s historic capital',
+  heroDescription: 'We install drywall in Ciutadella de Menorca and across its south coast: Cala en Bosc, Son Xoriguer, Cala Santandria, Son Oleo, Cala Blanca and Sa Caleta. False ceilings, partitions, acoustic and thermal insulation. Free quote within 24 hours.',
+  faqTitulo: 'Frequently asked questions about drywall in Ciutadella',
+  faqSubtitulo: 'Answers to the most common questions from our customers in Ciutadella and its south-coast tourist belt.',
+  proyectoTitulo: 'Renovation of 4 holiday apartments in Cala en Bosc',
+  ctaTitulo: 'Is your project in Ciutadella or its south coast?',
+  ctaSubtitulo: 'Contact us now and get your free quote in under 24 hours, no obligation.',
+  schemaName: 'Drywall installation in Ciutadella',
+  schemaDescription: 'Professional drywall installation in Ciutadella de Menorca: false ceilings, partitions, acoustic and thermal insulation in the historic core, Cala en Bosc, Son Xoriguer, Cala Santandria and Cala Blanca.',
+  seoBadge: 'Specialists in heritage and south-coast Menorca',
+  seoTitle: 'Drywall in Ciutadella: heritage cathedral city and south-coast tourism hub',
+  seoP1: 'Ciutadella is the former capital and the most historically significant city in Menorca, with 30,000 residents and a property market that mixes centuries-old noble palaces in the protected historic core with dense tourist developments on the south coast. This dual reality creates steady and diverse demand for drywall work across heritage buildings, holiday apartments and family homes.',
+  seoP2Start: 'The historic core (postcode 07760) is a UNESCO-class heritage landscape of noble palaces — Can Salort, Can Saura, Can Olivar — and seigneurial houses with marès-stone walls, timber-beam ceilings and layouts inherited from another era. These homes are ideal candidates for Placo or Knauf drywall: ',
+  seoP2Link: { href: falsosTechosHref, label: 'false ceilings' },
+  seoP2Mid: ' that conceal old services and reduce heated volume, ',
+  seoP2Link2: { href: tabiquesHref, label: 'partitions that redistribute spaces' },
+  seoP2End: ' for modern living, and wall linings with Isover or Rockwool mineral wool that insulate from winter cold and Menorcan summer heat, complying with CTE DB-HE in climate zone B3.',
+  seoP3: 'The south coast — Cala en Bosc, Son Xoriguer, Cala Santandria, Cala Blanca — concentrates thousands of tourist beds in apartments and hotels built during the 1980-2000 tourism boom. These buildings need updates every 6-8 years to keep their position on Airbnb, Booking and Vrbo. With drywall we modernise a 60 m² apartment in under two weeks, in the October-March window, with no wet trades and no bulk rubble.',
+  seoP4Start: 'Improving ',
+  seoP4Link: { href: aislamientoAcusticoHref, label: 'acoustic insulation' },
+  seoP4End: ' is the highest-ROI upgrade on the south coast: noise complaints are the main driver of negative reviews on Airbnb and Booking. Our Knauf drywall systems with Isover or Rockwool 48 mm mineral wool and decoupled framing cut airborne transmission by 45-55 dB and meet CTE DB-HR. Half a star more on the average rating means 10-15 % more revenue per night.',
+  seoP5: 'Ciutadella is also a commercial and logistics hub serving the western half of Menorca, with converted warehouses, retail premises in the historic core and offices that demand refits. Drywall partitions divide warehouses into offices and meeting rooms, deliver fire-rated solutions (Knauf DF board to DB-SI) on commercial party walls, and modernise ceilings with integrated LED in 5-10 working days, usually without interrupting business activity.',
+  seoP6: 'We work across the whole municipality (Ciutadella core, Cala en Bosc, Son Xoriguer, Cala Santandria, Son Oleo, Cala Blanca, Sa Caleta) with a fixed, transparent quote. Our team knows the local construction quirks: marès-stone walls in the historic centre, prefabricated floor structures in the south-coast tourist blocks and metal-frame structures in the Poima industrial estate.',
+  experienceTitle: 'Ciutadella trusts us since 2004',
+  experienceText: 'We install drywall in Ciutadella and across the western half of Menorca since 2004. We know the buildings, the materials (Placo, Knauf, Lafarge, Saint-Gobain) and the regulations (CTE DB-HR, DB-SI, DB-HE) that apply to each type of project.',
+  googleRating: '4.7/5 on Google',
+  servicesInTown: 'Services in Ciutadella',
+  proyecto1: 'An owner with four holiday apartments on the seafront of Cala en Bosc needed to renovate them before 1 May. The flats, built in 1988 and managed via Booking, had deteriorated plaster ceilings with salt-damp stains, party walls with insufficient acoustic insulation and an original two-small-bedroom layout that limited the nightly rate.',
+  proyecto2: 'The project covered 120 m² total (4 units of 30 m²). In each apartment we installed a Knauf standard continuous false ceiling with perimeter LED (30 m² per unit, €29/m²), reinforced the party walls with a double-board lining and Isover 48 mm mineral wool (16 linear metres, compliant with CTE DB-HR), and in two units we built a new partition (€45/m²) to convert the living-bedroom combo into a separate living room plus bedroom.',
+  proyecto3: 'Works completed in 9 working days, working two apartments in parallel, for a total investment of €8,400 (€70/m²). After the renovation the apartments went from 3.9 to 4.5 stars on Booking, the nightly rate rose 18 % versus the previous season and the investment paid back in under three months of rentals.',
+  articulos: [
+    { slug: 'reformas-pladur-ciutadella', titulo: 'Drywall renovations in Ciutadella', descripcion: 'Real drywall renovation projects in Ciutadella and its south-coast tourist belt.' },
+  ],
+} : {
+  srOnly: 'Pladur Menorca — instaladores de pladur en Ciutadella. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratis. Tel: 627 829 723.',
+  municipio: 'Ciutadella',
+  heroTitle: 'Pladur en Ciutadella — Instaladores Profesionales en la Segunda Ciudad Histórica de Menorca',
+  heroBadge: 'Ciutadella · Antigua capital de Menorca',
+  heroDescription: 'Instalamos pladur en Ciutadella de Menorca y en toda su costa sur: Cala en Bosc, Son Xoriguer, Cala Santandria, Son Oleo, Cala Blanca y Sa Caleta. Falsos techos, tabiques, aislamiento acústico y térmico. Presupuesto gratuito en 24 horas.',
+  faqTitulo: 'Preguntas frecuentes sobre pladur en Ciutadella',
+  faqSubtitulo: 'Respuestas a las dudas más habituales de nuestros clientes en Ciutadella y su franja turística de la costa sur.',
+  proyectoTitulo: 'Renovación de 4 apartamentos turísticos en Cala en Bosc',
+  ctaTitulo: '¿Tu proyecto está en Ciutadella o en su costa sur?',
+  ctaSubtitulo: 'Contacta ahora y recibe tu presupuesto gratuito en menos de 24 horas. Sin desplazamiento en todo el municipio.',
+  schemaName: 'Instalación de Pladur en Ciutadella',
+  schemaDescription: 'Servicio profesional de instalación de pladur en Ciutadella de Menorca: falsos techos, tabiques, aislamiento acústico y térmico en el casco histórico, Cala en Bosc, Son Xoriguer, Cala Santandria y Cala Blanca.',
+  seoBadge: 'Especialistas en patrimonio y costa sur de Menorca',
+  seoTitle: 'Pladur en Ciutadella: ciudad catedralicia y polo turístico del sur de Menorca',
+  seoP1: 'Ciutadella es la antigua capital y la ciudad con mayor peso histórico de Menorca, con 30.000 habitantes y un mercado inmobiliario que combina palacios nobles centenarios en el casco histórico protegido con urbanizaciones turísticas densas en la costa sur. Esta doble realidad genera demanda constante y diversa de obras de pladur en edificios patrimoniales, apartamentos turísticos y viviendas familiares.',
+  seoP2Start: 'El casco histórico (CP 07760) es un conjunto patrimonial de palacios nobles —Can Salort, Can Saura, Can Olivar— y casas señoriales con muros de marès, techos de vigas de madera y distribuciones heredadas. Son candidatas ideales al pladur Placo o Knauf: ',
+  seoP2Link: { href: '/falsos-techos-pladur-menorca', label: 'falsos techos' },
+  seoP2Mid: ' que ocultan instalaciones antiguas y reducen el volumen a climatizar, ',
+  seoP2Link2: { href: '/tabiques-pladur-menorca', label: 'tabiques que redistribuyen espacios' },
+  seoP2End: ' según el uso actual, y trasdosados con lana mineral Isover o Rockwool que aíslan del frío invernal y del calor del verano menorquín, cumpliendo el CTE DB-HE en zona climática B3.',
+  seoP3: 'La costa sur —Cala en Bosc, Son Xoriguer, Cala Santandria, Cala Blanca— concentra miles de plazas turísticas en apartamentos y hoteles construidos durante el boom de 1980-2000. Son edificios que piden actualizaciones cada 6-8 años para mantener la posición en Airbnb, Booking y Vrbo. Con pladur modernizamos un apartamento de 60 m² en menos de dos semanas, en la ventana de octubre a marzo, sin obra húmeda ni escombros a granel.',
+  seoP4Start: 'La mejora del ',
+  seoP4Link: { href: '/aislamiento-acustico-menorca', label: 'aislamiento acústico' },
+  seoP4End: ' es la mejora con mayor ROI en la costa sur: las quejas por ruido son la principal causa de reseñas negativas en Airbnb y Booking. Nuestros sistemas de pladur Knauf con lana mineral Isover o Rockwool de 48 mm y perfilería desacoplada reducen la transmisión aérea 45-55 dB y cumplen el CTE DB-HR. Medio punto más en la puntuación media supone un 10-15 % más en el precio por noche.',
+  seoP5: 'Ciutadella es también un polo comercial y logístico que abastece a la mitad occidental de Menorca, con naves reconvertidas, locales en el casco histórico y oficinas que piden adaptación. Con tabiques de pladur se dividen naves en despachos y salas de reuniones, se aplican soluciones ignífugas (placa Knauf DF según DB-SI) en medianeras comerciales y se modernizan techos con LED integrado en plazos de 5-10 días laborables, normalmente sin interrumpir la actividad.',
+  seoP6: 'Trabajamos en todo el municipio (Ciutadella centro, Cala en Bosc, Son Xoriguer, Cala Santandria, Son Oleo, Cala Blanca, Sa Caleta) sin coste de desplazamiento para obras desde 500 €. Nuestro equipo conoce las particularidades constructivas de cada zona: muros de marès en el casco histórico, forjados prefabricados en los bloques turísticos de la costa sur y estructuras metálicas en las naves del polígono del Poima.',
+  experienceTitle: 'Ciutadella nos contrata desde 2004',
+  experienceText: 'Instalamos pladur en Ciutadella y toda la mitad occidental de Menorca desde 2004. Conocemos los edificios, los materiales (Placo, Knauf, Lafarge, Saint-Gobain) y las normativas (CTE DB-HR, DB-SI, DB-HE) que afectan a cada tipo de proyecto.',
+  googleRating: '4.7/5 en Google',
+  servicesInTown: 'Servicios en Ciutadella',
+  proyecto1: 'Un propietario con cuatro apartamentos turísticos en primera línea de Cala en Bosc necesitaba renovarlos antes del 1 de mayo. Los pisos, construidos en 1988 y gestionados por Booking, presentaban techos de escayola deteriorados con manchas de humedad salina, medianeras con aislamiento acústico insuficiente y una distribución original de dos dormitorios pequeños que limitaba la tarifa por noche.',
+  proyecto2: 'El proyecto abarcó 120 m² totales (4 unidades de 30 m²). En cada apartamento se instaló un falso techo continuo Knauf estándar con LED perimetral (30 m² por unidad, 29€/m²), se reforzaron las medianeras con trasdosado de placa doble y lana mineral Isover de 48 mm (16 ml lineales, cumpliendo CTE DB-HR) y en dos unidades se levantó un tabique nuevo (45€/m²) para convertir el salón-dormitorio en salón independiente + dormitorio.',
+  proyecto3: 'Obra completada en 9 días hábiles, trabajando en dos apartamentos en paralelo, por una inversión total de 8.400 € (70 €/m²). Tras la reforma los apartamentos subieron de 3,9 a 4,5 estrellas en Booking, el precio por noche creció un 18 % respecto a la temporada anterior y la inversión se amortizó en menos de tres meses de alquiler.',
+  articulos: [
+    { slug: 'reformas-pladur-ciutadella', titulo: 'Reformas con pladur en Ciutadella', descripcion: 'Proyectos reales de reformas con pladur en Ciutadella y su franja turística de la costa sur.' },
+  ],
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbs} />
+    <SchemaService
+      name={t.schemaName}
+      description={t.schemaDescription}
+      serviceType={lang === 'en' ? 'Drywall installation' : 'Instalación de Pladur'}
+      url={meta.canonical}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <PaginaGeografica
+    municipio={t.municipio}
+    zonas={zonas}
+    faqKey="ciutadella"
+    heroTitle={t.heroTitle}
+    heroBadge={t.heroBadge}
+    heroDescription={t.heroDescription}
+    faqTitulo={t.faqTitulo}
+    faqSubtitulo={t.faqSubtitulo}
+    proyectoTitulo={t.proyectoTitulo}
+    proyectoFicha={proyectoFicha}
+    ctaTitulo={t.ctaTitulo}
+    ctaSubtitulo={t.ctaSubtitulo}
+  >
+    <!-- Texto SEO -->
+    <section slot="texto-seo" class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mb-10">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.seoBadge}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.seoTitle}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-5 text-muted leading-relaxed mb-12">
+          <div class="space-y-5">
+            <p>{t.seoP1}</p>
+            <p>
+              {t.seoP2Start}<a href={t.seoP2Link.href}>{t.seoP2Link.label}</a>{t.seoP2Mid}<a href={t.seoP2Link2.href}>{t.seoP2Link2.label}</a>{t.seoP2End}
+            </p>
+            <p>{t.seoP3}</p>
+          </div>
+          <div class="space-y-5">
+            <p>
+              {t.seoP4Start}<a href={t.seoP4Link.href}>{t.seoP4Link.label}</a>{t.seoP4End}
+            </p>
+            <p>{t.seoP5}</p>
+            <p>{t.seoP6}</p>
+          </div>
+        </div>
+        <div class="bg-foreground rounded-3xl p-7 sm:p-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 items-start">
+            <div>
+              <p class="font-bold text-lg text-white mb-2">{t.experienceTitle}</p>
+              <p class="text-white/60 text-sm leading-relaxed mb-4">{t.experienceText}</p>
+              <div class="flex items-center gap-2">
+                <div class="flex">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="size-4 text-star" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-white/60 text-xs">{t.googleRating}</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-3">{t.servicesInTown}</p>
+              <div class="grid grid-cols-2 gap-2">
+                {serviciosLinks.map((s) => (
+                  <a href={s.href} class="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+                    <svg aria-hidden="true" class="size-3 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    {s.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Custom proyecto contenido -->
+    <div slot="proyecto-contenido" class="max-w-none text-muted space-y-4">
+      <p>{t.proyecto1}</p>
+      <p>{t.proyecto2}</p>
+      <p>{t.proyecto3}</p>
+    </div>
+  </PaginaGeografica>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

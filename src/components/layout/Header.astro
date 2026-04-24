@@ -1,0 +1,651 @@
+---
+import { getServiciosMenu, getZonasMenu, getNavSimple } from '@/data/navigation'
+import { siteConfig } from '@/data/site'
+import { localizedHref, ui, type Lang } from '@/i18n'
+import NavIcon from '@/components/icons/NavIcon.astro'
+
+interface Props {
+  lang?: Lang
+  alternateHref?: string
+}
+
+const { lang = 'es', alternateHref } = Astro.props
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/'
+const isHome = pathname === '/' || pathname === '/en'
+const isEn = lang === 'en'
+const langSwitchHref = alternateHref ?? (isEn ? '/' : '/en')
+const strings = ui[lang].nav
+const serviciosMenu = getServiciosMenu(lang)
+const zonasMenu = getZonasMenu(lang)
+const navSimple = getNavSimple(lang)
+const homeHref = localizedHref('/', lang)
+const quoteHref = localizedHref('/presupuesto-pladur', lang)
+const allZonesHref = localizedHref('/pladur-en-menorca', lang)
+
+const isLinkActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
+---
+
+<header
+  data-header
+  data-home={isHome ? '' : undefined}
+  class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 isolation-isolate"
+>
+  <div class="relative w-full max-w-6xl">
+    <!-- ── Nav Pill ── -->
+    <nav
+      data-nav
+      class="nav-pill flex items-center justify-between px-6 py-3 rounded-[16px] text-sm [will-change:backdrop-filter] [transform:translateZ(0)] transition-[background-color,border-color,box-shadow,color] duration-300"
+      aria-label={strings.mainNavAria}
+    >
+      <!-- Logo -->
+      <a href={homeHref} aria-label="Pladur Menorca" class="flex items-center shrink-0">
+        <img
+          src="/images/pladur-menorca-logo.png"
+          alt="Pladur Menorca"
+          width="40"
+          height="40"
+          loading="eager"
+          decoding="async"
+          class="h-9 w-auto"
+        />
+      </a>
+
+      <!-- ── Desktop Links ── -->
+      <div class="hidden lg:flex items-center gap-6 ml-8">
+        <!-- Servicios dropdown -->
+        <div class="relative" data-dropdown="servicios">
+          <button
+            type="button"
+            class="nav-trigger flex items-center gap-1 group focus-visible:outline-hidden focus-visible:ring-2 rounded-xs"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-dropdown-trigger
+          >
+            <span class="roll-text"><span>{strings.servicios}</span><span aria-hidden="true">{strings.servicios}</span></span>
+            <svg class="chevron size-3 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div class="dropdown-panel dropdown-panel-left absolute top-full left-0 mt-3 w-[720px] bg-white rounded-xl shadow-dropdown z-50 overflow-hidden flex">
+            <div class="w-56 bg-nav-bg border-r border-nav-border p-6 flex flex-col justify-between shrink-0">
+              <div>
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-nav-border text-muted text-xs font-semibold uppercase tracking-wide mb-3">
+                  {strings.servicePanel.badge}
+                </span>
+                <p class="text-sm font-bold text-foreground leading-snug mb-2">{strings.servicePanel.title}</p>
+                <p class="text-xs text-muted leading-relaxed">{strings.servicePanel.subtitle}</p>
+              </div>
+            </div>
+            <div class="flex-1 p-4 grid grid-cols-2 gap-1 content-start">
+              {serviciosMenu.map((s) => (
+                <a
+                  href={s.href}
+                  class="flex items-start gap-3 p-3 rounded-xl hover:bg-nav-bg transition-colors duration-200 group"
+                 aria-label={s.label}>
+                  <div class="size-8 rounded-lg bg-nav-border flex items-center justify-center text-muted shrink-0 group-hover:bg-foreground group-hover:text-white transition-colors mt-0.5">
+                    <NavIcon name={s.iconName} />
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-foreground leading-snug group-hover:text-muted transition-colors">{s.label}</p>
+                    <p class="text-xs text-muted mt-0.5 leading-snug">{s.desc}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Zonas dropdown -->
+        <div class="relative" data-dropdown="zonas">
+          <button
+            type="button"
+            class="nav-trigger flex items-center gap-1 group focus-visible:outline-hidden focus-visible:ring-2 rounded-xs"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-dropdown-trigger
+          >
+            <span class="roll-text"><span>{strings.zonas}</span><span aria-hidden="true">{strings.zonas}</span></span>
+            <svg class="chevron size-3 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div class="dropdown-panel dropdown-panel-left absolute top-full left-0 mt-3 w-[540px] bg-white rounded-xl shadow-dropdown z-50 overflow-hidden">
+            <div class="px-5 pt-4 pb-3 border-b border-nav-border">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-nav-border text-muted text-xs font-semibold uppercase tracking-wide mb-2">
+                {strings.zonePanel.badge}
+              </span>
+              <p class="text-xs text-muted">{strings.zonePanel.subtitle}</p>
+            </div>
+            <div class="p-3 grid grid-cols-2 gap-1.5 max-h-[420px] overflow-y-auto">
+              {zonasMenu.map((z) => (
+                <a
+                  href={z.href}
+                  class="flex items-center justify-between gap-2 px-3.5 py-3 rounded-lg border border-nav-border hover:border-foreground hover:bg-nav-bg transition-colors duration-200 group"
+                 aria-label={z.label}>
+                  <div class="min-w-0">
+                    <p class="text-sm font-semibold text-foreground group-hover:text-muted transition-colors truncate">{z.label}</p>
+                    <p class="text-[11px] text-muted leading-snug truncate mt-0.5">{z.barrios.slice(0, 3).join(', ')}</p>
+                  </div>
+                  <svg class="size-3.5 text-muted shrink-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                  </svg>
+                </a>
+              ))}
+            </div>
+            <div class="px-5 py-3 border-t border-nav-border bg-nav-bg flex items-center justify-between">
+              <span class="text-xs text-muted">{strings.zonePanel.municipalities}</span>
+              <a
+                href={allZonesHref}
+                class="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground hover:text-foreground-dark transition-colors duration-200"
+               aria-label={strings.zonePanel.allZones}>
+                {strings.zonePanel.allZones}
+                <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simple links -->
+        {navSimple.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'nav-simple-link group focus-visible:outline-hidden focus-visible:ring-2 rounded-xs',
+              isLinkActive(link.href) && 'font-bold',
+            ]}
+           aria-label={link.label}>
+            <span class="roll-text"><span>{link.label}</span><span aria-hidden="true">{link.label}</span></span>
+          </a>
+        ))}
+      </div>
+
+      <!-- ── Desktop CTA ── -->
+      <div class="hidden lg:flex items-center gap-3 ml-8">
+        <a
+          href={langSwitchHref}
+          aria-label={strings.switchLangAria}
+          class="nav-lang px-2.5 py-1.5 rounded-lg text-xs font-bold tracking-[0.1em] transition-colors duration-200"
+        >
+          {isEn ? 'ES' : 'EN'}
+        </a>
+        <a
+          href={`tel:${siteConfig.phoneRaw}`}
+          class="nav-phone flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-colors duration-200"
+          aria-label={strings.callAria(siteConfig.phone)}
+        >
+          <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+          </svg>
+          {siteConfig.phone}
+        </a>
+        <a
+          href={quoteHref}
+          class="px-4 py-2 rounded-xl text-sm font-bold tracking-wide bg-accent hover:bg-accent-600 text-white shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 ease-out active:scale-95 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent/60"
+         aria-label={strings.ctaPrimary}>
+          {strings.ctaPrimary}
+        </a>
+      </div>
+
+      <!-- ── Mobile Hamburger ── -->
+      <button
+        type="button"
+        class="nav-hamburger lg:hidden p-1.5 rounded-lg transition-colors"
+        aria-label={strings.menuOpen}
+        aria-expanded="false"
+        data-mobile-toggle
+      >
+        <svg class="size-5 icon-open" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <svg class="size-5 icon-close hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </nav>
+  </div>
+
+  <!-- ── Mobile Menu ── -->
+  <div
+    data-mobile-menu
+    class="mobile-menu fixed top-[6.5rem] left-4 right-4 z-50 rounded-[22px] overflow-hidden lg:hidden transition-[max-height,opacity,transform] duration-[360ms] ease-[cubic-bezier(0.32,0.72,0,1)] origin-top [will-change:transform,opacity] max-h-0 opacity-0 -translate-y-1 pointer-events-none"
+    aria-hidden="true"
+  >
+    <div class="overflow-y-auto overscroll-contain max-h-[calc(100vh-7.5rem)]">
+      <nav class="px-5 pt-4 pb-3" aria-label={strings.mobileNavAria}>
+        <!-- Servicios accordion -->
+        <details class="mobile-accordion group">
+          <summary class="w-full flex items-center justify-between py-4 text-[15px] font-semibold tracking-tight cursor-pointer list-none">
+            <span>{strings.servicios}</span>
+            <svg class="size-4 mobile-chevron transition-transform duration-300 ease-out" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <ul class="pb-3 space-y-0.5">
+            {serviciosMenu.map((s) => (
+              <li>
+                <a href={s.href} data-mobile-close class="flex items-center gap-3 px-2.5 py-3 rounded-xl transition-colors duration-200 mobile-item" aria-label={s.label}>
+                  <span class="shrink-0 size-8 rounded-lg flex items-center justify-center transition-colors duration-200 mobile-item-icon">
+                    <NavIcon name={s.iconName} class="size-4" />
+                  </span>
+                  <span class="text-sm font-semibold leading-tight mobile-item-label">{s.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+
+        <!-- Zonas accordion -->
+        <details class="mobile-accordion group">
+          <summary class="w-full flex items-center justify-between py-4 text-[15px] font-semibold tracking-tight cursor-pointer list-none">
+            <span>{strings.zonas}</span>
+            <svg class="size-4 mobile-chevron transition-transform duration-300 ease-out" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.25" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <ul class="pb-3 space-y-0.5">
+            {zonasMenu.map((z) => (
+              <li>
+                <a href={z.href} data-mobile-close class="flex items-center px-2.5 py-3 rounded-xl transition-colors duration-200 mobile-zone" aria-label={z.label}>
+                  <span class="text-sm font-semibold leading-tight mobile-item-label">{z.label}</span>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={allZonesHref}
+                data-mobile-close
+                class="flex items-center justify-between gap-2 px-2.5 py-2.5 mt-1 rounded-xl text-sm font-semibold ring-1 transition-colors duration-200 mobile-all-zones"
+               aria-label={strings.zonePanel.allZones}>
+                {strings.zonePanel.allZones}
+                <svg class="size-3.5" fill="none" stroke="currentColor" stroke-width="2.25" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </details>
+
+        <!-- Simple links -->
+        <ul class="py-1">
+          {navSimple.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                data-mobile-close
+                class:list={[
+                  'flex items-center justify-between py-4 text-[15px] tracking-tight transition-colors duration-200 mobile-simple',
+                  isLinkActive(link.href) ? 'mobile-simple-active' : '',
+                ]}
+               aria-label={link.label}>
+                <span>{link.label}</span>
+                {isLinkActive(link.href) && <span class="size-1.5 rounded-full bg-accent shadow-[0_0_0_3px_rgba(255,94,43,0.25)]" aria-hidden="true" />}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="px-5 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] space-y-2.5 mobile-footer">
+        <div class="flex items-stretch gap-2">
+          <a
+            href={`tel:${siteConfig.phoneRaw}`}
+            data-mobile-close
+            class="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold ring-1 transition-[background-color,color,box-shadow] duration-200 mobile-phone"
+            aria-label={strings.callAria(siteConfig.phone)}
+          >
+            <svg class="size-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            {siteConfig.phone}
+          </a>
+          <a
+            href={langSwitchHref}
+            data-mobile-close
+            class="flex items-center justify-center px-4 rounded-xl text-xs font-bold tracking-[0.1em] ring-1 transition-[background-color,color,box-shadow] duration-200 mobile-lang"
+            aria-label={strings.switchLangAria}
+          >
+            {isEn ? 'ES' : 'EN'}
+          </a>
+        </div>
+        <a
+          href={quoteHref}
+          data-mobile-close
+          class="block text-center px-4 py-3 rounded-xl bg-accent hover:bg-accent-600 text-white text-sm font-bold tracking-wide shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 active:scale-[0.97] transition-[background-color,box-shadow,transform] duration-200 ease-out"
+         aria-label={strings.ctaPrimary}>
+          {strings.ctaPrimary}
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* ── Nav pill: 3 estados, todos los elementos en sincronía ─────────────
+     ESTRATEGIA: el pill define `color` y los hijos (simple-link, trigger,
+     phone) NO setean su propio color → lo heredan y "siguen" automáticamente
+     la transición de 300 ms del pill. Solo los elementos con color propio
+     (chevron, lang, hamburger con tono muted) llevan transición explícita. */
+
+  [data-header] .nav-pill {
+    background-color: rgb(255 255 255 / 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid transparent;
+    color: var(--color-foreground);
+    transition:
+      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      backdrop-filter 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hijos con color muted: necesitan su propia transición (no inherit) */
+  [data-header] .chevron,
+  [data-header] .nav-lang,
+  [data-header] .nav-hamburger {
+    color: var(--color-muted);
+    transition:
+      color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Hover states — duración corta es correcta porque son discretos */
+  [data-header] .nav-lang:hover { color: var(--color-foreground); background-color: var(--color-surface); }
+  [data-header] .nav-phone:hover { color: var(--color-foreground-dark); background-color: var(--color-surface); transition: color 200ms, background-color 200ms; }
+  [data-header] .nav-hamburger:hover { color: var(--color-foreground); background-color: var(--color-nav-border); }
+
+  /* nav-phone transición para bg al hover (el color lo hereda) */
+  [data-header] .nav-phone {
+    transition: background-color 200ms, color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ─── Home + unscrolled: glass transparent sobre el hero ─── */
+  [data-header][data-home]:not([data-scrolled]) .nav-pill {
+    background-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(4px);
+    border-color: rgb(255 255 255 / 0.1);
+    color: #fff;
+  }
+  [data-header][data-home]:not([data-scrolled]) .chevron { color: rgb(255 255 255 / 0.5); }
+  [data-header][data-home]:not([data-scrolled]) .nav-lang { color: rgb(255 255 255 / 0.7); }
+  [data-header][data-home]:not([data-scrolled]) .nav-lang:hover { color: #fff; background-color: rgb(255 255 255 / 0.1); }
+  [data-header][data-home]:not([data-scrolled]) .nav-phone:hover { color: #fff; background-color: rgb(255 255 255 / 0.1); }
+  [data-header][data-home]:not([data-scrolled]) .nav-hamburger { color: rgb(255 255 255 / 0.7); }
+  [data-header][data-home]:not([data-scrolled]) .nav-hamburger:hover { color: #fff; background-color: rgb(255 255 255 / 0.1); }
+
+  /* ─── Scrolled: gana sobre home ─── */
+  [data-header][data-scrolled] .nav-pill {
+    background-color: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(16px);
+    border-color: rgb(229 231 235);
+    box-shadow: var(--shadow-nav);
+    color: var(--color-foreground);
+  }
+
+  /* ── Dropdown panels: controlado por JS (data-open) + focus-within para teclado.
+     `--tx` es la translación horizontal: -50% para paneles centrados sobre el
+     trigger (Zonas) y 0 para paneles anclados al borde izquierdo (Servicios,
+     que de otra forma se salía por la izquierda al estar cerca del logo). */
+  .dropdown-panel {
+    --tx: -50%;
+    visibility: hidden;
+    opacity: 0;
+    transform: translate(var(--tx), -4px);
+    transition: opacity 150ms ease, transform 150ms ease, visibility 150ms linear;
+    pointer-events: none;
+  }
+  .dropdown-panel-left {
+    --tx: 0;
+  }
+  [data-dropdown]:focus-within .dropdown-panel,
+  [data-dropdown][data-open] .dropdown-panel {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(var(--tx), 0);
+    pointer-events: auto;
+    transition: opacity 150ms ease, transform 150ms ease, visibility 0s linear;
+  }
+  [data-dropdown]:hover .chevron,
+  [data-dropdown]:focus-within .chevron,
+  [data-dropdown][data-open] .chevron { transform: rotate(180deg); }
+  [data-dropdown]:hover [data-dropdown-trigger],
+  [data-dropdown]:focus-within [data-dropdown-trigger],
+  [data-dropdown][data-open] [data-dropdown-trigger] { outline: none; }
+  [data-dropdown]:hover [data-dropdown-trigger] { --aria-expanded: true; }
+  [data-dropdown][data-open] [data-dropdown-trigger] { /* set via JS */ }
+
+  /* ── Roll-text animation (label hover-slide) */
+  .roll-text {
+    position: relative;
+    overflow: hidden;
+    height: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+  }
+  .roll-text > span {
+    display: block;
+    line-height: 1.25rem;
+    transition: transform 300ms;
+  }
+  .roll-text > span + span {
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  .roll-text:hover > span,
+  button:hover .roll-text > span,
+  a:hover .roll-text > span { transform: translateY(-100%); }
+  @media (prefers-reduced-motion: reduce) {
+    .roll-text > span { transition: none; }
+  }
+
+  /* ── Mobile menu: open state */
+  [data-header][data-menu-open] [data-mobile-menu] {
+    max-height: calc(100vh - 7.5rem);
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Mobile menu look: glass vs light depends on the snapshot attr */
+  [data-mobile-menu] {
+    background-color: #fff;
+    box-shadow: 0 24px 60px -18px rgb(20 20 20 / 0.22);
+    --mobile-ring: rgb(0 0 0 / 0.05);
+    --mobile-accent: rgb(0 0 0 / 0.04);
+    --mobile-text: var(--color-foreground);
+    --mobile-text-muted: var(--color-muted);
+    --mobile-icon-bg: rgb(255 255 255 / 0.7);
+    --mobile-icon-ring: rgb(255 255 255 / 0.8);
+    --mobile-icon-text: var(--color-foreground);
+    --mobile-footer-bg: linear-gradient(to bottom, rgb(255 255 255 / 0), rgb(255 255 255 / 0.4));
+    box-shadow: 0 24px 60px -18px rgb(20 20 20 / 0.22);
+    outline: 1px solid rgb(0 0 0 / 0.05);
+  }
+  [data-header][data-menu-glass] [data-mobile-menu] {
+    background-color: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(4px);
+    outline: 1px solid rgb(255 255 255 / 0.15);
+    box-shadow: 0 24px 60px -18px rgb(0 0 0 / 0.5);
+    --mobile-text: #fff;
+    --mobile-text-muted: rgb(255 255 255 / 0.6);
+    --mobile-icon-bg: rgb(255 255 255 / 0.1);
+    --mobile-icon-ring: rgb(255 255 255 / 0.2);
+    --mobile-icon-text: #fff;
+    --mobile-footer-bg: linear-gradient(to bottom, rgb(255 255 255 / 0), rgb(0 0 0 / 0.1));
+  }
+  [data-mobile-menu] .mobile-accordion summary,
+  [data-mobile-menu] .mobile-item-label,
+  [data-mobile-menu] .mobile-simple,
+  [data-mobile-menu] .mobile-phone,
+  [data-mobile-menu] .mobile-all-zones { color: var(--mobile-text); }
+  [data-mobile-menu] .mobile-item-desc { color: var(--mobile-text-muted); }
+  [data-mobile-menu] .mobile-item:hover,
+  [data-mobile-menu] .mobile-zone:hover { background-color: var(--mobile-accent); }
+  [data-mobile-menu] .mobile-item-icon {
+    background-color: var(--mobile-icon-bg);
+    box-shadow: inset 0 0 0 1px var(--mobile-icon-ring);
+    color: var(--mobile-icon-text);
+  }
+  [data-mobile-menu] .mobile-item:hover .mobile-item-icon {
+    background-color: var(--color-foreground);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px var(--color-foreground);
+  }
+  [data-mobile-menu] .mobile-all-zones,
+  [data-mobile-menu] .mobile-phone,
+  [data-mobile-menu] .mobile-lang { box-shadow: inset 0 0 0 1px var(--mobile-ring); background-color: var(--mobile-icon-bg); color: var(--mobile-text); }
+  [data-mobile-menu] .mobile-lang { color: var(--mobile-text-muted); }
+  [data-mobile-menu] .mobile-simple-active { font-weight: 700; }
+  [data-mobile-menu] .mobile-footer { background: var(--mobile-footer-bg); }
+
+  /* Remove default details marker */
+  details > summary::-webkit-details-marker { display: none; }
+  details > summary { list-style: none; }
+
+  /* Chevron rotation en acordeones mobile. Antes Tailwind (variant open en
+     grupos) pero generaba un selector que critters no parseaba y saltaba
+     con warning. El selector nativo details[open] lo resuelve. */
+  details[open] > summary .mobile-chevron { transform: rotate(180deg); }
+
+  /* Hamburger toggle icon */
+  [data-header][data-menu-open] .nav-hamburger .icon-open { display: none; }
+  [data-header][data-menu-open] .nav-hamburger .icon-close { display: block; }
+
+  @keyframes slideUp { from { transform: translateY(1rem); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')
+  if (header) {
+    const isHome = header.hasAttribute('data-home')
+
+    // ── Scrolled state vía IntersectionObserver (sin forced reflow) ──
+    const sentinel = document.createElement('div')
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:10px;pointer-events:none;'
+    sentinel.setAttribute('aria-hidden', 'true')
+    document.body.prepend(sentinel)
+    const setScrolled = (v: boolean) => {
+      if (v) header.setAttribute('data-scrolled', '')
+      else header.removeAttribute('data-scrolled')
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0 },
+    )
+    io.observe(sentinel)
+
+    // ── Mobile menu toggle + scroll lock ──
+    const mobileToggle = header.querySelector<HTMLButtonElement>('[data-mobile-toggle]')
+    const mobileMenu = header.querySelector<HTMLElement>('[data-mobile-menu]')
+
+    const isInsideMenu = (target: EventTarget | null): boolean =>
+      target instanceof Node && !!mobileMenu?.contains(target)
+
+    const preventTouch = (e: TouchEvent) => { if (!isInsideMenu(e.target)) e.preventDefault() }
+    const preventWheel = (e: WheelEvent) => { if (!isInsideMenu(e.target)) e.preventDefault() }
+    const scrollKeys = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '])
+    const preventKeyScroll = (e: KeyboardEvent) => {
+      if (scrollKeys.has(e.key) && !isInsideMenu(e.target)) e.preventDefault()
+    }
+
+    const closeMobileMenu = () => {
+      if (!header.hasAttribute('data-menu-open')) return
+      header.removeAttribute('data-menu-open')
+      header.removeAttribute('data-menu-glass')
+      mobileToggle?.setAttribute('aria-expanded', 'false')
+      mobileMenu?.setAttribute('aria-hidden', 'true')
+      document.removeEventListener('touchmove', preventTouch)
+      document.removeEventListener('wheel', preventWheel)
+      document.removeEventListener('keydown', preventKeyScroll)
+    }
+
+    const openMobileMenu = () => {
+      if (header.hasAttribute('data-menu-open')) return
+      header.setAttribute('data-menu-open', '')
+      // Capturar apariencia glass al abrir (scroll congelado)
+      if (isHome && !header.hasAttribute('data-scrolled')) {
+        header.setAttribute('data-menu-glass', '')
+      }
+      mobileToggle?.setAttribute('aria-expanded', 'true')
+      mobileMenu?.setAttribute('aria-hidden', 'false')
+      document.addEventListener('touchmove', preventTouch, { passive: false })
+      document.addEventListener('wheel', preventWheel, { passive: false })
+      document.addEventListener('keydown', preventKeyScroll)
+    }
+
+    mobileToggle?.addEventListener('click', () => {
+      if (header.hasAttribute('data-menu-open')) closeMobileMenu()
+      else openMobileMenu()
+    })
+
+    header.querySelectorAll<HTMLAnchorElement>('[data-mobile-close]').forEach((a) => {
+      a.addEventListener('click', closeMobileMenu)
+    })
+
+    // ── Desktop dropdowns: hover con grace period (150 ms) + click toggle ──
+    // CSS no basta porque `pointer-events` no se puede transicionar; durante el
+    // fade-out el panel se vuelve no-interactivo y cualquier "salto" del cursor
+    // lo cierra. JS con timers es determinista y replica el patrón original.
+    const dropdowns = header.querySelectorAll<HTMLElement>('[data-dropdown]')
+    const closeAllExcept = (except: HTMLElement | null) => {
+      dropdowns.forEach((x) => {
+        if (x === except) return
+        x.removeAttribute('data-open')
+        x.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false')
+      })
+    }
+    dropdowns.forEach((dd) => {
+      let closeTimer: ReturnType<typeof setTimeout> | null = null
+      const trigger = dd.querySelector<HTMLButtonElement>('[data-dropdown-trigger]')
+
+      const doOpen = () => {
+        closeAllExcept(dd)
+        dd.setAttribute('data-open', '')
+        trigger?.setAttribute('aria-expanded', 'true')
+      }
+      const doClose = () => {
+        dd.removeAttribute('data-open')
+        trigger?.setAttribute('aria-expanded', 'false')
+      }
+      const cancelClose = () => {
+        if (closeTimer !== null) { clearTimeout(closeTimer); closeTimer = null }
+      }
+      const scheduleClose = () => {
+        cancelClose()
+        closeTimer = setTimeout(() => { doClose(); closeTimer = null }, 150)
+      }
+
+      dd.addEventListener('mouseenter', () => { cancelClose(); doOpen() })
+      dd.addEventListener('mouseleave', scheduleClose)
+
+      trigger?.addEventListener('click', (e) => {
+        e.preventDefault()
+        cancelClose()
+        if (dd.hasAttribute('data-open')) doClose()
+        else doOpen()
+      })
+    })
+
+    document.addEventListener('click', (e) => {
+      if (!(e.target instanceof Node)) return
+      let inside = false
+      dropdowns.forEach((dd) => { if (dd.contains(e.target as Node)) inside = true })
+      if (!inside) {
+        dropdowns.forEach((dd) => { dd.removeAttribute('data-open'); dd.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false') })
+      }
+    })
+
+    // ── Escape: cierra menú mobile y dropdowns ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return
+      closeMobileMenu()
+      dropdowns.forEach((dd) => { dd.removeAttribute('data-open'); dd.querySelector('[data-dropdown-trigger]')?.setAttribute('aria-expanded', 'false') })
+    })
+  }
+</script>

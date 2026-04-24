@@ -1,0 +1,168 @@
+---
+const lang = (Astro.currentLocale ?? 'es') as 'es' | 'en'
+const isEn = lang === 'en'
+
+const t = isEn
+  ? {
+      ariaLabel: 'Cookie settings',
+      message:
+        'We use first- and third-party cookies (Google Analytics, Google Ads, Meta Pixel) to analyse traffic and show you relevant ads. You can accept or reject their use.',
+      cookiePolicyLabel: 'Cookie Policy',
+      privacyPolicyLabel: 'Privacy Policy',
+      acceptBtn: 'Accept',
+      rejectBtn: 'Reject',
+    }
+  : {
+      ariaLabel: 'Configuración de cookies',
+      message:
+        'Usamos cookies propias y de terceros (Google Analytics, Google Ads, Meta Pixel) para analizar el tráfico y mostrarte publicidad relevante. Puedes aceptar o rechazar su uso.',
+      cookiePolicyLabel: 'Política de Cookies',
+      privacyPolicyLabel: 'Política de Privacidad',
+      acceptBtn: 'Aceptar',
+      rejectBtn: 'Rechazar',
+    }
+---
+
+<div
+  id="cookie-banner"
+  role="dialog"
+  aria-label={t.ariaLabel}
+  aria-modal="false"
+  hidden
+  class="fixed bottom-0 inset-x-0 z-[9999] p-3 sm:p-4 animate-[slideUp_0.4s_ease-out] motion-reduce:animate-none isolation-isolate"
+>
+  <div class="max-w-4xl mx-auto bg-white/95 backdrop-blur-2xl border border-warm-border rounded-2xl shadow-cookie p-5 sm:p-6 [will-change:backdrop-filter] [transform:translateZ(0)]">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <p class="text-sm text-muted leading-relaxed flex-1">
+        {t.message}{' '}
+        <a href="/aviso-legal" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark" aria-label={t.cookiePolicyLabel}>
+          {t.cookiePolicyLabel}
+        </a>
+        {' · '}
+        <a href="/politica-de-privacidad" class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark" aria-label={t.privacyPolicyLabel}>
+          {t.privacyPolicyLabel}
+        </a>
+      </p>
+      <div class="flex items-center gap-3 shrink-0 w-full sm:w-auto">
+        <button
+          type="button"
+          data-cookie-reject
+          class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-semibold text-foreground bg-white border border-warm-border rounded-xl hover:bg-warm-200 hover:border-warm-border transition-[background-color,border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+        >
+          {t.rejectBtn}
+        </button>
+        <button
+          type="button"
+          data-cookie-accept
+          class="flex-1 sm:flex-none px-5 py-2.5 text-sm font-semibold text-white bg-accent rounded-xl hover:bg-accent-600 transition-[background-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 shadow-lg shadow-accent/20"
+        >
+          {t.acceptBtn}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const CONSENT_KEY = 'pladur_cookie_consent'
+  const CONSENT_TS_KEY = 'pladur_cookie_consent_ts'
+  const TWELVE_MONTHS = 365 * 24 * 60 * 60 * 1000
+
+  const banner = document.getElementById('cookie-banner') as HTMLElement | null
+  if (banner) {
+    const show = () => { banner.hidden = false }
+    const hide = () => { banner.hidden = true }
+
+    const stored = localStorage.getItem(CONSENT_KEY)
+    const ts = localStorage.getItem(CONSENT_TS_KEY)
+
+    if (!stored || !ts) {
+      show()
+    } else if (Date.now() - parseInt(ts, 10) > TWELVE_MONTHS) {
+      localStorage.removeItem(CONSENT_KEY)
+      localStorage.removeItem(CONSENT_TS_KEY)
+      show()
+    } else if (stored === 'accepted') {
+      injectAnalyticsScripts()
+    }
+
+    const savePreference = (value: 'accepted' | 'rejected') => {
+      localStorage.setItem(CONSENT_KEY, value)
+      localStorage.setItem(CONSENT_TS_KEY, Date.now().toString())
+      hide()
+      if (value === 'accepted') injectAnalyticsScripts()
+    }
+
+    banner.querySelector('[data-cookie-accept]')?.addEventListener('click', () => savePreference('accepted'))
+    banner.querySelector('[data-cookie-reject]')?.addEventListener('click', () => savePreference('rejected'))
+
+    ;(window as Window & { openCookieSettings?: () => void }).openCookieSettings = show
+  }
+
+  function injectAnalyticsScripts() {
+    if (document.getElementById('pladur-analytics-loaded')) return
+
+    const run = () => {
+      const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID
+      const gtmId = import.meta.env.PUBLIC_GTM_ID
+      const adsId = import.meta.env.PUBLIC_GOOGLE_ADS_ID
+      const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID
+
+      const frag = document.createDocumentFragment()
+      const add = (setup: (s: HTMLScriptElement) => void) => {
+        const s = document.createElement('script')
+        setup(s)
+        frag.appendChild(s)
+      }
+
+      if (gaId) {
+        add((s) => { s.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`; s.async = true })
+        add((s) => { s.textContent = `
+          window.dataLayer=window.dataLayer||[];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js',new Date());
+          gtag('config','${gaId}',{page_path:window.location.pathname});
+        ` })
+      }
+
+      if (gtmId) {
+        add((s) => { s.textContent = `
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','${gtmId}');
+        ` })
+      }
+
+      if (adsId) {
+        add((s) => { s.textContent = `gtag('config','${adsId}');` })
+      }
+
+      if (metaPixelId) {
+        add((s) => { s.textContent = `
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window,document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init','${metaPixelId}');
+          fbq('track','PageView');
+        ` })
+      }
+
+      const marker = document.createElement('meta')
+      marker.id = 'pladur-analytics-loaded'
+      frag.appendChild(marker)
+
+      document.head.appendChild(frag)
+    }
+
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => void }).requestIdleCallback
+    if (typeof ric === 'function') ric(run, { timeout: 2000 })
+    else setTimeout(run, 0)
+  }
+</script>

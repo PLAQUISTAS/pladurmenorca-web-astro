@@ -1,0 +1,510 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import { siteConfig } from '@/data/site'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+
+const meta = lang === 'en' ? {
+  title: 'Drywall for New Builds in Menorca | B2B for Developers',
+  description: 'Drywall for new-build projects in Menorca. B2B service for developers, builders and architectural studios. Drywall partitions, false ceilings, DB-SI and CTE-HR. 6,000+ projects.',
+  canonical: '/en/pladur-obra-nueva-menorca',
+  alternateEs: '/pladur-obra-nueva-menorca',
+} : {
+  title: 'Obra Nueva en Menorca | Pladur B2B para Promotoras',
+  description: 'Pladur para obra nueva en Menorca. Servicio B2B para promotoras, constructoras y estudios. Tabiquería seca, falsos techos, DB-SI y CTE-HR. +6.000 proyectos.',
+  canonical: '/pladur-obra-nueva-menorca',
+  alternateEn: '/en/pladur-obra-nueva-menorca',
+}
+
+const capacidades = [
+  { titulo: 'Equipo estable', desc: 'Operarios propios capaces de absorber varios proyectos simultáneos sin comprometer plazos.' },
+  { titulo: '+6.000 proyectos', desc: 'Experiencia acumulada de la SL matriz Plaquistas y Acabados (fundada en 2004). Referencias verificables.' },
+  { titulo: 'Materiales premium', desc: 'Suministro garantizado de Placo (Saint-Gobain), Knauf y Lafarge. Distribución aliada en Menorca.' },
+  { titulo: 'DB-SI / CTE-HR', desc: 'Sistemas certificados EI-30 a EI-120 y soluciones acústicas que cumplen CTE-HR para hoteles y residencial.' },
+]
+
+const servicios = [
+  { titulo: 'Tabiquería seca', desc: 'Tabiques 70–200 mm con placa estándar, hidrófuga, cortafuegos o acústica. Acabado listo para pintar.' },
+  { titulo: 'Falsos techos', desc: 'Continuos y registrables con integración de climatización, electricidad y redes. Acústicos y decorativos.' },
+  { titulo: 'Trasdosados autoportantes', desc: 'Aislamiento térmico y acústico en medianeras y fachadas. Lana mineral de alta densidad.' },
+  { titulo: 'Compartimentación cortafuegos', desc: 'Sistemas certificados DB-SI (EI-30 a EI-120) para hoteles, edificios residenciales y comerciales.' },
+  { titulo: 'Coordinación de obra', desc: 'Trabajo con dirección facultativa, arquitecto y otros gremios. Planning, plazos y certificaciones.' },
+  { titulo: 'Control de calidad', desc: 'Parte de obra fotográfico diario, certificados de instalación y garantía de 1 año en mano de obra.' },
+]
+
+const tiposProyecto = [
+  {
+    tipo: 'Residencial',
+    descripcion: 'Promociones de vivienda unifamiliar adosada, chalets individuales y bloques plurifamiliares. Coordinación con el resto de gremios y entrega por fases.',
+    dbNormativa: 'CTE DB-HR (≥47 dB entre viviendas) · CTE DB-SI',
+    volumenTipico: 'De 5 a 50 unidades por promoción',
+  },
+  {
+    tipo: 'Hotelero',
+    descripcion: 'Fase de acabados en hoteles de nueva construcción y reformas integrales. Sectorización cortafuegos y aislamiento acústico entre habitaciones.',
+    dbNormativa: 'CTE DB-SI (EI-60 a EI-120 por plantas) · CTE DB-HR',
+    volumenTipico: 'De 40 a 200 habitaciones',
+  },
+  {
+    tipo: 'Comercial / Oficinas',
+    descripcion: 'Distribución interior de locales, oficinas, clínicas y centros educativos. Mamparas desmontables y techos registrables para instalaciones.',
+    dbNormativa: 'CTE DB-SI (sectorización) · CTE DB-HR si aplica',
+    volumenTipico: '200 a 2.000 m²',
+  },
+  {
+    tipo: 'Agroturismo / Rural',
+    descripcion: 'Obra nueva o ampliación en fincas rústicas con cumplimiento normativo y respeto por la identidad constructiva menorquina.',
+    dbNormativa: 'CTE DB-HE (térmico) · DB-HR si alojamiento',
+    volumenTipico: '6 a 20 habitaciones',
+  },
+]
+
+const normativa = [
+  { uso: 'Residencial', requisito: 'Aislamiento acústico mínimo 47 dB entre viviendas', norma: 'CTE DB-HR (Documento Básico de Protección frente al Ruido)' },
+  { uso: 'Hoteles', requisito: 'Sectorización cortafuegos EI-60 mínimo entre plantas', norma: 'CTE DB-SI (Seguridad en caso de Incendio)' },
+  { uso: 'Garajes', requisito: 'Compartimentación EI-120 respecto a usos contiguos', norma: 'CTE DB-SI Sección 1, Tabla 1.2' },
+  { uso: 'Escaleras', requisito: 'Sistemas EI-30 o EI-60 según altura de evacuación', norma: 'CTE DB-SI Sección 3' },
+]
+
+const partidas = [
+  { partida: 'Tabique simple 70mm (placa estándar)', desde: '46 €/m²', hasta: '52 €/m²' },
+  { partida: 'Tabique acústico doble placa (lana de roca 48mm)', desde: '58 €/m²', hasta: '68 €/m²' },
+  { partida: 'Tabique cortafuegos EI-60', desde: '62 €/m²', hasta: '75 €/m²' },
+  { partida: 'Trasdosado autoportante con aislamiento', desde: '36 €/m²', hasta: '52 €/m²' },
+  { partida: 'Falso techo continuo registrable', desde: '30 €/m²', hasta: '42 €/m²' },
+  { partida: 'Falso techo acústico (lana mineral)', desde: '38 €/m²', hasta: '52 €/m²' },
+  { partida: 'Compartimentación cortafuegos EI-120', desde: '75 €/m²', hasta: '95 €/m²' },
+]
+
+const procesoB2B = [
+  { paso: '01', titulo: 'Estudio técnico', descripcion: 'Revisión de mediciones, pliegos de condiciones y planos de proyecto. Reunión con arquitecto y dirección facultativa si procede.' },
+  { paso: '02', titulo: 'Oferta detallada', descripcion: 'Propuesta con precio cerrado por partida, desglose por fases, plazos de ejecución y lista de sistemas certificados (DB-SI, CTE-HR).' },
+  { paso: '03', titulo: 'Planificación', descripcion: 'Calendario coordinado con el resto de gremios. Reserva de materiales con antelación. Despliegue de equipo proporcional al tamaño de la obra.' },
+  { paso: '04', titulo: 'Ejecución', descripcion: 'Jornadas completas de lunes a viernes. Parte de obra fotográfico. Control de calidad continuo por jefe de equipo asignado.' },
+  { paso: '05', titulo: 'Entrega y certificados', descripcion: 'Acta de entrega, documentación técnica (DoP, fichas, certificados EI), y garantía 1 año en mano de obra.' },
+]
+
+const documentacion = [
+  'Declaración de Prestaciones (DoP) de todos los materiales instalados (Placo, Knauf, Lafarge)',
+  'Fichas técnicas de los sistemas con marcado CE',
+  'Parte de obra fotográfico diario con geolocalización',
+  'Certificados de resistencia al fuego (EI-30, EI-60, EI-90, EI-120) según sistema',
+  'Planos as-built si el cliente los requiere para el libro del edificio',
+  'Certificado de instalación firmado para la recepción provisional de la obra',
+]
+
+const obraNuevaFaqs = [
+  { pregunta: '¿Trabajáis con promotoras y constructoras?', respuesta: 'Sí. Damos servicio B2B exclusivo a promotoras, constructoras y estudios de arquitectura en Menorca. Facturación a empresas, coordinación con dirección facultativa y contratos marco para promociones de varios edificios.' },
+  { pregunta: '¿Qué capacidad tenéis para obra nueva?', respuesta: 'Podemos ejecutar varios proyectos en paralelo gracias al equipo estable de la SL matriz. Para promociones residenciales de 20–80 viviendas trabajamos por fases desplegando equipos dedicados.' },
+  { pregunta: '¿Cumplís la normativa DB-SI y CTE-HR?', respuesta: 'Sí. Instalamos sistemas certificados EI-30, EI-60, EI-90 y EI-120 (Placo, Knauf Fireboard). Para acústica entre viviendas cumplimos sobradamente el mínimo CTE-HR de 47 dB, alcanzando 50–55 dB con nuestros sistemas estándar.' },
+  { pregunta: '¿Podéis adaptar plazos a la planificación de obra?', respuesta: 'Sí. Planificamos con arquitecto y dirección facultativa antes de empezar. Nuestro equipo se dimensiona al tamaño del proyecto para entrar y salir en los plazos acordados sin retrasar el resto de gremios.' },
+  { pregunta: '¿Emitís certificados de instalación?', respuesta: 'Sí. Entregamos documentación técnica completa: DoP de materiales, fichas técnicas, fotografías de obra y certificados de instalación necesarios para la recepción del edificio.' },
+  { pregunta: '¿Cómo es el proceso de contratación?', respuesta: 'Envíanos el pliego o medición y tendrás oferta detallada en 3–5 días laborables. Aceptada la oferta, firmamos contrato de obra con calendario y condiciones de facturación acordadas.' },
+  { pregunta: '¿Cubrís obra nueva en toda Menorca?', respuesta: 'Sí, en los 8 municipios. Tenemos experiencia en promociones en Maó, Ciutadella y la zona sur (Sant Lluís / Es Castell) con más demanda de segunda residencia, así como en agroturismos rurales de Alaior, Es Mercadal y Ferreries.' },
+  { pregunta: '¿Facturáis con IVA invertido o con retenciones B2B?', respuesta: 'Aplicamos el régimen fiscal que corresponda a cada obra (IVA repercutido estándar, inversión del sujeto pasivo en ejecuciones de obra inmobiliaria con contratista principal, etc.). Nuestro departamento de administración se coordina con vuestro equipo financiero.' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Obra Nueva (B2B)', href: '/pladur-obra-nueva-menorca' }]} />
+    <SchemaService
+      name="Pladur para Obra Nueva en Menorca"
+      description="Servicio B2B de instalación de pladur para promotoras, constructoras y estudios en Menorca. Sistemas certificados DB-SI y CTE-HR."
+      serviceType="Construcción en Seco B2B"
+      url="/pladur-obra-nueva-menorca"
+    />
+    <SchemaFAQ faqs={obraNuevaFaqs} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? '/pladur-obra-nueva-menorca' : '/en/pladur-obra-nueva-menorca'} />
+
+  <p class="sr-only" aria-hidden="false">
+    Pladur Menorca — servicio B2B de pladur para obra nueva en Menorca. Promotoras, constructoras, estudios. Tabiquería seca, falsos techos, trasdosados, compartimentación cortafuegos. DB-SI, CTE-HR. Tel: 627 829 723.
+  </p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            B2B · Obra nueva · Menorca
+          </span>
+          <h1 aria-label="Pladur para Obra Nueva y Promotoras en Menorca" class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            Pladur para Obra Nueva y Promotoras en Menorca
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            Servicio B2B para promotoras, constructoras y estudios que ejecutan obra nueva en Menorca. Capacidad para múltiples proyectos simultáneos, sistemas certificados DB-SI / CTE-HR y coordinación profesional con dirección facultativa.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="/presupuesto-pladur"
+              aria-label="Solicitar propuesta técnica"
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              Solicitar propuesta técnica
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              aria-label={`Llamar al ${siteConfig.phone}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Por qué pladur en obra nueva -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Por qué pladur
+        </span>
+        <h2 aria-label="Por qué elegir pladur en obra nueva" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          ¿Por qué el pladur es la mejor opción en obra nueva?
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p>
+          El pladur —o <strong>yeso laminado</strong>— se ha convertido en el estándar de tabiquería interior en obra nueva residencial y hotelera por tres razones medibles: velocidad de ejecución, cumplimiento normativo y coste total. Una promoción de 20 viviendas puede completar toda su tabiquería interior en 4-6 semanas con un equipo de 6 operarios, frente a las 10-12 semanas que requiere la obra tradicional.
+        </p>
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p>"La construcción en seco con yeso laminado permite una reducción del <strong>40-60% en los plazos de ejecución</strong> de tabiquería interior respecto a la albañilería tradicional, manteniendo o mejorando las prestaciones térmicas y acústicas exigidas por el CTE."</p>
+          <cite class="block mt-2 text-sm not-italic text-muted/70">— <strong>ASEFAVE</strong>, Asociación Española de Fabricantes de Fachadas Ligeras y Ventanas</cite>
+        </blockquote>
+        <p>
+          En Menorca, donde la <strong>ventana de obra</strong> está muy condicionada por la temporada turística (abril-octubre), la rapidez del pladur permite acometer fase de acabados en un invierno completo sin solaparse con la campaña. Los sistemas certificados DB-SI cubren toda la escalera de resistencia al fuego (EI-30 a EI-240) sin cambios estructurales, y la acústica entre viviendas (CTE DB-HR) se resuelve con tabiques de doble placa y lana de roca sin aumentar el grosor respecto a la solución tradicional.
+        </p>
+        <p>
+          Comparado con la tabiquería de ladrillo cerámico, el pladur pesa entre un 60% y un 80% menos por m², lo que reduce la sobrecarga sobre el forjado y permite edificios de estructura más ligera y económica. Para instalaciones interiores (electricidad, fontanería, datos), los montantes de 70 o 98 mm ya incorporan el hueco técnico, evitando rozas posteriores y los vicios ocultos derivados.
+        </p>
+        <p>
+          Si tu promoción requiere cumplir normativa de protección contra incendios, consulta también nuestro servicio de <a href="/pladur-ignifugo-menorca" class="text-foreground font-semibold underline underline-offset-2">pladur ignífugo</a>, con sistemas certificados EI-30 a EI-120 para todas las situaciones previstas en el CTE DB-SI.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 stagger-children">
+        {[
+          { titulo: 'Rapidez', items: ['40-60% menos plazo', 'Ideal para obra invernal'] },
+          { titulo: 'Limpieza', items: ['Obra seca sin escombros', 'Sin esperas de secado'] },
+          { titulo: 'Normativa', items: ['DB-SI certificado', 'DB-HR superado'] },
+          { titulo: 'Coste total', items: ['Menor sobrecarga forjado', 'Sin rozas posteriores'] },
+        ].map((card) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 h-full cursor-default">
+            <p class="text-xs font-bold uppercase tracking-wider text-foreground-dark mb-3">{card.titulo}</p>
+            <ul class="space-y-2">
+              {card.items.map((item) => (
+                <li class="flex items-start gap-2 text-sm text-muted">
+                  <svg aria-hidden="true" class="size-4 text-foreground-dark shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  </svg>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Capacidad -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Capacidad
+        </span>
+        <h2 aria-label="Infraestructura y capacidad para obra nueva" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          Infraestructura y capacidad para obra nueva
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Respaldados por +20 años de la SL matriz y más de 6.000 proyectos completados en Baleares. Dimensión y experiencia para abordar desde una vivienda unifamiliar hasta una promoción residencial completa.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 stagger-children">
+        {capacidades.map((c) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 h-full cursor-default">
+            <h3 aria-label={c.titulo} class="font-bold text-foreground text-lg mb-2">{c.titulo}</h3>
+            <p class="text-sm text-muted leading-relaxed">{c.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de proyecto -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Tipos de proyecto
+        </span>
+        <h2 aria-label="Tipos de proyecto que abordamos en Menorca" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          Tipos de proyecto que abordamos en Menorca
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Desde promociones residenciales en Maó y Ciutadella hasta nuevos hoteles en la costa sur y agroturismos rurales. Cada tipo de proyecto tiene su normativa y su ritmo, y conocemos ambos.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6 stagger-children">
+        {tiposProyecto.map((p) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 lg:p-8 h-full cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-4">{p.tipo}</span>
+            <p class="text-muted leading-relaxed mb-5">{p.descripcion}</p>
+            <div class="space-y-3 border-t border-warm-border/60 pt-4">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-0.5">Normativa aplicable</p>
+                <p class="text-sm font-bold text-foreground-dark">{p.dbNormativa}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted mb-0.5">Volumen típico</p>
+                <p class="text-sm text-foreground">{p.volumenTipico}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Normativa CTE -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Normativa
+        </span>
+        <h2 aria-label="Normativa CTE aplicable en obra nueva" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          Normativa CTE aplicable en obra nueva
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Todos nuestros sistemas cumplen (o superan) los requisitos del Código Técnico de la Edificación vigente en Baleares.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 stagger-children">
+        {normativa.map((n) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-3">{n.uso}</span>
+            <p class="font-bold text-foreground text-sm mb-2">{n.requisito}</p>
+            <p class="text-xs text-muted">{n.norma}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Servicios
+        </span>
+        <h2 aria-label="Servicios para promotoras y constructoras" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          Servicios para promotoras y constructoras
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6 stagger-children">
+        {servicios.map((s) => (
+          <div class="bg-white/70 rounded-2xl border border-warm-border/50 shadow-card p-6 h-full">
+            <div class="flex items-start gap-3 mb-3">
+              <div class="shrink-0 size-8 rounded-lg bg-foreground-dark flex items-center justify-center">
+                <svg aria-hidden="true" class="size-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+              </div>
+              <h3 aria-label={s.titulo} class="font-bold text-foreground text-lg leading-snug">{s.titulo}</h3>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios por partida -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-2xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Precios
+        </span>
+        <h2 aria-label="Precios orientativos por partida — Obra nueva 2026" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Precios orientativos por partida
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Rangos orientativos (IVA no incluido) para obra nueva en Menorca. El precio final depende del volumen, la logística, los plazos y los sistemas certificados exigidos. Presupuesto cerrado tras revisión de mediciones.
+        </p>
+      </div>
+      <div class="space-y-3">
+        {partidas.map((p) => (
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default">
+            <div class="sm:flex-1">
+              <p class="text-sm font-bold text-foreground">{p.partida}</p>
+            </div>
+            <div class="flex items-baseline gap-2 sm:justify-end">
+              <span class="text-lg font-bold text-foreground-dark">{p.desde}</span>
+              <span class="text-muted">—</span>
+              <span class="text-lg font-bold text-foreground-dark">{p.hasta}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a
+          href="/precios-pladur-menorca"
+          class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+        >
+          Ver tabla de precios completa por servicio
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proceso B2B -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-14 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          Proceso
+        </span>
+        <h2 aria-label="Cómo trabajamos con promotoras" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          Cómo trabajamos con promotoras
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          Cinco pasos estructurados desde el estudio técnico hasta la entrega con documentación completa. Plazos cerrados, equipo dedicado y coordinación con dirección facultativa.
+        </p>
+      </div>
+
+      <ol class="relative max-w-3xl">
+        {/* Línea vertical de conexión */}
+        <div class="absolute left-6 top-6 bottom-6 w-px bg-warm-border hidden sm:block" aria-hidden="true"></div>
+
+        {procesoB2B.map((p, i) => (
+          <li class={`relative flex gap-5 items-start ${i < procesoB2B.length - 1 ? 'pb-8' : ''}`}>
+            <div class="shrink-0 size-12 rounded-full bg-white border-2 border-warm-border text-foreground-dark font-bold text-sm flex items-center justify-center tabular-nums relative z-10 shadow-soft">
+              {p.paso}
+            </div>
+            <div class="flex-1 pt-2.5">
+              <h3 aria-label={p.titulo} class="font-bold text-foreground text-lg mb-1.5">{p.titulo}</h3>
+              <p class="text-muted text-sm leading-relaxed">{p.descripcion}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Documentación que entregamos -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            Documentación
+          </span>
+          <h2 aria-label="Documentación técnica que entregamos" class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            Documentación técnica que entregamos
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>
+              La recepción de obra requiere documentación técnica específica. Entregamos todo lo necesario para el libro del edificio y las inspecciones de la dirección facultativa.
+            </p>
+            <p>
+              Trabajamos con las principales marcas del sector —Placo, Knauf y Lafarge— y aportamos las Declaraciones de Prestaciones (DoP), fichas técnicas y certificados de resistencia al fuego que exigen los organismos de control y los seguros decenales.
+            </p>
+          </div>
+        </div>
+        <div>
+          <ul class="space-y-3">
+            {documentacion.map((doc) => (
+              <li class="flex items-start gap-3 bg-white/70 border border-warm-border/50 rounded-2xl p-4 shadow-card">
+                <svg aria-hidden="true" class="size-5 text-foreground-dark shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+                <span class="text-sm text-muted leading-relaxed">{doc}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales B2B -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — B2B' : 'Nuestras cifras — B2B'}
+    title={lang === 'en' ? '3 in 10 of our projects are B2B' : '3 de cada 10 proyectos que ejecutamos son B2B'}
+    intro={lang === 'en'
+      ? 'Stable service for developers, contractors and hotel chains. Real figures from the Mallorca parent company in 2025 — not marketing claims.'
+      : 'Servicio estable a promotoras, constructoras y cadenas hoteleras. Cifras reales de la SL matriz en 2025 — no claims de marketing.'}
+    metrics={lang === 'en' ? [
+      { value: '~152', label: 'B2B projects in 2025', context: '30% of total delivered works' },
+      { value: '6,000+', label: 'cumulative works', context: 'Parent company track record since 2004' },
+      { value: 'EI-30 to EI-120', label: 'certified fire-rated systems', context: 'CTE DB-SI · Placo · Knauf Fireboard' },
+      { value: '50-55 dB', label: 'standard Rw between dwellings', context: 'Above the 47 dB CTE DB-HR minimum' },
+    ] : [
+      { value: '~152', label: 'proyectos B2B en 2025', context: '30% del total de obra ejecutada' },
+      { value: '+6.000', label: 'obras acumuladas', context: 'Histórico SL matriz desde 2004' },
+      { value: 'EI-30 a EI-120', label: 'sistemas cortafuegos certificados', context: 'CTE DB-SI · Placo · Knauf Fireboard' },
+      { value: '50-55 dB', label: 'Rw estándar entre viviendas', context: 'Por encima del mínimo 47 dB del CTE DB-HR' },
+    ]}
+  />
+
+  <!-- FAQ -->
+  <FaqAccordion
+    client:visible
+    faqs={obraNuevaFaqs}
+    titulo="Preguntas frecuentes sobre obra nueva"
+    subtitulo="Lo que nos preguntan promotoras, constructoras y estudios cuando empezamos una colaboración."
+  />
+
+  <!-- Servicios relacionados -->
+  <ServiciosRelacionados currentPath="/pladur-obra-nueva-menorca" />
+
+  <!-- Final CTA -->
+  <CtaBanner
+    titulo="Hablemos de tu promoción"
+    subtitulo="Envíanos el pliego o medición y tendrás oferta detallada en 3–5 días. Coordinación con arquitecto y dirección facultativa."
+  />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

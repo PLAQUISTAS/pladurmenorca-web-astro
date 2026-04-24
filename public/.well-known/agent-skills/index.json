@@ -1,0 +1,37 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
+  "generated": "2026-04-24T15:58:33.191Z",
+  "publisher": {
+    "name": "Pladur Menorca",
+    "url": "https://www.pladurmenorca.com"
+  },
+  "skills": [
+    {
+      "name": "check-coverage",
+      "type": "skill.md",
+      "description": "Verificar si Pladur Menorca presta servicio en un municipio concreto de Menorca y obtener información sobre desplazamientos.",
+      "url": "https://www.pladurmenorca.com/.well-known/agent-skills/check-coverage/SKILL.md",
+      "sha256": "1cdff4b376656e22ce5a2680270d8868a7186bcca331399a4e5a440e76e5c37c",
+      "version": "1.0.0",
+      "language": "es"
+    },
+    {
+      "name": "get-pricing",
+      "type": "skill.md",
+      "description": "Obtener precios orientativos 2026 de los servicios de pladur, aislamiento y escayola en Menorca. Los precios finales dependen de superficie, acceso y complejidad — un presupuesto cerrado requiere visita técnica gratuita.",
+      "url": "https://www.pladurmenorca.com/.well-known/agent-skills/get-pricing/SKILL.md",
+      "sha256": "a4c7ed0e58d301ca48b3cf36a5ad19222411ce531e4adcaa6bdecc1ee35e7787",
+      "version": "1.0.0",
+      "language": "es"
+    },
+    {
+      "name": "request-quote",
+      "type": "skill.md",
+      "description": "Enviar una solicitud real de presupuesto o contacto al equipo de Pladur Menorca (instaladores de pladur en Menorca desde 2004). La solicitud llega por email al negocio y el equipo responde en menos de 24h laborables.",
+      "url": "https://www.pladurmenorca.com/.well-known/agent-skills/request-quote/SKILL.md",
+      "sha256": "a651f2afa55cf6316af74c169c47074c5e930fd498d632997d13276bb26c8071",
+      "version": "1.0.0",
+      "language": "es"
+    }
+  ]
+}

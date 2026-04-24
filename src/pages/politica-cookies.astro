@@ -1,0 +1,93 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import Breadcrumbs from '@/components/layout/Breadcrumbs.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import Container from '@/components/ui/Container.astro'
+import CookieSettingsButton from '@/components/ui/CookieSettingsButton.astro'
+
+const meta = {
+  title: 'Política de Cookies | Pladur Menorca',
+  description: 'Política de cookies de pladurmenorca.com conforme a la AEPD. Tipos de cookies, finalidad, gestión de consentimiento y preferencias.',
+  canonical: '/politica-cookies',
+}
+
+const breadcrumbs = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Política de Cookies', href: '/politica-cookies' },
+]
+
+const cookies = [
+  { nombre: 'Consent storage', tipo: 'Técnica (obligatoria)', finalidad: 'Guarda tus preferencias de consentimiento.', caducidad: '12 meses' },
+  { nombre: '_ga, _ga_*', tipo: 'Analítica (opcional)', finalidad: 'Google Analytics 4: medición anónima de audiencia.', caducidad: '24 meses' },
+  { nombre: '_clck, _clsk', tipo: 'Analítica (opcional)', finalidad: 'Microsoft Clarity: heatmaps y grabaciones anónimas.', caducidad: '12 meses / sesión' },
+  { nombre: '_fbp', tipo: 'Marketing (opcional)', finalidad: 'Meta Pixel: remarketing (solo si se activa).', caducidad: '3 meses' },
+]
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaBreadcrumb items={breadcrumbs} />
+  </Fragment>
+
+  <Header slot="header" />
+
+  <main class="pt-28 pb-20 lg:pt-36 lg:pb-28">
+    <Container>
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="max-w-3xl">
+        <h1 class="text-4xl sm:text-5xl font-bold text-foreground leading-tight text-balance mb-6">Política de Cookies</h1>
+        <p class="text-muted leading-relaxed mb-6">
+          Esta política explica qué cookies utiliza pladurmenorca.com, con qué finalidad y cómo puedes gestionar tu consentimiento conforme a la Ley 34/2002 (LSSI-CE) y a las directrices de la Agencia Española de Protección de Datos (AEPD).
+        </p>
+
+        <h2 class="text-2xl font-bold text-foreground mt-10 mb-4">1. ¿Qué son las cookies?</h2>
+        <p class="text-muted mb-4">Las cookies son pequeños archivos que un sitio web guarda en tu dispositivo cuando lo visitas. Permiten al sitio recordar tus acciones o preferencias durante un tiempo.</p>
+
+        <h2 class="text-2xl font-bold text-foreground mt-10 mb-4">2. Cookies utilizadas</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-warm-border/50">
+                <th class="py-3 pr-4 font-semibold text-sm">Cookie</th>
+                <th class="py-3 pr-4 font-semibold text-sm">Tipo</th>
+                <th class="py-3 pr-4 font-semibold text-sm">Finalidad</th>
+                <th class="py-3 font-semibold text-sm">Caducidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cookies.map((c) => (
+                <tr class="border-b border-warm-border/30">
+                  <td class="py-3 pr-4 text-sm font-mono">{c.nombre}</td>
+                  <td class="py-3 pr-4 text-sm">{c.tipo}</td>
+                  <td class="py-3 pr-4 text-sm text-muted">{c.finalidad}</td>
+                  <td class="py-3 text-sm">{c.caducidad}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="text-2xl font-bold text-foreground mt-10 mb-4">3. Gestión de preferencias</h2>
+        <p class="text-muted mb-4">Puedes aceptar, rechazar o configurar las cookies opcionales en cualquier momento desde el banner o usando el botón siguiente:</p>
+        <CookieSettingsButton client:idle />
+
+        <h2 class="text-2xl font-bold text-foreground mt-10 mb-4">4. Cookies en el navegador</h2>
+        <p class="text-muted mb-4">También puedes bloquear o eliminar cookies desde la configuración de tu navegador (Chrome, Firefox, Safari, Edge). Consulta la ayuda de tu navegador para los pasos exactos.</p>
+
+        <h2 class="text-2xl font-bold text-foreground mt-10 mb-4">5. Responsable del tratamiento</h2>
+        <p class="text-muted mb-4">PLAQUISTAS Y ACABADOS SL · info@plaquistas.com · CIF y domicilio en <a href="/aviso-legal" class="underline">Aviso Legal</a>.</p>
+      </div>
+    </Container>
+  </main>
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

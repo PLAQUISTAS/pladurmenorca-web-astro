@@ -1,5 +1,7 @@
 ---
 import { Image } from 'astro:assets'
+import Button from '@/components/ui/Button.astro'
+import { localizedHref } from '@/i18n'
 
 interface Proyecto {
   titulo: string
@@ -10,39 +12,89 @@ interface Proyecto {
 }
 
 interface Props {
+  lang?: 'es' | 'en'
   proyectos?: Proyecto[]
 }
 
-const defaultProyectos: Proyecto[] = [
+const { lang = 'es', proyectos: proyectosProp } = Astro.props
+
+const defaultProyectosEs: Proyecto[] = [
   {
-    titulo: 'Reforma integral piso en Santa Catalina',
+    titulo: 'Reforma integral piso en Centro Histórico',
     descripcion: 'Redistribución completa de un piso de 95m² con falso techo continuo LED integrado, nuevos tabiques de distribución y trasdosado perimetral con aislamiento térmico. Acabado listo para pintar en 8 jornadas.',
-    imagen: '/images/proyectos/reforma-integral-piso-santa-catalina-pladur-mallorca.webp',
+    imagen: '/images/proyectos/reforma-integral-piso.webp',
     servicio: 'Falsos Techos + Tabiques',
-    ubicacion: 'Palma de Mallorca',
+    ubicacion: 'Maó',
   },
   {
     titulo: 'Aislamiento acústico apartamento turístico',
     descripcion: 'Insonorización completa de apartamento de 70m² en zona costera de alta densidad. Solución con doble placa y lana mineral de alta densidad en paredes medianeras y techo. Mejora de 4 dB en medición certificada.',
-    imagen: '/images/proyectos/aislamiento-acustico-apartamento-turistico-pladur-mallorca.webp',
+    imagen: '/images/proyectos/aislamiento-acustico-apartamento-turistico.webp',
     servicio: 'Aislamiento Acústico',
-    ubicacion: 'Calvià',
+    ubicacion: 'Ciutadella',
   },
   {
     titulo: 'Oficina distribución open space',
     descripcion: 'Transformación de nave diáfana de 300m² en espacio de oficinas con tabiques divisorios, salas de reuniones insonorizadas y falso techo técnico con instalación eléctrica integrada. Plazo: 3 semanas.',
-    imagen: '/images/proyectos/oficina-open-space-tabiques-pladur-mallorca.webp',
+    imagen: '/images/proyectos/oficina-open-space-tabiques.webp',
     servicio: 'Tabiques + Falsos Techos',
-    ubicacion: 'Manacor',
+    ubicacion: 'Es Mercadal',
   },
 ]
 
-function getAltText(proyecto: Proyecto) {
-  return `${proyecto.titulo} — ${proyecto.servicio} de pladur en ${proyecto.ubicacion}`
+const defaultProyectosEn: Proyecto[] = [
+  {
+    titulo: 'Full apartment renovation in the Old Town',
+    descripcion: 'Complete layout redesign of a 95m² apartment with continuous LED-integrated suspended ceiling, new partition walls and perimeter thermal lining. Ready-to-paint finish in 8 working days.',
+    imagen: '/images/proyectos/reforma-integral-piso.webp',
+    servicio: 'Ceilings + Partitions',
+    ubicacion: 'Maó',
+  },
+  {
+    titulo: 'Acoustic insulation — tourist apartment',
+    descripcion: 'Full soundproofing of a 70m² apartment in a high-density coastal area. Double-layer plasterboard with high-density mineral wool on party walls and ceiling. Certified 4 dB improvement.',
+    imagen: '/images/proyectos/aislamiento-acustico-apartamento-turistico.webp',
+    servicio: 'Acoustic Insulation',
+    ubicacion: 'Ciutadella',
+  },
+  {
+    titulo: 'Open-space office layout',
+    descripcion: 'Conversion of a 300m² warehouse into office space with partition walls, soundproofed meeting rooms and a technical suspended ceiling with integrated wiring. Duration: 3 weeks.',
+    imagen: '/images/proyectos/oficina-open-space-tabiques.webp',
+    servicio: 'Partitions + Ceilings',
+    ubicacion: 'Es Mercadal',
+  },
+]
+
+const t = lang === 'en' ? {
+  eyebrow: 'Real case studies',
+  title: 'Recent projects',
+  intro: "A selection of the work we've delivered in recent months across Menorca.",
+  seeAll: 'See all projects',
+  bannerTitle: 'Could your project be next?',
+  bannerText: 'Tell us what you need. Quote within 24h, no obligation.',
+  ctaLabel: 'Request a quote',
+  photoAlt: 'Project photo',
+} : {
+  eyebrow: 'Casos reales',
+  title: 'Proyectos recientes',
+  intro: 'Algunos de los trabajos que hemos realizado en los últimos meses por toda Menorca.',
+  seeAll: 'Ver todos los proyectos',
+  bannerTitle: '¿Tu proyecto podría ser el próximo?',
+  bannerText: 'Cuéntanos qué necesitas. Presupuesto en 24h, sin compromiso.',
+  ctaLabel: 'Solicitar presupuesto',
+  photoAlt: 'Foto de proyecto',
 }
 
-const { proyectos: proyectosProp } = Astro.props
-const items = proyectosProp ?? defaultProyectos
+function getAltText(proyecto: Proyecto) {
+  return lang === 'en'
+    ? `${proyecto.titulo} — ${proyecto.servicio} drywall in ${proyecto.ubicacion}`
+    : `${proyecto.titulo} — ${proyecto.servicio} de pladur en ${proyecto.ubicacion}`
+}
+
+const items = proyectosProp ?? (lang === 'en' ? defaultProyectosEn : defaultProyectosEs)
+const proyectosHref = localizedHref('/proyectos', lang)
+const presupuestoHref = localizedHref('/presupuesto-pladur', lang)
 ---
 
 <section class="w-full py-20 lg:py-28">
@@ -53,20 +105,20 @@ const items = proyectosProp ?? defaultProyectos
       <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
         <div class="max-w-xl">
           <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
-            Casos reales
+            {t.eyebrow}
           </span>
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
-            Proyectos recientes
+          <h2 aria-label={t.title} class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance">
+            {t.title}
           </h2>
           <p class="mt-4 text-lg text-muted leading-relaxed">
-            Algunos de los trabajos que hemos realizado en los últimos meses por toda Mallorca.
+            {t.intro}
           </p>
         </div>
         <a
-          href="/proyectos"
+          href={proyectosHref}
           class="inline-flex items-center gap-2 text-foreground font-bold text-sm border-b-2 border-warm-border pb-0.5 hover:text-muted hover:border-muted transition-colors duration-200 whitespace-nowrap self-start lg:self-auto rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-        >
-          Ver todos los proyectos
+         aria-label={t.seeAll}>
+          {t.seeAll}
           <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
           </svg>
@@ -96,7 +148,7 @@ const items = proyectosProp ?? defaultProyectos
                 <svg class="size-12 text-muted" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                 </svg>
-                <span class="text-muted text-xs font-medium">Foto de proyecto</span>
+                <span class="text-muted text-xs font-medium">{t.photoAlt}</span>
               </div>
             )}
 
@@ -118,7 +170,7 @@ const items = proyectosProp ?? defaultProyectos
               {proyecto.ubicacion}
             </div>
 
-            <h3 class="font-bold text-lg text-foreground leading-snug group-hover:text-muted transition-colors">
+            <h3 aria-label={proyecto.titulo} class="font-bold text-lg text-foreground leading-snug group-hover:text-muted transition-colors">
               {proyecto.titulo}
             </h3>
 
@@ -134,21 +186,15 @@ const items = proyectosProp ?? defaultProyectos
     <div class="mt-14 flex flex-col sm:flex-row items-center justify-between gap-6 p-8 bg-white border border-warm-border/40 rounded-3xl shadow-card animate-fade-up">
       <div>
         <p class="font-bold text-foreground text-lg">
-          ¿Tu proyecto podría ser el próximo?
+          {t.bannerTitle}
         </p>
         <p class="text-muted text-sm mt-1">
-          Cuéntanos qué necesitas. Visita técnica gratuita, presupuesto en 24h.
+          {t.bannerText}
         </p>
       </div>
-      <a
-        href="/presupuesto-pladur"
-        class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide transition-[background-color,box-shadow] duration-200 active:scale-95 shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-      >
-        Solicitar presupuesto
-        <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-        </svg>
-      </a>
+      <Button href={presupuestoHref} variant="primary" size="lg" withArrow class="whitespace-nowrap shrink-0">
+        {t.ctaLabel}
+      </Button>
     </div>
   </div>
 </section>

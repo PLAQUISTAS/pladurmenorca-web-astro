@@ -3,6 +3,7 @@ import Head from '@/components/seo/Head.astro'
 import SchemaWebSite from '@/components/seo/SchemaWebSite.astro'
 import SchemaOrganization from '@/components/seo/SchemaOrganization.astro'
 import SpeculationRules from '@/components/seo/SpeculationRules.astro'
+import WebMcpTools from '@/components/seo/WebMcpTools.astro'
 import type { PageMeta } from '@/lib/metadata'
 import '@/styles/globals.css'
 
@@ -11,10 +12,12 @@ interface Props {
 }
 
 const { meta } = Astro.props
+const lang = (Astro.currentLocale ?? 'es') as 'es' | 'en'
+const skipLink = lang === 'en' ? 'Skip to main content' : 'Ir al contenido principal'
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <Head meta={meta} />
     <SchemaWebSite />
@@ -23,7 +26,7 @@ const { meta } = Astro.props
   </head>
   <body class="font-sans antialiased bg-white text-foreground">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:z-[9999] focus:bg-white focus:px-4 focus:py-2 focus:text-foreground">
-      Ir al contenido principal
+      {skipLink}
     </a>
 
     <slot name="header" />
@@ -36,5 +39,6 @@ const { meta } = Astro.props
     <slot name="after-footer" />
 
     <SpeculationRules />
+    <WebMcpTools />
   </body>
 </html>

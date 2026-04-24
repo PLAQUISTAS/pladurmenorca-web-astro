@@ -1,0 +1,417 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import { getHidrofugoFaqs } from '@/data/faqs/hidrofugo'
+import { siteConfig } from '@/data/site'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getHidrofugoFaqs(lang)
+
+const t = lang === 'en' ? {
+  heroBadge: 'Wet areas · Menorca',
+  h1: 'Moisture-Resistant Drywall in Menorca — Wet-Area Specialists',
+  heroSubtitle: 'Moisture-resistant drywall in Menorca since 2004: type-H board and Glasroc H Ocean in hotel bathrooms, <a href="/en/pladur-apartamentos-turisticos-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">holiday apartments</a> and seafront villas exposed to Balearic salt spray and humidity.',
+  ctaPrimary: 'Request a free quote',
+  s1Eyebrow: 'Material',
+  s1Title: 'What is moisture-resistant (H) board?',
+  s1P1: '<strong>Placa H</strong> (BA13 H under EN 520) is a plasterboard whose gypsum core incorporates <strong>siloxane and paraffin additives</strong> that repel water. You will find it under brand names Placo Pregyhidro (Saint-Gobain), Knauf Diamant H, Pladur WA and Lafarge Rigimpact. Identified by its green colour (standard boards are grey, F fire boards pink).',
+  s1P2: "The difference from the standard board is decisive: while standard BA13 absorbs more than 30% of its weight in water after 2 hours of immersion, <strong>type H1 board</strong> absorbs less than 5%. This resistance makes it essential for <a href=\"/en/reformas-interiores-pladur-menorca\" class=\"text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors\">bathroom and kitchen renovations</a> and any space with relative humidity between 70 and 85%.",
+  s1P3: 'For seafront properties in Menorca we build a complete Saint-Gobain system: <strong>Aquapanel</strong> cement board outside, <strong>Glasroc H Ocean</strong> (fibreglass, not cellulose, so no mould) inside, with <strong>Z275 zinc-coated screws</strong> and <strong>Placo Vario</strong> semi-permeable vapour barrier. Our <a href="/en/instalacion-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">drywall installation</a> team also fits <a href="/en/falsos-techos-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">bathroom false ceilings</a> with H-board and waterproof joint compounds.',
+  s1Quote: '"Type H1 plasterboards as per EN 520 exhibit a total water absorption below 5% of their mass, making them suitable for use in humid rooms"',
+  s1Cite: '— EN 520:2004+A1:2009, Plasterboard',
+  s1Brands: 'H-board we install',
+  s1BrandsList: [
+    { marca: 'Placo Pregyhidro', tipo: 'Saint-Gobain · BA13 H1', absorcion: '< 5%' },
+    { marca: 'Knauf Diamant H', tipo: 'Knauf · impact + H1', absorcion: '< 5%' },
+    { marca: 'Glasroc H Ocean', tipo: 'Saint-Gobain · fibreglass', absorcion: '< 3%' },
+    { marca: 'Lafarge Rigimpact', tipo: 'Lafarge · reinforced H1', absorcion: '< 5%' },
+  ] as { marca: string; tipo: string; absorcion: string }[],
+  s1BrandsLabel: 'Absorption',
+  s2Eyebrow: 'Applications',
+  s2Title: 'Where it is used in Menorca',
+  s2Items: [
+    { titulo: 'Bathrooms and toilets', descripcion: 'Behind tiles or with Class 3 anti-damp paint. Glasroc H Ocean in shower areas for zero mould risk.' },
+    { titulo: 'Kitchens and utility rooms', descripcion: 'Sink, worktop and washing-machine zones. Protection against splashes, cooking steam and laundry humidity.' },
+    { titulo: 'Basements and semi-buried garages', descripcion: "Coastal areas of Menorca with 70-85% relative humidity (Arenal d'en Castell, Cala Galdana, Fornells)." },
+    { titulo: 'Heated indoor pools', descripcion: 'Ceilings and walls of pool areas in hotels and villas, where sustained humidity above 85% is common.' },
+    { titulo: 'Seafront homes and apartments', descripcion: 'Flats in first-line buildings exposed to salt spray. Aquapanel + Glasroc H Ocean system as standard.' },
+    { titulo: 'Spa and wellness areas', descripcion: 'Hammams, steam rooms and rest zones in hotel spas where vapour is continuous.' },
+  ] as { titulo: string; descripcion: string }[],
+  s3Eyebrow: 'Systems',
+  s3Title: 'Installation systems',
+  s3Intro: 'Three main configurations depending on the type of intervention and the area to be treated. All fitted with Z275 zinc-coated screws.',
+  s3Items: [
+    { sistema: 'H-board wall lining', descripcion: 'Placa H fixed to an existing wall with a 48 mm metal frame. Ideal for refurbishing bathrooms without demolition. Allows Rockwool insulation inside and a Placo Vario vapour barrier on the warm side.', cuando: 'Bathroom and kitchen refurbishments on existing walls.' },
+    { sistema: 'H-board partition', descripcion: 'Self-supporting 70/400 partition with Placa H on both sides. For new divisions between bathrooms, kitchens, utility rooms and bedrooms.', cuando: 'Layout changes that include new bathrooms or kitchens.' },
+    { sistema: 'H-board false ceiling', descripcion: 'Suspended ceiling with Placa H (or Glasroc H Ocean in pools and spas). Allows integrated LED lighting, extraction ducts and concealment of services.', cuando: 'Bathroom, kitchen, pool and spa ceilings.' },
+  ] as { sistema: string; descripcion: string; cuando: string }[],
+  s3When: 'When to use:',
+  s4Eyebrow: 'Prices',
+  s4Title: 'Moisture-resistant drywall price in Menorca 2026',
+  s4Intro: 'Full-installation prices (materials + labour), VAT excluded. Placa H material from €12/m²; installed systems below.',
+  s4Items: [
+    { sistema: 'H-board wall lining', desde: '€32/m²', hasta: '€42/m²', incluye: 'Frame + Placa H + perimeter sealing + Z275 screws' },
+    { sistema: 'Partition with H-board', desde: '€38/m²', hasta: '€52/m²', incluye: 'Frame + Placa H both sides + waterproof joints' },
+    { sistema: 'Glasroc H Ocean ceiling', desde: '€38/m²', hasta: '€55/m²', incluye: 'Frame + Glasroc H Ocean + mould-free finish' },
+  ] as { sistema: string; desde: string; hasta: string; incluye: string }[],
+  s4Link: 'See full pricing table',
+  s5Eyebrow: 'Comparison',
+  s5Title: 'Advantages over traditional tiling',
+  s5Items: [
+    { ventaja: '3× faster', detalle: 'Installed in hours vs. days for traditional tiling' },
+    { ventaja: '40% lower cost', detalle: 'Less material and labour than full wet-cement tiling' },
+    { ventaja: 'Future layout flexibility', detalle: 'Can be modified without demolition or rubble' },
+    { ventaja: 'Class 3 paint compatible', detalle: 'Finishes certified against wet-cleaning abrasion' },
+    { ventaja: '3× lighter', detalle: 'Ideal for old Menorcan slabs that cannot take heavy tiling' },
+    { ventaja: 'Integrated LED', detalle: 'Recessed spotlights and extraction in bathroom ceilings' },
+  ] as { ventaja: string; detalle: string }[],
+  faqTitle: 'Frequently asked questions about H-board drywall',
+  faqSubtitle: 'We answer the most common questions about Placa H, Glasroc H Ocean and their use in wet areas.',
+  ctaTitle: 'Need H-board drywall for your bathroom or kitchen?',
+  ctaSubtitle: 'Free quote in 24 hours. Placo, Knauf and Lafarge materials. 10-year manufacturer + 1-year installation warranty.',
+  srOnly: 'Pladur Menorca — installer since 2004 of moisture-resistant drywall (Placa H, Glasroc H Ocean) in Menorca. Bathrooms, kitchens, pools and seafront homes. Water absorption below 5%. From €32/m² installed. Free quote in 24h. Tel: 627 829 723.',
+  breadcrumbHome: 'Home',
+  breadcrumbLabel: 'Moisture-Resistant Drywall',
+  schemaServiceName: 'Moisture-Resistant Drywall Installation in Menorca',
+  schemaServiceDesc: 'Installer of Placa H (BA13 H1), Glasroc H Ocean and Aquapanel systems in Menorca since 2004. Bathrooms, kitchens, pools, seafront homes. Water absorption below 5%. Free quote.',
+  schemaServiceType: 'Moisture-Resistant Drywall Installation',
+} : {
+  heroBadge: 'Zonas húmedas · Menorca',
+  h1: 'Pladur Hidrófugo en Menorca — Especialistas en Zonas Húmedas',
+  heroSubtitle: 'Pladur hidrófugo en Menorca desde 2004: placa tipo H y Glasroc H Ocean en baños de hoteles, <a href="/pladur-apartamentos-turisticos-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">apartamentos turísticos</a> y villas expuestas al salitre balear y a la humedad.',
+  ctaPrimary: 'Pide presupuesto gratis',
+  s1Eyebrow: 'Material',
+  s1Title: '¿Qué es la placa hidrófuga (tipo H)?',
+  s1P1: 'La <strong>Placa H</strong> (BA13 H según EN 520) es una placa de yeso laminado cuyo núcleo incorpora <strong>aditivos de siloxano y parafina</strong> que repelen el agua. Se comercializa como Placo Pregyhidro (Saint-Gobain), Knauf Diamant H, Pladur WA y Lafarge Rigimpact. Se identifica por su color verde (la estándar es gris, la F ignífuga es rosa).',
+  s1P2: 'La diferencia con la placa estándar es determinante: mientras la BA13 normal absorbe más del 30% de su peso en agua tras 2 horas de inmersión, la <strong>placa tipo H1</strong> absorbe menos del 5%. Esta resistencia la hace imprescindible en <a href="/reformas-interiores-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">reformas de baños y cocinas</a> y cualquier zona con humedad relativa entre el 70 y el 85%.',
+  s1P3: 'Para viviendas en primera línea de playa montamos un sistema completo de Saint-Gobain: <strong>Aquapanel</strong> cementicio al exterior, <strong>Glasroc H Ocean</strong> (fibra de vidrio, no celulosa, sin riesgo de moho) al interior, <strong>tornillería Z275</strong> zincada y barrera de vapor <strong>Placo Vario</strong> semipermeable. Nuestro equipo de <a href="/instalacion-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">instalación de pladur</a> también ejecuta <a href="/falsos-techos-pladur-menorca" class="text-foreground font-semibold underline underline-offset-2 hover:text-muted transition-colors">falsos techos de baño</a> con placa H y masillas estancas al agua.',
+  s1Quote: '"Las placas de yeso laminado tipo H1 según EN 520 presentan una absorción total de agua inferior al 5% de su masa, lo que las hace aptas para su uso en locales húmedos"',
+  s1Cite: '— Norma EN 520:2004+A1:2009, Placas de yeso laminado',
+  s1Brands: 'Placas H que instalamos',
+  s1BrandsList: [
+    { marca: 'Placo Pregyhidro', tipo: 'Saint-Gobain · BA13 H1', absorcion: '< 5%' },
+    { marca: 'Knauf Diamant H', tipo: 'Knauf · impacto + H1', absorcion: '< 5%' },
+    { marca: 'Glasroc H Ocean', tipo: 'Saint-Gobain · fibra vidrio', absorcion: '< 3%' },
+    { marca: 'Lafarge Rigimpact', tipo: 'Lafarge · H1 reforzada', absorcion: '< 5%' },
+  ] as { marca: string; tipo: string; absorcion: string }[],
+  s1BrandsLabel: 'Absorción',
+  s2Eyebrow: 'Aplicaciones',
+  s2Title: '¿Dónde se usa en Menorca?',
+  s2Items: [
+    { titulo: 'Baños y aseos', descripcion: 'Detrás de azulejo o con pintura antihumedad Clase 3. Glasroc H Ocean en duchas para cero riesgo de moho.' },
+    { titulo: 'Cocinas y lavaderos', descripcion: 'Zona de fregadero, encimera y lavadora. Protección contra salpicaduras, vapor de cocción y humedad de secadora.' },
+    { titulo: 'Sótanos y garajes semienterrados', descripcion: "Zonas costeras de Menorca con HR del 70-85% (Arenal d'en Castell, Cala Galdana, Fornells)." },
+    { titulo: 'Piscinas cubiertas climatizadas', descripcion: 'Techos y paredes en hoteles y villas, con humedad sostenida por encima del 85%.' },
+    { titulo: 'Viviendas y apartamentos en 1ª línea', descripcion: 'Pisos en edificios frente al mar expuestos a salitre. Sistema Aquapanel + Glasroc H Ocean como estándar.' },
+    { titulo: 'Spas y zonas wellness', descripcion: 'Hammams, salas de vapor y zonas de descanso en spas hoteleros donde el vapor es continuo.' },
+  ] as { titulo: string; descripcion: string }[],
+  s3Eyebrow: 'Sistemas',
+  s3Title: 'Sistemas de instalación',
+  s3Intro: 'Tres configuraciones principales según el tipo de intervención y la zona a tratar. Todas montadas con tornillería Z275 zincada.',
+  s3Items: [
+    { sistema: 'Trasdosado con placa H', descripcion: 'Placa H adosada a pared existente con estructura metálica de 48 mm. Ideal para renovar baños sin demoler. Permite Rockwool interior y barrera Placo Vario del lado caliente.', cuando: 'Reformas de baños y cocinas sobre pared existente.' },
+    { sistema: 'Tabique con placa H', descripcion: 'Tabique autoportante 70/400 con Placa H en ambas caras. Para nuevas divisiones entre baños, cocinas, lavaderos y dormitorios.', cuando: 'Redistribución que incluye nuevos baños o cocinas.' },
+    { sistema: 'Falso techo con placa H', descripcion: 'Techo suspendido con Placa H (o Glasroc H Ocean en piscinas y spas). Permite LED empotrado, conductos de extracción y ocultar instalaciones.', cuando: 'Techos de baños, cocinas, piscinas y spas.' },
+  ] as { sistema: string; descripcion: string; cuando: string }[],
+  s3When: 'Cuándo usar:',
+  s4Eyebrow: 'Precios',
+  s4Title: 'Precio pladur hidrófugo en Menorca 2026',
+  s4Intro: 'Precios de instalación completa (material + mano de obra), IVA no incluido. Placa H material desde 12€/m²; sistemas instalados abajo.',
+  s4Items: [
+    { sistema: 'Trasdosado con placa H', desde: '32€/m²', hasta: '42€/m²', incluye: 'Estructura + Placa H + sellado perímetro + tornillería Z275' },
+    { sistema: 'Tabique con placa H', desde: '38€/m²', hasta: '52€/m²', incluye: 'Estructura + Placa H ambas caras + juntas estancas' },
+    { sistema: 'Techo Glasroc H Ocean', desde: '38€/m²', hasta: '55€/m²', incluye: 'Estructura + Glasroc H Ocean + acabado sin moho' },
+  ] as { sistema: string; desde: string; hasta: string; incluye: string }[],
+  s4Link: 'Ver tabla de precios completa',
+  s5Eyebrow: 'Comparativa',
+  s5Title: 'Ventajas frente al azulejo tradicional',
+  s5Items: [
+    { ventaja: '3× más rápido', detalle: 'Instalación en horas vs. días del azulejo tradicional' },
+    { ventaja: '40% menos coste', detalle: 'Menos material y mano de obra que alicatado completo con cemento cola' },
+    { ventaja: 'Redistribución futura', detalle: 'Se modifica sin obra de derribo ni escombro' },
+    { ventaja: 'Pintura Clase 3 compatible', detalle: 'Acabados certificados frente a abrasión húmeda' },
+    { ventaja: '3× más ligero', detalle: 'Ideal para forjados menorquines antiguos que no soportan azulejo' },
+    { ventaja: 'LED integrado', detalle: 'Focos empotrados y extracción en techos de baño' },
+  ] as { ventaja: string; detalle: string }[],
+  faqTitle: 'Preguntas frecuentes sobre placa H hidrófuga',
+  faqSubtitle: 'Resolvemos las dudas más habituales sobre Placa H, Glasroc H Ocean y su uso en zonas húmedas.',
+  ctaTitle: '¿Necesitas placa H hidrófuga para tu baño o cocina?',
+  ctaSubtitle: 'Presupuesto gratuito en 24 horas. Materiales Placo, Knauf y Lafarge. Garantía de fabricante 10 años + 1 año de instalación.',
+  srOnly: 'Pladur Menorca — instalador desde 2004 de pladur hidrófugo (Placa H, Glasroc H Ocean) en Menorca. Baños, cocinas, piscinas y viviendas en primera línea. Absorción de agua inferior al 5%. Desde 32€/m² instalado. Presupuesto gratis en 24h. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbLabel: 'Pladur Hidrófugo',
+  schemaServiceName: 'Instalación de Pladur Hidrófugo en Menorca',
+  schemaServiceDesc: 'Instalador de Placa H (BA13 H1), Glasroc H Ocean y sistemas Aquapanel en Menorca desde 2004. Baños, cocinas, piscinas y viviendas en primera línea. Absorción de agua inferior al 5%. Presupuesto gratuito.',
+  schemaServiceType: 'Instalación de Pladur Hidrófugo',
+}
+
+const meta = lang === 'en' ? {
+  title: 'Moisture-Resistant Drywall Menorca | Placa H since 2004',
+  description: 'Installer since 2004 of moisture-resistant drywall in Menorca: Placa H, Glasroc H Ocean, Aquapanel. Bathrooms, kitchens, pools, seafront. From €32/m².',
+  canonical: '/en/pladur-hidrofugo-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-hidrofugo-menorca',
+} : {
+  title: 'Pladur Hidrófugo Menorca | Placa H Baños y Cocinas 2004',
+  description: 'Instalador desde 2004 de pladur hidrófugo en Menorca: Placa H, Glasroc H Ocean, Aquapanel. Baños, cocinas, piscinas y primera línea. Desde 32€/m².',
+  canonical: '/pladur-hidrofugo-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-hidrofugo-menorca',
+}
+
+const breadcrumbHref = lang === 'en' ? '/en/pladur-hidrofugo-menorca' : '/pladur-hidrofugo-menorca'
+const preciosHref = lang === 'en' ? '/en/precios-pladur-menorca' : '/precios-pladur-menorca'
+const presupuestoHref = lang === 'en' ? '/en/presupuesto-pladur' : '/presupuesto-pladur'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType={t.schemaServiceType}
+      url={breadcrumbHref}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbLabel, href: breadcrumbHref }]} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            {t.heroBadge}
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.h1}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8" set:html={t.heroSubtitle} />
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={presupuestoHref}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              {t.ctaPrimary}
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qué es la placa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div class="animate-fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s1Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.s1Title}
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p set:html={t.s1P1} />
+            <p set:html={t.s1P2} />
+            <p set:html={t.s1P3} />
+            <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+              <p>{t.s1Quote}</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">{t.s1Cite}</cite>
+            </blockquote>
+          </div>
+        </div>
+        <div>
+          <div class="bg-foreground rounded-3xl p-7 lg:mt-12">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">{t.s1Brands}</p>
+            <div class="space-y-0">
+              {t.s1BrandsList.map((m) => (
+                <div class="flex justify-between items-center gap-4 py-3.5 border-b border-white/10 last:border-0">
+                  <div>
+                    <span class="text-sm font-bold text-white">{m.marca}</span>
+                    <span class="block text-xs text-white/50">{m.tipo}</span>
+                  </div>
+                  <span class="text-sm font-bold text-white shrink-0">{t.s1BrandsLabel} {m.absorcion}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aplicaciones -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s2Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s2Title}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+        {t.s2Items.map((a) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 cursor-default">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="size-3 rounded-full bg-emerald-500" />
+              <p class="font-bold text-foreground text-sm">{a.titulo}</p>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">{a.descripcion}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Sistemas -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s3Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s3Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s3Intro}
+        </p>
+      </div>
+      <div class="space-y-3">
+        {t.s3Items.map((s) => (
+          <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="shrink-0 size-11 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+              <svg aria-hidden="true" class="size-5 text-emerald-600 group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-foreground text-base mb-1">{s.sistema}</h3>
+              <p class="text-sm text-muted leading-relaxed mb-2">{s.descripcion}</p>
+              <p class="text-xs text-foreground-dark font-semibold">{t.s3When} {s.cuando}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s4Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s4Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s4Intro}
+        </p>
+      </div>
+      <div class="space-y-3">
+        {t.s4Items.map((p) => (
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default">
+            <div class="sm:w-56 shrink-0">
+              <p class="text-sm font-bold text-foreground">{p.sistema}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div class="flex items-baseline gap-2">
+                <span class="text-lg font-bold text-foreground-dark">{p.desde}</span>
+                <span class="text-muted">—</span>
+                <span class="text-lg font-bold text-foreground-dark">{p.hasta}</span>
+              </div>
+              <p class="text-xs text-muted sm:ml-auto">{p.incluye}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a href={preciosHref} class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors">
+          {t.s4Link}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ventajas -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s5Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s5Title}
+        </h2>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
+        {t.s5Items.map((v) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <p class="text-lg font-bold text-foreground-dark mb-1">{v.ventaja}</p>
+            <p class="text-sm text-muted">{v.detalle}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitle}
+    subtitulo={t.faqSubtitle}
+  />
+
+  <!-- CTA -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitle}
+    subtitulo={t.ctaSubtitle}
+  />
+
+  <ServiciosRelacionados currentPath={breadcrumbHref} />
+
+  <Footer lang={lang} slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

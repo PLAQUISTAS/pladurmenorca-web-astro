@@ -1,0 +1,817 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaHowTo from '@/components/seo/SchemaHowTo.astro'
+import SchemaOffers from '@/components/seo/SchemaOffers.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import Hero from '@/components/sections/Hero.astro'
+import PreciosTable from '@/components/sections/PreciosTable.astro'
+import ZonasServicio from '@/components/sections/ZonasServicio.astro'
+import GaleriaTrabajos from '@/components/sections/GaleriaTrabajos.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import NuestrosDatos from '@/components/sections/NuestrosDatos.astro'
+import Container from '@/components/ui/Container.astro'
+import { getTabiquesFaqs } from '@/data/faqs/tabiques'
+import { getServicioBySlug } from '@/data/servicios'
+import { siteConfig } from '@/data/site'
+import { localizedHref } from '@/i18n'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const p = (h: string) => localizedHref(h, lang)
+const servicio = getServicioBySlug('tabiques-pladur-menorca')!
+const pageFaqs = getTabiquesFaqs(lang)
+
+const meta = lang === 'en' ? {
+  title: 'Drywall Partitions in Menorca | No Mess | From €45/m²',
+  description: 'Install drywall partitions in Menorca to lay out homes and offices with no dust or debris. Fitted in 1–2 days. From €45/m². Free quote in 24h.',
+  canonical: '/en/tabiques-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/tabiques-pladur-menorca',
+} : {
+  title: 'Tabiques de Pladur en Menorca | Sin Obra | 45€/m²',
+  description: 'Instala tabiques de pladur en Menorca para redistribuir viviendas y oficinas sin obra sucia. Montaje en 1-2 días. Desde 45€/m². Presupuesto gratis 24h.',
+  canonical: '/tabiques-pladur-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/tabiques-pladur-menorca',
+}
+
+const t = lang === 'en' ? {
+  srOnly: 'Pladur Menorca — drywall partitions and wall linings across Menorca. Space division and flat layout changes. Prices from €45/m². Phone: 627 829 723.',
+  heroSubtitle: 'Reorganise your space without debris or weeks of work',
+  heroDescription: 'Drywall partitions for Menorca homes, hotels, offices and premises: 46–100 mm Placo or Knauf studs, BA13/BA15 plasterboard and mineral wool. Fitted in 1–2 days from €45/m², with no demolition or debris. Free quote in 24h.',
+  heroBadges: ['From €45/m²', 'No debris', 'In 1–2 days'],
+  ctaPrimario: 'Request a free quote',
+  ctaCallPrefix: 'Call:',
+  breadcrumbHome: 'Home',
+  breadcrumbCurrent: 'Drywall Partitions',
+  schemaHowToName: 'How to install drywall partitions',
+  schemaHowToDescription: 'Drywall partition installation in six steps: from setting-out to the final finish ready to paint.',
+  schemaSteps: [
+    { name: 'Setting-out and marking', text: 'The exact position of the partition is marked on the floor and ceiling with a laser level to ensure verticality.' },
+    { name: 'Installation of track profiles', text: 'Track profiles are fixed on the floor and ceiling with plug and screw, with resilient perimeter band for acoustic insulation.' },
+    { name: 'Studs and services routing', text: 'Vertical studs are installed every 40 or 60 cm depending on the type, and electrical services are run inside the frame.' },
+    { name: 'Insulation and first board face', text: 'The internal insulation (mineral wool or similar) is fitted and the first face of laminated plasterboards is screwed in.' },
+    { name: 'Second face and joint treatment', text: 'The second face of boards is installed and joints are treated with tape and compound to achieve a continuous surface.' },
+    { name: 'Final finish ready to paint', text: 'Joints are sanded, the meeting with walls and ceiling is sealed and the surface is left ready to paint.' },
+  ],
+  schemaOffers: [
+    { name: 'Standard single partition', description: 'Drywall partition with 46 mm frame, one board on each side and basic insulation. Price per m².' },
+    { name: 'Double-board partition', description: 'Reinforced partition with double board per face for greater strength and insulation. Price per m².' },
+    { name: 'Premium acoustic partition', description: 'Maximum acoustic insulation partition with double frame, double board and high-density rockwool. Price per m².' },
+    { name: 'Moisture-resistant partition for bathrooms', description: 'Partition with moisture-resistant (green) board for wet areas such as bathrooms and kitchens. Price per m².' },
+    { name: 'Fire-rated partition', description: 'Partition with fire-resistant (pink) board to comply with fire protection regulations. Price per m².' },
+  ],
+  sectionIntroEyebrow: 'Introduction',
+  sectionIntroTitle: 'What is a drywall partition?',
+  intro1: 'A drywall partition is a non-load-bearing wall built dry with laminated plasterboard (PYL) from Placo, Knauf or Pladur-Uralita. No mortar, no curing, no rubble: a 70–100 mm galvanised steel frame (horizontal tracks plus vertical studs every 40 or 60 cm) is erected, and BA13 or BA15 boards are screwed on one or both faces. Typical installed price in Menorca starts at €45/m².',
+  citaTexto: '"Self-supporting wall linings with laminated plasterboard and 48 mm mineral wool achieve a sound reduction index of 43 to 52 dBA, depending on the configuration"',
+  citaFuente: '— Placo Saint-Gobain, Construction Solutions Manual, 2024 Edition',
+  intro2: 'Inside the 46–100 mm cavity you route electrical, data, telecoms or HVAC services and fit 40–80 mm mineral wool (Isover, Rockwool) to raise acoustic performance to Rw 35–55 dB and cut thermal losses. The finished wall is flat, level and ready to paint the same day — no drying times like those of traditional brick-and-plaster.',
+  intro3: 'In Menorca we fit drywall partitions mainly to rearrange flats in Maó, Sant Lluís and Ciutadella (adding a bedroom, splitting lounge and dining area, fitting an en-suite), to divide offices and co-working spaces, and to compartmentalise shops and holiday apartments in Es Mercadal, Cala en Bosc or Punta Prima. Because the site stays dry and generates under 2 kg/m² of waste, occupied homes and premises can keep operating during the works.',
+  verTambien: 'See also:',
+  linkInstalacion: 'all our drywall installation services',
+  linkAcustico: 'acoustic insulation with drywall partitions',
+  sidebarBadge: 'Free quote',
+  sidebarTitle: 'Lay out your space without building work',
+  sidebarDesc: 'We visit your space, measure and send you a quote within 24 hours.',
+  sidebarOnlineCta: 'Request a quote online',
+  sidebarVerTambien: 'See also:',
+  sidebarLinks: [
+    { label: 'Drywall Installation', href: '/en/instalacion-pladur-menorca' },
+    { label: 'Drywall Prices', href: '/en/precios-pladur-menorca' },
+    { label: 'Acoustic Insulation', href: '/en/aislamiento-acustico-menorca' },
+  ],
+  tiposEyebrow: 'Solutions catalogue',
+  tiposTitle: 'Types of drywall partitions we install',
+  tiposIntro: 'Five partition typologies covering 45 to €52/m² installed, with Rw values from 35 to 55 dB and fire resistance up to EI-120 under CTE-DB-SI.',
+  tiposTabiques: [
+    {
+      titulo: 'Simple layout partition',
+      desc: 'Workhorse partition for 80% of Menorca homes and offices. Built with 70 mm studs every 60 cm, one 12.5 mm BA13 plasterboard per face and optional 40–50 mm mineral wool inside. Delivers Rw 35–40 dB, enough for bedroom-to-hallway separations. Available in total thicknesses of 70, 98 or 120 mm (48, 70 or 90 mm stud).',
+      precio: 'From €45/m²',
+      tiempo: '1 day / 30 m²',
+      tags: ['M70 stud', 'BA13 board both sides', 'Optional mineral wool', 'Ready to paint'],
+    },
+    {
+      titulo: 'Double-board acoustic partition',
+      desc: 'Used when Rw must clear the 47 dB CTE-HR minimum: bedrooms next to lounges, hotel rooms, meeting rooms and homes adjoining bars or shops. Uses 70 or 100 mm studs with a resilient perimeter band, four BA13 boards (two per face) and 45–60 mm high-density mineral wool (Isover Arena, Rockwool Confortpan). Certified Rw 50–55 dB, 3–8 dB above CTE-HR.',
+      precio: 'From €52/m²',
+      tiempo: '1–2 days / 30 m²',
+      tags: ['4 BA13 boards', '45 mm mineral wool', 'Resilient perimeter band', 'Rw 50–55 dB'],
+    },
+    {
+      titulo: 'Fire-rated partition (EI-30 / EI-60 / EI-90 / EI-120)',
+      desc: 'Certified fire-compartmentation system under CTE-DB-SI. Uses glass-fibre-reinforced gypsum boards (DF90, Placo Pregyfeu or Knauf GKF) and perimeter intumescent sealing that keep integrity and insulation for 30, 60, 90 or 120 minutes of direct flame. Required between commercial premises and dwellings, in storage rooms and garages over 100 m², in stair cores and in public-use buildings (hotels, schools, clinics).',
+      precio: 'From €52/m²',
+      tiempo: '2–3 days / 30 m²',
+      tags: ['DF90 board', 'Perimeter sealing', 'CE classification', 'EI-30 to EI-120'],
+    },
+    {
+      titulo: 'Self-supporting wall lining',
+      desc: 'Inner lining (trasdosado) applied 4–10 cm away from the existing wall, with a 40–60 mm mineral wool infill. Raises Rw by 8–15 dB and U-value by 0.3–0.5 W/m²K on party walls, marés-stone facades or damp walls — without touching the load-bearing structure. Routine in the refurbishment of historic buildings in Maó’s centre and Ciutadella, where drilling the original wall is not permitted.',
+      precio: 'From €29/m²',
+      tiempo: '1 day / 30 m²',
+      tags: ['No work on original wall', 'Internal insulation', 'Better acoustic and thermal', 'Ideal for party walls'],
+    },
+    {
+      titulo: 'Demountable office screens',
+      desc: 'Modular drywall screens for offices and co-working in Maó and Ciutadella that dismount and re-assemble in another layout in one working day. Combine with double-glazing modules (6 + 6 mm laminated) to keep daylight and Rw around 38 dB. Over 90% of profiles and boards are reusable, which lowers the cost of subsequent layout changes by roughly 60%.',
+      precio: 'From €45/m²',
+      tiempo: '1–2 days depending on m²',
+      tags: ['Demountable and reusable', 'Optional glass modules', 'Flexible layout', 'No permanent building work'],
+    },
+  ],
+  tiposPrecio: 'From',
+  tiposPlazo: 'Timeline:',
+  comparativaEyebrow: 'Comparison',
+  comparativaTitle: 'Drywall vs brick: the definitive comparison',
+  comparativaIntro: 'Eight construction criteria measured on the same 30 m² partition — time, weight, Rw, price, waste — to pick the right system for each case.',
+  comparativa: [
+    { criterio: 'Installation time', pladur: '1–2 days / 30 m²', ladrillo: '1–2 weeks / 30 m²', pladurBetter: true },
+    { criterio: 'Debris generation', pladur: 'Minimal (packaging and offcuts)', ladrillo: 'High (bricks, mortar, dust)', pladurBetter: true },
+    { criterio: 'Weight per m²', pladur: '25–40 kg/m²', ladrillo: '120–200 kg/m²', pladurBetter: true },
+    { criterio: 'Acoustic insulation', pladur: 'Rw 35–55 dB (with double board)', ladrillo: 'Rw 40–50 dB (with render)', pladurBetter: false },
+    { criterio: 'Total installed price', pladur: 'Lower (less labour)', ladrillo: 'Higher (more time and materials)', pladurBetter: true },
+    { criterio: 'Future flexibility', pladur: 'Total: easy to dismantle and change', ladrillo: 'Limited: demolition required', pladurBetter: true },
+    { criterio: 'Surface finish', pladur: 'Flat and uniform as standard', ladrillo: 'Requires render + plaster', pladurBetter: true },
+    { criterio: 'Heavy fixed loads', pladur: 'With frame reinforcement', ladrillo: 'No limitation', pladurBetter: false },
+  ],
+  pladurGanaBadge: 'Drywall wins 6 out of 8 criteria',
+  pladurVentajas: ['Installation speed', 'On-site cleanliness', 'Lower weight', 'Lower price', 'Future flexibility', 'Better finish'],
+  pladurCargasNota: 'For very heavy fixed loads (bathtubs, boilers) the drywall partition frame can be reinforced.',
+  labelPladur: 'Drywall',
+  labelLadrillo: 'Brick',
+  ctaMidTitulo: 'Laying out your space in Menorca?',
+  ctaMidSubtitulo: 'No building work, no dust, no weeks of waiting. Free quote in 24h.',
+  ventajasEyebrow: 'Why choose us',
+  ventajasTitle: 'Advantages of drywall partitions in Menorca',
+  ventajasCards: [
+    { titulo: '30 m² in one day', desc: 'A two-fitter team completes 30 m² of 70 mm partition in a single 8-hour shift; the same run in hollow brick with plaster takes 8–10 working days including setting and rendering. Ideal for rented flats, retail units or offices that cannot shut down for two weeks.' },
+    { titulo: 'Dry, low-waste build', desc: 'No mortar, no sand, no water on the slab. Waste stays under 2 kg/m² (plasterboard offcuts and film). Noise peaks at 75 dB for 20–30 minutes — neighbouring flats stay usable and there are no drying times.' },
+    { titulo: '25–40 kg/m² vs 120–200 kg/m²', desc: 'A 70 mm drywall partition weighs 25–40 kg/m²; a standard 7 cm brick partition weighs 120–200 kg/m². The 5× difference removes slab-loading concerns in pre-1970 buildings in Maó’s historic centre, Ciutadella or Alaior.' },
+    { titulo: 'Reversible and easy to modify', desc: 'You can open a 1 m chase in a drywall partition in under 30 minutes and re-seal it the same day — no rubble, no skip, no neighbour notice. Essential for retail premises and offices in Maó with layouts that change every 3–5 years.' },
+  ],
+  procesoEyebrow: 'Methodology',
+  procesoTitle: 'How do we install a drywall partition?',
+  procesoIntro: 'Installation is standardised in six steps following Placo/Knauf technical specification, taking 1–2 days for 30 m² of partition.',
+  stats6: 'Process steps',
+  stats12: 'Installation days',
+  statsNota: 'On-site cleaning included',
+  pasosProceso: [
+    { num: '01', titulo: 'Setting-out and marking', desc: 'We mark the exact position of the partition on the floor and ceiling with a laser level. It is the most critical step to ensure verticality and alignment with other elements of the space.' },
+    { num: '02', titulo: 'Installation of track profiles', desc: 'We fix the track profiles on the floor and ceiling with plug and screw. Before fixing them, we install the resilient perimeter band that decouples the partition frame from the slab and improves acoustic insulation.' },
+    { num: '03', titulo: 'Studs and services routing', desc: 'We install the vertical studs every 40 or 60 cm depending on the typology and required strength. At this stage, the electrical, data or telecoms services are run.' },
+    { num: '04', titulo: 'Insulation and first board face', desc: 'We fit the internal insulation (mineral wool if additional acoustic or thermal insulation is required) and screw on the first face of plasterboards. Screwing follows standard spacings.' },
+    { num: '05', titulo: 'Second face and joint treatment', desc: 'We install the second face of boards and treat the joints: paper or fibreglass tape + joint compound. This process requires at least two coats with intermediate drying to achieve a perfect finish.' },
+    { num: '06', titulo: 'Final finish ready to paint', desc: 'We sand the joints and surface, seal the meetings with walls and ceiling, and leave the partition completely ready to paint. On-site cleaning included. We do not paint, but the surface is left in optimal condition for the painter.' },
+  ],
+  galeriaAlts: [
+    'Drywall partitions in an open-space office in the Balearics',
+    'Corridor with drywall partitions in a Balearic villa',
+    'Bedroom with built-in drywall wardrobe in the Balearics',
+    'Drywall partitions in a new-build villa in the Balearics',
+  ],
+  articulos: [
+    { slug: 'pladur-vs-ladrillo', titulo: 'Drywall vs brick: full comparison', descripcion: 'Detailed comparison between drywall and brick partitions. Prices, timelines and performance.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Drywall prices in Menorca 2026', descripcion: 'Updated drywall partition prices in Menorca. Full pricing table.' },
+    { slug: 'normativa-cte-hr-baleares', titulo: 'CTE-HR regulations in the Balearic Islands', descripcion: 'Acoustic insulation requirements for partitions under current regulations in the Balearic Islands.' },
+  ],
+  faqTitulo: 'Frequently asked questions about drywall partitions',
+  faqSubtitulo: 'We answer the most common questions about drywall partition installation in Menorca.',
+  banner: 'For wet areas such as bathrooms and kitchens, we use',
+  bannerBold: 'moisture-resistant (green) board',
+  bannerTail: 'with water absorption below 5%. A partition resistant to ambient humidity without deteriorating.',
+  bannerCta: 'See moisture-resistant drywall',
+  ctaFinalTitulo: 'Need to reorganise your space in Menorca?',
+  ctaFinalSubtitulo: 'Free quote in 24 hours. No debris, no weeks of waiting.',
+} : {
+  srOnly: 'Pladur Menorca — tabiques de pladur y trasdosados en Menorca. Divisiones de espacios, redistribución de pisos. Precios desde 45€/m². Tel: 627 829 723.',
+  heroSubtitle: 'Redistribuye tu espacio sin escombros ni semanas de obra',
+  heroDescription: 'Tabiques de pladur en Menorca para viviendas, hoteles, oficinas y locales: montantes Placo o Knauf de 46-100 mm, placa BA13/BA15 y lana mineral. Montaje en 1-2 días desde 45€/m², sin demolición ni escombros. Presupuesto gratis en 24h.',
+  heroBadges: ['Desde 45€/m²', 'Sin escombros', 'En 1-2 días'],
+  ctaPrimario: 'Pedir presupuesto gratis',
+  ctaCallPrefix: 'Llamar:',
+  breadcrumbHome: 'Inicio',
+  breadcrumbCurrent: 'Tabiques de Pladur',
+  schemaHowToName: 'Cómo instalar tabiques de pladur',
+  schemaHowToDescription: 'Proceso de instalación de tabiques de pladur en 6 pasos: desde el marcado y replanteo hasta el acabado final listo para pintar.',
+  schemaSteps: [
+    { name: 'Marcado y replanteo', text: 'Se marca la posición exacta del tabique en suelo y techo mediante láser de nivel para garantizar la verticalidad.' },
+    { name: 'Instalación de perfiles guía', text: 'Se fijan los perfiles guía en suelo y techo con taco y tornillo, con banda perimetral resiliente para aislamiento acústico.' },
+    { name: 'Montantes y paso de instalaciones', text: 'Se instalan montantes verticales cada 40 o 60 cm según tipología y se pasan las instalaciones eléctricas por el interior de la estructura.' },
+    { name: 'Aislante y primera cara de placa', text: 'Se coloca el aislante interior (lana mineral o similar) y se atornilla la primera cara de placas de yeso laminado.' },
+    { name: 'Segunda cara y tratamiento de juntas', text: 'Se instala la segunda cara de placas y se tratan las juntas con cintas y pasta de juntas para lograr una superficie continua.' },
+    { name: 'Acabado final listo para pintar', text: 'Se lijan las juntas, se sella el encuentro con paredes y techo, y se deja la superficie lista para pintar.' },
+  ],
+  schemaOffers: [
+    { name: 'Tabique sencillo estándar', description: 'Tabique de pladur con estructura de 46mm, placa a cada lado y aislante básico. Precio por m².' },
+    { name: 'Tabique doble placa', description: 'Tabique reforzado con doble placa por cara para mayor resistencia y aislamiento. Precio por m².' },
+    { name: 'Tabique acústico premium', description: 'Tabique de máximo aislamiento acústico con doble estructura, doble placa y lana de roca de alta densidad. Precio por m².' },
+    { name: 'Tabique hidrófugo para baños', description: 'Tabique con placa hidrófuga (verde) para zonas húmedas como baños y cocinas. Precio por m².' },
+    { name: 'Tabique cortafuegos', description: 'Tabique con placa cortafuegos (rosa) para cumplir normativa de protección contra incendios. Precio por m².' },
+  ],
+  sectionIntroEyebrow: 'Introducción',
+  sectionIntroTitle: '¿Qué es un tabique de pladur?',
+  intro1: 'Un tabique de pladur es una pared no estructural en seco con placa de yeso laminado (PYL) de Placo, Knauf o Pladur-Uralita. Sin mortero, sin fraguado y sin escombros: se monta una estructura de acero galvanizado de 70-100 mm (guías en suelo y techo, montantes verticales cada 40 o 60 cm) y se atornillan placas BA13 o BA15 en una o ambas caras. El precio instalado en Menorca arranca en 45€/m².',
+  citaTexto: '"Los trasdosados autoportantes con placa de yeso laminado y lana mineral de 48mm alcanzan un índice de reducción acústica de 43 a 52 dBA, dependiendo de la configuración"',
+  citaFuente: '— Placo Saint-Gobain, Manual de Soluciones Constructivas, Edición 2024',
+  intro2: 'En la cámara de 46-100 mm pasan instalaciones eléctricas, datos, telefonía o climatización y se aloja lana mineral de 40-80 mm (Isover, Rockwool) para alcanzar Rw de 35 a 55 dB y reducir pérdidas térmicas. El resultado es una pared plana, aplomada y lista para pintar el mismo día, sin los plazos de secado del sistema tradicional de ladrillo y yeso.',
+  intro3: 'En Menorca los tabiques de pladur se usan sobre todo para redistribuir pisos en Maó, Sant Lluís y Ciutadella (añadir un dormitorio, separar salón y comedor, encajar un aseo en suite), para dividir oficinas y coworkings, y para compartimentar locales comerciales y apartamentos turísticos en Es Mercadal, Cala en Bosc o Punta Prima. Al ser una obra seca y con menos de 2 kg/m² de residuos, viviendas y locales pueden seguir operativos durante el montaje.',
+  verTambien: 'Ver también:',
+  linkInstalacion: 'todos nuestros servicios de instalación de pladur',
+  linkAcustico: 'aislamiento acústico con tabiques de pladur',
+  sidebarBadge: 'Presupuesto gratis',
+  sidebarTitle: 'Distribuye tu espacio sin obras',
+  sidebarDesc: 'Visitamos tu espacio, medimos y te enviamos presupuesto en 24h.',
+  sidebarOnlineCta: 'Pedir presupuesto online',
+  sidebarVerTambien: 'Ver también:',
+  sidebarLinks: [
+    { label: 'Instalación de Pladur', href: '/instalacion-pladur-menorca' },
+    { label: 'Precios del Pladur', href: '/precios-pladur-menorca' },
+    { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  ],
+  tiposEyebrow: 'Catálogo de soluciones',
+  tiposTitle: 'Tipos de tabiques de pladur que instalamos',
+  tiposIntro: 'Cinco tipologías de tabique que cubren de 45 a 52€/m² instalado, con valores Rw de 35 a 55 dB y resistencia al fuego hasta EI-120 según el CTE-DB-SI.',
+  tiposTabiques: [
+    {
+      titulo: 'Tabique de distribución simple',
+      desc: 'El tabique de referencia en el 80% de viviendas y oficinas de Menorca. Montantes de 70 mm cada 60 cm, una placa BA13 de 12,5 mm por cara y, opcionalmente, lana mineral de 40-50 mm. Ofrece Rw 35-40 dB, suficiente para separar dormitorio y pasillo. Disponible en espesores totales de 70, 98 o 120 mm (montantes de 48, 70 o 90 mm).',
+      precio: 'Desde 45€/m²',
+      tiempo: '1 día/30 m²',
+      tags: ['Montante M70', 'Placa BA13 ambas caras', 'Opción con lana mineral', 'Listo para pintar'],
+    },
+    {
+      titulo: 'Tabique acústico de doble placa',
+      desc: 'Para cuando el Rw tiene que superar los 47 dB que exige el CTE-HR: dormitorios junto a salones, habitaciones de hotel, salas de reuniones y viviendas contiguas a bares o locales. Montantes de 70 o 100 mm con banda perimetral resiliente, cuatro placas BA13 (dos por cara) y lana mineral de alta densidad de 45-60 mm (Isover Arena, Rockwool Confortpan). Alcanza Rw 50-55 dB, 3-8 dB por encima del CTE-HR.',
+      precio: 'Desde 52€/m²',
+      tiempo: '1-2 días/30 m²',
+      tags: ['4 placas BA13', 'Lana mineral 45mm', 'Banda perimetral resiliente', 'Rw 50-55 dB'],
+    },
+    {
+      titulo: 'Tabique cortafuego (EI-30 / EI-60 / EI-90 / EI-120)',
+      desc: 'Sistema certificado de compartimentación al fuego según el CTE-DB-SI. Utiliza placas de yeso con fibra de vidrio (DF90, Placo Pregyfeu o Knauf GKF) y sellado perimetral intumescente que mantiene integridad y aislamiento durante 30, 60, 90 o 120 minutos de llama directa. Obligatorio en separaciones entre locales comerciales y viviendas, en trasteros y garajes de más de 100 m², en cajas de escalera y en edificios de uso público (hoteles, colegios, clínicas).',
+      precio: 'Desde 52€/m²',
+      tiempo: '2-3 días/30 m²',
+      tags: ['Placa DF90', 'Sellado perimetral', 'Clasificación CE', 'EI-30 a EI-120'],
+    },
+    {
+      titulo: 'Trasdosado autoportante',
+      desc: 'Revestimiento interior que se monta a 4-10 cm de la pared existente, con lana mineral de 40-60 mm en la cámara. Mejora el Rw entre 8 y 15 dB y el valor U en 0,3-0,5 W/m²K en medianeras, fachadas de marés o paredes con humedades, sin tocar la estructura portante. Habitual en rehabilitación de edificios históricos del centro de Maó y Ciutadella, donde no se permite taladrar la pared original.',
+      precio: 'Desde 29€/m²',
+      tiempo: '1 día/30 m²',
+      tags: ['Sin tocar la pared original', 'Aislante interior', 'Mejora acústica y térmica', 'Ideal para medianeras'],
+    },
+    {
+      titulo: 'Mamparas de oficina desmontables',
+      desc: 'Mamparas modulares de pladur para oficinas y coworkings en Maó y Ciutadella que se desmontan y se vuelven a montar en otra configuración en una jornada. Se combinan con módulos de doble vidrio (6 + 6 mm laminado) que mantienen luz natural y un Rw cercano a 38 dB. Más del 90% de perfiles y placas son reutilizables, lo que reduce un 60% el coste de futuros cambios de distribución.',
+      precio: 'Desde 45€/m²',
+      tiempo: '1-2 días según m²',
+      tags: ['Desmontable y reutilizable', 'Módulos de cristal opcionales', 'Distribución flexible', 'Sin obra permanente'],
+    },
+  ],
+  tiposPrecio: 'Precio',
+  tiposPlazo: 'Plazo:',
+  comparativaEyebrow: 'Comparativa',
+  comparativaTitle: 'Pladur vs ladrillo: la comparativa definitiva',
+  comparativaIntro: 'Ocho criterios constructivos medidos sobre el mismo tabique de 30 m² —tiempo, peso, Rw, precio, residuos— para elegir el sistema adecuado en cada caso.',
+  comparativa: [
+    { criterio: 'Tiempo de instalación', pladur: '1-2 días / 30 m²', ladrillo: '1-2 semanas / 30 m²', pladurBetter: true },
+    { criterio: 'Generación de escombros', pladur: 'Mínima (embalajes y recortes)', ladrillo: 'Alta (ladrillos, mortero, polvo)', pladurBetter: true },
+    { criterio: 'Peso por m²', pladur: '25-40 kg/m²', ladrillo: '120-200 kg/m²', pladurBetter: true },
+    { criterio: 'Aislamiento acústico', pladur: 'Rw 35-55 dB (con doble placa)', ladrillo: 'Rw 40-50 dB (con revoco)', pladurBetter: false },
+    { criterio: 'Precio total instalado', pladur: 'Inferior (menos mano de obra)', ladrillo: 'Superior (más tiempo y materiales)', pladurBetter: true },
+    { criterio: 'Flexibilidad futura', pladur: 'Total: se desmonta y cambia fácil', ladrillo: 'Escasa: demolición necesaria', pladurBetter: true },
+    { criterio: 'Acabado superficial', pladur: 'Plano y homogéneo de serie', ladrillo: 'Requiere revoco + yesado', pladurBetter: true },
+    { criterio: 'Cargas empotradas pesadas', pladur: 'Con refuerzo de estructura', ladrillo: 'Sin limitación', pladurBetter: false },
+  ],
+  pladurGanaBadge: 'Pladur gana en 6 de 8 criterios',
+  pladurVentajas: ['Rapidez de instalación', 'Limpieza de obra', 'Menor peso', 'Precio más bajo', 'Flexibilidad futura', 'Acabado superior'],
+  pladurCargasNota: 'Para cargas empotradas muy pesadas (bañeras, boilers) se puede reforzar la estructura del tabique de pladur.',
+  labelPladur: 'Pladur',
+  labelLadrillo: 'Ladrillo',
+  ctaMidTitulo: '¿Redistribuyes tu espacio en Menorca?',
+  ctaMidSubtitulo: 'Sin obra, sin polvo, sin semanas de espera. Presupuesto gratis en 24h.',
+  ventajasEyebrow: 'Por qué elegirnos',
+  ventajasTitle: 'Ventajas de los tabiques de pladur en Menorca',
+  ventajasCards: [
+    { titulo: '30 m² en una jornada', desc: 'Un equipo de dos instaladores termina 30 m² de tabique de 70 mm en un turno de 8 horas; el mismo paño en ladrillo hueco con yeso exige 8-10 jornadas entre fraguado y revestido. Ideal para pisos alquilados, locales o oficinas que no pueden parar dos semanas.' },
+    { titulo: 'Obra seca y sin residuos', desc: 'Ni mortero, ni arena, ni agua sobre el forjado. Los residuos se mantienen por debajo de 2 kg/m² (recortes de placa y film). El ruido punta se limita a 75 dB durante 20-30 minutos: los pisos colindantes siguen habitables y no hay tiempos de secado.' },
+    { titulo: '25-40 kg/m² vs 120-200 kg/m²', desc: 'Un tabique de pladur de 70 mm pesa 25-40 kg/m²; uno de ladrillo hueco de 7 cm alcanza 120-200 kg/m². Esa diferencia de 5× elimina dudas sobre la capacidad del forjado en edificios anteriores a 1970 del centro de Maó, Ciutadella o Alaior.' },
+    { titulo: 'Reversible y modificable', desc: 'Abrir una roza de 1 m en un tabique de pladur lleva menos de 30 minutos y se sella el mismo día: sin escombros, sin contenedor y sin aviso a la comunidad. Imprescindible en locales y oficinas de Maó donde la distribución cambia cada 3-5 años.' },
+  ],
+  procesoEyebrow: 'Metodología',
+  procesoTitle: '¿Cómo instalamos un tabique de pladur?',
+  procesoIntro: 'La instalación sigue 6 pasos estandarizados según la ficha técnica de Placo/Knauf, que suman 1-2 días para 30 m² de tabique.',
+  stats6: 'Pasos del proceso',
+  stats12: 'Días de instalación',
+  statsNota: 'Limpieza de obra incluida',
+  pasosProceso: [
+    { num: '01', titulo: 'Marcado y replanteo', desc: 'Marcamos la posición exacta del tabique en suelo y techo mediante láser de nivel. Es el paso más crítico para garantizar la verticalidad y el alineamiento con otros elementos del espacio.' },
+    { num: '02', titulo: 'Instalación de perfiles guía', desc: 'Fijamos los perfiles guía en suelo y techo con taco y tornillo. Antes de fijarlos, colocamos la banda perimetral resiliente que desvincula la estructura del tabique del forjado y mejora el aislamiento acústico.' },
+    { num: '03', titulo: 'Montantes y paso de instalaciones', desc: 'Instalamos los montantes verticales cada 40 o 60 cm según la tipología y resistencia requeridas. En esta fase pasan las instalaciones eléctricas, de datos o telecomunicaciones que sean necesarias.' },
+    { num: '04', titulo: 'Aislante y primera cara de placa', desc: 'Colocamos el aislante interior (lana mineral si se requiere aislamiento acústico o térmico adicional) y atornillamos la primera cara de placas de yeso. El atornillado se realiza siguiendo las distancias normalizadas.' },
+    { num: '05', titulo: 'Segunda cara y tratamiento de juntas', desc: 'Instalamos la segunda cara de placas y procedemos al tratamiento de juntas: cintas de papel o fibra de vidrio + pasta de juntas. Este proceso requiere al menos dos capas con secado intermedio para conseguir un acabado perfecto.' },
+    { num: '06', titulo: 'Acabado final listo para pintar', desc: 'Lijamos las juntas y la superficie, sellamos los encuentros con paredes y techo, y dejamos el tabique completamente listo para pintar. Limpieza de obra incluida. No pintamos, pero dejamos la superficie en condiciones óptimas para el pintor.' },
+  ],
+  galeriaAlts: [
+    'Tabiques de pladur en oficina open space en Baleares',
+    'Pasillo con tabiques de pladur en villa de Baleares',
+    'Habitación con armario empotrado de pladur en Baleares',
+    'Tabiques de pladur en villa de obra nueva en Baleares',
+  ],
+  articulos: [
+    { slug: 'pladur-vs-ladrillo', titulo: 'Pladur vs ladrillo: comparativa completa', descripcion: 'Comparación detallada entre tabiques de pladur y de ladrillo. Precios, plazos y rendimiento.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Precio del pladur en Menorca 2026', descripcion: 'Precios actualizados de tabiques de pladur en Menorca. Tabla de tarifas completa.' },
+    { slug: 'normativa-cte-hr-baleares', titulo: 'Normativa CTE-HR en Baleares', descripcion: 'Requisitos de aislamiento acústico en tabiques según la normativa vigente en Baleares.' },
+  ],
+  faqTitulo: 'Preguntas frecuentes sobre tabiques de pladur',
+  faqSubtitulo: 'Resolvemos las dudas más habituales sobre la instalación de tabiques de pladur en Menorca.',
+  banner: 'Para zonas húmedas como baños y cocinas, utilizamos',
+  bannerBold: 'placa hidrófuga (verde)',
+  bannerTail: 'con absorción de agua inferior al 5%. Un tabique resistente a la humedad ambiental sin deteriorarse.',
+  bannerCta: 'Ver pladur hidrófugo',
+  ctaFinalTitulo: '¿Necesitas redistribuir tu espacio en Menorca?',
+  ctaFinalSubtitulo: 'Presupuesto gratis en 24 horas. Sin escombros, sin semanas de espera.',
+}
+
+const schemaOffersPrices = ['45', '52', '52', '45', '52']
+const schemaOffers = t.schemaOffers.map((o, i) => ({ ...o, price: schemaOffersPrices[i] }))
+
+const pageBase = lang === 'en' ? '/en/tabiques-pladur-menorca' : '/tabiques-pladur-menorca'
+const homeHref = lang === 'en' ? '/en/' : '/'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: homeHref }, { label: t.breadcrumbCurrent, href: pageBase }]} />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaService
+      name={servicio.schema.name}
+      description={servicio.schema.description}
+      serviceType={servicio.schema.serviceType}
+      url={`https://www.pladurmenorca.com${pageBase}`}
+      image="https://www.pladurmenorca.com/images/proyectos/pasillo-tabiques-villa.webp"
+
+    />
+    <SchemaHowTo
+      name={t.schemaHowToName}
+      description={t.schemaHowToDescription}
+      totalTime="PT16H"
+      steps={t.schemaSteps}
+    />
+    <SchemaOffers offers={schemaOffers} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">
+    {t.srOnly}
+  </p>
+
+  <!-- Hero -->
+  <Hero
+    title={servicio.h1}
+    subtitle={t.heroSubtitle}
+    description={t.heroDescription}
+    dark={true}
+    badges={t.heroBadges}
+    ctaPrimario={{ texto: t.ctaPrimario, href: p('/presupuesto-pladur') }}
+    ctaSecundario={{ texto: `${t.ctaCallPrefix} ${siteConfig.phone}`, href: `tel:${siteConfig.phoneRaw}` }}
+  />
+
+  <!-- ¿Qué es un tabique de pladur? -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-8">
+          <div class="animate-fade-up">
+            <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+              {t.sectionIntroEyebrow}
+            </p>
+            <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-6">
+              {t.sectionIntroTitle}
+            </h2>
+          </div>
+          <div class="space-y-7 text-muted leading-relaxed">
+            <p class="text-lg">{t.intro1}</p>
+
+            {/* Stat bar */}
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-warm-border/50 rounded-3xl overflow-hidden border border-warm-border/50">
+              {[
+                { k: lang === 'en' ? 'Thickness' : 'Espesor', v: '70–100 mm' },
+                { k: lang === 'en' ? 'Weight' : 'Peso', v: '< 2 kg/m² residuos' },
+                { k: 'Rw', v: '35–55 dB' },
+                { k: lang === 'en' ? 'From' : 'Desde', v: '45 €/m²' },
+              ].map((s) => (
+                <div class="bg-white/80 px-4 py-5 text-center">
+                  <p class="text-[10px] font-bold uppercase tracking-[0.14em] text-muted/80 mb-1">{s.k}</p>
+                  <p class="text-sm font-bold text-foreground">{s.v}</p>
+                </div>
+              ))}
+            </div>
+
+            <blockquote class="border-l-4 border-foreground/20 pl-5 italic text-muted">
+              <p>{t.citaTexto}</p>
+              <cite class="block mt-2 text-sm not-italic text-muted/70">{t.citaFuente}</cite>
+            </blockquote>
+
+            <p>{t.intro2}</p>
+            <p>{t.intro3}</p>
+
+            {/* Common use-cases as tag pills */}
+            <div class="flex flex-wrap gap-2 pt-1">
+              {(lang === 'en' ? [
+                'Flat layout change', 'Extra bedroom', 'Ensuite bathroom', 'Open-plan living',
+                'Office partitioning', 'Retail spaces', 'Holiday apartments',
+              ] : [
+                'Redistribución de piso', 'Dormitorio extra', 'Baño en suite', 'Salón-comedor abierto',
+                'Oficinas divididas', 'Locales comerciales', 'Apartamentos turísticos',
+              ]).map((tag) => (
+                <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-surface text-foreground text-xs font-semibold border border-warm-border/50">
+                  {tag}
+                </span>
+              ))}
+            </div>
+
+            <p class="text-sm pt-2">
+              {t.verTambien}
+              <a href={lang === 'en' ? '/en/instalacion-pladur-menorca' : '/instalacion-pladur-menorca'} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">
+                {t.linkInstalacion}
+              </a>
+              &middot;
+              <a href={lang === 'en' ? '/en/aislamiento-acustico-menorca' : '/aislamiento-acustico-menorca'} class="text-foreground font-semibold underline underline-offset-2 hover:text-foreground-dark">
+                {t.linkAcustico}
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+            <div class="p-6 bg-foreground rounded-3xl text-white">
+              <p class="text-xs font-bold uppercase tracking-widest text-nav-border/60 mb-3">
+                {t.sidebarBadge}
+              </p>
+              <p class="font-bold text-lg mb-2">{t.sidebarTitle}</p>
+              <p class="text-gray-300 text-sm mb-5 leading-relaxed">
+                {t.sidebarDesc}
+              </p>
+              <a
+                href={`tel:${siteConfig.phoneRaw}`}
+                class="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide transition-colors"
+              >
+                {siteConfig.phone}
+              </a>
+              <a
+                href={p('/presupuesto-pladur')}
+                class="flex items-center justify-center gap-2 w-full py-3 mt-3 rounded-xl border border-white/30 hover:border-white text-white font-bold text-sm tracking-wide transition-colors"
+              >
+                {t.sidebarOnlineCta}
+              </a>
+            </div>
+            <div class="p-5 bg-white/70 border border-warm-border/50 rounded-3xl">
+              <p class="font-semibold text-foreground text-sm mb-3">{t.sidebarVerTambien}</p>
+              <ul class="space-y-2">
+                {t.sidebarLinks.map((s) => (
+                  <li>
+                    <a href={s.href} class="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors py-0.5">
+                      <svg aria-hidden="true" class="size-3.5 text-foreground shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                      {s.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Tipos de tabiques -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="animate-fade-up">
+        <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+          {t.tiposEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-4 max-w-3xl">
+          {t.tiposTitle}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed mb-14 max-w-3xl">
+          {t.tiposIntro}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 stagger-children">
+        {t.tiposTabiques.map((tipo) => (
+          <div class="bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default p-7 lg:p-8">
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <h3 class="text-lg font-bold text-foreground leading-snug">{tipo.titulo}</h3>
+              <div class="shrink-0 text-right">
+                <p class="text-xs font-bold text-muted uppercase tracking-wider">{t.tiposPrecio}</p>
+                <p class="font-bold text-foreground text-sm">{tipo.precio}</p>
+              </div>
+            </div>
+            <p class="text-sm text-muted leading-relaxed mb-5">{tipo.desc}</p>
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-xs font-bold text-muted uppercase tracking-wider">{t.tiposPlazo}</span>
+              <span class="text-xs font-semibold text-foreground">{tipo.tiempo}</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              {tipo.tags.map((tag) => (
+                <span class="text-xs px-2.5 py-1 bg-surface text-foreground rounded-lg font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Comparativa Pladur vs Ladrillo -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: sticky header -->
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28">
+            <div>
+              <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+                {t.comparativaEyebrow}
+              </span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+                {t.comparativaTitle}
+              </h2>
+              <p class="text-muted leading-relaxed mb-8">
+                {t.comparativaIntro}
+              </p>
+            </div>
+
+            <div class="bg-foreground rounded-3xl p-7">
+              <p class="text-xs font-bold uppercase tracking-widest text-white/50 mb-5">{t.pladurGanaBadge}</p>
+              <div class="space-y-3">
+                {t.pladurVentajas.map((v) => (
+                  <div class="flex items-center gap-3">
+                    <div class="shrink-0 w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                      <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <p class="text-white/70 text-sm">{v}</p>
+                  </div>
+                ))}
+              </div>
+              <div class="mt-6 pt-5 border-t border-white/10">
+                <p class="text-white/50 text-xs leading-relaxed">
+                  {t.pladurCargasNota}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Comparison cards -->
+        <div class="lg:col-span-7 space-y-5">
+          {t.comparativa.map((fila) => (
+            <div class="bg-white/70 rounded-3xl border border-warm-border/50 p-6 lg:p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300">
+              <p class="font-bold text-foreground text-base mb-4">{fila.criterio}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Pladur -->
+                <div class={`rounded-2xl p-4 ${fila.pladurBetter ? 'bg-surface border border-nav-border' : 'bg-transparent'}`}>
+                  <div class="flex items-center gap-2 mb-2">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.labelPladur}</p>
+                    {fila.pladurBetter && (
+                      <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <p class={`text-sm leading-relaxed ${fila.pladurBetter ? 'text-foreground font-medium' : 'text-muted'}`}>
+                    {fila.pladur}
+                  </p>
+                </div>
+                <!-- Ladrillo -->
+                <div class={`rounded-2xl p-4 ${!fila.pladurBetter ? 'bg-surface border border-nav-border' : 'bg-transparent'}`}>
+                  <div class="flex items-center gap-2 mb-2">
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.labelLadrillo}</p>
+                    {!fila.pladurBetter && (
+                      <div class="shrink-0 w-4 h-4 bg-foreground-dark rounded-full flex items-center justify-center">
+                        <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </div>
+                  <p class={`text-sm leading-relaxed ${!fila.pladurBetter ? 'text-foreground font-medium' : 'text-muted'}`}>
+                    {fila.ladrillo}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- CtaBanner intermedio -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaMidTitulo}
+    subtitulo={t.ctaMidSubtitulo}
+    showForm={false}
+  />
+
+  <!-- Ventajas -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-widest bg-surface text-foreground mb-4 inline-block px-3 py-1 rounded-lg">
+          {t.ventajasEyebrow}
+        </p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance mb-12 max-w-2xl">
+          {t.ventajasTitle}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {t.ventajasCards.map((v) => (
+          <div class="p-6 bg-white/70 border border-warm-border/50 rounded-3xl shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="size-8 bg-surface border border-nav-border rounded-xl flex items-center justify-center mb-4">
+              <svg aria-hidden="true" class="size-4 text-foreground" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <h3 class="font-bold text-foreground text-base mb-2">{v.titulo}</h3>
+            <p class="text-sm text-muted leading-relaxed">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- Proceso -->
+  <section class="py-20 lg:py-28">
+    <Container size="xl">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+        <!-- Left: sticky header -->
+        <div class="lg:col-span-5">
+          <div class="lg:sticky lg:top-28">
+            <div>
+              <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+                {t.procesoEyebrow}
+              </span>
+              <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+                {t.procesoTitle}
+              </h2>
+              <p class="text-muted leading-relaxed mb-8">
+                {t.procesoIntro}
+              </p>
+            </div>
+
+            <div class="bg-foreground rounded-3xl p-7">
+              <div class="grid grid-cols-2 gap-6">
+                <div>
+                  <p class="text-3xl font-bold text-white">6</p>
+                  <p class="text-white/50 text-sm">{t.stats6}</p>
+                </div>
+                <div>
+                  <p class="text-3xl font-bold text-white">1-2</p>
+                  <p class="text-white/50 text-sm">{t.stats12}</p>
+                </div>
+              </div>
+              <div class="mt-6 pt-6 border-t border-white/10">
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 w-5 h-5 bg-white/20 rounded-full flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <p class="text-white/70 text-sm">{t.statsNota}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Timeline steps -->
+        <div class="lg:col-span-7">
+          <div class="relative">
+            <!-- Connecting timeline line -->
+            <div class="absolute left-[1.19rem] top-10 bottom-10 w-px bg-gradient-to-b from-nav-border via-nav-border to-transparent hidden lg:block" aria-hidden="true"></div>
+
+            <div class="space-y-5">
+              {t.pasosProceso.map((paso) => (
+                <div class="group flex gap-5 bg-white/70 rounded-3xl border border-warm-border/50 p-7 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 relative">
+                  <!-- Number indicator -->
+                  <div class="shrink-0 size-10 rounded-xl bg-surface border border-nav-border flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-colors duration-300 relative z-10">
+                    <span class="text-sm font-bold text-foreground group-hover:text-white transition-colors duration-300">{paso.num}</span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <h3 class="font-bold text-foreground text-base mb-2">{paso.titulo}</h3>
+                    <p class="text-sm text-muted leading-relaxed">{paso.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <!-- NuestrosDatos — benchmarks reales de tabiques -->
+  <NuestrosDatos
+    lang={lang}
+    eyebrow={lang === 'en' ? 'Our numbers — drywall partitions' : 'Nuestras cifras — tabiques'}
+    title={lang === 'en' ? '9 out of 10 of our projects include a drywall partition' : '9 de cada 10 obras incluyen un tabique de pladur'}
+    intro={lang === 'en'
+      ? 'Drywall partitions are the most requested redistribution system. Real volumes delivered in 2025 by the Mallorca parent company.'
+      : 'El tabique de pladur es nuestro sistema más solicitado para redistribuir. Estos son los volúmenes reales ejecutados en 2025 por la SL matriz.'}
+    metrics={lang === 'en' ? [
+      { value: '~457', label: 'partitions executed in 2025', context: '90% of the 508 projects delivered' },
+      { value: '25 kg/m²', label: 'vs 120 kg/m² for brick', context: '80% lighter on the slab' },
+      { value: '45-55 dB', label: 'typical Rw on acoustic partitions', context: 'Above CTE-HR minimum (47 dB)' },
+      { value: '1 day', label: 'to build a standard partition', context: 'Dry build, paint-ready in 24h' },
+    ] : [
+      { value: '~457', label: 'tabiques ejecutados en 2025', context: '90% de los 508 proyectos' },
+      { value: '25 kg/m²', label: 'frente a 120 kg/m² del ladrillo', context: '80% más ligero sobre el forjado' },
+      { value: '45-55 dB', label: 'Rw típico en tabiques acústicos', context: 'Por encima del mínimo CTE-HR (47 dB)' },
+      { value: '1 día', label: 'para un tabique estándar', context: 'Montaje en seco, listo para pintar en 24h' },
+    ]}
+  />
+
+  <!-- PreciosTable -->
+  <PreciosTable lang={lang} variant="Tabiques y Particiones" />
+
+  <!-- GaleriaTrabajos -->
+  <GaleriaTrabajos imagenes={[
+    { src: '/images/proyectos/oficina-open-space-tabiques.webp', alt: t.galeriaAlts[0] },
+    { src: '/images/proyectos/pasillo-tabiques-villa.webp', alt: t.galeriaAlts[1] },
+    { src: '/images/proyectos/habitacion-armario-empotrado.webp', alt: t.galeriaAlts[2] },
+    { src: '/images/proyectos/villa-obra-nueva-pladur-integral.webp', alt: t.galeriaAlts[3] },
+  ]} />
+
+  <!-- ZonasServicio -->
+  <ZonasServicio lang={lang} />
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FaqAccordion -->
+  <FaqAccordion
+    client:visible
+    faqs={pageFaqs}
+    lang={lang}
+    titulo={t.faqTitulo}
+    subtitulo={t.faqSubtitulo}
+  />
+
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed">{t.banner} <strong class="text-white">{t.bannerBold}</strong> {t.bannerTail}</p>
+        <a href={p('/pladur-hidrofugo-menorca')} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.bannerCta}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CtaBanner final -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaFinalTitulo}
+    subtitulo={t.ctaFinalSubtitulo}
+    showForm={true}
+  />
+
+  <ServiciosRelacionados currentPath="/tabiques-pladur-menorca" />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

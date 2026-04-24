@@ -1,0 +1,480 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaService from '@/components/seo/SchemaService.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import FaqAccordion from '@/components/sections/FaqAccordion'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ServiciosRelacionados from '@/components/sections/ServiciosRelacionados.astro'
+import ArticulosRelacionados from '@/components/sections/ArticulosRelacionados.astro'
+import { getIgnifugoFaqs } from '@/data/faqs/ignifugo'
+import { siteConfig } from '@/data/site'
+import type { Lang } from '@/i18n'
+
+const lang = (Astro.currentLocale ?? 'es') as Lang
+const pageFaqs = getIgnifugoFaqs(lang)
+
+const t = lang === 'en' ? {
+  heroBadge: 'Fire protection · Menorca',
+  h1: 'Fire-Rated Drywall in Menorca — Passive Fire Protection',
+  heroSubtitle: 'Fire-rated drywall compartmentation in Menorca since 2004: type-F board certified EI-30 to EI-240 under CTE DB-SI for hotels, clinics, car parks and industrial units.',
+  ctaPrimary: 'Request a free quote',
+  s1Eyebrow: 'Materials',
+  s1Title: 'Types of F (fire-rated) board',
+  s1Intro: 'We install the four main type-F boards on the market, following EN 520. The pink core carries fibreglass to delay fire propagation; standard boards are grey, H moisture boards green.',
+  s1Items: [
+    { tipo: 'Placo <strong>Pregyfeu</strong>', color: 'Pink', resistencia: 'EI-30 to EI-120', aplicacion: 'Partitions, ceilings, hotel corridors' },
+    { tipo: 'Knauf GKF / Fireboard', color: 'Red (Fireboard)', resistencia: 'EI-120 to EI-240', aplicacion: 'Ducts, steel columns, beam casing' },
+    { tipo: 'Lafarge Prégyflam', color: 'Pink reinforced', resistencia: 'EI-120 to EI-180', aplicacion: 'Firewalls, plant rooms, transformers' },
+  ] as { tipo: string; color: string; resistencia: string; aplicacion: string }[],
+  s1Color: 'Colour',
+  s1Resistance: 'Euroclass / EI',
+  s1Use: 'Application',
+  s2Eyebrow: 'Regulation',
+  s2Title: 'Which CTE DB-SI regulation applies in Menorca?',
+  s2P1: "Spain's Technical Building Code, in its Basic Document on Fire Safety (<strong>CTE DB-SI</strong>), sets minimum fire-resistance requirements depending on the use of the building. The CTE combines <strong>Euroclasses</strong> (A1 non-combustible, A2, B, C, D, E, F) for reaction-to-fire and <strong>EI</strong> ratings (integrity + insulation in minutes) for compartment elements.",
+  s2Quote: '"Construction elements delimiting fire compartments must have a fire resistance at least equal to that set out in Table 1.2 of DB-SI 1, which ranges between <strong>EI-60</strong> and <strong>EI-120</strong> depending on use and evacuation height"',
+  s2Cite: "— CTE DB-SI, Basic Document on Fire Safety, Section SI-1",
+  s2Items: [
+    { uso: 'Hotel corridors', requisito: 'EI-60: double Placa F + EI-C₅ 60 door', norma: 'CTE DB-SI, Table 1.2' },
+    { uso: 'Protected stairs', requisito: 'EI-120: triple Placa F enclosure', norma: 'CTE DB-SI, Section SI-3' },
+    { uso: 'Car parks', requisito: 'Compartmentation every 100 m² at EI-120', norma: 'CTE DB-SI, Section SI-1' },
+    { uso: 'Plant / transformer rooms', requisito: 'EI-120 to EI-180 with Rockwool (100 kg/m³)', norma: 'CTE DB-SI, Table 1.2' },
+  ] as { uso: string; requisito: string; norma: string }[],
+  s3Eyebrow: 'Applications',
+  s3Title: 'Common applications in Menorca',
+  s3Intro: 'Type-F drywall is the go-to solution where the CTE, the fire brigade or an OCT (Technical Control Body) require certified <strong>passive fire protection</strong>.',
+  s3Items: [
+    { titulo: 'Hotel corridor compartmentation', descripcion: 'EI-60 double Placa F walls + EI-C₅ 60-90 doors between rooms and corridors. We execute during low season (Oct-Mar) in Son Bou, Fornells and Punta Prima.' },
+    { titulo: 'Underground car parks', descripcion: 'EI-120 ceilings and firewalls every 100 m² of car-park compartment in Maó and Ciutadella. Typical system: double Placo F 15+15 mm, 70 mm frame, Rockwool 100 kg/m³.' },
+    { titulo: 'Protected stairs', descripcion: 'Triple Placa F enclosures to reach EI-120. Mandatory evacuation path in buildings with evacuation height above 14 m.' },
+    { titulo: 'Steel structure protection', descripcion: 'Fire-rated casing of beams and columns to upgrade R-15 bare steel to R-60, R-90 or R-120.' },
+    { titulo: 'Plant and transformer rooms', descripcion: 'EI-120 or EI-180 sectors for switch rooms, gensets and HVAC plant. Inspected by the OCT before commissioning.' },
+    { titulo: 'Fire-stopping of service penetrations', descripcion: 'Intumescent seal + Placa F patches where pipes, cables or ducts cross fire compartments, certified by laboratory.' },
+  ] as { titulo: string; descripcion: string }[],
+  s4Eyebrow: 'Prices',
+  s4Title: 'Fire-rated drywall price in Menorca 2026',
+  s4Intro: 'Full-installation prices (materials + labour), VAT excluded. Placa F material from €7/m²; installed systems below. Final price after an on-site visit.',
+  s4Items: [
+    { sistema: 'Simple Placa F partition', ei: 'EI-30', desde: '€42/m²', hasta: '€55/m²' },
+    { sistema: 'Double Placa F + Rockwool', ei: 'EI-60', desde: '€52/m²', hasta: '€70/m²' },
+    { sistema: 'Firewall (triple Placa F)', ei: 'EI-120', desde: '€85/m²', hasta: '€110/m²' },
+    { sistema: 'Beam/column encasement', ei: 'EI-60 to EI-120', desde: '€55/lm', hasta: '€95/lm' },
+    { sistema: 'Service-penetration sealing', ei: 'Intumescent', desde: '€30/unit', hasta: '€80/unit' },
+  ] as { sistema: string; ei: string; desde: string; hasta: string }[],
+  s4Resistance: 'Fire resistance',
+  s4Link: 'See full pricing table',
+  s5Eyebrow: 'Documentation',
+  s5Title: 'Documentation we deliver',
+  s5P1: 'Since 2004 we have closed CTE DB-SI fire-compartment projects with technical documentation for the municipal works licence, OCT audits and fire-brigade inspections. Placo, Knauf and Lafarge certificates are issued by homologated laboratories.',
+  s5Card: 'Included in every project',
+  s5Items: [
+    'EI certificate from a homologated laboratory (Placo, Knauf, Lafarge, Saint-Gobain)',
+    'Declaration of Performance (DoP) and Euroclass for each board',
+    'Technical data sheet with reaction-to-fire classification (A1, A2 or B-s1,d0)',
+    'Process photos and as-built plans for the OCT audit',
+  ],
+  hotelLink: 'Need fire compartmentation for a hotel? See our <strong class="text-white">specialised hotel renovation service</strong> with low-season timelines.',
+  hotelLinkLabel: 'Drywall for hotels',
+  articulos: [
+    { slug: 'pladur-ignifugo-normativa-menorca', titulo: 'Fire-rated drywall and CTE DB-SI in Menorca', descripcion: 'Guide to Euroclasses, EI ratings and type-F boards (Placo, Knauf, Lafarge) in Menorca.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Drywall price in Menorca 2026', descripcion: 'Up-to-date prices for Placa F, Placa H and other board types in Menorca.' },
+    { slug: 'licencia-obra-pladur-menorca', titulo: 'Do you need a works licence for drywall?', descripcion: 'Permits needed to install fire-rated drywall in premises and car parks in Menorca.' },
+  ],
+  faqTitle: 'Frequently asked questions about Placa F fire-rated drywall',
+  faqSubtitle: 'We answer the most common questions about Placa F, Euroclasses, EI ratings and CTE DB-SI compliance.',
+  ctaTitle: 'Need CTE DB-SI fire protection with drywall?',
+  ctaSubtitle: 'Free quote in 24 hours. Placo, Knauf, Lafarge EI certificates included. Valid for OCT and fire-brigade audits.',
+  srOnly: "Pladur Menorca — installer since 2004 of fire-rated drywall (Placa F: Placo Pregyfeu, Knauf GKF, Lafarge Prégyflam) in Menorca. EI-30 to EI-240 compartments. Hotels, clinics, car parks, industrial units. CTE DB-SI compliance. Laboratory certificates included. Tel: 627 829 723.",
+  breadcrumbHome: 'Home',
+  breadcrumbLabel: 'Fire-Rated Drywall',
+  schemaServiceName: 'Fire-Rated Drywall Installation in Menorca',
+  schemaServiceDesc: "Installer since 2004 of Placa F (Placo Pregyfeu, Knauf GKF, Lafarge Prégyflam) in Menorca. Passive fire protection EI-30 to EI-240. Hotels, car parks, clinics. Laboratory EI certificates and CTE DB-SI documentation.",
+  schemaServiceType: 'Passive Fire Protection',
+} : {
+  heroBadge: 'Protección contra incendios · Menorca',
+  h1: 'Pladur Ignífugo en Menorca — Protección Pasiva Contra Incendios',
+  heroSubtitle: 'Sectorización ignífuga con pladur en Menorca desde 2004: placa tipo F con certificación EI-30 a EI-240 según CTE DB-SI para hoteles, clínicas, garajes y naves industriales.',
+  ctaPrimary: 'Pide presupuesto gratis',
+  s1Eyebrow: 'Materiales',
+  s1Title: 'Tipos de placa F (ignífuga)',
+  s1Intro: 'Instalamos las cuatro principales placas tipo F del mercado, según EN 520. El núcleo rosa incorpora fibra de vidrio para retardar la propagación del fuego; la placa estándar es gris y la placa H hidrófuga verde.',
+  s1Items: [
+    { tipo: 'Placo <strong>Pregyfeu</strong>', color: 'Rosa', resistencia: 'EI-30 a EI-120', aplicacion: 'Tabiques, techos, pasillos hoteles' },
+    { tipo: 'Knauf GKF / Fireboard', color: 'Roja (Fireboard)', resistencia: 'EI-120 a EI-240', aplicacion: 'Conductos, pilares acero, forro vigas' },
+    { tipo: 'Lafarge Prégyflam', color: 'Rosa reforzada', resistencia: 'EI-120 a EI-180', aplicacion: 'Muros cortafuegos, sala máquinas, trafo' },
+  ] as { tipo: string; color: string; resistencia: string; aplicacion: string }[],
+  s1Color: 'Color',
+  s1Resistance: 'Euroclase / EI',
+  s1Use: 'Aplicación',
+  s2Eyebrow: 'Normativa',
+  s2Title: '¿Qué normativa CTE DB-SI se aplica en Menorca?',
+  s2P1: 'El Código Técnico de la Edificación, en su Documento Básico de Seguridad en caso de Incendio (<strong>CTE DB-SI</strong>), establece los requisitos mínimos de resistencia al fuego según el uso del edificio. Combina <strong>Euroclases</strong> (A1 incombustible, A2, B, C, D, E, F) para reacción al fuego y <strong>EI</strong> (estanqueidad + aislamiento en minutos) para elementos de sectorización.',
+  s2Quote: '"Los elementos constructivos delimitadores de los sectores de incendio deben tener una resistencia al fuego al menos igual a la establecida en la Tabla 1.2 del DB-SI 1, que varía entre <strong>EI-60</strong> y <strong>EI-120</strong> según el uso y la altura de evacuación"',
+  s2Cite: '— CTE DB-SI, Documento Básico de Seguridad en caso de Incendio, Sección SI-1',
+  s2Items: [
+    { uso: 'Pasillos hoteles', requisito: 'EI-60: doble Placa F + puerta EI-C₅ 60', norma: 'CTE DB-SI, Tabla 1.2' },
+    { uso: 'Escaleras protegidas', requisito: 'EI-120: triple Placa F en cerramientos', norma: 'CTE DB-SI, Sección SI-3' },
+    { uso: 'Aparcamientos', requisito: 'Sectorización cada 100 m² a EI-120', norma: 'CTE DB-SI, Sección SI-1' },
+    { uso: 'Sala máquinas / trafo', requisito: 'EI-120 a EI-180 con Rockwool (100 kg/m³)', norma: 'CTE DB-SI, Tabla 1.2' },
+  ] as { uso: string; requisito: string; norma: string }[],
+  s3Eyebrow: 'Aplicaciones',
+  s3Title: 'Aplicaciones habituales en Menorca',
+  s3Intro: 'La placa F es la solución de referencia cuando el CTE, los bomberos o el OCT (Organismo de Control Técnico) exigen <strong>protección pasiva</strong> contra incendios certificada.',
+  s3Items: [
+    { titulo: 'Sectorización de pasillos de hotel', descripcion: 'Tabiques EI-60 con doble Placa F + puertas EI-C₅ 60-90 entre habitaciones y pasillos. Ejecutamos en temporada baja (oct-mar) en Son Bou, Fornells y Punta Prima.' },
+    { titulo: 'Aparcamientos subterráneos', descripcion: 'Techos EI-120 y muros cortafuegos cada 100 m² de sector en Maó y Ciutadella. Sistema típico: doble Placo F 15+15 mm, perfilería 70 mm, Rockwool 100 kg/m³.' },
+    { titulo: 'Escaleras protegidas', descripcion: 'Cerramientos de triple Placa F para alcanzar EI-120. Vía de evacuación obligatoria en edificios con altura de evacuación superior a 14 m.' },
+    { titulo: 'Protección de estructura metálica', descripcion: 'Revestimiento cortafuegos de vigas y pilares metálicos para pasar de R-15 en acero desnudo a R-60, R-90 o R-120.' },
+    { titulo: 'Sala de máquinas y centro de transformación', descripcion: 'Sectores EI-120 o EI-180 para cuadros eléctricos, grupos electrógenos y climatización. Inspeccionado por el OCT antes de la puesta en servicio.' },
+    { titulo: 'Sellado de pasos de instalaciones', descripcion: 'Sellado intumescente + parcheo con Placa F en puntos donde tuberías, cables o conductos atraviesan sectores, certificado por laboratorio.' },
+  ] as { titulo: string; descripcion: string }[],
+  s4Eyebrow: 'Precios',
+  s4Title: 'Precio pladur ignífugo en Menorca 2026',
+  s4Intro: 'Precios de instalación completa (material + mano de obra), IVA no incluido. Placa F material desde 7€/m²; sistemas instalados abajo. Precio final tras la visita técnica.',
+  s4Items: [
+    { sistema: 'Tabique simple Placa F', ei: 'EI-30', desde: '42€/m²', hasta: '55€/m²' },
+    { sistema: 'Doble Placa F + Rockwool', ei: 'EI-60', desde: '52€/m²', hasta: '70€/m²' },
+    { sistema: 'Muro cortafuegos (triple Placa F)', ei: 'EI-120', desde: '85€/m²', hasta: '110€/m²' },
+    { sistema: 'Revestimiento viga/pilar', ei: 'EI-60 a EI-120', desde: '55€/ml', hasta: '95€/ml' },
+    { sistema: 'Sellado paso instalaciones', ei: 'Intumescente', desde: '30€/ud', hasta: '80€/ud' },
+  ] as { sistema: string; ei: string; desde: string; hasta: string }[],
+  s4Resistance: 'Resistencia',
+  s4Link: 'Ver tabla de precios completa',
+  s5Eyebrow: 'Documentación',
+  s5Title: 'Documentación que entregamos',
+  s5P1: 'Desde 2004 cerramos proyectos de sectorización CTE DB-SI con la documentación técnica para la licencia de obra municipal, las auditorías del OCT y las inspecciones de bomberos. Los certificados de Placo, Knauf y Lafarge se emiten por laboratorios homologados.',
+  s5Card: 'Incluido en cada proyecto',
+  s5Items: [
+    'Certificado EI por laboratorio homologado (Placo, Knauf, Lafarge, Saint-Gobain)',
+    'Declaración de prestaciones (DoP) y Euroclase de cada placa',
+    'Ficha técnica con clasificación de reacción al fuego (A1, A2 o B-s1,d0)',
+    'Fotografías del proceso y planos as-built para auditoría OCT',
+  ],
+  hotelLink: '¿Necesitas sectorización ignífuga para un hotel? Consulta nuestro <strong class="text-white">servicio especializado en reformas hoteleras</strong> con plazos en temporada baja.',
+  hotelLinkLabel: 'Pladur para hoteles',
+  articulos: [
+    { slug: 'pladur-ignifugo-normativa-menorca', titulo: 'Pladur ignífugo y CTE DB-SI en Menorca', descripcion: 'Guía de Euroclases, resistencias EI y placas tipo F (Placo, Knauf, Lafarge) en Menorca.' },
+    { slug: 'precio-pladur-menorca-2026', titulo: 'Precio del pladur en Menorca 2026', descripcion: 'Precios actualizados de Placa F, Placa H y otros tipos de placa en Menorca.' },
+    { slug: 'licencia-obra-pladur-menorca', titulo: '¿Necesitas licencia de obra para pladur?', descripcion: 'Permisos necesarios para instalar pladur ignífugo en locales y garajes en Menorca.' },
+  ],
+  faqTitle: 'Preguntas frecuentes sobre placa F ignífuga',
+  faqSubtitle: 'Resolvemos las dudas más habituales sobre Placa F, Euroclases, resistencias EI y cumplimiento CTE DB-SI.',
+  ctaTitle: '¿Necesitas protección CTE DB-SI contra incendios?',
+  ctaSubtitle: 'Presupuesto gratuito en 24 horas. Certificados EI de Placo, Knauf y Lafarge incluidos. Válido para OCT y bomberos.',
+  srOnly: 'Pladur Menorca — instalador desde 2004 de pladur ignífugo (Placa F: Placo Pregyfeu, Knauf GKF, Lafarge Prégyflam) en Menorca. Sectorizaciones EI-30 a EI-240. Hoteles, clínicas, aparcamientos, naves industriales. Cumplimiento CTE DB-SI. Certificados de laboratorio incluidos. Tel: 627 829 723.',
+  breadcrumbHome: 'Inicio',
+  breadcrumbLabel: 'Pladur Ignífugo',
+  schemaServiceName: 'Instalación de Pladur Ignífugo en Menorca',
+  schemaServiceDesc: 'Instalador desde 2004 de Placa F (Placo Pregyfeu, Knauf GKF, Lafarge Prégyflam) en Menorca. Protección pasiva EI-30 a EI-240. Hoteles, aparcamientos, clínicas. Certificados EI de laboratorio y documentación CTE DB-SI.',
+  schemaServiceType: 'Protección Pasiva Contra Incendios',
+}
+
+const meta = lang === 'en' ? {
+  title: 'Fire-Rated Drywall Menorca | Placa F CTE DB-SI since 2004',
+  description: 'Installer since 2004 of Placa F (Placo, Knauf, Lafarge) in Menorca. EI-30 to EI-240 sectors for hotels, clinics, car parks. CTE DB-SI certificates.',
+  canonical: '/en/pladur-ignifugo-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEs: '/pladur-ignifugo-menorca',
+} : {
+  title: 'Pladur Ignífugo Menorca | Placa F CTE DB-SI desde 2004',
+  description: 'Instalador desde 2004 de Placa F (Placo, Knauf, Lafarge) en Menorca. Sectores EI-30 a EI-240 para hoteles, clínicas y aparcamientos. Certificados CTE DB-SI.',
+  canonical: '/pladur-ignifugo-menorca',
+  ogImage: '/og/home.jpg',
+  alternateEn: '/en/pladur-ignifugo-menorca',
+}
+
+const breadcrumbHref = lang === 'en' ? '/en/pladur-ignifugo-menorca' : '/pladur-ignifugo-menorca'
+const hotelesHref = '/pladur-hoteles-menorca'
+const preciosHref = '/precios-pladur-menorca'
+const presupuestoHref = lang === 'en' ? '/en/presupuesto-pladur' : '/presupuesto-pladur'
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaService
+      name={t.schemaServiceName}
+      description={t.schemaServiceDesc}
+      serviceType={t.schemaServiceType}
+      url={breadcrumbHref}
+    />
+    <SchemaFAQ faqs={pageFaqs} />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={[{ label: t.breadcrumbHome, href: lang === 'en' ? '/en/' : '/' }, { label: t.breadcrumbLabel, href: breadcrumbHref }]} />
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <p class="sr-only" aria-hidden="false">{t.srOnly}</p>
+
+  <!-- Hero -->
+  <section class="pt-24 pb-20 lg:pt-32 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/70 border border-warm-border/50 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="max-w-4xl mx-auto text-center">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-warm-200 text-foreground border border-warm-border/60 text-xs font-semibold tracking-wide mb-6">
+            {t.heroBadge}
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.h1}
+          </h1>
+          <p class="text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+            {t.heroSubtitle}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href={presupuestoHref}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-base tracking-wide shadow-lg shadow-accent/20 hover:shadow-xl hover:shadow-accent/30 transition-[background-color,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            >
+              {t.ctaPrimary}
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </a>
+            <a
+              href={`tel:${siteConfig.phoneRaw}`}
+              class="inline-flex items-center gap-2 px-8 py-4 rounded-xl border-2 border-warm-border hover:bg-foreground-dark hover:border-foreground-dark hover:text-white text-foreground font-bold text-base tracking-wide transition-[background-color,border-color,color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            >
+              <svg aria-hidden="true" class="size-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              {siteConfig.phone}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de placa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s1Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s1Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s1Intro}
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 stagger-children">
+        {t.s1Items.map((p) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 p-6 cursor-default">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="size-4 rounded-full bg-rose-400 border border-rose-500" />
+              <p class="font-bold text-foreground" set:html={p.tipo} />
+            </div>
+            <div class="space-y-2">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s1Color}</p>
+                <p class="text-sm text-foreground">{p.color}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s1Resistance}</p>
+                <p class="text-sm font-bold text-foreground-dark">{p.resistencia}</p>
+              </div>
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s1Use}</p>
+                <p class="text-sm text-muted">{p.aplicacion}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Normativa -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-10 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s2Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+          {t.s2Title}
+        </h2>
+      </div>
+      <div class="max-w-3xl space-y-5 text-muted leading-relaxed mb-12">
+        <p set:html={t.s2P1} />
+        <blockquote class="border-l-4 border-foreground/20 pl-5 my-6 italic text-muted">
+          <p set:html={t.s2Quote} />
+          <cite class="block mt-2 text-sm not-italic text-muted/70">{t.s2Cite}</cite>
+        </blockquote>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {t.s2Items.map((n) => (
+          <div class="bg-white/70 rounded-3xl border border-warm-border/50 shadow-card p-6 cursor-default">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md bg-foreground text-white text-[10px] font-bold uppercase tracking-wider mb-3">{n.uso}</span>
+            <p class="font-bold text-foreground text-sm mb-2">{n.requisito}</p>
+            <p class="text-xs text-muted">{n.norma}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Aplicaciones -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-12 animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s3Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s3Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed" set:html={t.s3Intro} />
+      </div>
+      <div class="space-y-3">
+        {t.s3Items.map((a) => (
+          <div class="group flex items-start gap-5 bg-white/70 border border-warm-border/50 rounded-3xl p-6 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 cursor-default">
+            <div class="shrink-0 size-11 bg-surface border border-nav-border rounded-xl flex items-center justify-center group-hover:bg-foreground-dark group-hover:border-foreground-dark transition-all duration-300">
+              <svg aria-hidden="true" class="size-5 text-foreground group-hover:text-white transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-foreground text-base mb-1">{a.titulo}</h3>
+              <p class="text-sm text-muted leading-relaxed">{a.descripcion}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Precios -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12 max-w-2xl animate-fade-up">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.s4Eyebrow}
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-4">
+          {t.s4Title}
+        </h2>
+        <p class="text-lg text-muted leading-relaxed">
+          {t.s4Intro}
+        </p>
+      </div>
+      <div class="space-y-3">
+        {t.s4Items.map((p) => (
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 bg-white/70 rounded-2xl border border-warm-border/50 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 transition-[transform,box-shadow] duration-300 px-5 py-4 cursor-default">
+            <div class="sm:w-64 shrink-0">
+              <p class="text-sm font-bold text-foreground">{p.sistema}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-2 sm:flex-1">
+              <div>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-muted">{t.s4Resistance}</p>
+                <p class="text-sm font-bold text-foreground-dark">{p.ei}</p>
+              </div>
+              <div class="sm:ml-auto flex items-baseline gap-2">
+                <span class="text-lg font-bold text-foreground-dark">{p.desde}</span>
+                <span class="text-muted">—</span>
+                <span class="text-lg font-bold text-foreground-dark">{p.hasta}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="mt-8">
+        <a
+          href={preciosHref}
+          class="inline-flex items-center gap-2 text-foreground font-semibold underline underline-offset-2 text-sm transition-colors"
+        >
+          {t.s4Link}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Documentación -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.s5Eyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight text-balance mb-6">
+            {t.s5Title}
+          </h2>
+          <div class="space-y-5 text-muted leading-relaxed">
+            <p>{t.s5P1}</p>
+          </div>
+        </div>
+        <div>
+          <div class="bg-foreground rounded-3xl p-7 lg:mt-12">
+            <p class="text-[10px] font-bold uppercase tracking-wider text-white/50 mb-5">{t.s5Card}</p>
+            <div class="space-y-0">
+              {t.s5Items.map((doc) => (
+                <div class="flex items-start gap-3 py-3.5 border-b border-white/10 last:border-0">
+                  <div class="shrink-0 w-4 h-4 bg-white/20 rounded-full flex items-center justify-center mt-0.5">
+                    <svg aria-hidden="true" class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <span class="text-sm text-white/70">{doc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Enlace a hoteles -->
+  <section class="pb-10 lg:pb-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-foreground rounded-3xl p-7 sm:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <p class="text-white/80 text-sm leading-relaxed" set:html={t.hotelLink} />
+        <a href={hotelesHref} class="inline-flex items-center gap-2 text-white font-semibold underline underline-offset-2 text-sm shrink-0">
+          {t.hotelLinkLabel}
+          <svg aria-hidden="true" class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Artículos relacionados -->
+  <ArticulosRelacionados articulos={t.articulos} />
+
+  <!-- FAQs -->
+  <FaqAccordion
+    client:visible
+    lang={lang}
+    faqs={pageFaqs}
+    titulo={t.faqTitle}
+    subtitulo={t.faqSubtitle}
+  />
+
+  <!-- CTA -->
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaTitle}
+    subtitulo={t.ctaSubtitle}
+  />
+
+  <ServiciosRelacionados currentPath={breadcrumbHref} />
+
+  <Footer slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

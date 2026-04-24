@@ -1,0 +1,14 @@
+{
+  "issuer": "https://www.pladurmenorca.com",
+  "grant_types_supported": [],
+  "response_types_supported": [],
+  "token_endpoint_auth_methods_supported": ["none"],
+  "service_documentation": "https://www.pladurmenorca.com/api/openapi.json",
+  "x-api-auth-model": "public-no-auth",
+  "x-api-description": "Public API without authentication. All endpoints are open to agents and integrations. Abuse protection is provided by per-IP rate limiting (20 requests per 24 hours on /api/contacto) and request validation.",
+  "x-rate-limit": {
+    "per-ip-daily-quota": 20,
+    "scope": "/api/contacto",
+    "nginx-burst": "1 req/s with burst of 3"
+  }
+}

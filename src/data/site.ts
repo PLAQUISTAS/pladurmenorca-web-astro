@@ -1,12 +1,26 @@
+const descriptionI18n = {
+  es: 'Empresa especializada en instalación de pladur en Menorca. Falsos techos, tabiques, aislamiento acústico y térmico. +20 años, +6.000 proyectos Baleares. Presupuesto gratis.',
+  en: 'Drywall installation company in Menorca. False ceilings, partitions, acoustic and thermal insulation. 20+ years, 6,000+ projects across the Balearic Islands. Free quote.',
+}
+
+const sloganI18n = {
+  es: 'Especialistas exclusivos en pladur en Menorca',
+  en: 'Exclusive drywall specialists in Menorca',
+}
+
 export const siteConfig = {
-  name: 'Pladur Mallorca',
-  description: 'Empresa líder en instalación de pladur y escayola en Mallorca. Falsos techos, tabiques, aislamiento acústico y térmico. +20 años, +6.000 proyectos. Presupuesto gratis.',
-  url: 'https://www.pladurmallorca.com',
+  name: 'Pladur Menorca',
+  legalName: 'Plaquistas y Acabados SL',
+  description: descriptionI18n.es,
+  descriptionI18n,
+  sloganI18n,
+  url: 'https://www.pladurmenorca.com',
   email: 'info@plaquistas.com',
   phone: '627 829 723',
   phoneRaw: '627829723',
   whatsapp: '34627829723',
-  whatsappText: 'Hola,%20me%20interesa%20un%20presupuesto%20de%20pladur%20en%20Mallorca',
+  whatsappText: 'Hola,%20me%20interesa%20un%20presupuesto%20de%20pladur%20en%20Menorca',
+  whatsappTextEn: 'Hi,%20I%27m%20interested%20in%20a%20drywall%20quote%20in%20Menorca',
   address: {
     street: 'Carrer Jacint Verdaguer, 37, ESC. A 4º 2ª',
     city: 'Palma de Mallorca',
@@ -14,17 +28,22 @@ export const siteConfig = {
     postalCode: '07004',
     country: 'ES',
     countryName: 'España',
+    note: 'Domicilio social de Plaquistas y Acabados SL en Palma de Mallorca (desde 2004). Servicio operativo en toda Menorca.',
   },
   coordinates: {
+    // Oficina de la SL matriz (Palma de Mallorca)
     lat: 39.5696,
     lng: 2.6502,
   },
+  geoPlacename: 'Menorca',
   experience: 20,
   foundingYear: 2004,
+  menorcaLaunchYear: 2026,
   openingHoursText: 'Lunes–Viernes: 8:00–18:00 | Sábados: 8:00–14:00',
+  openingHoursTextEn: 'Mon–Fri: 8:00–18:00 | Sat: 8:00–14:00',
   social: {
-    instagram: 'https://www.instagram.com/pladurmallorca',
-    google: 'https://share.google/GI7l8UBujoMGt39ae',
+    instagram: 'https://www.instagram.com/pladurmenorca',
+    google: 'https://share.google/ROaaqglclRkfMliJ6',
     facebook: '',
     linkedin: '',
     youtube: '',
@@ -34,17 +53,21 @@ export const siteConfig = {
   og: {
     image: '/og/home.jpg',
   },
-  googleReviewsUrl: 'https://g.page/r/Ce99kVWSsJKxEBM/review',
-  indexNowKey: '20a892852a8742a5967e019c782f9775',
-  aggregateRating: {
-    ratingValue: '4.7',
-    reviewCount: '25',
+  googleReviewsUrl: 'https://share.google/ROaaqglclRkfMliJ6',
+  indexNowKey: '',
+  // Omitido hasta tener ≥5 reseñas reales Menorca (FASE 3 §10)
+  aggregateRating: null as null | { ratingValue: string; reviewCount: string },
+  // Experiencia y proyectos de la SL matriz
+  parentCompany: {
+    name: 'Pladur Menorca',
+    url: 'https://www.pladurmenorca.com',
+    projectsTotal: 6000,
+    rating: '4.7',
+    reviews: 25,
   },
   areaServed: [
-    'Palma de Mallorca', 'Calvià', 'Llucmajor', 'Marratxí', 'Inca', 'Manacor',
-    'Alcúdia', 'Pollença', 'Felanitx', 'Andratx', 'Santanyí', 'Sa Pobla',
-    'Sóller', 'Campos', 'Porreres', 'Petra', 'Artà', 'Binissalem',
-    'Santa Maria del Camí', 'Ses Salines', 'Esporles', 'Valldemossa',
+    'Maó', 'Ciutadella', 'Alaior', 'Es Mercadal', 'Ferreries',
+    'Sant Lluís', 'Es Migjorn Gran', 'Es Castell',
   ],
 }
 

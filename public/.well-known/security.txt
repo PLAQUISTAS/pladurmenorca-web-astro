@@ -1,4 +1,4 @@
 Contact: info@plaquistas.com
-Contact: https://www.pladurmallorca.com/contacto
+Contact: https://www.pladurmenorca.com/contacto
 Preferred-Languages: es, en
-Canonical: https://www.pladurmallorca.com/.well-known/security.txt
+Canonical: https://www.pladurmenorca.com/.well-known/security.txt

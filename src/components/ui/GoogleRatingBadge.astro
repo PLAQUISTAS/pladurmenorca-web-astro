@@ -6,8 +6,10 @@ interface Props {
 }
 
 const { variant = 'default' } = Astro.props
-const rating = siteConfig.aggregateRating.ratingValue
-const reviews = siteConfig.aggregateRating.reviewCount
+// Fallback al rating de la SL matriz hasta tener ≥5 reseñas propias Menorca
+const rating = siteConfig.aggregateRating?.ratingValue ?? siteConfig.parentCompany.rating
+const reviews = siteConfig.aggregateRating?.reviewCount ?? String(siteConfig.parentCompany.reviews)
+void reviews
 ---
 
 {variant === 'default' && (

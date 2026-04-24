@@ -1,17 +1,17 @@
 ---
 export const prerender = true
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Header from '@/components/layout/Header'
+import Header from '@/components/layout/Header.astro'
 import Footer from '@/components/layout/Footer.astro'
-import WhatsAppButton from '@/components/layout/WhatsAppButton'
-import CookieBanner from '@/components/layout/CookieBanner'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
 import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
 import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
 import { siteConfig } from '@/data/site'
 
 const meta = {
-  title: 'Página no encontrada | Pladur Mallorca',
-  description: 'La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de instalación de pladur en Mallorca. Tel: 627 829 723.',
+  title: 'Página no encontrada | Pladur Menorca',
+  description: 'La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de instalación de pladur en Menorca. Tel: 627 829 723.',
   canonical: '/404',
   noindex: true,
 }
@@ -23,7 +23,7 @@ const meta = {
     <SchemaBreadcrumb items={[{ label: 'Inicio', href: '/' }, { label: 'Error 404', href: '/404' }]} />
   </Fragment>
 
-  <Header client:idle slot="header" />
+  <Header slot="header" />
 
   <section class="min-h-[80vh] flex items-center justify-center py-24 lg:py-32 relative overflow-hidden">
     <!-- Subtle background decorations -->
@@ -55,7 +55,7 @@ const meta = {
           </h1>
 
           <p class="text-lg text-muted leading-relaxed max-w-lg mx-auto mb-10">
-            La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de pladur en Mallorca.
+            La página que buscas no existe o ha sido movida. Vuelve al inicio o explora nuestros servicios de pladur en Menorca.
           </p>
 
           <!-- Actions -->
@@ -113,7 +113,7 @@ const meta = {
 
   <Footer slot="footer" />
   <Fragment slot="after-footer">
-    <WhatsAppButton client:visible />
-    <CookieBanner client:idle />
+    <WhatsAppButton />
+    <CookieBanner />
   </Fragment>
 </BaseLayout>

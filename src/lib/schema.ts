@@ -7,7 +7,7 @@ export function localBusinessSchema() {
     '@type': 'HomeAndConstructionBusiness',
     '@id': `${siteConfig.url}/#localbusiness`,
     name: siteConfig.name,
-    alternateName: ['Plaquistas y Acabados SL', 'pladurmallorca.com'],
+    alternateName: ['Plaquistas y Acabados SL', 'pladurmenorca.com'],
     url: siteConfig.url,
     logo: `${siteConfig.url}/images/logo.webp`,
     image: `${siteConfig.url}/og/home.jpg`,
@@ -20,7 +20,7 @@ export function localBusinessSchema() {
       minValue: 50,
       maxValue: 100,
     },
-    slogan: 'Especialistas exclusivos en pladur en Mallorca desde 2004',
+    slogan: 'Especialistas exclusivos en pladur en Menorca desde 2004',
     address: {
       '@type': 'PostalAddress',
       streetAddress: siteConfig.address.street,
@@ -56,17 +56,19 @@ export function localBusinessSchema() {
         name: 'Islas Baleares',
       },
     })),
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: siteConfig.aggregateRating.ratingValue,
-      reviewCount: siteConfig.aggregateRating.reviewCount,
-      bestRating: '5',
-      worstRating: '1',
-    },
+    ...(siteConfig.aggregateRating && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: siteConfig.aggregateRating.ratingValue,
+        reviewCount: siteConfig.aggregateRating.reviewCount,
+        bestRating: '5',
+        worstRating: '1',
+      },
+    }),
     priceRange: '€€',
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
-      name: 'Servicios de pladur en Mallorca',
+      name: 'Servicios de pladur en Menorca',
       itemListElement: [
         {
           '@type': 'OfferCatalog',
@@ -145,7 +147,7 @@ export function serviceSchema({
     },
     areaServed: {
       '@type': 'AdministrativeArea',
-      name: 'Mallorca, Islas Baleares, España',
+      name: 'Menorca, Islas Baleares, España',
     },
     ...(image && { image: image.startsWith('http') ? image : `${siteConfig.url}${image}` }),
   }
@@ -223,7 +225,7 @@ export function offersSchema(
         },
         areaServed: {
           '@type': 'AdministrativeArea',
-          name: 'Mallorca, Islas Baleares, España',
+          name: 'Menorca, Islas Baleares, España',
         },
       },
     })),
@@ -237,7 +239,7 @@ export function articleSchema({
   image,
   datePublished,
   dateModified,
-  authorName = 'Equipo Pladur Mallorca',
+  authorName = 'Equipo Pladur Menorca',
   wordCount,
   articleSection,
   keywords,
@@ -305,7 +307,7 @@ export function organizationSchema() {
     '@type': 'Organization',
     '@id': `${siteConfig.url}/#organization`,
     name: siteConfig.name,
-    alternateName: ['Plaquistas y Acabados SL', 'pladurmallorca.com'],
+    alternateName: ['Plaquistas y Acabados SL', 'pladurmenorca.com'],
     url: siteConfig.url,
     logo: {
       '@type': 'ImageObject',
@@ -321,17 +323,19 @@ export function organizationSchema() {
       minValue: 50,
       maxValue: 100,
     },
-    slogan: 'Especialistas exclusivos en pladur en Mallorca desde 2004',
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: siteConfig.aggregateRating.ratingValue,
-      reviewCount: siteConfig.aggregateRating.reviewCount,
-      bestRating: '5',
-      worstRating: '1',
-    },
+    slogan: 'Especialistas exclusivos en pladur en Menorca',
+    ...(siteConfig.aggregateRating && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: siteConfig.aggregateRating.ratingValue,
+        reviewCount: siteConfig.aggregateRating.reviewCount,
+        bestRating: '5',
+        worstRating: '1',
+      },
+    }),
     areaServed: {
       '@type': 'State',
-      name: 'Mallorca, Islas Baleares',
+      name: 'Menorca, Islas Baleares',
     },
     sameAs: Object.values(siteConfig.social).filter(Boolean),
     contactPoint: {

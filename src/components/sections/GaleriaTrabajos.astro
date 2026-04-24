@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import Button from '@/components/ui/Button.astro'
 
 interface ImagenGaleria {
   src: string
@@ -11,10 +12,10 @@ interface Props {
 }
 
 const defaultImagenes: ImagenGaleria[] = [
-  { src: '', alt: 'Falso techo continuo de pladur con integración LED en vivienda de Mallorca' },
-  { src: '', alt: 'Tabiques de pladur para distribución open space en oficina de Mallorca' },
-  { src: '', alt: 'Aislamiento acústico con pladur en apartamento turístico de Calvià, Mallorca' },
-  { src: '', alt: 'Reforma integral con pladur en piso de Santa Catalina, Palma de Mallorca' },
+  { src: '', alt: 'Falso techo continuo de pladur con integración LED en vivienda de Baleares' },
+  { src: '', alt: 'Tabiques de pladur para distribución open space en oficina de Baleares' },
+  { src: '', alt: 'Aislamiento acústico con pladur en apartamento turístico de Baleares' },
+  { src: '', alt: 'Reforma integral con pladur en piso de casco histórico de Baleares' },
 ]
 
 const { imagenes: imagenesProp } = Astro.props
@@ -33,7 +34,7 @@ const imagenes = imagenesProp ?? defaultImagenes
         Galería de trabajos
       </h2>
       <p class="mt-4 text-lg text-muted leading-relaxed">
-        Fotos reales de proyectos ejecutados en toda Mallorca.
+        Fotos reales de proyectos ejecutados por nuestro equipo en Baleares.
       </p>
     </div>
 
@@ -132,7 +133,7 @@ const imagenes = imagenesProp ?? defaultImagenes
         </svg>
       </div>
       <p class="text-sm text-muted">
-        Todas las imágenes corresponden a <strong class="text-foreground">proyectos reales</strong> ejecutados por nuestro equipo en viviendas y locales de Mallorca.
+        Todas las imágenes corresponden a <strong class="text-foreground">proyectos reales</strong> ejecutados por nuestro equipo en viviendas y locales de Baleares.
       </p>
     </div>
 
@@ -143,25 +144,16 @@ const imagenes = imagenesProp ?? defaultImagenes
           ¿Quieres ver más proyectos?
         </p>
         <p class="text-white/60 text-sm mt-1">
-          Tenemos más de 6.000 proyectos ejecutados en toda Mallorca.
+          Tenemos más de 6.000 proyectos ejecutados en toda Menorca.
         </p>
       </div>
       <div class="flex flex-col sm:flex-row gap-4 shrink-0">
-        <a
-          href="/proyectos"
-          class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border-2 border-white/30 hover:border-white text-white font-bold text-sm tracking-wide transition-[border-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
-        >
+        <Button href="/proyectos" variant="ghost-dark" size="md" class="border-2 border-white/30 hover:border-white">
           Ver todos los proyectos
-        </a>
-        <a
-          href="/presupuesto-pladur"
-          class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-accent hover:bg-accent-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-accent/30 transition-[background-color] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-foreground"
-        >
+        </Button>
+        <Button href="/presupuesto-pladur" variant="primary" size="md" withArrow>
           Pedir presupuesto
-          <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-          </svg>
-        </a>
+        </Button>
       </div>
     </div>
   </div>

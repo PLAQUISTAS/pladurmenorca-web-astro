@@ -1,0 +1,14 @@
+{
+  "resource": "https://www.pladurmenorca.com/api/",
+  "authorization_servers": [],
+  "scopes_supported": [],
+  "bearer_methods_supported": [],
+  "resource_documentation": "https://www.pladurmenorca.com/api/openapi.json",
+  "x-resource-auth-model": "public-no-auth",
+  "x-resource-description": "Public REST API for Pladur Menorca. No access token required: /api/contacto accepts contact/quote submissions, /api/status returns health. Abuse protection: per-IP rate limiting (20 req/24h on /api/contacto) + Zod validation + anti-spam heuristics.",
+  "x-rate-limit": {
+    "per-ip-daily-quota": 20,
+    "scope": "/api/contacto",
+    "nginx-burst": "1 req/s with burst of 3"
+  }
+}

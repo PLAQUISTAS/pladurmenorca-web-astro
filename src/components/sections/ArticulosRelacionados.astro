@@ -23,7 +23,7 @@ const { articulos } = Astro.props
             href={`/blog/${a.slug}`}
             class="group bg-white rounded-2xl border border-warm-border p-6 shadow-soft hover:shadow-soft-lg hover:-translate-y-0.5 transition-[box-shadow,transform] duration-300"
           >
-            <h3 class="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 mb-2 leading-snug">
+            <h3 aria-label={a.titulo} class="text-base font-bold text-foreground group-hover:text-accent transition-colors duration-200 mb-2 leading-snug">
               {a.titulo}
             </h3>
             <p class="text-sm text-muted leading-relaxed line-clamp-2">

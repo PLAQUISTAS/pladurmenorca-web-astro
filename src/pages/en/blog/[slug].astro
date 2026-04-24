@@ -1,0 +1,450 @@
+---
+export const prerender = true
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/layout/Header.astro'
+import Footer from '@/components/layout/Footer.astro'
+import WhatsAppButton from '@/components/layout/WhatsAppButton.astro'
+import CookieBanner from '@/components/layout/CookieBanner.astro'
+import SchemaArticle from '@/components/seo/SchemaArticle.astro'
+import SchemaLocalBusiness from '@/components/seo/SchemaLocalBusiness.astro'
+import SchemaBreadcrumb from '@/components/seo/SchemaBreadcrumb.astro'
+import SchemaFAQ from '@/components/seo/SchemaFAQ.astro'
+import CtaBanner from '@/components/sections/CtaBanner.astro'
+import ContactoRapidoCard from '@/components/sections/ContactoRapidoCard.astro'
+import Button from '@/components/ui/Button.astro'
+import { Image } from 'astro:assets'
+import { getAllPosts, getPostBySlug, getTranslationSlug, formatDate } from '@/lib/blog'
+import { siteConfig } from '@/data/site'
+import type { FAQ } from '@/data/faqs/types'
+import type { Lang } from '@/i18n'
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts('en')
+  return posts.map((post) => ({ params: { slug: post.slug } }))
+}
+
+const lang = (Astro.currentLocale ?? 'en') as Lang
+const { slug } = Astro.params
+const [post, allPosts] = await Promise.all([
+  getPostBySlug(slug!, lang),
+  getAllPosts(lang),
+])
+
+if (!post) {
+  return Astro.redirect(lang === 'en' ? '/en/404' : '/404')
+}
+
+const relatedPosts = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3)
+
+const blogPath = lang === 'en' ? '/en/blog' : '/blog'
+const homePath = lang === 'en' ? '/en' : '/'
+const postPath = (s: string) => `${blogPath}/${s}`
+
+const t = lang === 'en' ? {
+  breadcrumbHome: 'Home',
+  breadcrumbBlog: 'Blog',
+  updatedPrefix: 'Updated:',
+  sidebarEyebrow: 'Start your project',
+  sidebarTitle: 'Get your free quote',
+  sidebarList: ['Free quote', 'Response within 24-48 hours', 'Fixed price, no surprises'],
+  sidebarCta: 'Request a quote',
+  sidebarRating: (r: string | number) => `${r}/5 on Google`,
+  infoEyebrow: 'About this article',
+  infoCategory: 'Category',
+  infoAuthor: 'Author',
+  infoPublished: 'Published',
+  infoUpdated: 'Updated',
+  infoReading: 'Reading time',
+  ctaBannerTitle: 'Got a project in mind?',
+  ctaBannerSubtitle: 'Free quote in 24 hours. No obligation.',
+  relatedEyebrow: 'Continue reading',
+  relatedTitle: 'Related articles',
+  relatedCta: 'Read article',
+  seeAll: 'See all articles',
+  exploreEyebrow: 'Explore more',
+  exploreTitle: 'You may also be interested in',
+  seeMore: 'See more',
+  relatedLinks: [
+    { href: '/en/presupuesto-pladur', label: 'Free Quote', desc: 'Fixed price within 24-48h, no obligation.' },
+    { href: '/en/precios-pladur-menorca', label: 'Prices per m²', desc: '2026 updated rates for every drywall system.' },
+    { href: '/en/instalacion-pladur-menorca', label: 'Installation Services', desc: 'False ceilings, partitions, wall linings and full refurbishments.' },
+  ],
+} : {
+  breadcrumbHome: 'Inicio',
+  breadcrumbBlog: 'Blog',
+  updatedPrefix: 'Actualizado:',
+  sidebarEyebrow: 'Empieza tu proyecto',
+  sidebarTitle: 'Pide tu presupuesto gratis',
+  sidebarList: ['Presupuesto gratis', 'Respuesta en 24-48 horas', 'Precio cerrado sin sorpresas'],
+  sidebarCta: 'Solicitar presupuesto',
+  sidebarRating: (r: string | number) => `${r}/5 en Google`,
+  infoEyebrow: 'Sobre este artículo',
+  infoCategory: 'Categoría',
+  infoAuthor: 'Autor',
+  infoPublished: 'Publicado',
+  infoUpdated: 'Actualizado',
+  infoReading: 'Lectura',
+  ctaBannerTitle: '¿Tienes un proyecto en mente?',
+  ctaBannerSubtitle: 'Presupuesto gratis en 24 horas. Sin compromiso.',
+  relatedEyebrow: 'Continúa leyendo',
+  relatedTitle: 'Artículos relacionados',
+  relatedCta: 'Leer artículo',
+  seeAll: 'Ver todos los artículos',
+  exploreEyebrow: 'Explora más',
+  exploreTitle: 'También te puede interesar',
+  seeMore: 'Ver más',
+  relatedLinks: [
+    { href: '/presupuesto-pladur', label: 'Presupuesto Gratuito', desc: 'Precio cerrado en 24-48h sin compromiso.' },
+    { href: '/precios-pladur-menorca', label: 'Precios por m²', desc: 'Tarifas actualizadas 2026 para todos los sistemas de pladur.' },
+    { href: '/instalacion-pladur-menorca', label: 'Servicios de Instalación', desc: 'Falsos techos, tabiques, trasdosados y reformas integrales.' },
+  ],
+}
+
+const breadcrumbItems = [
+  { label: t.breadcrumbHome, href: homePath },
+  { label: t.breadcrumbBlog, href: blogPath },
+  { label: post.title, href: postPath(post.slug) },
+]
+
+const postFaqs = (post as unknown as { faqs?: FAQ[] }).faqs
+
+const ogImage = post.image.startsWith('http') ? post.image : `${siteConfig.url}${post.image}`
+
+// Alternate link si existe la traducción del slug en el otro idioma.
+const altLang: Lang = lang === 'en' ? 'es' : 'en'
+const altSlug = await getTranslationSlug(post.slug, altLang)
+const altPath = altSlug ? (altLang === 'en' ? `/en/blog/${altSlug}` : `/blog/${altSlug}`) : undefined
+
+const meta = {
+  title: post.title,
+  description: post.description,
+  canonical: postPath(post.slug),
+  ogImage,
+  type: 'article' as const,
+  publishedTime: post.date,
+  modifiedTime: post.updated || post.date,
+  articleSection: post.category,
+  articleTags: post.keywords,
+  preloadImage: post.image,
+  ...(altPath && lang === 'es' ? { alternateEn: altPath } : {}),
+  ...(altPath && lang === 'en' ? { alternateEs: altPath } : {}),
+}
+---
+
+<BaseLayout meta={meta}>
+  <Fragment slot="head">
+    <SchemaArticle
+      title={post.title}
+      description={post.description}
+      url={postPath(post.slug)}
+      image={post.image}
+      datePublished={post.date}
+      dateModified={post.updated}
+      authorName={post.author}
+      articleSection={post.category}
+      keywords={post.keywords}
+    />
+    <SchemaLocalBusiness />
+    <SchemaBreadcrumb items={breadcrumbItems} />
+    {postFaqs && postFaqs.length > 0 && <SchemaFAQ faqs={postFaqs} />}
+  </Fragment>
+
+  <Header slot="header" lang={lang} alternateHref={lang === 'en' ? meta.alternateEs : meta.alternateEn} />
+
+  <!-- Hero -->
+  <section class="pt-28 pb-20 lg:pt-36 lg:pb-28 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white border border-warm-border/40 rounded-3xl px-6 sm:px-10 lg:px-16 py-14 lg:py-20 relative overflow-hidden shadow-warm animate-fade-up">
+        <div class="relative max-w-4xl mx-auto text-center">
+          <!-- Breadcrumb -->
+          <nav aria-label="Breadcrumb" class="mb-6">
+            <ol class="flex flex-wrap items-center justify-center gap-1.5 text-sm text-muted">
+              {breadcrumbItems.map((item, i) => (
+                <li class="flex items-center gap-1.5">
+                  {i > 0 && (
+                    <svg class="size-3.5 text-warm-border" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  )}
+                  {i < breadcrumbItems.length - 1 ? (
+                    <a href={item.href} class="hover:text-foreground transition-colors">
+                      {item.label}
+                    </a>
+                  ) : (
+                    <span class="text-foreground font-medium truncate max-w-[200px] sm:max-w-[400px]">{item.label}</span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div class="flex items-center justify-center gap-3 mb-6">
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-warm-200 text-foreground border border-warm-border/60">
+              {post.category}
+            </span>
+          </div>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance mb-8">
+            {post.title}
+          </h1>
+          <!-- Article meta -->
+          <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-muted">
+            <div class="flex items-center gap-2">
+              <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+              <span>{post.author}</span>
+            </div>
+            <span class="size-1 rounded-full bg-warm-border" aria-hidden="true"></span>
+            <div class="flex items-center gap-2">
+              <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+              </svg>
+              <time datetime={post.date}>{formatDate(post.date, lang)}</time>
+            </div>
+            {post.updated && post.updated !== post.date && (
+              <>
+                <span class="size-1 rounded-full bg-warm-border" aria-hidden="true"></span>
+                <div class="flex items-center gap-2">
+                  <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  <span>{t.updatedPrefix} {formatDate(post.updated, lang)}</span>
+                </div>
+              </>
+            )}
+            <span class="size-1 rounded-full bg-warm-border" aria-hidden="true"></span>
+            <div class="flex items-center gap-2">
+              <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{post.readingTime}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content area -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+
+        <!-- Main content -->
+        <article class="lg:col-span-8">
+          <!-- Featured image -->
+          {post.image && (
+            <div class="relative aspect-[16/9] mb-14 overflow-hidden rounded-2xl bg-warm-border-light border border-warm-border/40 shadow-card">
+              <Image
+                src={post.image}
+                alt={`${post.title} — ${post.category}, Pladur Menorca`}
+                width={900}
+                height={506}
+                class="object-cover w-full h-full"
+                loading="eager"
+              />
+            </div>
+          )}
+
+          <!-- MDX/Markdown content -->
+          <div class="prose-pladur max-w-prose" set:html={post.content} />
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="lg:col-span-4">
+          <div class="sticky top-24 space-y-6">
+
+            <!-- CTA presupuesto -->
+            <ContactoRapidoCard lang={lang} />
+
+            <!-- Article info card -->
+            <div class="bg-white rounded-3xl border border-warm-border/40 p-7 shadow-card">
+              <p class="text-xs font-semibold uppercase tracking-wide text-foreground mb-6">
+                {t.infoEyebrow}
+              </p>
+              <div class="space-y-5">
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center">
+                    <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6z" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-xs text-muted">{t.infoCategory}</p>
+                    <p class="text-sm font-semibold text-foreground truncate">{post.category}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center">
+                    <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-xs text-muted">{t.infoAuthor}</p>
+                    <p class="text-sm font-semibold text-foreground truncate">{post.author}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center">
+                    <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-xs text-muted">{t.infoPublished}</p>
+                    <p class="text-sm font-semibold text-foreground">{formatDate(post.date, lang)}</p>
+                  </div>
+                </div>
+
+                {post.updated && post.updated !== post.date && (
+                  <div class="flex items-center gap-3">
+                    <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center">
+                      <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                    </div>
+                    <div class="min-w-0">
+                      <p class="text-xs text-muted">{t.infoUpdated}</p>
+                      <p class="text-sm font-semibold text-foreground">{formatDate(post.updated, lang)}</p>
+                    </div>
+                  </div>
+                )}
+
+                <div class="flex items-center gap-3">
+                  <div class="shrink-0 size-9 rounded-xl bg-surface border border-nav-border flex items-center justify-center">
+                    <svg class="size-4 text-foreground" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div class="min-w-0">
+                    <p class="text-xs text-muted">{t.infoReading}</p>
+                    <p class="text-sm font-semibold text-foreground">{post.readingTime}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner
+    lang={lang}
+    titulo={t.ctaBannerTitle}
+    subtitulo={t.ctaBannerSubtitle}
+  />
+
+  <!-- Posts relacionados -->
+  {relatedPosts.length > 0 && (
+    <section class="py-20 lg:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-14 animate-fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+            {t.relatedEyebrow}
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-foreground leading-tight text-balance">
+            {t.relatedTitle}
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 stagger-children">
+          {relatedPosts.map((relPost) => (
+            <a href={postPath(relPost.slug)} class="group block h-full">
+              <article class="h-full bg-white rounded-3xl border border-warm-border/40 shadow-card hover:shadow-card-hover hover:-translate-y-0.5 flex flex-col overflow-hidden"
+                style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;">
+                <!-- Image -->
+                <div class="relative aspect-[16/9] overflow-hidden bg-warm-border-light">
+                  <Image
+                    src={relPost.image}
+                    alt={`${relPost.title} — ${relPost.category}, Pladur Menorca`}
+                    width={600}
+                    height={338}
+                    class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div class="absolute top-4 left-4">
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-bold text-white bg-foreground/80 backdrop-blur-sm uppercase tracking-wider">
+                      {relPost.category}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Content -->
+                <div class="flex flex-col flex-1 p-7">
+                  <div class="flex items-center gap-2 mb-4 text-xs text-muted">
+                    <time datetime={relPost.date}>{formatDate(relPost.date, lang)}</time>
+                    <span class="size-1 rounded-full bg-warm-border" aria-hidden="true"></span>
+                    <span>{relPost.readingTime}</span>
+                  </div>
+
+                  <h3 class="text-lg font-bold text-foreground leading-snug mb-5 group-hover:text-muted transition-colors flex-1">
+                    {relPost.title}
+                  </h3>
+
+                  <div class="flex items-center gap-1.5 text-foreground font-semibold text-sm">
+                    {t.relatedCta}
+                    <svg class="size-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </div>
+                </div>
+              </article>
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-14 text-center">
+          <Button href={blogPath} variant="secondary" size="lg" withArrow>
+            {t.seeAll}
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Enlazado interno -->
+  <section class="py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="mb-12">
+        <span class="inline-flex items-center px-3 py-1 rounded-lg bg-surface text-foreground text-xs font-semibold uppercase tracking-wide mb-4">
+          {t.exploreEyebrow}
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-foreground leading-tight text-balance">
+          {t.exploreTitle}
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 stagger-children">
+        {t.relatedLinks.map((link) => (
+          <a
+            href={link.href}
+            class="group flex flex-col items-center text-center bg-white rounded-3xl border border-warm-border/40 p-8 shadow-card hover:shadow-card-hover hover:-translate-y-0.5"
+            style="transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;"
+          >
+            <h3 class="font-bold text-foreground text-lg mb-2">{link.label}</h3>
+            <p class="text-muted text-sm leading-relaxed mb-5">{link.desc}</p>
+            <span class="inline-flex items-center gap-1.5 text-foreground font-semibold text-sm mt-auto">
+              {t.seeMore}
+              <svg class="size-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer lang={lang} slot="footer" />
+  <Fragment slot="after-footer">
+    <WhatsAppButton />
+    <CookieBanner />
+  </Fragment>
+</BaseLayout>

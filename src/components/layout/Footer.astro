@@ -4,21 +4,21 @@ import { siteConfig } from '@/data/site'
 import GoogleRatingBadge from '@/components/ui/GoogleRatingBadge.astro'
 
 const services = [
-  { label: 'Instalación de Pladur', href: '/instalacion-pladur-mallorca' },
-  { label: 'Falsos Techos', href: '/falsos-techos-pladur-mallorca' },
-  { label: 'Tabiques de Pladur', href: '/tabiques-pladur-mallorca' },
-  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-mallorca' },
-  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-mallorca' },
-  { label: 'Escayola', href: '/escayola-mallorca' },
-  { label: 'Precios de Pladur', href: '/precios-pladur-mallorca' },
+  { label: 'Instalación de Pladur', href: '/instalacion-pladur-menorca' },
+  { label: 'Falsos Techos', href: '/falsos-techos-pladur-menorca' },
+  { label: 'Tabiques de Pladur', href: '/tabiques-pladur-menorca' },
+  { label: 'Aislamiento Acústico', href: '/aislamiento-acustico-menorca' },
+  { label: 'Aislamiento Térmico', href: '/aislamiento-termico-menorca' },
+  { label: 'Escayola', href: '/escayola-menorca' },
+  { label: 'Precios de Pladur', href: '/precios-pladur-menorca' },
 ]
 
 const zonas = [
-  { label: 'Pladur en Palma', href: '/pladur-palma' },
-  { label: 'Pladur en Calvià', href: '/pladur-calvia' },
-  { label: 'Pladur en Inca', href: '/pladur-inca' },
-  { label: 'Pladur en Manacor', href: '/pladur-manacor' },
-  { label: 'Pladur en Alcúdia', href: '/pladur-alcudia' },
+  { label: 'Pladur en Maó', href: '/pladur-mao' },
+  { label: 'Pladur en Ciutadella', href: '/pladur-ciutadella' },
+  { label: 'Pladur en Alaior', href: '/pladur-alaior' },
+  { label: 'Pladur en Es Mercadal', href: '/pladur-es-mercadal' },
+  { label: 'Pladur en Sant Lluís', href: '/pladur-sant-lluis' },
 ]
 
 const empresa = [
@@ -38,10 +38,10 @@ const empresa = [
 
       {/* Col 1: Logo + description + social */}
       <div class="lg:col-span-3 space-y-5">
-        <a href="/" aria-label="Pladur Mallorca — Inicio" class="inline-block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">
+        <a href="/" aria-label="Pladur Menorca — Inicio" class="inline-block rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2">
           <Image
-            src="/images/pladur-mallorca-logo.png"
-            alt="Pladur Mallorca"
+            src="/images/pladur-menorca-logo.png"
+            alt="Pladur Menorca"
             width={48}
             height={48}
             class="h-12 w-auto"
@@ -50,7 +50,7 @@ const empresa = [
           />
         </a>
         <p class="text-muted text-sm leading-relaxed max-w-xs">
-          Especialistas en instalación de pladur en Mallorca. Falsos techos, tabiques y aislamiento con más de {siteConfig.experience} años de experiencia.
+          Especialistas en instalación de pladur en Menorca. Falsos techos, tabiques y aislamiento con más de {siteConfig.experience} años de experiencia.
         </p>
 
         {/* Google rating badge */}
@@ -62,7 +62,7 @@ const empresa = [
             href={siteConfig.social.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Instagram de Pladur Mallorca"
+            aria-label="Instagram de Pladur Menorca"
             class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
           >
             <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -73,7 +73,7 @@ const empresa = [
             href={siteConfig.social.google}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Google Business de Pladur Mallorca"
+            aria-label="Google Business de Pladur Menorca"
             class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
           >
             <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -85,7 +85,7 @@ const empresa = [
               href={siteConfig.social.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook de Pladur Mallorca"
+              aria-label="Facebook de Pladur Menorca"
               class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
             >
               <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -98,7 +98,7 @@ const empresa = [
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn de Pladur Mallorca"
+              aria-label="LinkedIn de Pladur Menorca"
               class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
             >
               <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -111,7 +111,7 @@ const empresa = [
               href={siteConfig.social.youtube}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="YouTube de Pladur Mallorca"
+              aria-label="YouTube de Pladur Menorca"
               class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
             >
               <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -124,7 +124,7 @@ const empresa = [
               href={siteConfig.social.tiktok}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="TikTok de Pladur Mallorca"
+              aria-label="TikTok de Pladur Menorca"
               class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
             >
               <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -137,7 +137,7 @@ const empresa = [
               href={siteConfig.social.pinterest}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Pinterest de Pladur Mallorca"
+              aria-label="Pinterest de Pladur Menorca"
               class="size-10 rounded-xl bg-warm-200 border border-warm-border/60 hover:bg-warm-border-light hover:border-warm-border hover:-translate-y-0.5 transition-[background-color,border-color,transform] duration-300 flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
             >
               <svg class="size-4 fill-current text-muted" viewBox="0 0 24 24" aria-hidden="true">
@@ -159,7 +159,7 @@ const empresa = [
               <a
                 href={s.href}
                 class="group text-sm text-muted hover:text-foreground transition-colors duration-200 inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-              >
+               aria-label={s.label}>
                 <span>{s.label}</span>
                 <svg class="size-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-[opacity,transform] duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -181,7 +181,7 @@ const empresa = [
               <a
                 href={z.href}
                 class="group text-sm text-muted hover:text-foreground transition-colors duration-200 inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-              >
+               aria-label={z.label}>
                 <span>{z.label}</span>
                 <svg class="size-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-[opacity,transform] duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -191,7 +191,7 @@ const empresa = [
           ))}
         </ul>
         <a
-          href="/pladur-en-mallorca"
+          href="/pladur-en-menorca"
           class="group inline-flex items-center gap-1.5 text-xs font-semibold text-muted hover:text-foreground transition-colors duration-200 mt-4"
         >
           Ver todas las zonas
@@ -212,7 +212,7 @@ const empresa = [
               <a
                 href={e.href}
                 class="group text-sm text-muted hover:text-foreground transition-colors duration-200 inline-flex items-center gap-1.5 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-              >
+               aria-label={e.label}>
                 <span>{e.label}</span>
                 <svg class="size-3 opacity-0 -translate-x-1 group-hover:opacity-60 group-hover:translate-x-0 transition-[opacity,transform] duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
@@ -221,6 +221,25 @@ const empresa = [
             </li>
           ))}
         </ul>
+
+        {/* Parent company link — Plaquistas y Acabados SL (Mallorca, 2004) */}
+        <div class="mt-6 pt-5 border-t border-warm-border/40">
+          <p class="text-[10px] font-bold uppercase tracking-widest text-muted/70 mb-2">
+            Parte del grupo
+          </p>
+          <a
+            href="https://www.pladurmallorca.com"
+            target="_blank"
+            rel="noopener"
+            class="group inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-foreground transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
+            aria-label="Pladur Mallorca — SL matriz (abre en una pestaña nueva)"
+          >
+            <span>Pladur Mallorca</span>
+            <svg class="size-3 opacity-60 group-hover:opacity-100 transition-opacity duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+            </svg>
+          </a>
+        </div>
       </div>
 
       {/* Col 5: Contacto (NAP) */}
@@ -253,7 +272,7 @@ const empresa = [
             <a
               href={`tel:${siteConfig.phoneRaw}`}
               class="text-sm text-muted hover:text-foreground transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-            >
+             aria-label={siteConfig.phone}>
               {siteConfig.phone}
             </a>
           </div>
@@ -268,7 +287,7 @@ const empresa = [
             <a
               href={`mailto:${siteConfig.email}`}
               class="text-sm text-muted hover:text-foreground transition-colors duration-200 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2"
-            >
+             aria-label={siteConfig.email}>
               {siteConfig.email}
             </a>
           </div>
@@ -289,7 +308,7 @@ const empresa = [
 
         {/* Displacement note */}
         <p class="mt-6 text-xs text-muted leading-relaxed rounded-xl bg-warm-200 border border-warm-border/40 px-4 py-3">
-          Servicio en toda la isla de Mallorca sin suplemento por desplazamiento en obras desde 500&euro;.
+          Servicio en toda la isla de Menorca. Presupuesto cerrado con desplazamiento incluido: sin cargos sorpresa al final de la obra.
         </p>
       </div>
     </div>
