@@ -9,10 +9,8 @@ import critters from 'astro-critters'
 import compress from '@playform/compress'
 import { legacyRedirects } from './src/data/redirects'
 
-const SITE_URL = process.env.PUBLIC_SITE_URL || 'https://www.pladurmenorca.com'
-
 export default defineConfig({
-  site: SITE_URL,
+  site: 'https://www.pladurmenorca.com',
   trailingSlash: 'never',
   output: 'server',
   adapter: node({ mode: 'standalone' }),

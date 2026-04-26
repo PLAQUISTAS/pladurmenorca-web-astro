@@ -90,18 +90,29 @@ Pladur Menorca es la expansión 2026 de **Plaquistas y Acabados SL** (2004, Mall
 
 ## Variables de entorno (Dokploy)
 
+Las 6 variables que el código realmente lee (auditado contra `src/`):
+
+| Variable | Uso | Obligatoria |
+|---|---|---|
+| `ORIGIN` | URL pública (`@astrojs/node` la lee para CSRF + `Astro.url` cuando va detrás de Traefik) | Sí |
+| `GOOGLE_CLIENT_ID` | Gmail OAuth2 — envío de emails de formularios | Sí |
+| `GOOGLE_CLIENT_SECRET` | Gmail OAuth2 | Sí |
+| `GOOGLE_REFRESH_TOKEN` | Gmail OAuth2 | Sí |
+| `GMAIL_SENDER_EMAIL` | Dirección remitente de los emails | Sí |
+| `PUBLIC_GOOGLE_VERIFICATION` | Meta tag de Google Search Console (verificación URL prefix) | No (recomendada) |
+
+Variables opcionales para analítica (sin configurar por defecto):
+
 | Variable | Uso |
 |---|---|
-| `PUBLIC_SITE_URL` | URL canónica (default: https://www.pladurmenorca.com) |
-| `GOOGLE_CLIENT_ID` | Gmail OAuth2 — envío de emails |
-| `GOOGLE_CLIENT_SECRET` | Gmail OAuth2 |
-| `GOOGLE_REFRESH_TOKEN` | Gmail OAuth2 |
-| `GMAIL_SENDER_EMAIL` | Dirección remitente |
-| `CONTACT_EMAIL` | Dirección destino formularios |
-| `PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 (GA4 Menorca) |
-| `RECAPTCHA_SECRET` | reCAPTCHA v3 (server) |
-| `PUBLIC_RECAPTCHA_SITE_KEY` | reCAPTCHA v3 (client) |
-| `INDEXNOW_KEY` | Key IndexNow |
+| `PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 (`G-XXXXX`) — el `CookieBanner` lo carga si está |
+| `PUBLIC_GTM_ID` | Google Tag Manager |
+| `PUBLIC_GOOGLE_ADS_ID` | Google Ads |
+| `PUBLIC_META_PIXEL_ID` | Meta Pixel |
+
+Notas:
+- `site` de Astro está hardcoded en `astro.config.mjs` (no usa env-var, mismo patrón que Pladur Mallorca)
+- `INTERNAL_RECIPIENT` (destino de los formularios) está hardcoded a `info@plaquistas.com` en [`api/contacto.ts`](src/pages/api/contacto.ts) y [`lib/contact-service.ts`](src/lib/contact-service.ts) — si cambia, son 2 líneas de código
 
 ## Comandos
 
@@ -151,6 +162,12 @@ Limpieza exhaustiva de referencias residuales a Mallorca heredadas del fork:
 - Eliminado [`TrackableLink.tsx`](src/components/layout/) (componente huérfano, 30 líneas, nunca importado)
 - `src/data/redirects.ts` y `src/data/backlinks.ts` se dejan como documentación interna (no importados pero con valor: placeholder para migraciones y tracker SEO respectivamente)
 - Dependencias de `shadcn`, `radix-ui`, `class-variance-authority`, `lucide-react`, `tw-animate-css`, `@fontsource-variable/geist` ya eliminadas de `package.json` en limpieza previa
+
+### Alineación de configuración con Pladur Mallorca
+
+- `nginx.conf` — `server_name` corregido de `pladurmallorca.com` a `pladurmenorca.com` (residuo del fork)
+- `astro.config.mjs` — `site` hardcoded a `https://www.pladurmenorca.com` en lugar de leer `PUBLIC_SITE_URL`. Mismo patrón que Mallorca, una variable de entorno menos que mantener
+- `INTERNAL_RECIPIENT` (destino de formularios) hardcoded a `info@plaquistas.com` en `api/contacto.ts` y `lib/contact-service.ts`. Mismo patrón que Mallorca
 
 ### Componente `NuestrosDatos`
 
