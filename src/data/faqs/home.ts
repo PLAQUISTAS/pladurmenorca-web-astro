@@ -24,7 +24,7 @@ export const homeFaqsEn: FAQ[] = [
   },
   {
     pregunta: 'Is drywall suitable for bathrooms and wet areas?',
-    respuesta: 'Yes. For wet areas we use moisture-resistant (H) board, known as the green board: its core contains silicone additives that repel water absorption (< 5 %). It is the standard solution for bathrooms, kitchens, laundries and areas exposed to ambient moisture. In technical rooms or areas with direct water contact we reinforce with waterproofing before tiling.',
+    respuesta: 'Yes. For wet areas we use moisture-resistant (H) board, known as the green board: its core contains silicone additives that repel water absorption (≤ 5 %). It is the standard solution for bathrooms, kitchens, laundries and areas exposed to ambient moisture. In technical rooms or areas with direct water contact we reinforce with waterproofing before tiling.',
   },
   {
     pregunta: 'What drywall do I need for a holiday apartment?',
@@ -71,7 +71,7 @@ export const homeFaqs: FAQ[] = [
   },
   {
     pregunta: '¿El pladur es adecuado para baños y zonas húmedas?',
-    respuesta: 'Sí. Para zonas húmedas utilizamos placa hidrófuga (H), conocida como placa verde: su núcleo lleva aditivos siliconados que repelen la absorción de agua (< 5 %). Es la solución estándar para baños, cocinas, lavaderos y zonas en contacto con humedad ambiental. En locales técnicos o zonas expuestas al agua directa reforzamos con tratamiento impermeabilizante antes del alicatado.',
+    respuesta: 'Sí. Para zonas húmedas utilizamos placa hidrófuga (H), conocida como placa verde: su núcleo lleva aditivos siliconados que repelen la absorción de agua (≤ 5 %). Es la solución estándar para baños, cocinas, lavaderos y zonas en contacto con humedad ambiental. En locales técnicos o zonas expuestas al agua directa reforzamos con tratamiento impermeabilizante antes del alicatado.',
   },
   {
     pregunta: '¿Qué pladur necesito para un apartamento turístico?',

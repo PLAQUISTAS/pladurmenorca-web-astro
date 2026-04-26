@@ -53,8 +53,8 @@ const preciosFaqsData: BilingualFAQ[] = [
       en: 'What payment methods do you accept?',
     },
     respuesta: {
-      es: 'Aceptamos transferencia bancaria, Bizum (hasta el límite diario) y efectivo (siempre con factura). El pago habitual se estructura en: 30-40 % de señal al inicio de la obra para compra de materiales, 30 % a mitad de ejecución y el resto a la entrega con el visto bueno del cliente. En obras pequeñas (<2.000 €) suele hacerse al 50 %/50 %.',
-      en: 'We accept bank transfer, Bizum (up to the daily limit) and cash (always invoiced). Standard payment is structured as: 30-40% deposit at the start of the works for materials, 30% mid-execution and the balance on handover with the client\'s sign-off. On small jobs (<€2,000) we typically split it 50/50.',
+      es: 'Aceptamos transferencia bancaria, Bizum (hasta el límite diario) y efectivo (siempre con factura). El pago habitual se estructura en: 30-40 % de señal al inicio de la obra para compra de materiales, 30 % a mitad de ejecución y el resto a la entrega con el visto bueno del cliente. En obras pequeñas (≤ 2.000 €) suele hacerse al 50 %/50 %.',
+      en: 'We accept bank transfer, Bizum (up to the daily limit) and cash (always invoiced). Standard payment is structured as: 30-40% deposit at the start of the works for materials, 30% mid-execution and the balance on handover with the client\'s sign-off. On small jobs (≤ €2,000) we typically split it 50/50.',
     },
   },
   {
