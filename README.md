@@ -173,6 +173,42 @@ Limpieza exhaustiva de referencias residuales a Mallorca heredadas del fork:
 
 Widget reutilizable de cifras verificables (non-commodity, E-E-A-T). Usado en 10 páginas con métricas propias del negocio. Si en el futuro se necesita renderizar valores largos en una línea (ej. listas de marcas), considerar añadir un prop `compact?: boolean` — se intentó y se revirtió en esta sesión porque el uso actual con `break-words` sirve a todas las métricas sin overflow.
 
+### Fixes de build (compresión HTML + directivas Astro)
+
+- `aviso-legal.astro`, `politica-cookies.astro`, `politica-de-privacidad.astro` — quitadas directivas `client:visible` / `client:idle` de componentes Astro (son SSR-only, no aceptan hidratación). El build emitía warnings; ahora pasa limpio.
+- `data/faqs/home.ts` y `data/faqs/precios.ts` — reemplazado el carácter `<` literal por palabras (`inferior al 5 %`, `hasta 2.000 €`). Causa raíz: cuando `SchemaFAQ.astro` serializaba el texto en JSON-LD inline dentro de `<script>`, el parser de `html-minifier-terser` interpretaba el `<` como inicio de tag y fallaba con `Cannot compress file` en home y precios. Resultado: build pasa de 92/96 a 96/96 archivos comprimidos.
+
+### Optimización LCP en mobile
+
+`HeroHome.astro` — el componente `<Image>` del hero pasa de `quality={82}` a `quality={72}` (sweet spot WebP) y añade un `width=480` para mobiles de baja DPR. El variant 800w (servido a la mayoría de móviles con DPR=2) baja de 30 KB a 19 KB (−37 %). Lighthouse estimaba un ahorro de 7.6 KB; el resultado lo supera.
+
+### SEO/agentes — Markdown for Agents (RFC 8288 / RFC 7231)
+
+- `nginx.conf` — añadida lógica de content negotiation:
+  - `map $http_accept $prefers_md` con respeto a q-values (un `Accept: text/markdown;q=0.5, text/html;q=1.0` recibe HTML)
+  - `location /` añade `Vary: Accept` y rewrite interno a `/__md/...` cuando el agente pide markdown
+  - `location ^~ /__md/` (internal-only) sirve `dist/client/**/*.md` con `Content-Type: text/markdown; charset=utf-8`
+  - `location @md_missing` cae al HTML si no existe el `.md` para esa URL
+- Los `.md` ya se generaban en build (`scripts/generate-markdown.mjs` → 96 ficheros en `dist/client/`); ahora nginx los entrega cuando el cliente los pide.
+
+Verificación tras deploy:
+```sh
+curl -H "Accept: text/markdown" -I https://www.pladurmenorca.com/
+# → Content-Type: text/markdown; charset=utf-8
+curl -I https://www.pladurmenorca.com/
+# → Content-Type: text/html  (browsers, comportamiento por defecto)
+```
+
+### SEO/agentes — Content Signals en `robots.txt`
+
+`public/robots.txt` declara preferencias de uso del contenido por agentes IA según el draft IETF [`draft-romm-aipref-contentsignals`](https://datatracker.ietf.org/doc/draft-romm-aipref-contentsignals/) y la spec de [contentsignals.org](https://contentsignals.org/):
+
+```
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+```
+
+Postura "máxima visibilidad" (coherente con el comentario de cabecera): se permite indexación en buscadores, uso como contexto/RAG por LLMs (citaciones en tiempo real) y uso del contenido en datasets de entrenamiento. Decisión deliberada — todo el contenido es información pública del servicio, sin nada que proteger.
+
 ## Verificación
 
 ```sh
