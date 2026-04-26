@@ -28,7 +28,6 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
 
   <!-- Hero -->
   <Hero
-    client:visible
     title="Aviso Legal y Política de Cookies"
     subtitle="Información legal sobre el uso de este sitio web y nuestra política de cookies conforme a la LSSI-CE y la normativa de la AEPD."
     dark={true}
@@ -677,7 +676,7 @@ const checkSvg = `<svg class="size-3.5" fill="currentColor" viewBox="0 0 20 20" 
           panel de configuración en cualquier momento haciendo clic en el siguiente botón:
         </p>
         <div class="mt-6">
-          <CookieSettingsButton client:visible />
+          <CookieSettingsButton />
         </div>
         <p class="text-muted leading-relaxed mt-4 text-sm">
           Las modificaciones realizadas en las preferencias de cookies tendrán efecto inmediato
