@@ -5,7 +5,6 @@ import preact from '@astrojs/preact'
 import sitemap from '@astrojs/sitemap'
 import mdx from '@astrojs/mdx'
 import node from '@astrojs/node'
-import critters from 'astro-critters'
 import compress from '@playform/compress'
 import { legacyRedirects } from './src/data/redirects'
 
@@ -17,6 +16,14 @@ export default defineConfig({
   redirects: legacyRedirects,
   security: {
     checkOrigin: false,
+  },
+  build: {
+    // Astro built-in: inlinea automáticamente los chunks de CSS pequeños
+    // (≤ vite.build.assetsInlineLimit, default 4 KB). Sustituye a
+    // astro-critters (deprecado) sin pruning ni reglas perdidas — los
+    // CSS grandes siguen siendo externos render-blocking, pero gzippeados
+    // pesan poco (~15 KB) y el browser los paraleliza con el HTML.
+    inlineStylesheets: 'auto',
   },
   i18n: {
     locales: ['es', 'en'],
@@ -84,21 +91,6 @@ export default defineConfig({
         item.priority = priorities[item.url] ?? priorities[url] ?? 0.7
         return item
       },
-    }),
-    critters({
-      // pruneSource: al inlinear CSS crítico, lo elimina del stylesheet
-      // externo → evita que el navegador re-parse las mismas reglas dos
-      // veces y reduce el peso total de CSS procesado en el thread principal.
-      pruneSource: true,
-      // preload 'swap' (default) + fonts para que el CSS no crítico cargue
-      // con prioridad baja sin bloquear el primer paint.
-      preload: 'swap',
-      // Mantener keyframes y fonts inline para evitar FOUT/FOIT.
-      keyframes: 'critical',
-      // Comprimir selectores repetidos.
-      mergeStylesheets: true,
-      // Inlinear solo fuentes usadas por encima del fold.
-      fonts: true,
     }),
     compress({
       CSS: true,
