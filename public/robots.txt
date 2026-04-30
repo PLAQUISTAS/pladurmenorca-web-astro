@@ -1,15 +1,13 @@
 # Pladur Menorca — robots.txt
 # Máxima visibilidad: buscadores y agentes de IA (search, inferencia y entrenamiento).
 # Todo el contenido es información pública del servicio, nada que proteger.
+# Content Signals: IETF draft-romm-aipref-contentsignals + contentsignals.org
 # Guías para IA: /llms.txt · /llms-full.txt
 
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /api/
-
-# Content Signals (IETF draft-romm-aipref-contentsignals + contentsignals.org)
-# Declara preferencias de uso del contenido por parte de agentes IA.
-Content-Signal: search=yes, ai-input=yes, ai-train=yes
 
 Sitemap: https://www.pladurmenorca.com/sitemap-index.xml
 
