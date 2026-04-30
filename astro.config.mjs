@@ -18,12 +18,15 @@ export default defineConfig({
     checkOrigin: false,
   },
   build: {
-    // Astro built-in: inlinea automáticamente los chunks de CSS pequeños
-    // (≤ vite.build.assetsInlineLimit, default 4 KB). Sustituye a
-    // astro-critters (deprecado) sin pruning ni reglas perdidas — los
-    // CSS grandes siguen siendo externos render-blocking, pero gzippeados
-    // pesan poco (~15 KB) y el browser los paraleliza con el HTML.
-    inlineStylesheets: 'auto',
+    // 'always' inlinea TODO el CSS dentro del <head> de cada HTML. Elimina
+    // por completo el CSS render-blocking que retrasa el LCP (Lighthouse
+    // marcaba 160ms de bloqueo por el chunk de 19 KB gzipped). El CSS
+    // total comprimido pesa ~18 KB — lo que descargabas igualmente como
+    // archivo externo — pero ahora viaja con el HTML sin round-trip extra.
+    // Tradeoff: si un usuario visita N páginas, el CSS no se cachea entre
+    // ellas. Aceptable para web de marketing donde el visitante medio ve
+    // 1-3 páginas. Astro recomienda 'always' justo para este caso de uso.
+    inlineStylesheets: 'always',
   },
   i18n: {
     locales: ['es', 'en'],
