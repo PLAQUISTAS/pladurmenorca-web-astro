@@ -1,6 +1,27 @@
 import { siteConfig } from '@/data/site'
 import type { FAQ } from '@/data/faqs'
 
+/**
+ * Representación canónica jerárquica de Menorca como área de servicio.
+ * Se usa en TODOS los schemas (LocalBusiness.areaServed.containedInPlace,
+ * Service.areaServed, Offer.areaServed, Organization.areaServed) para
+ * dar a Google una señal geográfica idéntica en cada lugar.
+ *
+ * Jerarquía explícita: Menorca → Islas Baleares → España.
+ */
+const MENORCA_AREA = {
+  '@type': 'AdministrativeArea',
+  name: 'Menorca',
+  containedInPlace: {
+    '@type': 'AdministrativeArea',
+    name: 'Islas Baleares',
+    containedInPlace: {
+      '@type': 'Country',
+      name: 'España',
+    },
+  },
+} as const
+
 export function localBusinessSchema() {
   return {
     '@context': 'https://schema.org',
@@ -31,8 +52,11 @@ export function localBusinessSchema() {
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: siteConfig.coordinates.lat,
-      longitude: siteConfig.coordinates.lng,
+      // serviceGeo (centro de Menorca) — refleja el centro operativo del
+      // dominio pladurmenorca.com. NO es coordinates (Palma), que se usa
+      // únicamente para la PostalAddress legal arriba.
+      latitude: siteConfig.serviceGeo.lat,
+      longitude: siteConfig.serviceGeo.lng,
     },
     openingHoursSpecification: [
       {
@@ -51,10 +75,7 @@ export function localBusinessSchema() {
     areaServed: siteConfig.areaServed.map((municipio) => ({
       '@type': 'City',
       name: municipio,
-      containedInPlace: {
-        '@type': 'AdministrativeArea',
-        name: 'Islas Baleares',
-      },
+      containedInPlace: MENORCA_AREA,
     })),
     ...(siteConfig.aggregateRating && {
       aggregateRating: {
@@ -145,10 +166,7 @@ export function serviceSchema({
     provider: {
       '@id': `${siteConfig.url}/#organization`,
     },
-    areaServed: {
-      '@type': 'AdministrativeArea',
-      name: 'Menorca, Islas Baleares, España',
-    },
+    areaServed: MENORCA_AREA,
     ...(image && { image: image.startsWith('http') ? image : `${siteConfig.url}${image}` }),
   }
 }
@@ -223,10 +241,7 @@ export function offersSchema(
           unitCode: 'MTK',
           unitText: 'metro cuadrado',
         },
-        areaServed: {
-          '@type': 'AdministrativeArea',
-          name: 'Menorca, Islas Baleares, España',
-        },
+        areaServed: MENORCA_AREA,
       },
     })),
   }
@@ -333,10 +348,7 @@ export function organizationSchema() {
         worstRating: '1',
       },
     }),
-    areaServed: {
-      '@type': 'State',
-      name: 'Menorca, Islas Baleares',
-    },
+    areaServed: MENORCA_AREA,
     sameAs: Object.values(siteConfig.social).filter(Boolean),
     contactPoint: {
       '@type': 'ContactPoint',

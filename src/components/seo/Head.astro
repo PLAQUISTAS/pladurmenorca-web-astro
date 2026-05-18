@@ -27,17 +27,19 @@ const ogLocale = currentLocale === 'en' ? 'en_GB' : 'es_ES'
 <link rel="canonical" href={canonicalURL.href} />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
+<link rel="icon" href="/icon-192x192.png" sizes="192x192" type="image/png" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="apple-touch-icon" href="/icon-192x192.png" />
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
+<link rel="mask-icon" href="/favicon.svg" color="#E54D1F" />
 <meta name="robots" content={meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
 {import.meta.env.PUBLIC_GOOGLE_VERIFICATION && (
   <meta name="google-site-verification" content={import.meta.env.PUBLIC_GOOGLE_VERIFICATION} />
 )}
 <meta name="author" content="Pladur Menorca" />
 <meta name="geo.region" content="ES-IB" />
-<meta name="geo.placename" content="Palma de Mallorca" />
-<meta name="geo.position" content="39.5696;2.6502" />
-<meta name="ICBM" content="39.5696, 2.6502" />
+<meta name="geo.placename" content={siteConfig.geoPlacename} />
+<meta name="geo.position" content={`${siteConfig.serviceGeo.lat};${siteConfig.serviceGeo.lng}`} />
+<meta name="ICBM" content={`${siteConfig.serviceGeo.lat}, ${siteConfig.serviceGeo.lng}`} />
 {esUrl && <link rel="alternate" hreflang="es" href={esUrl} />}
 {enUrl && <link rel="alternate" hreflang="en" href={enUrl} />}
 <link rel="alternate" hreflang="x-default" href={esUrl ?? canonicalURL.href} />
@@ -78,7 +80,3 @@ const ogLocale = currentLocale === 'en' ? 'en_GB' : 'es_ES'
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-500.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-600.woff2" crossorigin />
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-700.woff2" crossorigin />
-
-<!-- Resource Hints -->
-<link rel="dns-prefetch" href="https://www.google-analytics.com" />
-<link rel="dns-prefetch" href="https://www.googletagmanager.com" />

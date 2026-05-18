@@ -30,10 +30,22 @@ export const siteConfig = {
     countryName: 'España',
     note: 'Domicilio social de Plaquistas y Acabados SL en Palma de Mallorca (desde 2004). Servicio operativo en toda Menorca.',
   },
+  // Coordenadas de la oficina legal de la SL matriz (Palma de Mallorca).
+  // Sin uso actual desde código tras el unificado de schemas en Menorca —
+  // el JSON-LD usa `address` (street/city/postal) sin lat/lng, y el `geo`
+  // del LocalBusiness se llena desde `serviceGeo` abajo. Se mantiene como
+  // referencia para futuros mapas o JSON-LD específico de la SL matriz.
   coordinates: {
-    // Oficina de la SL matriz (Palma de Mallorca)
     lat: 39.5696,
     lng: 2.6502,
+  },
+  // Centro geográfico de Menorca (zona Es Mercadal). Es el geo "operativo"
+  // del dominio pladurmenorca.com: lo consumen los <meta geo.position/ICBM>
+  // del HTML y el `geo` del JSON-LD LocalBusiness. Punto neutro entre Maó
+  // y Ciutadella — no sesga el ranking hacia un extremo de la isla.
+  serviceGeo: {
+    lat: 39.9923,
+    lng: 4.0907,
   },
   geoPlacename: 'Menorca',
   experience: 20,
